@@ -1,0 +1,1 @@
+see leetcode n-queens n=8即可

@@ -1,0 +1,848 @@
+using System;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Collections;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Schema;
+using System.Globalization;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Xml.XPath;
+using System.Windows.Forms;
+
+using log4net;
+using BOC.TFSA.DataAccess;
+using BOC.TFSA.DataAccess.DTO;
+
+namespace BOC.TFSA.XmlParser
+{
+    public class XmlDataProvider : IXmlDataProvider
+    {
+        private ILog tfsa_error_log;
+        private ILog tfsa_summary_log;
+
+        public XmlDataProvider()
+        {
+            tfsa_error_log = LogManager.GetLogger("logger");
+            tfsa_summary_log = LogManager.GetLogger("TFSA_SUMMARY");
+        }
+
+        public XElement LOAD_TFSA_T619(string path)
+        {
+            XElement T619 = XElement.Load(path);
+            return T619;
+        }
+
+        public XElement LOAD_TFSA_SLP_TRANS(TRANSACTION t)
+        {
+            //cnamt,wdamt
+            string cnamt = null;
+            string wdamt = null;
+
+            if (Common.IsCreditAccount(t.TRANSACTION_TYPE))
+            {
+                //
+                if (t.DEBIT_AMOUNT.ToString() == "0.00")
+                {
+                    cnamt = t.CREDIT_AMOUNT.ToString();
+                    wdamt = t.DEBIT_AMOUNT.ToString();
+                }
+                else
+                {
+                    cnamt = t.DEBIT_AMOUNT.ToString();
+                    wdamt = t.CREDIT_AMOUNT.ToString();
+                }
+            }
+            else
+            {
+                if (t.CREDIT_AMOUNT.ToString() == "0.00")
+                {
+                    wdamt = t.DEBIT_AMOUNT.ToString();
+                    cnamt = t.CREDIT_AMOUNT.ToString();
+                }
+                else
+                {
+                    wdamt = t.CREDIT_AMOUNT.ToString();
+                    cnamt = t.DEBIT_AMOUNT.ToString();
+                }
+            }
+
+            String TransactionDate = ConfigurationManager.AppSettings.Get("TRAN_YEAR");
+            if (!(t.PROCESSING_DATE.Substring(0, 4).Equals(TransactionDate)))
+            {
+                cnamt = "0.00";
+                wdamt = "0.00";
+            }
+
+            //generate tfsa_trans file
+            XElement TFSA_TRANS =
+                new XElement("TFSA_TRANS",
+                    new XElement("TRANS_DT",
+                        new XElement("trans_dt_yr", t.PROCESSING_DATE.Substring(0, 4)),
+                        new XElement("trans_dt_mo", t.PROCESSING_DATE.Substring(4, 2)),
+                        new XElement("trans_dt_dy", t.PROCESSING_DATE.Substring(6, 2))),
+                    new XElement("cnamt", cnamt),
+                    new XElement("wdamt", wdamt));
+
+            return TFSA_TRANS;
+        }
+
+        public XElement LOAD_TFSA_SLP_IDENT(CUSTOMER c, DateTime reportFrom, DateTime reportTo, string recordType, Decimal cyefmvamt)
+        {
+            //tfsa_hldr_sin
+            string tfsa_hldr_sin = null;
+            if (c.US_TAX_ID_TYP == "SIN")
+                tfsa_hldr_sin = c.US_TAX_ID.Replace("-", "").Trim();
+
+            //tfsa_hldr_snm,tfsa_hldr_gvn_nm
+            string tfsa_hldr_snm = null;
+            string tfsa_hldr_gvn_nm = null;
+            tfsa_hldr_snm = c.SHORT_NAME.Substring(0, c.SHORT_NAME.IndexOf(" "));
+            tfsa_hldr_snm = Common.ReplaceSpecialChar3(tfsa_hldr_snm);
+
+            tfsa_hldr_gvn_nm = c.SHORT_NAME.Substring(c.SHORT_NAME.IndexOf(" ") + 1,
+                c.SHORT_NAME.Length - (c.SHORT_NAME.IndexOf(" ") + 1)).TrimStart();
+            tfsa_hldr_gvn_nm = Common.ReplaceSpecialChar3(tfsa_hldr_gvn_nm);
+
+            //tfsa_hldr_addr_l1_txt
+            string tfsa_hldr_addr_l1_txt = null;
+            tfsa_hldr_addr_l1_txt = Common.ReplaceSpecialChar3(c.STREET);
+
+            //XmlDocument xmlDoc = new XmlDocument();
+            //XmlElement s = xmlDoc.CreateElement("tfsa_hldr_addr_l1_txt");
+            //s.InnerText = tfsa_hldr_addr_l1_txt;
+
+
+            //tfsa_hldr_cntry_cd
+            string tfsa_hldr_cntry_cd = null;
+            RegionInfo cntry_code = new RegionInfo(c.RESIDENCE.Trim());
+            tfsa_hldr_cntry_cd = cntry_code.ThreeLetterISORegionName;
+
+            //cye_fmv_amt
+            Decimal cye_fmv_amt;
+            cye_fmv_amt = cyefmvamt;
+
+            //generate tfsa_indent file
+            XElement TFSA_IDENT =
+                new XElement("TFSA_IDENT",
+                    new XElement("bn", "135961621RZ0002"),
+                    new XElement("tfsa_pln_id", "05360011"),
+                    new XElement("tfsa_ctrct_nbr", c.ACCOUNT_NUMBER),
+                    new XElement("tfsa_hldr_sin", tfsa_hldr_sin),
+                    new XElement("HLDR_NM",
+                        new XElement("tfsa_hldr_snm", tfsa_hldr_snm),
+                        new XElement("tfsa_hldr_gvn_nm", tfsa_hldr_gvn_nm)),
+                    new XElement("HLDR_ADDR",
+                        new XElement("tfsa_hldr_addr_l1_txt", tfsa_hldr_addr_l1_txt),
+                        new XElement("tfsa_hldr_cty_nm", c.US_TOWN_CITY),
+                        new XElement("tfsa_hldr_pvst_cd", c.US_STATE),
+                        new XElement("tfsa_hldr_cntry_cd", tfsa_hldr_cntry_cd),
+                        new XElement("hldr_pstl_zip_cd", c.US_ZIP_CODE)),
+                    new XElement("TFSA_HLDR_BRTH_DT",
+                        new XElement("tfsa_hldr_brth_dt_yr", String.IsNullOrEmpty(c.BIRTH_INCORP_DATE) ? "" : c.BIRTH_INCORP_DATE.Substring(0, 4)),
+                        new XElement("tfsa_hldr_brth_dt_mo", String.IsNullOrEmpty(c.BIRTH_INCORP_DATE) ? "" : c.BIRTH_INCORP_DATE.Substring(4, 2)),
+                        new XElement("tfsa_hldr_brth_dt_dy", String.IsNullOrEmpty(c.BIRTH_INCORP_DATE) ? "" : c.BIRTH_INCORP_DATE.Substring(6, 2))),
+                    new XElement("tfsa_new_ctrct_ind", ""),
+                    new XElement("ctrct_trmnt_ind", ""),
+                    new XElement("TFSA_TRMNT_DT",
+                        new XElement("tfsa_trmnt_dt_yr", ""),
+                        new XElement("tfsa_trmnt_dt_mo", ""),
+                        new XElement("tfsa_trmnt_dt_dy", "")),
+                    new XElement("cye_fmv_amt", cye_fmv_amt),
+                    new XElement("stot_trans_cnt", c.stot_trans_cnt.ToString()),
+                    new XElement("TFSA_HLDR_TAMT",
+                        new XElement("stot_cnamt", c.stot_cnamt.ToString()),
+                        new XElement("stot_wdamt", c.stot_wdamt.ToString()),
+                        new XElement("stot_mbk_out_amt", c.stot_mbk_out_amt.ToString()),
+                        new XElement("stot_mbk_in_amt", c.stot_mbk_in_amt.ToString())),
+                    new XElement("slip_type_code", recordType),
+                    new XElement("company", c.COMPANY));
+
+            //INDICATES WHETHER THIS ACCOUNT IS OPENED THIS YEAR
+            DateTime opendate = Common.FormatDate(c.OPENING_DATE.Trim());
+            if (opendate >= reportFrom && opendate <= reportTo)
+            {
+                TFSA_IDENT.Element("tfsa_new_ctrct_ind").SetValue("Y");
+            }
+            else
+            {
+                TFSA_IDENT.Element("tfsa_new_ctrct_ind").SetValue("N");
+            }
+
+            //INDICATES WHETHER THIS ACCOUNT IS CLOSED THIS YEAR
+            if (!String.IsNullOrEmpty(c.CLOSURE_DATE) && String.Compare(c.CLOSURE_DATE.Substring(0, 4), ConfigurationManager.AppSettings.Get("TRAN_YEAR")) <= 0)
+            {
+                TFSA_IDENT.Element("ctrct_trmnt_ind").SetValue("Y");
+                TFSA_IDENT.Element("TFSA_TRMNT_DT").Element("tfsa_trmnt_dt_yr").
+                    SetValue(c.CLOSURE_DATE.Substring(0, 4));
+                TFSA_IDENT.Element("TFSA_TRMNT_DT").Element("tfsa_trmnt_dt_mo").
+                    SetValue(c.CLOSURE_DATE.Substring(4, 2));
+                TFSA_IDENT.Element("TFSA_TRMNT_DT").Element("tfsa_trmnt_dt_dy").
+                    SetValue(c.CLOSURE_DATE.Substring(6, 2));
+            }
+            else
+            {
+                TFSA_IDENT.Element("ctrct_trmnt_ind").SetValue("N");
+                TFSA_IDENT.Element("TFSA_TRMNT_DT").Remove();
+            }
+
+            return TFSA_IDENT;
+        }
+
+        public XElement LOAD_TFSA_SUM(string path)
+        {
+            XElement TFSA_SUM = XElement.Load(path);
+            return TFSA_SUM;
+        }
+
+        public void GenerateTFSAXmlFile(string templatePath, string targetPath, string schemaUri,
+            DateTime reportDateFrom, DateTime reportDateTo, string contributionTransType, string withdrawalTransType,
+            string transferOutType, string transferInType, string recordStatus, string histAccount)
+        {
+            //LOAD TFSA TEMPLATE XML FILE
+            IXmlDataProvider xmlService = new XmlDataProvider();
+            XElement TFSA_T619 = xmlService.LOAD_TFSA_T619(templatePath);
+
+            //GET DATA FROM DATA_MART
+            IDataProvider service = new SqlDataProvider();
+            DataAccess.DTO.ACCOUNT[] accounts = null;
+
+            string creditTransType = contributionTransType;// +"," + transferInType;                  /****************TRANSFER IN/OUT*****************/
+            string debitTransType = withdrawalTransType;// +"," + transferOutType;
+
+            tfsa_summary_log.Info("Begin to generate TFSA xml file...");
+
+            try
+            {
+                accounts = service.GetTFSA(creditTransType, debitTransType, reportDateFrom,
+                    reportDateTo, recordStatus, histAccount);
+
+                foreach (DataAccess.DTO.ACCOUNT a in accounts)
+                {
+                    Console.WriteLine("Check Account Number");
+                    Console.WriteLine(a.ACCOUNT_NUMBER);
+                }
+
+                Console.WriteLine("Check Account Number End");
+            }
+            catch (SqlException sqlError)
+            {
+                tfsa_error_log.Error(sqlError.ToString());
+                tfsa_summary_log.Info("Generate TFSA xml file Failed.\n " +
+                      "***********************************************************************");
+                MessageBox.Show("!!!!!!!!!!!!!!!!!!!!!!!!!!Timeout expired. The timeout period elapsed prior to completion of the " +
+                    "operation or the server is not responding. \nPlease try it again.", "Alert",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+            catch (Exception acctError)
+            {
+                tfsa_error_log.Error(acctError.ToString());
+                tfsa_summary_log.Info("Generate TFSA xml file finished.\n " +
+                      "***********************************************************************");
+                MessageBox.Show(acctError.ToString(), "Alert", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+
+            //TO REMOVE DUPLICATE ACCOUNT
+            Hashtable removeDuplicate = new Hashtable();
+
+            //DEFINE TFSA_SUMMARY VARIABLES
+            int transNum = 0;
+            int slp_cnt = 0;
+            decimal rtot_cnamt = 0.00m;
+            decimal rtot_wdamt = 0.00m;
+            decimal rtot_cye_fmv_amt = 0.00m;
+
+            //LOOP ACCOUNTS TO GET TRANSACTIONS
+            foreach (DataAccess.DTO.ACCOUNT a in accounts)
+            {
+                //Remove INTERNAL ACCOUNTS
+                int i = 0;
+
+                if (int.TryParse(a.ACCOUNT_NUMBER.Trim(), out i) == false)
+                {
+                    Console.WriteLine("Internal Account:{0}", a.ACCOUNT_NUMBER.Trim());
+                    continue;
+                }
+
+                DataAccess.DTO.CUSTOMER customer = null;
+
+                if (!removeDuplicate.ContainsKey(a.ACCOUNT_NUMBER.Trim()))
+                {
+                    //Manual remove user don't need account for 2012
+                    if (a.ACCOUNT_NUMBER == "12013552"
+                        || a.ACCOUNT_NUMBER == "19002252"
+                        || a.ACCOUNT_NUMBER == "05000558"
+                        || a.ACCOUNT_NUMBER == "05001500"
+                        || a.ACCOUNT_NUMBER == "05001588"
+                        || a.ACCOUNT_NUMBER == "12001069"
+                        || a.ACCOUNT_NUMBER == "12009956"
+                        || a.ACCOUNT_NUMBER == "12014307"
+                        || a.ACCOUNT_NUMBER == "12007407"       //these two are amended account. They have been report in 2010 report.
+                        || a.ACCOUNT_NUMBER == "04008533"       //
+                        || a.ACCOUNT_NUMBER == "12003760"       //these two are in 2011 report already. No need to add them.
+                        || a.ACCOUNT_NUMBER == "12009341"       //
+                        )
+                        continue;
+
+                    DataAccess.DTO.TRANSACTION[] trans = null;
+                    string transType = contributionTransType + "," +
+                        withdrawalTransType;
+
+                    //DEFINE TFSA_IDENT SUMMARY VARIABLES
+                    int stot_trans_cnt = 0;
+                    decimal stot_cnamt = 0.00m;
+                    decimal stot_wdamt = 0.00m;
+                    decimal stot_mbk_out_amt = 0.00m;
+                    decimal stot_mbk_in_amt = 0.00m;
+
+
+                    removeDuplicate.Add(a.ACCOUNT_NUMBER.Trim(), a.ACCOUNT_NUMBER.Trim());
+
+                    try
+                    {
+                        customer = service.GetCustomerByID(a.ACCOUNT_NUMBER);
+                    }
+                    catch (Exception cusError)
+                    {
+                        //tfsa_summary_log.Info("ACCOUNT: " + a.ACCOUNT_NUMBER + " IS CLOSED!");
+                        tfsa_error_log.Error(cusError.ToString());
+                    }
+
+                    if (customer == null)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("------------------customer is null!");
+                        continue;
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("------------------customer is not null, information displayed as following:");
+
+                    //BEGIN TO GENERATE TFSA_SLP
+                    XElement TFSA_SLP = new XElement("TFSA_SLP", "");
+
+                    //if current year has transactions display them otherwise <TFSA_TRANS> won't be displayed in slip
+                    if (service.GetCurrentYearTran(a.ACCOUNT_NUMBER, transType, reportDateFrom, reportDateTo, recordStatus))
+                    {
+                        Console.WriteLine("Current year has transaction!");
+                        try
+                        {
+                            trans = service.GetTransByAcctID(a.ACCOUNT_NUMBER, transType, reportDateFrom,
+                                reportDateTo, recordStatus);
+
+                            foreach (DataAccess.DTO.TRANSACTION t in trans)
+                            {
+                                if (t.ID == "FT1208648761;1"
+                                    || t.ID == "FT1215654854;1"
+                                    || t.ID == "FT1208632508;1"
+                                    || t.ID == "FT1215632684;1"
+                                    || t.ID == "FT1214584613;1"
+                                    )
+                                    continue;
+
+                                //TOTAL TRANSACTONS NUMBER
+                                transNum++;
+                                stot_trans_cnt++;
+
+                                //TOTAL TFSA_SLIP TRANSACTIONS NUMBER
+                                //if (t.PROCESSING_DATE.Substring(0, 4) == reportDateTo.ToString().Substring(0, 4))
+                                //stot_trans_cnt++;
+
+                                //BEGIN TO GENERATE TFSA_SLP_TRANS
+                                XElement slp_trans = xmlService.LOAD_TFSA_SLP_TRANS(t);
+                                TFSA_SLP.Add(slp_trans);
+
+                                //TOTAL TFSA_SLP_TRANS camat and wdamt AMOUNT
+                                if (t.TRANSACTION_TYPE == contributionTransType || t.TRANSACTION_TYPE == withdrawalTransType)
+                                {
+                                    stot_cnamt = stot_cnamt + Convert.ToDecimal(slp_trans.Element("cnamt").Value);
+                                    stot_wdamt = stot_wdamt + Convert.ToDecimal(slp_trans.Element("wdamt").Value);
+                                }
+                            }
+                        }
+                        catch (Exception transError)
+                        {
+                            tfsa_error_log.Error(transError.ToString());
+                            Console.WriteLine("ACCOUNT: {0} NO TRANSACTION!", a.ACCOUNT_NUMBER);
+                        }
+
+                        Console.WriteLine("stot_trans_cnt " + stot_trans_cnt);
+                        Console.WriteLine("transNum " + transNum);
+
+                        
+                    }//end GetCurrentYearTran()
+                    else
+                    {
+                        Console.WriteLine("Current year does not have transactions!");
+                    } 
+                    
+                    customer.stot_trans_cnt = stot_trans_cnt;
+                    customer.stot_cnamt = stot_cnamt;
+                    customer.stot_wdamt = stot_wdamt;
+                    customer.stot_mbk_in_amt = stot_mbk_in_amt;
+                    customer.stot_mbk_out_amt = stot_mbk_out_amt;
+
+                    //Calculate cye_fmv_amt
+                    Decimal d = service.Get_stot_cnamt(a.ACCOUNT_NUMBER, "21031") + service.Get_stot_cnamt2(a.ACCOUNT_NUMBER, "1079");
+
+                    //TFSA_SUMMARY
+                    //rtot_cnamt = rtot_cnamt + stot_cnamt;
+                    rtot_cnamt = rtot_cnamt + stot_cnamt;       // +stot_mbk_in_amt;
+                    rtot_wdamt = rtot_wdamt + stot_wdamt;       // +stot_mbk_out_amt;
+                    rtot_cye_fmv_amt = rtot_cye_fmv_amt + d;
+
+                    //GENERATE TFSA_SLP
+                    //System.Windows.Forms.MessageBox.Show(customer.SHORT_NAME);
+                    TFSA_SLP.Add(xmlService.LOAD_TFSA_SLP_IDENT(customer, reportDateFrom, reportDateTo, "O", d));
+                    TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").
+                        AddBeforeSelf(TFSA_SLP);
+
+                    //TOTAL TFSA_SLIP NUMBER
+                    slp_cnt++;
+                    Console.WriteLine("Now the slp_cnt is " + slp_cnt);
+
+                }//end removeDuplicate()
+                else
+                {
+                    tfsa_summary_log.Info("DUPLICATE ACCOUNT NUMBER: " + a.ACCOUNT_NUMBER);
+                    Console.WriteLine("DUPLICATE ACCOUNT NUMBER: {0}", a.ACCOUNT_NUMBER);
+                }
+            }//end foreach accout
+
+            //WRITE TFSA_SUMMARY TO XML FILE
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").
+                Element("slp_cnt").SetValue(slp_cnt);
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").Element("TFSA_TAMT").
+                Element("rtot_cnamt").SetValue(rtot_cnamt);
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").Element("TFSA_TAMT").
+                Element("rtot_wdamt").SetValue(rtot_wdamt);
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").Element("TFSA_TAMT").
+                Element("rtot_cye_fmv_amt").SetValue(rtot_cye_fmv_amt);
+
+            Console.WriteLine("----------------------------------------------");
+
+            //GENERATE FINAL XML FILE
+            Console.WriteLine("BEGIN TO GENERATE XML FILE...");
+            string tempfile = null;
+            tempfile = targetPath.Replace(".XML", "_TEMP.XML");
+            TFSA_T619.Save(tempfile);
+
+
+            if (File.Exists(tempfile))
+            {
+                Common.SaveTFSAXmlFile(tempfile, targetPath);
+            }
+            else
+            {
+                throw new Exception(tempfile + "is not exists.");
+            }
+
+            tfsa_summary_log.Info("Total Transactons: " + transNum);
+
+            Console.WriteLine("XML FILE IS GENERATED AT " + targetPath);
+
+            //VALIDATE XML FILE
+            Common.ValidateXmlFile(targetPath, schemaUri, tfsa_summary_log);
+
+            //TOTAL TRANSACTONS NUMBER
+
+            Console.WriteLine("Total Transactons Number: {0}", transNum);
+
+            tfsa_summary_log.Info("TFSA xml file is generated at " + targetPath);
+            tfsa_summary_log.Info("Generate TFSA xml file finished.\n " +
+                                  "***********************************************************************");
+        }
+
+        public void GenerateAmendedTFSAXmlFile(string accts, string templatePath, string targetPath, string schemaUri,
+        DateTime reportDateFrom, DateTime reportDateTo, string contributionTransType, string withdrawalTransType,
+        string transferOutType, string transferInType, string recordStatus, string histAccount)
+        {
+            //LOAD TFSA TEMPLATE XML FILE
+            IXmlDataProvider xmlService = new XmlDataProvider();
+            XElement TFSA_T619 = xmlService.LOAD_TFSA_T619(templatePath);
+            string[] accounts = accts.Split(new Char[] { ',' });
+
+            //GET DATA FROM DATA_MART
+            IDataProvider service = new SqlDataProvider();
+
+            //TO REMOVE DUPLICATE ACCOUNT
+            Hashtable removeDuplicate = new Hashtable();
+
+            //DEFINE TFSA_SUMMARY VARIABLES
+            int transNum = 0;
+            int slp_cnt = 0;
+            decimal rtot_cnamt = 0.00m;
+            decimal rtot_wdamt = 0.00m;
+            decimal rtot_cye_fmv_amt = 0.00m;
+
+            //LOOP ACCOUNTS TO GET TRANSACTIONS
+            foreach (string account in accounts)
+            {
+                DataAccess.DTO.CUSTOMER customer = null;
+
+                if (!removeDuplicate.ContainsKey(account.Trim()))
+                {
+                    removeDuplicate.Add(account.Trim(), account.Trim());
+
+                    try
+                    {
+                        customer = service.GetCustomerByID(account);
+                    }
+                    catch (Exception cusError)
+                    {
+                        tfsa_summary_log.Info("ACCOUNT: " + account + " IS CLOSED!");
+                        tfsa_error_log.Error(cusError.ToString());
+                        Console.WriteLine("ACCOUNT: {0} IS CLOSED!", account);
+                    }
+
+                    //IF ACCOUNT COLOED, GET CUSTOMER CODE FORM MULTI_ACCOUNT_HIST
+                    //if (customer == null)
+                    //{
+                    //    try
+                    //    {
+                    //        customer = service.GetClosedAccountByID(account)[0];
+                    //    }
+                    //    catch (Exception err)
+                    //    {
+                    //        tfsa_error_log.Error(err.ToString());
+                    //        Console.WriteLine("{0} ", err.ToString());
+                    //        continue;
+                    //    }
+                    //}
+
+                    //TOTAL TFSA_SLIP NUMBER
+                    slp_cnt++;
+
+                    //BEGIN TO GENERATE TFSA_SLP
+                    XElement TFSA_SLP = new XElement("TFSA_SLP", "");
+
+                    //Console.WriteLine("CUSTOMER INFORMATION: {0}--{1}--{2}--{3}",
+                    //    customer.CUSTOMER_CODE, customer.SHORT_NAME, customer.STREET, customer.TOWN_COUNTRY);
+
+                    DataAccess.DTO.TRANSACTION[] trans = null;
+                    string transType = contributionTransType + "," +
+                        withdrawalTransType + "," +
+                        transferOutType + "," +
+                        transferInType;
+
+                    //DEFINE TFSA_IDENT SUMMARY VARIABLES
+                    int stot_trans_cnt = 0;
+                    decimal stot_cnamt = 0.00m;
+                    decimal stot_wdamt = 0.00m;
+                    decimal stot_mbk_out_amt = 0.00m;
+                    decimal stot_mbk_in_amt = 0.00m;
+
+                    try
+                    {
+                        trans = service.GetTransByAcctID(account, transType, reportDateFrom,
+                            reportDateTo, recordStatus);
+
+                        foreach (DataAccess.DTO.TRANSACTION t in trans)
+                        {
+                            //TOTAL TRANSACTONS NUMBER
+                            transNum++;
+
+                            //TOTAL TFSA_SLIP TRANSACTIONS NUMBER
+                            stot_trans_cnt++;
+
+                            //BEGIN TO GENERATE TFSA_SLP_TRANS
+                            XElement slp_trans = xmlService.LOAD_TFSA_SLP_TRANS(t);
+                            TFSA_SLP.Add(slp_trans);
+
+                            //TOTAL TFSA_SLP_TRANS camat and wdamt AMOUNT
+                            if (t.TRANSACTION_TYPE == contributionTransType || t.TRANSACTION_TYPE == withdrawalTransType)
+                            {
+                                stot_cnamt = stot_cnamt + Convert.ToDecimal(slp_trans.Element("cnamt").Value);
+                                stot_wdamt = stot_wdamt + Convert.ToDecimal(slp_trans.Element("wdamt").Value);
+                            }
+
+                            if (t.TRANSACTION_TYPE == transferOutType || t.TRANSACTION_TYPE == transferInType)
+                            {
+                                stot_mbk_out_amt = stot_mbk_out_amt + Convert.ToDecimal(slp_trans.Element("wdamt").Value);
+                                stot_mbk_in_amt = stot_mbk_in_amt + Convert.ToDecimal(slp_trans.Element("cnamt").Value);
+                            }
+                            //Console.WriteLine("TRANSACTION INFORMATION: {0}--{1}--{2}--{3}--{4}",
+                            //    t.TRANSACTION_TYPE, t.CREDIT_ACCT_NO, t.CREDIT_AMOUNT, t.DEBIT_ACCT_NO,
+                            //    t.DEBIT_AMOUNT);
+                        }
+                    }
+                    catch (Exception transError)
+                    {
+                        tfsa_error_log.Error(transError.ToString());
+                        Console.WriteLine("ACCOUNT: {0} NO TRANSACTION!", account);
+                    }
+
+                    //TFSA_IDENT SUMMARY
+                    customer.stot_trans_cnt = stot_trans_cnt;
+                    customer.stot_cnamt = stot_cnamt;
+                    customer.stot_wdamt = stot_wdamt;
+                    customer.stot_mbk_in_amt = stot_mbk_in_amt;
+                    customer.stot_mbk_out_amt = stot_mbk_out_amt;
+
+                    //TFSA_SUMMARY
+                    rtot_cnamt = rtot_cnamt + stot_cnamt;
+                    rtot_wdamt = rtot_wdamt + stot_wdamt;
+                    rtot_cye_fmv_amt = rtot_cye_fmv_amt +
+                        Convert.ToDecimal(customer.WORKING_BALANCE);
+
+                    //GENERATE TFSA_SLP
+                    //TFSA_SLP.Add(xmlService.LOAD_TFSA_SLP_IDENT(customer, reportDateFrom, reportDateTo, "A"));
+                    TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").
+                        AddBeforeSelf(TFSA_SLP);
+                }
+                else
+                {
+                    tfsa_summary_log.Info("DUPLICATE ACCOUNT NUMBER: " + account);
+                    Console.WriteLine("DUPLICATE ACCOUNT NUMBER: {0}", account);
+                }
+            }
+
+            //WRITE TFSA_SUMMARY TO XML FILE
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").
+                Element("slp_cnt").SetValue(slp_cnt);
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").Element("TFSA_TAMT").
+                Element("rtot_cnamt").SetValue(rtot_cnamt);
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").Element("TFSA_TAMT").
+                Element("rtot_wdamt").SetValue(rtot_wdamt);
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").Element("TFSA_TAMT").
+                Element("rtot_cye_fmv_amt").SetValue(rtot_cye_fmv_amt);
+
+            //SET RECORD TYPE CODE TO "A"
+            TFSA_T619.Element("T619").Element("rpt_tcd").SetValue("A");
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").Element("summ_tcd").SetValue("A");
+
+            Console.WriteLine("----------------------------------------------");
+
+            //GENERATE FINAL XML FILE
+            Console.WriteLine("BEGIN TO GENERATE XML FILE...");
+            string tempfile = null;
+            tempfile = targetPath.Replace(".XML", "_TEMP.XML");
+            TFSA_T619.Save(tempfile);
+
+
+            if (File.Exists(tempfile))
+            {
+                Common.SaveTFSAXmlFile(tempfile, targetPath);
+            }
+            else
+            {
+                throw new Exception(tempfile + "is not exists.");
+            }
+
+            tfsa_summary_log.Info("Total Transactons: " + transNum);
+
+            Console.WriteLine("XML FILE IS GENERATED AT " + targetPath);
+
+            //VALIDATE XML FILE
+            Common.ValidateXmlFile(targetPath, schemaUri, tfsa_summary_log);
+
+            //TOTAL TRANSACTONS NUMBER
+
+            Console.WriteLine("Total Transactons Number: {0}", transNum);
+
+            tfsa_summary_log.Info("TFSA xml file is generated at " + targetPath);
+            tfsa_summary_log.Info("Generate TFSA xml file finished.\n " +
+                                  "***********************************************************************");
+        }
+
+
+        /****************************************************************************************************************************
+        public void GenerateAmendedTFSAXmlFile(string accts, string templatePath, string targetPath, string schemaUri,
+            DateTime reportDateFrom, DateTime reportDateTo, string contributionTransType, string withdrawalTransType,
+            string transferOutType, string transferInType, string recordStatus,string histAccount)
+        {
+            //LOAD TFSA TEMPLATE XML FILE
+            IXmlDataProvider xmlService = new XmlDataProvider();
+            XElement TFSA_T619 = xmlService.LOAD_TFSA_T619(templatePath);
+            string[] accounts = accts.Split(new Char[] { ',' });
+
+            //GET DATA FROM DATA_MART
+            IDataProvider service = new SqlDataProvider();
+
+            //TO REMOVE DUPLICATE ACCOUNT
+            Hashtable removeDuplicate = new Hashtable();
+
+            //DEFINE TFSA_SUMMARY VARIABLES
+            int transNum = 0;
+            int slp_cnt = 0;
+            decimal rtot_cnamt = 0.00m;
+            decimal rtot_wdamt = 0.00m;
+            decimal rtot_cye_fmv_amt = 0.00m;
+
+            //LOOP ACCOUNTS TO GET TRANSACTIONS
+            foreach (string account in accounts)
+            {
+                DataAccess.DTO.CUSTOMER customer = null;
+
+                if (!removeDuplicate.ContainsKey(account.Trim()))
+                {
+                    removeDuplicate.Add(account.Trim(), account.Trim());
+
+                    try
+                    {
+                        customer = service.GetCustomerByID(account);
+                    }
+                    catch (Exception cusError)
+                    {
+                        tfsa_summary_log.Info("ACCOUNT: " + account + " IS CLOSED!");
+                        tfsa_error_log.Error(cusError.ToString());
+                        Console.WriteLine("ACCOUNT: {0} IS CLOSED!", account);
+                    }
+
+                    //IF ACCOUNT COLOED, GET CUSTOMER CODE FORM MULTI_ACCOUNT_HIST
+                    if (customer == null)
+                    {
+                        try
+                        {
+                            customer = service.GetClosedAccountByID(account)[0];
+                        }
+                        catch (Exception err)
+                        {
+                            tfsa_error_log.Error(err.ToString());
+                            Console.WriteLine("{0} ", err.ToString());
+                            continue;
+                        }
+                    }
+
+                    //TOTAL TFSA_SLIP NUMBER
+                    slp_cnt++;
+
+                    //BEGIN TO GENERATE TFSA_SLP
+                    XElement TFSA_SLP = new XElement("TFSA_SLP", "");
+
+                    //Console.WriteLine("CUSTOMER INFORMATION: {0}--{1}--{2}--{3}",
+                    //    customer.CUSTOMER_CODE, customer.SHORT_NAME, customer.STREET, customer.TOWN_COUNTRY);
+
+                    DataAccess.DTO.TRANSACTION[] trans = null;
+                    string transType = contributionTransType + "," +
+                        withdrawalTransType + "," +
+                        transferOutType + "," +
+                        transferInType;
+
+                    //DEFINE TFSA_IDENT SUMMARY VARIABLES
+                    int stot_trans_cnt = 0;
+                    decimal stot_cnamt = 0.00m;
+                    decimal stot_wdamt = 0.00m;
+                    decimal stot_mbk_out_amt = 0.00m;
+                    decimal stot_mbk_in_amt = 0.00m;
+
+                    try
+                    {
+                        trans = service.GetTransByAcctID(account, transType, reportDateFrom,
+                            reportDateTo, recordStatus);
+
+                        foreach (DataAccess.DTO.TRANSACTION t in trans)
+                        {
+                            //TOTAL TRANSACTONS NUMBER
+                            transNum++;
+
+                            //TOTAL TFSA_SLIP TRANSACTIONS NUMBER
+                            stot_trans_cnt++;
+
+                            //BEGIN TO GENERATE TFSA_SLP_TRANS
+                            XElement slp_trans = xmlService.LOAD_TFSA_SLP_TRANS(t);
+                            TFSA_SLP.Add(slp_trans);
+
+                            //TOTAL TFSA_SLP_TRANS camat and wdamt AMOUNT
+                            if (t.TRANSACTION_TYPE == contributionTransType || t.TRANSACTION_TYPE == withdrawalTransType)
+                            {
+                                stot_cnamt = stot_cnamt + Convert.ToDecimal(slp_trans.Element("cnamt").Value);
+                                stot_wdamt = stot_wdamt + Convert.ToDecimal(slp_trans.Element("wdamt").Value);
+                            }
+
+                            if (t.TRANSACTION_TYPE == transferOutType || t.TRANSACTION_TYPE == transferInType)
+                            {
+                                stot_mbk_out_amt = stot_mbk_out_amt + Convert.ToDecimal(slp_trans.Element("wdamt").Value);
+                                stot_mbk_in_amt = stot_mbk_in_amt + Convert.ToDecimal(slp_trans.Element("cnamt").Value);
+                            }
+                            //Console.WriteLine("TRANSACTION INFORMATION: {0}--{1}--{2}--{3}--{4}",
+                            //    t.TRANSACTION_TYPE, t.CREDIT_ACCT_NO, t.CREDIT_AMOUNT, t.DEBIT_ACCT_NO,
+                            //    t.DEBIT_AMOUNT);
+                        }
+                    }
+                    catch (Exception transError)
+                    {
+                        tfsa_error_log.Error(transError.ToString());
+                        Console.WriteLine("ACCOUNT: {0} NO TRANSACTION!", account);
+                    }
+
+                    //TFSA_IDENT SUMMARY
+                    customer.stot_trans_cnt = stot_trans_cnt;
+                    customer.stot_cnamt = stot_cnamt;
+                    customer.stot_wdamt = stot_wdamt;
+                    customer.stot_mbk_in_amt = stot_mbk_in_amt;
+                    customer.stot_mbk_out_amt = stot_mbk_out_amt;
+
+                    //TFSA_SUMMARY
+                    rtot_cnamt = rtot_cnamt + stot_cnamt;
+                    rtot_wdamt = rtot_wdamt + stot_wdamt;
+                    rtot_cye_fmv_amt = rtot_cye_fmv_amt +
+                        Convert.ToDecimal(customer.WORKING_BALANCE);
+
+                    //GENERATE TFSA_SLP
+                    TFSA_SLP.Add(xmlService.LOAD_TFSA_SLP_IDENT(customer, reportDateFrom, reportDateTo, "A"));
+                    TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").
+                        AddBeforeSelf(TFSA_SLP);
+                }
+                else
+                {
+                    tfsa_summary_log.Info("DUPLICATE ACCOUNT NUMBER: " + account);
+                    Console.WriteLine("DUPLICATE ACCOUNT NUMBER: {0}", account);
+                }
+            }
+
+            //WRITE TFSA_SUMMARY TO XML FILE
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").
+                Element("slp_cnt").SetValue(slp_cnt);
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").Element("TFSA_TAMT").
+                Element("rtot_cnamt").SetValue(rtot_cnamt);
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").Element("TFSA_TAMT").
+                Element("rtot_wdamt").SetValue(rtot_wdamt);
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").Element("TFSA_TAMT").
+                Element("rtot_cye_fmv_amt").SetValue(rtot_cye_fmv_amt);
+
+            //SET RECORD TYPE CODE TO "A"
+            TFSA_T619.Element("T619").Element("rpt_tcd").SetValue("A");
+            TFSA_T619.Element("Return").Element("TFSA").Element("TFSA_SUMM").Element("summ_tcd").SetValue("A");
+
+            Console.WriteLine("----------------------------------------------");
+
+            //GENERATE FINAL XML FILE
+            Console.WriteLine("BEGIN TO GENERATE XML FILE...");
+            string tempfile = null;
+            tempfile = targetPath.Replace(".XML", "_TEMP.XML");
+            TFSA_T619.Save(tempfile);
+
+
+            if (File.Exists(tempfile))
+            {
+                Common.SaveTFSAXmlFile(tempfile, targetPath);
+            }
+            else
+            {
+                throw new Exception(tempfile + "is not exists.");
+            }
+
+            tfsa_summary_log.Info("Total Transactons: " + transNum);
+
+            Console.WriteLine("XML FILE IS GENERATED AT " + targetPath);
+
+            //VALIDATE XML FILE
+            Common.ValidateXmlFile(targetPath, schemaUri, tfsa_summary_log);
+
+            //TOTAL TRANSACTONS NUMBER
+
+            Console.WriteLine("Total Transactons Number: {0}", transNum);
+
+            tfsa_summary_log.Info("TFSA xml file is generated at " + targetPath);
+            tfsa_summary_log.Info("Generate TFSA xml file finished.\n " +
+                                  "***********************************************************************");
+        }
+         * *****************************************************/
+    }
+}

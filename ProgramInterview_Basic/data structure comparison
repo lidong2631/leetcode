@@ -1,0 +1,40 @@
+Data Structure										Search					Insertion					Deletion					Traversal
+Array															O(N)						O(1)							O(N)
+
+Ordered Array											O(logN)					O(N)							O(N)							O(N)
+
+Linked list												O(N)						O(1)							O(N)
+
+Ordered Linked list								O(N)						O(N)							O(N)							O(N)
+
+Binary tree(average)							O(logN)					O(logN)						O(logN)						O(N)
+
+Binary tree(worst case)						O(N)						O(N)							O(N)							O(N)
+
+Balanced Tree(average and worst)	O(logN)					O(logN)						O(logN)						O(N)
+
+Hash table												O(1)						O(1)							O(1)
+
+Stack																							O(1)							O(1)
+
+Queue																							O(1)							O(1)
+
+Priority Queue(ordered array)											O(N)							O(1)
+
+Priority queue(heap)															O(logN)						O(logN)
+
+
+
+
+Sort															Average 				Worst 						Comparison 				Extra Memory
+Bubble														O(N^2)					O(N^2)						poor							No
+
+Selection													O(N^2)					O(N^2)						fair							No
+
+Insertion													O(N^2)					O(N^2)						Good							No
+
+Quicksort													O(NlogN)				O(N^2)						Good							No
+
+Mergesort													O(NlogN)				O(NlogN)					fair							Yes
+
+Heapsort													O(NlogN)				O(NlogN)					fair							No

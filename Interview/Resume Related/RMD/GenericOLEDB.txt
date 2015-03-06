@@ -1,0 +1,465 @@
+using System;
+using System.Data.OleDb;
+using System.Text;
+
+namespace RMD
+{
+
+    /// <summary>
+    /// Summary description for GenericOLEDB
+    /// </summary>
+    public class GenericOLEDBClass
+    {
+        /// <summary>
+        /// Declare the ole db required objects
+        /// </summary>
+
+
+        /// <summary>
+        /// An ole db adapter to act as the bridge to the database
+        /// </summary>
+        private OleDbDataAdapter oleDbDataAdapter;
+        /// <summary>
+        /// The connection to the database
+        /// </summary>
+        private OleDbConnection oleDbConnection;
+        /// <summary>
+        /// The command for doing the inserts
+        /// </summary>
+        private OleDbCommand oleDbInsertCommand;
+        /// <summary>
+        /// The command for doing the deletes
+        /// </summary>
+        private OleDbCommand oleDbDeleteCommand;
+        /// <summary>
+        /// The command for doing the updates
+        /// </summary>
+        private OleDbCommand oleDbUpdateCommand;
+        /// <summary>
+        /// The command for doing the Selects
+        /// </summary>
+        private OleDbCommand oleDbSelectCommand;
+
+        /// <summary>
+        /// The data reader for the application
+        /// </summary>
+        public OleDbDataReader oleDbDataReader;
+
+
+        /// <summary>
+        /// Declare an enum to allow internal tracking of commands 
+        /// </summary>
+        enum COMMAND { NONE, INSERT, UPDATE, DELETE, SELECT };
+
+        /// <summary>
+        /// Internal member for tracking command progress
+        /// </summary>
+        private COMMAND command;
+
+        /// <summary>
+        /// String to hold error messages if a command fails
+        /// </summary>
+        private string error;
+
+        /// <summary>
+        /// Get a stored error message if ExecuteCommand fails
+        /// </summary>
+        public string ErrorMessage
+        {
+            get
+            {
+                return error;
+            }
+        }
+
+        /// <summary>
+        /// bool holder for is open
+        /// </summary>
+        private bool bOpen;
+
+        /// <summary>
+        /// Check to see if a data base is open
+        /// </summary>
+        public bool IsOpen
+        {
+            get
+            {
+                return bOpen;
+            }
+        }
+
+
+        /// <summary>
+        /// Declare a string object for the insert command
+        /// </summary>
+        public string InsertCommand
+        {
+            get
+            {
+                return oleDbInsertCommand.CommandText;
+            }
+            set
+            {
+                command = COMMAND.INSERT;
+                oleDbInsertCommand.CommandText = value;
+            }
+        }
+
+        /// <summary>
+        /// Declare a string object for the delete command
+        /// </summary>
+        public string DeleteCommand
+        {
+            get
+            {
+                return oleDbDeleteCommand.CommandText;
+            }
+            set
+            {
+                command = COMMAND.DELETE;
+                oleDbDeleteCommand.CommandText = value;
+            }
+        }
+
+        /// <summary>
+        /// Declare a string object for the update command
+        /// </summary>
+        public string UpdateCommand
+        {
+            get
+            {
+                return oleDbUpdateCommand.CommandText;
+            }
+            set
+            {
+                command = COMMAND.UPDATE;
+                oleDbUpdateCommand.CommandText = value;
+            }
+        }
+
+        /// <summary>
+        /// Declare a string object for the select command
+        /// </summary>
+        public string SelectCommand
+        {
+            get
+            {
+                return oleDbSelectCommand.CommandText;
+            }
+            set
+            {
+                command = COMMAND.SELECT;
+                oleDbSelectCommand.CommandText = value;
+            }
+        }
+
+        /// <summary>
+        /// Get the reader from the class
+        /// </summary>
+        public OleDbDataReader GetReader
+        {
+            get
+            {
+                switch (command)
+                {
+                    case COMMAND.NONE: return null;
+                    case COMMAND.DELETE: return DeleteReader;
+                    case COMMAND.INSERT: return InsertReader;
+                    case COMMAND.SELECT: return SelectReader;
+                    case COMMAND.UPDATE: return UpdateReader;
+                    default: return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Execute the command that has been set up previously
+        /// </summary>
+        /// <returns>A boolean value indicating true or false</returns>
+        public bool ExecuteCommand()
+        {
+            bool bReturn = false;
+            if (command == COMMAND.NONE)
+            {
+                return bReturn;
+            }
+            else if (command == COMMAND.SELECT)
+            {
+                /// select only returns true as the get reader function will
+                /// execute the command
+
+                try
+                {
+                    if (oleDbDataReader != null)
+                    {
+                        oleDbDataReader.Close();
+                        oleDbDataReader = null;
+                    }
+
+                    bReturn = true;
+                    ///			return bReturn;
+                }
+                catch (OleDbException exp)
+                {
+                    error = "OleDbException thrown when trying to Select, error given = " + exp.Message + " check the sql";
+                    return bReturn = false;
+                }
+
+            }
+            else
+            {
+                int nAffected = -1;
+
+                if (oleDbDataReader != null)
+                {
+                    oleDbDataReader.Close();
+                    oleDbDataReader = null;
+                }
+
+                /// get the transaction object from the connection
+                OleDbTransaction trans = oleDbConnection.BeginTransaction();
+
+                try
+                {
+                    /// create a nested transaction on the connection transaction
+                    switch (command)
+                    {
+                        case COMMAND.DELETE: oleDbDeleteCommand.Transaction = trans.Begin(); break;
+                        case COMMAND.INSERT: oleDbInsertCommand.Transaction = trans.Begin(); break;
+                        case COMMAND.UPDATE: oleDbUpdateCommand.Transaction = trans.Begin(); break;
+                    }
+
+
+                    /// execute the command
+                    switch (command)
+                    {
+                        case COMMAND.DELETE: nAffected = oleDbDeleteCommand.ExecuteNonQuery(); break;
+                        case COMMAND.INSERT: nAffected = oleDbInsertCommand.ExecuteNonQuery(); break;
+                        case COMMAND.UPDATE: nAffected = oleDbUpdateCommand.ExecuteNonQuery(); break;
+                    }
+
+                }
+                catch (InvalidOperationException ioexp)
+                {
+                    StringBuilder buildError = new StringBuilder();
+                    buildError.Append("InvalidOperationException thrown when trying to ");
+
+                    switch (command)
+                    {
+                        case COMMAND.DELETE: buildError.Append("Delete"); break;
+                        case COMMAND.INSERT: buildError.Append("Insert"); break;
+                        case COMMAND.UPDATE: buildError.Append("Update"); break;
+                    }
+
+                    buildError.Append(", error given = " + ioexp.Message + " check the sql");
+
+                    error = buildError.ToString();
+
+                    return bReturn = false;
+                }
+                catch (OleDbException oledbexp)
+                {
+                    StringBuilder buildError = new StringBuilder();
+                    buildError.Append("InvalidOperationException thrown when trying to ");
+
+                    switch (command)
+                    {
+                        case COMMAND.DELETE: buildError.Append("Delete"); break;
+                        case COMMAND.INSERT: buildError.Append("Insert"); break;
+                        case COMMAND.UPDATE: buildError.Append("Update"); break;
+                    }
+
+                    buildError.Append(", error given = " + oledbexp.Message + " check the sql");
+
+                    error = buildError.ToString();
+
+                    return bReturn = false;
+                }
+                finally
+                {
+                    /// commit the command
+                    if (nAffected >= 1)
+                    {
+                        switch (command)
+                        {
+                            case COMMAND.DELETE: oleDbDeleteCommand.Transaction.Commit(); break;
+                            case COMMAND.INSERT: oleDbInsertCommand.Transaction.Commit(); break;
+                            case COMMAND.UPDATE: oleDbUpdateCommand.Transaction.Commit(); break;
+                        }
+
+                        trans.Commit();
+
+                        bReturn = true;
+                    }
+                    else /// if something went wrong rollback
+                    {
+                        switch (command)
+                        {
+                            case COMMAND.DELETE: oleDbDeleteCommand.Transaction.Rollback(); break;
+                            case COMMAND.INSERT: oleDbInsertCommand.Transaction.Rollback(); break;
+                            case COMMAND.UPDATE: oleDbUpdateCommand.Transaction.Rollback(); break;
+                        }
+
+                        trans.Rollback();
+
+                        bReturn = false;
+                    }
+                }
+            }
+
+            return bReturn;
+        }
+
+
+        #region select functions
+
+        /// <summary>
+        /// Get the Select reader from the select command
+        /// </summary>
+        private OleDbDataReader SelectReader
+        {
+            get
+            {
+                if (oleDbDataReader != null)
+                {
+                    if (oleDbDataReader.IsClosed == false)
+                    {
+                        oleDbDataReader.Close();
+                        oleDbDataReader = null;
+                    }
+                }
+
+                oleDbDataReader = oleDbSelectCommand.ExecuteReader();
+                return oleDbDataReader;
+            }
+        }
+
+        /// <summary>
+        /// Get the Update reader from the update command
+        /// </summary>
+        private OleDbDataReader UpdateReader
+        {
+            get
+            {
+                if (oleDbDataReader.IsClosed == false)
+                    oleDbDataReader.Close();
+
+                oleDbDataReader = oleDbSelectCommand.ExecuteReader();
+                return oleDbDataReader;
+            }
+        }
+
+        /// <summary>
+        /// Get the Insert Reader from the Insert Command
+        /// </summary>
+        private OleDbDataReader InsertReader
+        {
+            get
+            {
+                if (oleDbDataReader.IsClosed == false)
+                    oleDbDataReader.Close();
+
+                oleDbDataReader = oleDbSelectCommand.ExecuteReader();
+                return oleDbDataReader;
+            }
+        }
+
+        /// <summary>
+        /// Get the Delete Reader from the Delete Command
+        /// </summary>
+        private OleDbDataReader DeleteReader
+        {
+            get
+            {
+                if (oleDbDataReader != null)
+                {
+                    if (oleDbDataReader.IsClosed == false)
+                    {
+                        oleDbDataReader.Close();
+                        oleDbDataReader = null;
+                    }
+                }
+
+                oleDbDataReader = oleDbSelectCommand.ExecuteReader();
+                return oleDbDataReader;
+            }
+        }
+
+        #endregion
+
+
+        /// <summary>
+        /// Standard Constructor
+        /// </summary>
+        public GenericOLEDBClass()
+        {
+            /// NOTE That we are not setting the commands up the way the wizard would
+            /// but building them more generically
+
+            // create the command variables
+            oleDbDataAdapter = new OleDbDataAdapter();
+            oleDbConnection = new OleDbConnection();
+            oleDbSelectCommand = new OleDbCommand();
+            oleDbDeleteCommand = new OleDbCommand();
+            oleDbUpdateCommand = new OleDbCommand();
+            oleDbInsertCommand = new OleDbCommand();
+
+            /// set up the adapter 
+            oleDbDataAdapter.DeleteCommand = oleDbDeleteCommand;
+            oleDbDataAdapter.InsertCommand = oleDbInsertCommand;
+            oleDbDataAdapter.SelectCommand = oleDbSelectCommand;
+            oleDbDataAdapter.UpdateCommand = oleDbUpdateCommand;
+
+            /// make sure everyone knows what conection to use
+            oleDbSelectCommand.Connection = oleDbConnection;
+            oleDbDeleteCommand.Connection = oleDbConnection;
+            oleDbUpdateCommand.Connection = oleDbConnection;
+            oleDbInsertCommand.Connection = oleDbConnection;
+
+            command = COMMAND.NONE;
+            oleDbDataReader = null;
+        }
+
+        /// <summary>
+        /// Open function taking the strings to pass to the adapter
+        /// </summary>
+        /// <param name="Provider"> The name of the database provider to use </param>
+        /// <param name="Password"> The password for the database</param>
+        /// <param name="UserID"> The User ID for the database</param>
+        /// <param name="DatabaseName"> The name including path of the database</param>
+        /// <param name="Mode">The access mode to be passed to the database</param>
+        public void Open(string Provider, string UserID, string Password, string DatabaseName, string Mode)
+        {
+            /// set up the connection string
+            StringBuilder strBuild = new StringBuilder();
+            strBuild.AppendFormat("Provider={0};Jet OLEDB:Database Password=\"{1}\";User ID={2};Data Source={3};Mode={4}", Provider, Password, UserID, DatabaseName, Mode);
+            oleDbConnection.ConnectionString = strBuild.ToString();
+            oleDbConnection.Open();
+            bOpen = true;
+
+        }
+
+        /// <summary>
+        /// Close the currently open connection
+        /// </summary>
+        public void Close()
+        {
+            //if (oleDbDataReader.IsClosed == false)
+            //{
+            //    oleDbDataReader.Close();
+            //    oleDbDataReader = null;
+            //}
+
+            if (oleDbDataReader != null)
+            {
+                oleDbDataReader.Close();
+            }
+
+            if (oleDbConnection != null)
+            {
+                oleDbConnection.Close();
+            }
+        }
+
+    }
+}

@@ -1,0 +1,140 @@
+inner join / outer join
+
+outer join can be divided into left outer join, right outer join and full outer join
+
+left join = left outer join, right join = right outer join
+
+left join will retain all the rows of the left table regardless of whether there is a row that matches on the right table.
+
+non-matching columns will be filled with a NULL.
+
+right join is pretty much the same as left join except rows that are retained are from the right table.
+
+inner join will only return rows that has a match based on the join predicate
+
+
+
+
+
+
+primary key, foreign key and unique key
+
+they all can consist of more than just one column from a given table
+
+foreign keys are used to reference unique columns in another table. It makes sense when columns of two different tables have a relationship.
+
+Example is an employee table and employee salary table
+
+A table can have multiple unique and foreign keys. However, a table can have only one primary key.
+
+unique key columns are allowed to hold NULL values. primary key column can never be NULL
+
+A foreign key can reference a key that is not the primary key of a table. But, a foreign key must reference a unique key.
+
+A foreign key can hold NULL values.
+
+
+
+
+
+
+having VS where
+
+having usually works with group by and aggregate functions while where cannot be used with aggregate functions
+
+
+
+
+
+
+group by
+
+group by is used in conjunction with the aggregate functions to group the result-set by one or more columns.
+
+
+
+
+
+
+self join
+
+SELECT e1.EMPLOYEE_NAME
+FROM EMPLOYEE e1, EMPLOYEE e2
+WHERE e1.EMPLOYEE_LOCATION = e2.EMPLOYEE_LOCATION
+AND e2.EMPLOYEE_NAME="JOE"
+
+
+
+
+
+
+
+index
+
+an index is a data structure that stores the values for a specific column in a table. It is mostly implemented in a B tree or hashtable.
+
+B-tree is better because for B-tree, look-ups, deletions and insertions can all be done in logarithmic time. Also B-trees can be sorted.
+
+Hashtable is only good at looking up key value pairs(equality). They are not sorted in particular order. It cannot help when you want to find 
+
+out all employees who are less than 40 years old. 
+
+When we search for a column("Mike") we do not need to search for the entire table. Instead, we use index to find the item. Because all names
+
+starting with a "M" will be righ next to each other it is a lot faster.
+
+Another thing we need to know is that index also store pointers to the corresponding rows in the table. So we could retrieve the entire row
+
+otherwise all we have is a single value which would be meaningless.
+
+when a query is run, the database will check to see if there is an index on the column being queried. if we have an index on that column 
+
+the database will decide whether to use index because there are some scenarios where it is less efficient to use index.
+
+disadvantage: index takes up space. when you add/delete rows the same operations will have to be done to your index. As a general rule,
+
+an index should only be created on a table if the data in the index column will be queried frequently.
+
+CREATE INDEX NAME_INDEX
+ON EMPLOYEE(EMPLOYEE_NAME)
+
+CREATE INDEX NAME_INDEX
+ON EMPLOYEE(EMPLOYEE_NAME, EMPLOYEE_AGE)
+
+
+
+
+
+
+database lock
+
+is used to "lock" some data in a database so only one database user/session may update that particular data
+
+
+
+
+
+Transaction
+
+transactions are sequences of work accomplished in a logical order. It starts with a BEGIN TRANSACTION statement and ends with
+
+either a ROLLBACK TRANSACTION statement or a COMMIT TRANSACTION statement
+
+
+
+
+
+SELECT TOP is used to specify the number of records
+
+SELECT TOP number | percent column_name(s)
+FROM table_name
+
+
+
+
+
+UNION
+
+UNION is used to combine the result-set of two or more SELECT statements. each SELECT statement within the UNION must have the same number
+
+of columns. The columns must also have similar data types. Also, the columns in each SELECT statement must be in the same order.

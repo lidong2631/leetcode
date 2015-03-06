@@ -1,0 +1,1249 @@
+using System;
+using System.Drawing;
+using System.Collections;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Data;
+using System.IO;
+using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.Collections.Specialized;
+using System.Text;
+using System.Configuration;
+
+namespace RMD
+{
+    /// <summary>
+    /// Summary description for Form1.
+    /// </summary>
+    public class MaintenanceForm : System.Windows.Forms.Form
+    {
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ListView listView1;
+
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button Edit;
+        private System.Windows.Forms.Button Insert;
+
+        private System.Windows.Forms.Button Delete;
+
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.Container components = null;
+
+        /// <summary>
+        ///  declare a variable to handle the generic database stuff
+        /// </summary>
+        private GenericOLEDBClass dbAccess;
+
+        /// <summary>
+        /// String Collection to store the column names
+        /// </summary>
+        private StringCollection stringCol;
+
+        /// <summary>
+        /// string holder for the provider
+        /// </summary>
+        private string strProvider;
+
+        /// <summary>
+        /// Get and Set the provider
+        /// </summary>
+        public string Provider
+        {
+            get
+            {
+                return strProvider;
+            }
+            set
+            {
+                strProvider = value;
+            }
+        }
+
+        /// <summary>
+        /// string holder for the password
+        /// </summary>
+        private string strPassword;
+
+        /// <summary>
+        /// Get and Set the Password
+        /// </summary>
+        public string Password
+        {
+            get
+            {
+                return strPassword;
+            }
+            set
+            {
+                strPassword = value;
+            }
+        }
+
+        /// <summary>
+        /// string holder for the user ID
+        /// </summary>
+        private string strUserID;
+
+        /// <summary>
+        /// Get and Set the User ID
+        /// </summary>
+        public string UserID
+        {
+            get
+            {
+                return strUserID;
+            }
+            set
+            {
+                strUserID = value;
+            }
+        }
+
+        /// <summary>
+        /// String holder for the database name
+        /// </summary>
+        private string strDatabaseName;
+
+        /// <summary>
+        /// Get and Set the Database name
+        /// </summary>
+        public string DatabaseName
+        {
+            get
+            {
+                return strDatabaseName;
+            }
+            set
+            {
+                strDatabaseName = value;
+            }
+        }
+
+
+        /// <summary>
+        /// string holder for the mode
+        /// </summary>
+        private string strMode;
+
+        /// <summary>
+        /// Get and Set the Mode
+        /// </summary>
+        public string Mode
+        {
+            get
+            {
+                return strMode;
+            }
+            set
+            {
+                strMode = value;
+            }
+        }
+
+        /// <summary>
+        ///  Add the strings for the commands
+        /// </summary>
+
+        /// <summary>
+        /// string holder for the select command
+        /// </summary>
+        private string strSelect;
+
+        /// <summary>
+        ///  Get and Set the select Command
+        /// </summary>
+        public string SelectCommand
+        {
+            get
+            {
+                return strSelect;
+            }
+            set
+            {
+                strSelect = value;
+            }
+        }
+
+        /// <summary>
+        ///  string holder for the Insert Command
+        /// </summary>
+        private string strInsert;
+
+        /// <summary>
+        /// Get and Set the Insert Command
+        /// </summary>
+        public string InsertCommand
+        {
+            get
+            {
+                return strInsert;
+            }
+            set
+            {
+                strInsert = value;
+            }
+        }
+
+        /// <summary>
+        /// String holder for the Delete Command
+        /// </summary>
+        private string strDelete;
+
+        /// <summary>
+        /// Get and Set for the Delete Command
+        /// </summary>
+        public string DeleteCommand
+        {
+            get
+            {
+                return strDelete;
+            }
+            set
+            {
+                strDelete = value;
+            }
+        }
+
+        /// <summary>
+        /// String holder for the update Command
+        /// </summary>
+        private string strUpdate;
+        private GroupBox groupBox1;
+        private Button btn_GenerateData;
+        private Button btn_DelOldData;
+        private Button btn_Exit;
+        private GroupBox groupBox2;
+        private Button btn_Generate_RPT2;
+
+        /// <summary>
+        /// Get and Set the Update Command
+        /// </summary>
+        public string UpdateCommand
+        {
+            get
+            {
+                return strUpdate;
+            }
+            set
+            {
+                strUpdate = value;
+            }
+        }
+
+        /// <summary>
+        /// string holder for the table
+        /// </summary>
+        private string strTable;
+
+        /// <summary>
+        /// Get and Set the table name
+        /// </summary>
+        public string Table
+        {
+            get
+            {
+                return strTable;
+            }
+            set
+            {
+                strTable = value;
+            }
+        }
+
+
+        /// <summary>
+        /// Standard constructor
+        /// </summary>
+        public MaintenanceForm()
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
+
+            //
+            // TODO: Add any constructor code after InitializeComponent call
+            //
+
+            /// set the defaults for an access database
+            //textBox1.Text = "Microsoft.Jet.OLEDB.4.0";
+            //textBox2.Text = "Admin";
+            //textBox3.Text = "";
+            Mode = "ReadWrite";
+
+            stringCol = new StringCollection();
+
+        }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MaintenanceForm));
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.Edit = new System.Windows.Forms.Button();
+            this.Delete = new System.Windows.Forms.Button();
+            this.Insert = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_GenerateData = new System.Windows.Forms.Button();
+            this.btn_DelOldData = new System.Windows.Forms.Button();
+            this.btn_Exit = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn_Generate_RPT2 = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(158, 27);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(253, 20);
+            this.textBox4.TabIndex = 4;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(417, 25);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Browse";
+            this.button1.Click += new System.EventHandler(this.OnBrowse);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(197, 60);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(192, 23);
+            this.button3.TabIndex = 8;
+            this.button3.Text = "Open Parameter Table";
+            this.button3.Click += new System.EventHandler(this.OnOpenDatabase);
+            // 
+            // listView1
+            // 
+            this.listView1.FullRowSelect = true;
+            this.listView1.GridLines = true;
+            this.listView1.Location = new System.Drawing.Point(10, 92);
+            this.listView1.MultiSelect = false;
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(568, 283);
+            this.listView1.TabIndex = 7;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // Edit
+            // 
+            this.Edit.Location = new System.Drawing.Point(93, 381);
+            this.Edit.Name = "Edit";
+            this.Edit.Size = new System.Drawing.Size(72, 24);
+            this.Edit.TabIndex = 9;
+            this.Edit.Text = "Edit";
+            this.Edit.Click += new System.EventHandler(this.OnEdit);
+            // 
+            // Delete
+            // 
+            this.Delete.Location = new System.Drawing.Point(410, 382);
+            this.Delete.Name = "Delete";
+            this.Delete.Size = new System.Drawing.Size(72, 24);
+            this.Delete.TabIndex = 9;
+            this.Delete.Text = "Delete";
+            this.Delete.Click += new System.EventHandler(this.OnDelete);
+            // 
+            // Insert
+            // 
+            this.Insert.Location = new System.Drawing.Point(257, 381);
+            this.Insert.Name = "Insert";
+            this.Insert.Size = new System.Drawing.Size(72, 24);
+            this.Insert.TabIndex = 9;
+            this.Insert.Text = "Insert";
+            this.Insert.Click += new System.EventHandler(this.OnInsert);
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(23, 30);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(129, 16);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Office Access 2007 File";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btn_Generate_RPT2);
+            this.groupBox1.Controls.Add(this.btn_GenerateData);
+            this.groupBox1.Controls.Add(this.btn_DelOldData);
+            this.groupBox1.Location = new System.Drawing.Point(12, 434);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(586, 69);
+            this.groupBox1.TabIndex = 11;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "2. Generate Data";
+            // 
+            // btn_GenerateData
+            // 
+            this.btn_GenerateData.Location = new System.Drawing.Point(205, 23);
+            this.btn_GenerateData.Name = "btn_GenerateData";
+            this.btn_GenerateData.Size = new System.Drawing.Size(138, 23);
+            this.btn_GenerateData.TabIndex = 1;
+            this.btn_GenerateData.Text = "II. Generate RMD Data";
+            this.btn_GenerateData.UseVisualStyleBackColor = true;
+            this.btn_GenerateData.Click += new System.EventHandler(this.btn_GenerateData_Click);
+            // 
+            // btn_DelOldData
+            // 
+            this.btn_DelOldData.Location = new System.Drawing.Point(39, 23);
+            this.btn_DelOldData.Name = "btn_DelOldData";
+            this.btn_DelOldData.Size = new System.Drawing.Size(140, 23);
+            this.btn_DelOldData.TabIndex = 0;
+            this.btn_DelOldData.Text = "I. Delete RMD Data";
+            this.btn_DelOldData.UseVisualStyleBackColor = true;
+            this.btn_DelOldData.Click += new System.EventHandler(this.btn_DelOldData_Click);
+            // 
+            // btn_Exit
+            // 
+            this.btn_Exit.Location = new System.Drawing.Point(234, 509);
+            this.btn_Exit.Name = "btn_Exit";
+            this.btn_Exit.Size = new System.Drawing.Size(135, 38);
+            this.btn_Exit.TabIndex = 12;
+            this.btn_Exit.Text = "QUIT";
+            this.btn_Exit.UseVisualStyleBackColor = true;
+            this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.button3);
+            this.groupBox2.Controls.Add(this.Delete);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.Insert);
+            this.groupBox2.Controls.Add(this.Edit);
+            this.groupBox2.Controls.Add(this.listView1);
+            this.groupBox2.Controls.Add(this.textBox4);
+            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(586, 416);
+            this.groupBox2.TabIndex = 13;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "1. Parameter Table Maintenance";
+            // 
+            // btn_Generate_RPT2
+            // 
+            this.btn_Generate_RPT2.Location = new System.Drawing.Point(377, 22);
+            this.btn_Generate_RPT2.Name = "btn_Generate_RPT2";
+            this.btn_Generate_RPT2.Size = new System.Drawing.Size(171, 23);
+            this.btn_Generate_RPT2.TabIndex = 2;
+            this.btn_Generate_RPT2.Text = "III. Generate LLR_REPORT2";
+            this.btn_Generate_RPT2.UseVisualStyleBackColor = true;
+            this.btn_Generate_RPT2.Click += new System.EventHandler(this.btn_Generate_RPT2_Click);
+            // 
+            // MaintenanceForm
+            // 
+            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.ClientSize = new System.Drawing.Size(603, 557);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.btn_Exit);
+            this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.Name = "MaintenanceForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "RMD REPORTS - BANK OF CHINA";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+        #endregion
+
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        //[STAThread]
+        //static void Main() 
+        //{
+        //    Application.Run(new Form1());
+        //}
+
+        /// <summary>
+        /// Open a file dialog and browse for an access database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnBrowse(object sender, System.EventArgs e)
+        {
+            openFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
+            openFileDialog1.Filter = "Access Files ( *.accdb )| *.accdb";
+            openFileDialog1.FilterIndex = 1;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                DatabaseName = openFileDialog1.FileName;
+                textBox4.Text = DatabaseName;
+            }
+
+        }
+
+        /// <summary>
+        /// Quit the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnOK(object sender, System.EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        /// <summary>
+        /// Display the columns in the list
+        /// </summary>
+        /// <param name="reader"></param>
+        public void DisplayList(OleDbDataReader reader)
+        {
+            listView1.Clear();
+
+            int nCount = reader.FieldCount;
+
+            /// build the headers first
+
+            for (int i = 0; i < nCount; i++)
+            {
+                ColumnHeader header = new ColumnHeader();
+                header.Width = 100;
+                header.Text = reader.GetName(i);
+                listView1.Columns.Add(header);
+                /// Store the header names in a collection
+                stringCol.Add(reader.GetName(i));
+            }
+
+            /// now add the data
+            ListViewItem lvItem = new ListViewItem();
+
+            while (reader.Read() == true)
+            {
+                lvItem = listView1.Items.Add(reader.GetValue(0).ToString());
+                for (int i = 1; i < nCount; i++)
+                {
+                    lvItem.SubItems.Add(reader.GetValue(i).ToString());
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Open the database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnOpenDatabase(object sender, System.EventArgs e)
+        {
+            if (String.IsNullOrEmpty(textBox4.Text))
+            {
+                MessageBox.Show("You need to enter a database file");
+                return;
+            }
+            else
+                DatabaseName = textBox4.Text;
+
+            Table = ConfigurationManager.AppSettings.Get("ACCESS_PARAMETER_TABLE");
+            Provider = ConfigurationManager.AppSettings.Get("ACCESS_PROVIDER");
+            UserID = ConfigurationManager.AppSettings.Get("ACCESS_USERID");
+            Password = ConfigurationManager.AppSettings.Get("ACCESS_PWD");
+
+            if (dbAccess != null)
+            {
+                if (dbAccess.IsOpen == true)
+                {
+                    dbAccess.Close();
+                }
+            }
+            SelectCommand = ConfigurationManager.AppSettings.Get("ACCESS_TABLE_QUERY");
+            dbAccess = new GenericOLEDBClass();
+            dbAccess.Open(Provider, UserID, Password, DatabaseName, Mode);
+
+            /// set the insert command and run it
+            if (SelectCommand == null)
+            {
+                MessageBox.Show("you need to generate a select command first");
+                return;
+            }
+
+            dbAccess.SelectCommand = SelectCommand;
+
+            if (dbAccess.ExecuteCommand() == true)
+            {
+                DisplayList(dbAccess.GetReader);
+            }
+            else
+            {
+                MessageBox.Show(dbAccess.ErrorMessage);
+                return;
+            }
+
+        }
+
+        /// <summary>
+        /// Edit the selected record
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnEdit(object sender, System.EventArgs e)
+        {
+            ListView.SelectedListViewItemCollection col = listView1.SelectedItems;
+
+            IEnumerator colEnum = col.GetEnumerator();
+
+            /// move to the first and only
+            if (!colEnum.MoveNext())
+            {
+                MessageBox.Show("Please select a record.", "Alert");
+                return;
+            }
+
+            /// get the list view item
+            ListViewItem item = (ListViewItem)colEnum.Current;
+
+            /// get the collection of subitems
+            ListViewItem.ListViewSubItemCollection subItemsCol = item.SubItems;
+
+            dbAccess.SelectCommand = SelectCommand;
+            if (dbAccess.ExecuteCommand() == false)
+            {
+                MessageBox.Show(dbAccess.ErrorMessage);
+                return;
+            }
+
+            try
+            {
+
+                OleDbDataReader reader = dbAccess.GetReader;
+
+                ListViewItem.ListViewSubItem subItem = null;
+                bool bFound = false;
+                bool bChecked = true;
+
+                while (bFound == false && reader.Read() == true)
+                {
+                    IEnumerator subEnum = subItemsCol.GetEnumerator();
+
+                    subEnum.MoveNext();
+
+                    /// check each field is identical
+
+                    bChecked = true;
+
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        if (bChecked == true)
+                        {
+                            subItem = (ListViewItem.ListViewSubItem)subEnum.Current;
+                            if (subItem.Text != reader.GetValue(i).ToString())
+                            {
+                                bChecked = false;
+                            }
+
+                            subEnum.MoveNext();
+                        }
+                    }
+
+                    if (bChecked == true)
+                        bFound = true;
+                }
+
+
+
+                EditBox dlg = new EditBox(this, reader, Table, false);
+                dlg.ShowDialog();
+
+                //fix throw sql is null exception
+                if (String.IsNullOrEmpty(dlg.SQL))
+                    return;
+
+                UpdateCommand = dlg.SQL;
+                dbAccess.UpdateCommand = UpdateCommand;
+
+                if (dbAccess.ExecuteCommand() == true)
+                {
+                    dbAccess.SelectCommand = SelectCommand;
+                    if (dbAccess.ExecuteCommand() == true)
+                    {
+                        DisplayList(dbAccess.GetReader);
+                    }
+                    else
+                    {
+                        MessageBox.Show(dbAccess.ErrorMessage);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(dbAccess.ErrorMessage);
+                }
+            }
+            catch (NullReferenceException nullRef)
+            {
+                StringBuilder builder = new StringBuilder();
+                builder.Append("Error Reader Equals null " + nullRef.Message);
+                MessageBox.Show(builder.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Delete the selected record
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDelete(object sender, System.EventArgs e)
+        {
+            ListView.SelectedListViewItemCollection col = listView1.SelectedItems;
+
+            IEnumerator colEnum = col.GetEnumerator();
+
+            /// move to the first and only
+            if (!colEnum.MoveNext())
+            {
+                MessageBox.Show("Please select a record.", "Alert");
+                return;
+            }
+
+            /// get the list view item
+            ListViewItem item = (ListViewItem)colEnum.Current;
+
+            /// get the collection of subitems
+            ListViewItem.ListViewSubItemCollection subItemsCol = item.SubItems;
+
+            IEnumerator subEnum = subItemsCol.GetEnumerator();
+            StringEnumerator stringEnum = stringCol.GetEnumerator();
+
+            StringBuilder builder = new StringBuilder();
+
+            builder.Append("DELETE FROM ");
+            builder.Append(Table);
+            builder.Append(" WHERE ");
+
+            bool bFirst = true;
+
+            OleDbDataReader reader = dbAccess.GetReader;
+            reader.Read();
+            int nColumn = 0;
+            string strType;
+
+            while (subEnum.MoveNext() == true && stringEnum.MoveNext() == true)
+            {
+
+                ListViewItem.ListViewSubItem subItem = (ListViewItem.ListViewSubItem)subEnum.Current;
+                strType = reader.GetDataTypeName(nColumn++);
+
+                if (subItem.Text != "")
+                {
+                    if (bFirst == false)
+                    {
+                        builder.Append(" AND");
+                    }
+                    else
+                        bFirst = false;
+
+                    builder.Append(" [");
+                    builder.Append(stringEnum.Current);
+
+                    //if (strType == "DBTYPE_I4")
+                    //    builder.Append("] = ");
+                    //else
+                    //    builder.Append("] = '");
+
+                    if (strType == "DBTYPE_NUMERIC")
+                        builder.Append("] = ");
+                    else
+                        builder.Append("] = '");
+
+                    builder.Append(subItem.Text.Trim());
+
+                    if (strType == "DBTYPE_NUMERIC")
+                        builder.Append(" ");
+                    else
+                        builder.Append("'");
+                }
+
+            }
+
+            DeleteCommand = builder.ToString();
+
+            dbAccess.DeleteCommand = DeleteCommand;
+
+            if (MessageBox.Show("Are you sure?", "Alert", MessageBoxButtons.YesNo) == DialogResult.No)
+                return;
+
+            if (dbAccess.ExecuteCommand() == true)
+            {
+                OleDbDataReader dbReader = dbAccess.GetReader;
+                DisplayList(dbReader);
+            }
+            else
+            {
+                MessageBox.Show(dbAccess.ErrorMessage);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Insert a new record
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnInsert(object sender, System.EventArgs e)
+        {
+            OleDbDataReader reader = null;
+            if (String.IsNullOrEmpty(SelectCommand))
+            {
+                MessageBox.Show("Please open access file.", "Alert");
+                return;
+            }
+            else
+            {
+                dbAccess.SelectCommand = SelectCommand;
+            }
+
+
+            if (dbAccess.ExecuteCommand() == false)
+            {
+                MessageBox.Show(dbAccess.ErrorMessage);
+                return;
+            }
+
+            try
+            {
+                EditBox dlg = new EditBox(this, dbAccess.GetReader, Table, true);
+                dlg.ShowDialog();
+
+                InsertCommand = dlg.SQL;
+
+                //fix throw sql is null exception
+                if (String.IsNullOrEmpty(dlg.SQL))
+                    return;
+      
+                dbAccess.InsertCommand = InsertCommand;
+
+                if (dbAccess.ExecuteCommand() == true)
+                {
+                    dbAccess.SelectCommand = SelectCommand;
+                    if (dbAccess.ExecuteCommand() == true)
+                    {
+                        DisplayList(dbAccess.GetReader);
+                    }
+                    else
+                    {
+                        MessageBox.Show(dbAccess.ErrorMessage);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(dbAccess.ErrorMessage);
+                }
+            }
+            catch (NullReferenceException nullRef)
+            {
+                StringBuilder builder = new StringBuilder();
+                builder.Append("Error Reader Equals null " + nullRef.Message);
+                MessageBox.Show(builder.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Select rows from the table
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSelectCommand(object sender, System.EventArgs e)
+        {
+            SelectBox dlg = new SelectBox();
+            dlg.ShowDialog();
+
+            StringBuilder builder = new StringBuilder();
+            builder.Append("SELECT ");
+            builder.Append(dlg.Selection);
+            builder.Append(" FROM ");
+            builder.Append(dlg.Table);
+
+            Table = dlg.Table;
+
+            SelectCommand = builder.ToString();
+
+        }
+
+        private void btn_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btn_DelOldData_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(textBox4.Text))
+            {
+                MessageBox.Show("You need to enter a database file");
+                return;
+            }
+            else
+                DatabaseName = textBox4.Text;
+
+            Table = ConfigurationManager.AppSettings.Get("ACCESS_PARAMETER_TABLE");
+            Provider = ConfigurationManager.AppSettings.Get("ACCESS_PROVIDER");
+            UserID = ConfigurationManager.AppSettings.Get("ACCESS_USERID");
+            Password = ConfigurationManager.AppSettings.Get("ACCESS_PWD");
+
+            if (dbAccess != null)
+            {
+                if (dbAccess.IsOpen == true)
+                {
+                    dbAccess.Close();
+                }
+            }
+            DeleteCommand = "DELETE FROM RMD";
+            dbAccess = new GenericOLEDBClass();
+            dbAccess.Open(Provider, UserID, Password, DatabaseName, Mode);
+
+            dbAccess.DeleteCommand = DeleteCommand;
+
+            if (dbAccess.ExecuteCommand() == true)
+            {
+                MessageBox.Show("Have been deleted!", "Success");
+                return;
+            }
+            else
+            {
+                MessageBox.Show(dbAccess.ErrorMessage);
+                return;
+            }
+        }
+
+        private void btn_GenerateData_Click(object sender, EventArgs e)
+        {
+             if (String.IsNullOrEmpty(textBox4.Text))
+            {
+                MessageBox.Show("You need to enter a database file");
+                return;
+            }
+            else
+                DatabaseName = textBox4.Text;
+
+            if (dbAccess != null)
+            {
+                if (dbAccess.IsOpen == true)
+                {
+                    dbAccess.Close();
+                }
+            }
+
+            SelectCommand = ConfigurationManager.AppSettings.Get("ACCESS_TABLE_QUERY");
+            dbAccess = new GenericOLEDBClass();
+            dbAccess.Open(Provider, UserID, Password, DatabaseName, Mode);
+            dbAccess.SelectCommand = SelectCommand;
+            OleDbDataReader getParaTbl = null;
+            if (dbAccess.ExecuteCommand() == true)
+            {
+                getParaTbl = dbAccess.GetReader;
+            }
+            else
+            {
+                MessageBox.Show(dbAccess.ErrorMessage);
+                return;
+            }
+
+            string connString = ConfigurationManager.AppSettings.Get("connString_DATA_MART");
+            string sp_SRC = ConfigurationManager.AppSettings.Get("SRC_PROCEDURE");
+            MergeData query = new MergeData();
+            SqlDataReader getSqlReader = query.GetSourceData(sp_SRC, connString);
+
+            try
+            {
+                query.GenerateData(getSqlReader, getParaTbl, dbAccess);
+            }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            MessageBox.Show("Generate RMD data finished!");
+        }
+
+        private void Generate_LLR_Report2()
+        {
+            LLR_Product_Sum("1-1-SELECT", "1-1-UPDATE");
+            LLR_Product_Sum("1-2-SELECT", "1-2-UPDATE");
+            LLR_Product_Sum("1-3-SELECT", "1-3-UPDATE");
+            LLR_Product_Sum("1-4-SELECT", "1-4-UPDATE");
+            LLR_Product_Sum("1-5-SELECT", "1-5-UPDATE");
+            LLR_Product_Sum("1-6-SELECT", "1-6-UPDATE");
+            LLR_Product_Sum("1-7-SELECT", "1-7-UPDATE");
+            LLR_Product_Sum("2-1-SELECT", "2-1-UPDATE");
+            LLR_Product_Sum("2-2-SELECT", "2-2-UPDATE");
+            LLR_Product_Sum("2-3-SELECT", "2-3-UPDATE");
+            LLR_Product_Sum("2-4-SELECT", "2-4-UPDATE");
+            LLR_Product_Sum("2-5-SELECT", "2-5-UPDATE");
+            LLR_Product_Sum("2-6-SELECT", "2-6-UPDATE");
+            LLR_Product_Sum("2-7-SELECT", "2-7-UPDATE");
+            LLR_Product_Sum("2-8-SELECT", "2-8-UPDATE");
+            LLR_Product_Sum("2-9-SELECT", "2-9-UPDATE");
+            LLR_Product_Sum("2-10-SELECT", "2-10-UPDATE");
+            LLR_Product_Sum("2-11-SELECT", "2-11-UPDATE");
+            LLR_Product_Sum("2-12-SELECT", "2-12-UPDATE");
+            LLR_Product_Sum("2-13-SELECT", "2-13-UPDATE");
+            LLR_Product_Sum("2-14-SELECT", "2-14-UPDATE");
+            LLR_Product_Sum("3-1-SELECT", "3-1-UPDATE");
+            LLR_Product_Sum("3-2-SELECT", "3-2-UPDATE");
+            LLR_Product_Sum("3-3-SELECT", "3-3-UPDATE");
+            LLR_Product_Sum("4-1-SELECT", "4-1-UPDATE");
+            LLR_Product_Sum("5-SELECT", "5-UPDATE");
+        }
+
+        private void LLR_Product_Sum(string select_id, string update_id)
+        {
+            decimal BNK_BAL = 0.00m;
+            decimal BNK_RESERVE = 0.00m;
+            decimal NIB_BAL = 0.00m;
+            decimal NIB_RESERVE = 0.00m;
+            decimal CTB_BAL = 0.00m;
+            decimal CTB_RESERVE = 0.00m;
+            decimal LAB_BAL = 0.00m;
+            decimal LAB_RESERVE = 0.00m;
+            decimal LIB_BAL = 0.00m;
+            decimal LIB_RESERVE = 0.00m;
+            decimal CHI_BAL = 0.00m;
+            decimal CHI_RESERVE = 0.00m;
+            decimal CIB_BAL = 0.00m;
+            decimal CIB_RESERVE = 0.00m;
+            decimal TOTAL_BAL = 0.00m;
+            decimal TOTAL_RESERVE = 0.00m;
+
+            ArrayList BalAndReserve = new ArrayList();
+
+            //SELECT BNK SUM DATA
+            string selectQry_BNK = ConfigurationManager.AppSettings.Get(select_id).Replace("[COMPANY]", "BNK");
+            BalAndReserve = Get_Data_LLR_RPT2(selectQry_BNK);
+            BNK_BAL = Convert.ToDecimal(BalAndReserve[0]);
+            BNK_RESERVE = Convert.ToDecimal(BalAndReserve[1]);
+
+            //SELECT NIB SUM DATA
+            string selectQry_NIB = ConfigurationManager.AppSettings.Get(select_id).Replace("[COMPANY]", "NIB");
+            BalAndReserve = Get_Data_LLR_RPT2(selectQry_NIB);
+            NIB_BAL = Convert.ToDecimal(BalAndReserve[0]);
+            NIB_RESERVE = Convert.ToDecimal(BalAndReserve[1]);
+
+            //SELECT CTB SUM DATA
+            string selectQry_CTB = ConfigurationManager.AppSettings.Get(select_id).Replace("[COMPANY]", "CTB");
+            BalAndReserve = Get_Data_LLR_RPT2(selectQry_CTB);
+            CTB_BAL = Convert.ToDecimal(BalAndReserve[0]);
+            CTB_RESERVE = Convert.ToDecimal(BalAndReserve[1]);
+
+            //SELECT LAB SUM DATA
+            string selectQry_LAB = ConfigurationManager.AppSettings.Get(select_id).Replace("[COMPANY]", "LAB");
+            BalAndReserve = Get_Data_LLR_RPT2(selectQry_LAB);
+            LAB_BAL = Convert.ToDecimal(BalAndReserve[0]);
+            LAB_RESERVE = Convert.ToDecimal(BalAndReserve[1]);
+
+            //SELECT LIB SUM DATA
+            string selectQry_LIB = ConfigurationManager.AppSettings.Get(select_id).Replace("[COMPANY]", "LIB");
+            BalAndReserve = Get_Data_LLR_RPT2(selectQry_LIB);
+            LIB_BAL = Convert.ToDecimal(BalAndReserve[0]);
+            LIB_RESERVE = Convert.ToDecimal(BalAndReserve[1]);
+
+            //SELECT CHI SUM DATA
+            string selectQry_CHI = ConfigurationManager.AppSettings.Get(select_id).Replace("[COMPANY]", "CHI");
+            BalAndReserve = Get_Data_LLR_RPT2(selectQry_CHI);
+            CHI_BAL = Convert.ToDecimal(BalAndReserve[0]);
+            CHI_RESERVE = Convert.ToDecimal(BalAndReserve[1]);
+
+            //SELECT CIB SUM DATA
+            string selectQry_CIB = ConfigurationManager.AppSettings.Get(select_id).Replace("[COMPANY]", "CIB");
+            BalAndReserve = Get_Data_LLR_RPT2(selectQry_CIB);
+            CIB_BAL = Convert.ToDecimal(BalAndReserve[0]);
+            CIB_RESERVE = Convert.ToDecimal(BalAndReserve[1]);
+
+            //TOTAL
+            TOTAL_BAL = BNK_BAL + NIB_BAL + CTB_BAL + LAB_BAL + LIB_BAL + CHI_BAL + CIB_BAL;
+            TOTAL_RESERVE = BNK_RESERVE + NIB_RESERVE + CTB_RESERVE + LAB_RESERVE + LIB_RESERVE + CHI_RESERVE + CIB_RESERVE;
+
+            //UPDATE DATA
+            string updateQry = ConfigurationManager.AppSettings.Get(update_id);
+
+            updateQry = updateQry.Replace("[BNK_BAL]", BNK_BAL.ToString()).
+                Replace("[BNK_RESERVE]", BNK_RESERVE.ToString()).
+                Replace("[NIB_BAL]", NIB_BAL.ToString()).
+                Replace("[NIB_RESERVE]", NIB_RESERVE.ToString()).
+                Replace("[CTB_BAL]", CTB_BAL.ToString()).
+                Replace("[CTB_RESERVE]", CTB_RESERVE.ToString()).
+                Replace("[LAB_BAL]", LAB_BAL.ToString()).
+                Replace("[LAB_RESERVE]", LAB_RESERVE.ToString()).
+                Replace("[LIB_BAL]", LIB_BAL.ToString()).
+                Replace("[LIB_RESERVE]", LIB_RESERVE.ToString()).
+                Replace("[CHI_BAL]", CHI_BAL.ToString()).
+                Replace("[CHI_RESERVE]", CHI_RESERVE.ToString()).
+                Replace("[CIB_BAL]", CIB_BAL.ToString()).
+                Replace("[CIB_RESERVE]", CIB_RESERVE.ToString()).
+                Replace("[TOTAL_BAL]", TOTAL_BAL.ToString()).
+                Replace("[TOTAL_RESERVE]", TOTAL_RESERVE.ToString());
+
+            Update_LLR_RPT2_BY_ID(updateQry);
+
+        }
+
+        private ArrayList Get_Data_LLR_RPT2(string selectQry)
+        {
+            OleDbDataReader reader = null;
+
+            decimal BAL = 0.00m;
+            decimal RESERVE = 0.00m;
+
+            if (dbAccess != null)
+            {
+                if (dbAccess.IsOpen == true)
+                {
+                    dbAccess.Close();
+                }
+            }
+
+            SelectCommand = selectQry;
+            dbAccess = new GenericOLEDBClass();
+            dbAccess.Open(Provider, UserID, Password, DatabaseName, Mode);
+
+            /// set the insert command and run it
+            if (SelectCommand == null)
+            {
+                MessageBox.Show("you need to generate a select command first");
+            }
+
+            dbAccess.SelectCommand = SelectCommand;
+
+            if (dbAccess.ExecuteCommand() == true)
+            {
+                reader = dbAccess.GetReader;
+            }
+            else
+            {
+                MessageBox.Show(dbAccess.ErrorMessage);
+            }
+
+            while (reader.Read())
+            {
+                if (!String.IsNullOrEmpty(reader.GetValue(0).ToString()))
+                    BAL = Convert.ToDecimal(reader.GetValue(0).ToString());
+                if (!String.IsNullOrEmpty(reader.GetValue(1).ToString()))
+                    RESERVE = Convert.ToDecimal(reader.GetValue(1).ToString());
+            }
+
+            ArrayList t = new ArrayList();
+            t.Add(BAL);
+            t.Add(RESERVE);
+            return t;
+        }
+
+        private void Update_LLR_RPT2_BY_ID(string sql)
+        {
+            if (dbAccess != null)
+            {
+                if (dbAccess.IsOpen == true)
+                {
+                    dbAccess.Close();
+                }
+            }
+
+            dbAccess = new GenericOLEDBClass();
+            dbAccess.Open(Provider, UserID, Password, DatabaseName, Mode);
+
+            UpdateCommand = sql;
+
+            dbAccess.UpdateCommand = UpdateCommand;
+
+            if (dbAccess.ExecuteCommand() == true)
+            {
+
+            }
+            else
+            {
+                Console.WriteLine("---------------------------------UPDATE---------------------------------");
+                Console.WriteLine(UpdateCommand);
+                MessageBox.Show(dbAccess.ErrorMessage);
+            }
+        }
+
+        private void Update_LLR_RPT2_ASOFDATE()
+        {
+            string ASOFDATE = null;
+            if (dbAccess != null)
+            {
+                if (dbAccess.IsOpen == true)
+                {
+                    dbAccess.Close();
+                }
+            }
+
+            //GET ASOFDATE
+            OleDbDataReader asofdateReader = null;
+            dbAccess = new GenericOLEDBClass();
+            dbAccess.Open(Provider, UserID, Password, DatabaseName, Mode);
+            dbAccess.SelectCommand = "SELECT TOP 1 RMD.ASOFDATE FROM RMD";
+            if (dbAccess.ExecuteCommand() == true)
+            {
+                asofdateReader = dbAccess.GetReader;
+                while (asofdateReader.Read())
+                {
+                    ASOFDATE = asofdateReader.GetValue(0).ToString();
+                }
+            }
+            else
+            {
+                MessageBox.Show(dbAccess.ErrorMessage);
+                return;
+            }
+
+            //UPDATE ASOFDATE
+            dbAccess.UpdateCommand = "UPDATE LLR_REPORT2 SET LLR_REPORT2.ASOFDATE = " + "'" + ASOFDATE + "'";
+            dbAccess.ExecuteCommand();
+        }
+
+        private void btn_Generate_RPT2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Generate_LLR_Report2();
+                Update_LLR_RPT2_ASOFDATE();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            MessageBox.Show("Generate LLR REPORT2 data finished!");
+        }
+    }
+}

@@ -1,0 +1,1161 @@
+Collection
+
+What are the basic interfaces of Java Collections Framework ? 
+
+Java Collections Framework provides a well designed set of interfaces and classes that support operations on a collections of objects. 
+The most basic interfaces that reside in the Java Collections Framework are:
+
+Collection, which represents a group of objects known as its elements.
+Set, which is a collection that cannot contain duplicate elements.
+List, which is an ordered collection and can contain duplicate elements.
+Map, which is an object that maps keys to values and cannot contain duplicate keys.
+
+
+
+
+
+Why Collection doesn’t extend Cloneable and Serializable interfaces ? 
+
+The Collection interface specifies groups of objects known as elements. Each concrete implementation of a Collection can choose 
+
+its own way of how to maintain and order its elements. Some collections allow duplicate keys, while some other collections don’t. 
+
+The semantics and the implications of either cloning or serialization come into play when dealing with actual implementations. 
+
+Thus, the concrete implementations of collections should decide how they can be cloned or serialized.
+
+
+
+
+
+What is difference between fail-fast and fail-safe ? 
+
+The Iterator's fail-safe property works with the clone of the underlying collection and thus, it is not affected by any modification 
+
+in the collection. All the collection classes in java.util package are fail-fast, while the collection classes in java.util.concurrent 
+
+are fail-safe. Fail-fast iterators throw a ConcurrentModificationException, while fail-safe iterator never throws such an exception.
+
+
+
+
+
+What is an Iterator ?
+
+The Iterator interface is used to step through the elements of a Collection.
+
+Iterators let you process each element of a Collection.
+
+Iterators are a generic way to go through all the elements of a Collection no matter how it is organized.
+
+Iterator is an Interface implemented a different way for every Collection.
+
+
+
+
+
+How do you traverse through a collection using its Iterator?
+
+To use an iterator to traverse through the contents of a collection, follow these steps:
+
+Obtain an iterator to the start of the collection by calling the collectionâ€™s iterator() method.
+
+Set up a loop that makes a call to hasNext(). Have the loop iterate as long as hasNext() returns true.
+
+Within the loop, obtain each element by calling next().
+
+
+
+
+
+What is the difference between Enumeration and Iterator?
+
+Enumeration is twice as fast as compared to an Iterator and uses very less memory. 
+However, the Iterator is much safer compared to Enumeration, because other threads are not able to modify the collection object 
+that is currently traversed by the iterator. Iterator is fail-fast and Enumeration is not fail-fast
+
+Enumeration doesn't have a remove() method
+Iterator has a remove() method
+
+Enumeration acts as Read-only interface, because it has the methods only to traverse and fetch the objects
+Can be abstract, final, native, static, or synchronized
+
+Note: So Enumeration is used whenever we want to make Collection objects as Read-only.
+
+
+
+
+
+How is ListIterator?
+
+ListIterator is just like Iterator, except it allows us to access the collection in either the forward or backward direction 
+and lets us modify an element
+
+hasNext(), hasPrevious(), next(), previous(), nextIndex(), previousIndex(), remove()
+
+
+
+
+
+What are the main implementations of the List interface ?
+
+The main implementations of the List interface are as follows :
+
+ArrayList : Resizable-array implementation of the List interface. The best all-around implementation of the List interface.
+
+Vector : Synchronized resizable-array implementation of the List interface with additional "legacy methods."
+
+LinkedList : Doubly-linked list implementation of the List interface. May provide better performance than the ArrayList implementation if
+elements are frequently inserted or deleted within the list. Useful for queues and double-ended queues (deques).
+
+
+
+
+
+What are the advantages of ArrayList over arrays ?
+
+Some of the advantages ArrayList has over arrays are:
+It can grow dynamically
+It provides more powerful insertion and search mechanisms than arrays.
+
+
+
+
+
+What is difference between Array and ArrayList ? When will you use Array over ArrayList ? 
+
+The Array and ArrayList classes differ on the following features:
+
+Arrays can contain primitive or objects, while an ArrayList can contain only objects.
+
+Arrays have fixed size, while an ArrayList is dynamic.
+
+An ArrayListprovides more methods and features, such as addAll, removeAll, iterator, etc.
+
+For a list of primitive data types, the collections use autoboxing to reduce the coding effort. 
+
+However, this approach makes them slower when working on fixed size primitive data types.
+
+
+
+
+
+Difference between ArrayList and Vector ?
+
+ArrayList is NOT synchronized by default.
+Vector List is synchronized by default.
+
+ArrayList can use only Iterator to access the elements.	
+Vector list can use Iterator and Enumeration Interface to access the elements.
+
+The ArrayList increases its array size by 50 percent if it runs out of room.
+A Vector defaults to doubling the size of its array if it runs out of room
+
+ArrayList has no default size.	While vector has a default size of 10.
+
+
+
+
+
+How to obtain Array from ArrayList?
+
+using toArray() method
+
+Object a[] = arrayList.toArray();
+
+
+
+
+
+Why insertion and deletion in ArrayList is slow compared to LinkedList ?
+
+ArrayList internally uses array to store the elements. When that array gets filled by inserting elements a new array of roughly 
+
+1.5 times the size of the original array is created and all the data of old array is copied to new array.
+
+During deletion, all elements present in the array after the deleted elements have to be moved one step back to fill the space created by
+
+deletion. In linked list data is stored in nodes that have reference to the previous node and the next node so adding element is simple as
+
+creating the node an updating the next pointer on the last node and the previous pointer on the new node. Deletion in linked list is fast
+
+because it involves only updating the next pointer in the node before the deleted node and updating the previous pointer in the node 
+
+after the deleted node.
+
+
+
+
+
+What is difference between ArrayList and LinkedList ?
+
+An ArrayList is an index based data structure backed by an Array. It provides random access to its elements with a performance equal to O(1).
+
+On the other hand, a LinkedList stores its data as list of elements and every element is linked to its previous and next element. 
+
+In this case, the search operation for an element has execution time equal to O(n).
+
+The Insertion, addition and removal operations of an element are faster in a LinkedList compared to an ArrayList, 
+
+because there is no need of resizing an array or updating the index when an element is added in some arbitrary position inside the collection.
+
+A LinkedList consumes more memory than an ArrayList, because every node in a LinkedList stores two references, 
+
+one for its previous element and one for its next element.
+
+
+
+
+
+Why are Iterators returned by ArrayList called Fail Fast ?
+
+Because, if list is structurally modified at any time after the iterator is created, in any way except through the iterator's own 
+
+remove or add methods, the iterator will throw a ConcurrentModificationException. Thus, in the face of concurrent modification, 
+
+the iterator fails quickly and cleanly, rather than risking arbitrary, non-deterministic behavior at an undetermined time in the future.
+
+
+
+
+
+How do you decide when to use ArrayList and When to use LinkedList?
+
+If you need to support random access, without inserting or removing elements from any place other than the end, then ArrayList offers 
+
+the optimal collection. If, however, you need to frequently add and remove elements from the middle of the list and only access the 
+
+list elements sequentially, then LinkedList offers the better implementation.
+
+
+
+
+
+What is the Set interface ?
+
+The Set interface provides methods for accessing the elements of a finite mathematical set
+
+Sets do not allow duplicate elements
+
+Contains no methods other than those inherited from Collection
+
+It adds the restriction that duplicate elements are prohibited
+
+Two Set objects are equal if they contain the same elements
+
+
+
+
+
+What are the main Implementations of the Set interface ?
+
+The main implementations of the Set interface are as follows:
+HashSet
+TreeSet
+LinkedHashSet
+EnumSet
+
+
+
+
+
+What is a HashSet ?
+
+A HashSet is an unsorted, unordered Set. It is backed by a hash table(actually a HashMap instance). It makes no guraantees as to the
+
+iteration order of the set. Note this implementation is not synchronized.
+
+It uses the hashcode of the object being inserted (so the more efficient your hashcode() implementation the better access performance 
+
+you’ll get).
+
+Use this class when you want a collection with no duplicates and you don’t care about order when you iterate through it.
+
+
+
+
+
+What is a TreeSet ?
+
+A NavigableSet implementation basedon a Treemap.
+
+TreeSet is a Set implementation that keeps the elements in sorted order. The elements are sorted according to the natural order of 
+
+elements or by the comparator provided at creation time. This implementation provides guaranteed log(n) time cost for the 
+
+basic operations (add, remove and contains). Note this implementation is not synchronized.
+
+
+
+
+
+What is an EnumSet ?
+
+An EnumSet is a specialized set for use with enum types, all of the elements in the EnumSet type must come from a single enum type
+
+that is specified, explicitly or implicitly, when the set is created.
+
+
+
+
+
+Difference between HashSet and TreeSet ?
+
+HashSet is under set interface. it  does not guarantee for either sorted order or sequence order.
+TreeSet is under set i.e. it provides elements in a sorted  order (acceding order).
+
+We can add any type of elements to hash set. 
+We can add only similar types of elements to tree set.
+
+
+
+
+
+What is a Map ?
+
+A map is an object that stores associations between keys and values (key/value pairs).
+
+Given a key, you can find its value. Both keys  and  values are objects.
+
+The keys must be unique, but the values may be duplicated.
+
+Some maps can accept a null key and null values, others cannot.
+
+
+
+
+
+What are the main Implementations of the Map interface ?
+
+The main implementations of the List interface are as follows:
+HashMap
+HashTable
+TreeMap
+ConcurrentHashMap
+EnumMap
+
+
+
+
+
+What is a TreeMap ?
+
+TreeMap actually implements the SortedMap interface which extends the Map interface. This implementation is not synchronized.
+
+A red-black tree based NavigableMap implementation. This implementation provides guaranteed log(n) time cost for the containsKey,
+
+get, put and remove operations.
+
+In a TreeMap the data will be sorted in ascending order of keys according to the natural order for the key's class, 
+
+or by the comparator provided at creation time.
+
+
+
+
+
+How do you decide when to use HashMap and when to use TreeMap ?
+
+For inserting, deleting, and locating elements in a Map, the HashMap offers the best alternative. 
+
+If, however, you need to traverse the keys in a sorted order, then TreeMap is your better alternative. 
+
+Depending upon the size of your collection, it may be faster to add elements to a HashMap, 
+
+then convert the map to a TreeMap for sorted key traversal.
+
+
+
+
+
+Difference between HashMap and Hashtable ?
+
+HashMap lets you have null values as well as one null key.	
+HashTable  does not allows null values as key and value.
+
+The iterator in the HashMap is fail-safe (If you change the map while iterating, you’ll know).	
+The enumerator for the Hashtable is not fail-safe.
+
+HashMap is unsynchronized.	Hashtable is synchronized.
+
+Note: Only one NULL is allowed as a key in HashMap. HashMap does not allow multiple keys to be NULL. Nevertheless, 
+
+it can have multiple NULL values.
+
+
+
+
+
+How does a Hashtable internally maintain the key-value pairs?
+
+The Hashtable class uses an internal (private) class named Entry to hold the key-value pairs. All entries of the Hashtable are stored 
+
+in an array of Entry objects with the hash value of the key serving as the index. If two or more different keys have the same hash value 
+
+these entries are stored as a linked list under the same index.
+
+
+
+
+
+How HashMap works in Java ? 
+
+A HashMap in Java stores key-value pairs. The HashMap requires a hash function and uses hashCode and equals methods, 
+
+in order to put and retrieve elements to and from the collection respectively. When the put method is invoked, 
+
+the HashMap calculates the hash value of the key and stores the pair in the appropriate index inside the collection. 
+
+If the key exists, its value is updated with the new value. Some important characteristics of a HashMap are its capacity, 
+
+its load factor and the threshold resizing.
+
+
+
+
+
+What is the importance of hashCode() and equals() methods ? 
+
+A HashMap in Java uses the hashCode and equals methods to determine the index of the key-value pair. 
+
+These methods are also used when we request the value of a specific key. If these methods are not implemented correctly, 
+
+two different keys might produce the same hash value and thus, will be considered as equal by the collection. 
+
+Furthermore, these methods are also used to detect duplicates. Thus, the implementation of both methods is crucial to 
+
+the accuracy and correctness of the HashMap.
+
+
+
+
+
+What Are the different Collection Views That Maps Provide?
+
+Maps Provide Three Collection Views.
+Key Set - allow a map's contents to be viewed as a set of keys.
+Values Collection - allow a map's contents to be viewed as a set of values.
+Entry Set - allow a map's contents to be viewed as a set of key-value mappings.
+
+
+
+
+
+What is a KeySet View ?
+KeySet is a set returned by the keySet() method of the Map Interface, It is a set that contains all the keys present in the Map.
+
+73.What is a Values Collection View ?
+Values Collection View is a collection returned by the values() method of the Map Interface, It contains all the objects present as 
+values in the map.
+
+74.What is an EntrySet View ?
+Entry Set view is a set that is returned by the entrySet() method in the map and contains Objects of type Map. Entry each of which has 
+both Key and Value.
+
+
+
+
+
+How do you sort an ArrayList (or any list) of user-defined objects ?
+
+Create an implementation of the java.lang.Comparable interface that knows how to order your objects and pass it to 
+
+java.util.Collections.sort(List, Comparator).
+
+
+
+
+
+What is the Comparable interface ?
+
+The Comparable interface is used to sort collections and arrays of objects using the Collections.sort() and java.utils.Arrays.sort() 
+
+methods respectively. The objects of the class implementing the Comparable interface can be ordered.
+
+The Comparable interface in the generic form is written as follows:
+	interface Comparable<T>
+where T is the name of the type parameter.
+
+All classes implementing the Comparable interface must implement the compareTo() method that has the return type as an integer. 
+
+The signature of the compareTo() method is as follows:
+
+      int i = object1.compareTo(object2)
+If object1 < object2: The value of i returned will be negative.
+If object1 > object2: The value of i returned will be positive.
+If object1 = object2: The value of i returned will be zero.
+
+
+
+
+
+What are the differences between the Comparable and Comparator interfaces ?
+
+Comparable uses the compareTo() method.
+Comparator uses the compare() method.
+
+int objectOne.compareTo(objectTwo).
+int compare(ObjOne, ObjTwo)
+
+It is necessary to modify the class whose instance is going to be sorted.	
+A separate class can be created in order to sort the instances.
+
+Only one sort sequence can be created.
+Many sort sequences can be created.
+
+It is frequently used by the API classes.
+It used by third-party classes to sort instances.
+
+
+
+
+
+What is Java Priority Queue ? 
+
+The PriorityQueue is an unbounded queue, based on a priority heap and its elements are ordered in their natural order. 
+
+At the time of its creation, we can provide a Comparator that is responsible for ordering the elements of the PriorityQueue. 
+
+A PriorityQueue doesn’t allow null values, those objects that doesn’t provide natural ordering, or those objects that don’t have any 
+
+comparator associated with them. Finally, the Java PriorityQueue is not thread-safe and 
+
+it requires O(log(n)) time for its enqueing and dequeing operations.
+
+
+
+
+
+If an ArrayList has to be iterate to read data only, what are the possible ways and which is the fastest?
+
+Ans) It can be done in two ways, using for loop or using iterator of ArrayList. The first option is faster than using iterator. 
+
+Because value stored in arraylist is indexed access. So while accessing the value is accessed directly as per the index.
+
+Now another question with respect to above question is if accessing through iterator is slow then why do we need it and when to use it.
+
+Ans) For loop does not allow the updation in the array(add or remove operation) inside the loop whereas Iterator does. 
+
+Also Iterator can be used where there is no clue what type of collections will be used because all collections have iterator.
+
+
+
+
+
+How can ArrayList be synchronized without using Vector?
+
+ArrayList can be synchronized using:
+Collection.synchronizedList(List list)
+
+
+
+
+
+How to avoid ConcurrentModificationException while iterating a collection?
+
+You should first try to find another alternative iterator which are fail-safe. For example if you use List and you can use ListIterator.
+
+If it is legacy collection, you can use enumeration. If above options are not possible then you use one of three changes:
+
+you can use ConcurrentHashMap and CopyOnWriteArrayList classes.
+
+You can convert the list to an array and then iterate on the array.
+
+You can lock the list while iterating by putting it in a synchronized block.
+
+The last two approaches will cause a performance hit.
+
+
+
+
+
+What are the differences between Queue and Stack in java?
+
+Besides basic Collection operations, queues provide additional insertion, extraction, and inspection operations.
+
+Queues typically, but do not necessarily, order elements in a FIFO (first-in-first-out) manner.
+
+Stack is also a form of Queue but one difference, it is LIFO (last-in-first-out).
+
+Whatever the ordering used, the head of the queue is that element which would be removed by a call to remove() or poll(). 
+
+Also note that Stack and Vector are both synchronized.
+
+
+
+
+
+How can we make Hashmap synchronized?
+
+HashMap can be synchronized by Map m = Collections.synchronizedMap(hashMap);
+
+
+
+
+
+How to make a collection read only?
+
+Collections.unmodifiableList(list);
+Collections.unmodifiableSet(set);
+Collections.unmodifiableMap(map);
+
+These methods takes collection parameter and return a new read-only collection with same elements as in original collection.
+
+
+
+
+
+What is NavigableMap in Java ? What are its benefits over Map?
+
+NavigableMap Map was added in Java 1.6, it adds navigation capability to Map data structure.
+
+It provides methods like lowerKey() to get keys which is less than specified key, floorKey() to return keys which is less than 
+
+or equal to specified key, ceilingKey() to get keys which is greater than or equal to specified key and higherKey() to return keys 
+
+which is greater specified key from a Map.
+
+It also provide similar methods to get entries e.g. lowerEntry(), floorEntry(), ceilingEntry() and higherEntry().
+
+Apart from navigation methods, it also provides utilities to create sub-Map e.g. creating a Map from entries of an exsiting Map 
+
+like tailMap, headMap and subMap. headMap() method returns a NavigableMap whose keys are less than specified, tailMap() returns 
+
+a NavigableMap whose keys are greater than the specified and subMap() gives a NavigableMap between a range, specified by toKey to fromKey. 
+
+
+
+
+
+When do you use ConcurrentHashMap in Java?
+
+This is another advanced level collection interview questions in Java which normally asked to check whether interviewer is 
+
+familiar with optimization done on ConcurrentHashMap or not.
+
+ConcurrentHashMap is better suited for situation where you have multiple readers and one Writer or fewer writers since Map 
+
+gets locked only during write operation.
+
+If you have equal number of reader and writer than ConcurrentHashMap will perform in line of Hashtable or synchronized HashMap. 
+
+
+
+
+
+Which implementation of the List interface provides for the fastest insertion of a new element into the middle of the list?
+
+We have three implementation of List :  Vector, ArrayList, LinkedList.
+
+ArrayList and Vector both use an array to store the elements of the list.
+
+When an element is inserted into the middle of the list the elements that follow the insertion point must be shifted 
+
+to make room for the new element.
+
+The LinkedList is implemented using a doubly linked list; an insertion requires only the updating of the links at the point of insertion.
+
+Therefore, the LinkedList allows for fast insertions and deletions.
+
+
+
+
+
+What is the Difference between the Iterator  and ListIterator?
+
+Iterator : Iterator Can Only get Data From forward Direction .
+
+ListIterator : An iterator for lists that allows one to traverse the list in either direction.modify the list during iteration, 
+
+and obtain the iterator’s current position in the list.
+
+A ListIterator has no current element. its cursor position always lies between the element that would be returned by a call to previous() 
+
+and the element that would be returned by a call to next(). In a list of length n, there are n+1 valid index values, from 0 to n, inclusive.
+
+
+
+
+
+What is CopyOnWriteArrayList, how it is different than ArrayList and Vector?
+
+CopyOnWriteArrayList is new List implementation introduced in Java 1.5 which provides better concurrent access than Synchronized List.
+
+Better concurrency is achieved by Copying ArrayList over each write and replace with original instead of locking.
+
+Also CopyOnWriteArrayList doesn't throw any ConcurrentModification Exception.
+
+Its different than ArrayList because its thread-safe and ArrayList is not thread safe and its different than Vector in terms of Concurrency.
+
+CopyOnWriteArrayList provides better Concurrency by reducing contention among readers and writers.
+
+
+
+
+
+How to convert a string array to arraylist? 
+
+new ArrayList(Arrays.asList(myArray));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Thread 			
+
+reference: http://blog.csdn.net/ns_code/article/details/17539599, JSR-133, 深入理解java虚拟机
+
+
+
+
+Difference between Thread and Process
+
+
+
+
+
+Explain different ways of creating a thread. Which one would you prefer and why ? 
+
+There are three ways that can be used in order for a Thread to be created:
+
+A class may extend the Thread class.
+A class may implement the Runnable interface.
+An application can use the Executor framework, in order to create a thread pool.
+
+
+
+
+
+Explain the available thread states in a high-level. During its execution, a thread can reside in one of the following states:
+
+Runnable: A thread becomes ready to run, but does not necessarily start running immediately.
+Running: The processor is actively executing the thread code.
+Waiting: A thread is in a blocked state waiting for some external processing to finish.
+Sleeping: The thread is forced to sleep.
+Blocked on I/O: Waiting for an I/O operation to complete.
+Blocked on Synchronization: Waiting to acquire a lock.
+Dead: The thread has finished its execution.
+
+
+
+
+
+What is the difference between a synchronized method and a synchronized block ? 
+
+In Java programming, each object has a lock. A thread can acquire the lock for an object by using the synchronized keyword. 
+
+The synchronized keyword can be applied in a method level (coarse grained lock) or block level of code (fine grained lock).
+
+
+
+
+
+How does thread synchronization occurs inside a monitor ? What levels of synchronization can you apply ? 
+
+The JVM uses locks in conjunction with monitors. A monitor is basically a guardian that watches over a sequence of synchronized code 
+
+and ensuring that only one thread at a time executes a synchronized piece of code. Each monitor is associated with an object reference. 
+
+The thread is not allowed to execute the code until it obtains the lock.
+
+
+
+
+
+What’s a deadlock ? 
+
+A condition that occurs when two processes are waiting for each other to complete, before proceeding. 
+
+The result is that both processes wait endlessly.
+
+
+
+
+
+How do you ensure that N threads can access N resources without deadlock ? 
+
+A very simple way to avoid deadlock while using N threads is to impose an ordering on the locks and force each thread to follow that ordering.
+
+Thus, if all threads lock and unlock the mutexes in the same order, no deadlocks can arise.
+
+
+
+
+
+How does volatile variable works in Java ?
+
+The volatile keyword tells the JVM that a thread accessing the variable must always reconcile its own private copy of the variable 
+
+with the master copy in memory.
+
+When a field is declared volatile, the compiler and runtime are put on notice that this variable is shared and that operations on it 
+
+should not be reordered with other memory operations.
+
+Volatile variables are not cached in registers or in caches where they are hidden from other processors, so a read of a volatile variable
+
+always returns the most recent write by any thread.
+
+see http://sakyone.iteye.com/blog/668091
+
+
+
+
+
+You have thread T1, T2 and T3, how will you ensure that thread T2 run after T1 and thread T3 run after T2 ?
+
+it can be achieved by using join method of Thread class.
+
+
+
+
+
+What is race condition? How will you find and solve race condition ?
+
+A race condition occurs when two or more threads can access shared data and they try to change it at the same time.
+
+This problem often occur when one thread does a 'check-then-act'.
+
+For example, "check" if the value is X, then "act" to do something that depends on the value being X and another thread does something 
+
+to the value in between the "check" and the "act".
+
+This means something like this :
+
+if(x==5)
+{
+	y = x * 2;
+
+	//if another thread changed x in between "iF(x==5)" and "y=x*2" above, y will not be equal to 10.
+}
+
+The point being, y could be 10, or it could be anything, depending on whether another thread changed x in between the check and act.
+
+You have no real way of knowing. In order to prevent race conditions from occurring, you would typically put a lock around the shared data 
+
+to ensure only one thread can access the data at a time.
+
+This means something like this :
+
+//obtain lock for x
+if(x==5)
+{
+	y = x * 2;	//Now, nothing can change x until the lock is released. Therefore y = 10
+}
+//release lock for x
+
+
+
+
+
+What is atomic operation ?   What are atomic classes in Java Concurrency API ?
+
+Atomic operations are performed in a single unit of task without interference from other operations.
+
+Atomic operations are necessity in multi-threaded environment to avoid data inconsistency.
+
+int++ is not an atomic operation  hence  by the time one threads read it’s value and increment it by one, 
+
+other thread has read the older value leading to wrong result.
+
+To solve this issue, We will have to make sure that increment operation on count is atomic, we can do that using Synchronization 
+
+but Java 5 java.util.concurrent.atomic provides wrapper classes for int and long that can be used to achieve this atomically 
+
+without usage of Synchronization.
+
+
+
+
+
+Why we call start() method which in turns calls run() method, why not we directly call run() method ?
+
+When you call start() method it creates new Thread and execute code declared in run().
+
+While directly calling run() method doesn’t create any new thread and execute code on same calling thread.
+
+
+
+
+
+How will you awake a blocked thread in java ?
+
+Answer : If thread is blocked on IO then I don't think there is a way to interrupt the thread, let me know if there is any, 
+
+on the other hand if thread is blocked due to result of calling wait(), sleep() or join() method you can interrupt the thread 
+
+and it will awake by throwing InterruptedException.
+
+
+
+
+
+What is Lock interface in Java Concurrency API ?   What are it’s benefits over synchronization ?
+
+Lock interface provide more extensive locking operations than can be obtained using synchronized methods and statements.
+
+They allow more flexible structuring, may have quite different properties, and may support multiple associated Condition objects.
+
+The advantages of a lock are : 
+
+It is possible to try to acquire the lock, but return immediately or after a timeout if the lock can’t be acquired.
+It is possible to make them fair and  make thread more responsive to interruption while waiting on a Lock object.
+It is possible to acquire and release locks in different scopes, and in different orders.
+
+
+
+
+
+What is Executors Framework ?
+
+In Java 5, Executor framework was introduced with the java.util.concurrent.Executor interface.
+
+The Executor framework is a framework for standardizing invocation, scheduling, execution, and control of asynchronous tasks 
+
+according to a set of execution policies.
+
+Creating a lot many threads with no bounds to the maximum threshold can cause application to run out of heap memory.
+
+So, creating a ThreadPool is a better solution as a finite number of threads can be pooled and reused.
+
+Executors framework facilitate process of creating Thread pools in java.
+
+
+
+
+
+What is Callable and Future ? 
+
+Java 5 introduced java.util.concurrent.Callable interface in concurrency package that is similar to Runnable interface 
+
+but it can return any Object and able to throw Exception.
+
+Callable interface use Generic to define the return type of Object.
+
+Executors class provide useful methods to execute Callable in a thread pool.
+
+Since callable tasks run in parallel, we have to wait for the returned Object.
+
+Callable tasks return java.util.concurrent.Future object.
+
+Using Future we can find out the status of the Callable task and get the returned Object, It provides get() method 
+
+that can wait for the Callable to finish and then return the result.
+
+
+
+
+
+What are Concurrent Collection Classes ?
+
+Java Collection classes are fail-fast which means that if the Collection will be changed while some thread is traversing 
+
+over it using iterator, the iterator.next() will throw ConcurrentModificationException.
+
+Concurrent Collection classes support full concurrency of retrievals and adjustable expected concurrency for updates.
+
+Major classes are :
+ConcurrentHashMap,
+CopyOnWriteArrayList and
+CopyOnWriteArraySet.
+
+
+
+
+
+What is Executors Class ?
+
+Executors class provide utility methods for :
+Executor
+ExecutorService
+ScheduledExecutorService
+ThreadFactory and
+Callable classes.
+
+Executors class can be used to easily create Thread Pool in java, also this is the only class supporting execution of Callable implementations
+
+
+
+
+
+How to catch exception from thread in java ?
+
+In Java, To facilitate parallel-execution or concurrency, Each thread is having their own separate memory page / call stack 
+
+internally apart from the main or parent thread.
+
+So you can't catch exception of Thread-A in Thread-B, In other words, Exception handling of threads should be done within the 
+
+same thread itself.
+
+Now, To have a general solution or common handler class for handling different threads exception, Java provides 
+
+Thread.UncaughtExceptionHandler static interface.
+
+You can write your concrete MyAppUncaughtExceptionHandler class or MyAppDefaultUncaughtExceptionHandler class for your application by
+
+implementing Thread.UncaughtExceptionHandler static interface.
+
+
+
+
+
+5、sleep()和wait()有何异同？
+（1）首先一个最明显的区别是  wait是Object类的方法,而sleep()是Thread类的静态方法,谁调用了该方法谁去休眠,即使在a线程里调用了b线程的sleep方法,实际上还是a线程去休眠.
+
+（2）比较重要的一点是sleep没有释放出锁，而wait释放了锁，是其他线程可以使用同步块资源。
+     sleep不出让系统资源；wait是进入线程等待池等待，出让系统资源，其他线程可以占用CPU。一般wait不会加时间限制，因为如果wait线程的运行资源不够，再出来也没用，要
+     等待其他线程调用notify/notifyAll唤醒等待池中的所有线程，才会进入就绪队列等待OS分配系统资源。sleep(milliseconds)可以用时间指定使它自动唤醒过来，如果时间不到
+     只能调用interrupt()强行打断。
+
+（3）使用范围：
+     wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，而sleep可以在任何地方使用 
+     synchronized(x){ 
+       x.notify() 
+       //或者wait() 
+      }
+
+（4）sleep需要捕获异常,而wait不需要。
+
+
+
+
+
+
+子线程循环2次，接着主线程循环3次，接着子线程循环3次，接着主线程循环3次，如此循环5次，请写出程序代码。
+
+public class ThreadDemo5 {
+	static boolean thread_flag=false;//指示子线程循环是否结束
+	static boolean main_flag=true;   //调用子线程的start方法后变为true,循环等待thread_flag为true（也就是子线程循环完）的时刻，主线程循环完又变为false;
+	public static void main(String[] args) {
+		for(int k=0;k<5;k++){
+			Thread7 t=new Thread7();
+			t.start();
+			main_flag=true;
+			while (main_flag) {//循环等待thread_f
+				if(thread_flag){
+					for(int i=0;i<3;i++){
+						System.out.println("主线程第一次循环"+(i+1)+"次");
+					}
+					thread_flag=false;
+					main_flag=false;
+				}	
+			}
+		}
+	}
+}
+
+class Thread7 extends Thread {
+	static boolean flag=true;//标志子线程第几次循环，当值为true的时候子线程循环2次，否则循环3次
+	public void run() {
+		if(flag){
+			for(int i=0;i<2;i++){
+				System.out.println("子线程第一次循环"+(i+1)+"次");
+			}
+			flag=false;
+		}else{
+			for(int i=0;i<3;i++){
+				System.out.println("子线程第二次循环"+(i+1)+"次");
+			}
+			flag=true;
+		}
+		ThreadDemo5.thread_flag=true;
+		
+		
+	}
+}
+
+
+
+
+
+现在有T1 T2 T3三个线程，怎样保证T2在T1执行完之后执行 T3在T2执行完之后执行
+
+public class JoinDemo {
+	public static void main(String[] args) {
+		T1 t1=new T1("T1");
+		T2 t2=new T2("T2");
+		T3 t3=new T3("T3");
+		t1.start();
+		try {
+			t1.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		t2.start();
+		try {
+			t2.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		t3.start();
+	}
+}
+
+class T1 extends  Thread{
+	private String name;
+	public T1(String name) {
+		this.name=name;
+	}
+
+	@Override
+	public void run() {
+		for(int i=0;i<5;i++){
+			try {
+				sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(this.name+"循环"+i);
+		}
+	}
+}
+class T2 extends  Thread{
+	private String name;
+	public T2(String name) {
+		this.name=name;
+	}
+	@Override
+	public void run() {
+		for(int i=0;i<5;i++){
+			try {
+				sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(this.name+"循环"+i);
+		}
+	}
+}
+class T3 extends  Thread{
+	private String name;
+	public T3(String name) {
+		this.name=name;
+	}
+	@Override
+	public void run() {
+		for(int i=0;i<5;i++){
+			System.out.println(this.name+"循环"+i);
+		}
+	}
+}

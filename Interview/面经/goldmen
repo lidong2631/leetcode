@@ -1,0 +1,1538 @@
+why finance?
+
+Besides my passion for techonology I am also interested in financial area. my 3 years experience in Bank of China helps me faciliate
+this thought. Being a software engineer in financial company you must have not only technical skills but only some necessary financial
+knowledge which make the job itself more challenge but it has more fun to me. Your program will not fully satisfy the client's requirement
+if you do not know the basic business logic so at this point you have to master certain business rules. By doing this in a long period you
+will become an expert in both the two area.
+
+
+walk us through your entire resume
+
+
+
+
+Can you see yourself in Technology in 10 years?
+
+10 years maybe a little bit longer to say, but for the most recent at least 4 to 5 years. My goal is to work in a big financial company
+contribute my kills to the company and try to learn as much as I can. While since I have not been working for
+over 3 years I am still quite like a freshman I think the best thing to do is to gain more experience. Big company they usually have
+regulatory policy on business and good training programs
+
+
+
+why you wanna join goldman?
+
+slang It's an interpreted dataflow language (kind of like python/perl) running on an in-memory database called SecDB
+
+contribute the the java community through open source Goldman Sachs Collections(GSC) Jan 2012
+GSC is a Java collections framework developed at Goldman Sachs. The functional API of GSC was inspired by the Smalltalk collections framework, while many of its container types are direct descendants of Java types such as Iterable, Collection, List, Set and Map. Goldman Sachs open-sourced GS Collections under an Apache 2.0 license on GitHub in January 2012.
+
+
+suppose you have eight identical balls. One of them is slight heavier... what is the fewest number of times to find the heavier ball?
+
+2. separate 3+3+2. balance 3 and 3. if equal balance 2. if not equal balance any two of them
+
+
+
+
+how to remove a node from singly-linked list when only given the pointer to the node
+
+cc150 2.3
+
+public void remove(LinkedNode node) {
+    if(node.next==null)
+        return;
+    node.val = node.next.val;
+    node.next = node.next.next;
+}
+
+
+
+3 gallon bucket and 5 gallon bucket get 4 gallon
+
+cc150
+
+
+
+
+
+Fibonacci implementation.
+
+public int Fibonacci(int n) {
+    if(n==0)
+        return 0;
+    else if(n==1)
+        return 1;
+    else if(n>1) 
+        return Fibonacci(n-1)+Fibonacci(n-2);
+    else
+        return -1;
+}
+
+public int Fibonacci(int n) {
+    if(n<0)
+        return -1;
+    if(n==0)
+        return 0;
+    int a=1, b=1;
+    for(int i=3; i<=n; i++)
+    {
+        int c = a+b;
+        a = b;
+        b = c;
+    }
+    return b;
+}
+
+
+
+
+public class WhichReturns{
+	...
+}
+finally and return question for java, see programmerinterview
+
+if there is return statement in try, codes in finally would run before return.
+
+if there is return in finally it will override previous return in try block or any exception thrown from try block.
+so it is a bad idea to have return in finally
+
+
+
+
+
+
+
+diff between var1==var2 and var1.equals(var2) which method needs to be implemented along with equals()?
+
+== compare reference(object location in memory)
+
+by default, equals() is the same as ==. but the equals class is overridden to get the desired functionality whereby the object contents 
+
+are compared instead of the object locations.  Java’s String class overrides the equals() method to compare the characters in a string.
+
+
+Hashcode() depends on the language.
+
+To know the relevance of hashcode and equals, it is important to understand the concept of hashing and how collections such as HashMap use it. 
+
+Hashing is a process of storing entities at a particular memory location which can be fetched in a single shot using the hashcode. 
+
+Hashcode determines where the value is stored and using the same value of hashcode value(against key) is retrieved.
+
+Lets try to understand it using example of hashmap. When we do a put at a particular key in a hashmap, 
+
+jvm looks for the hashcode implementation of that key to decide where in memory jvm should put the corresponding value(against key). 
+
+When we do a get on a particular key, again hashcode is used to get the memory location of the corresponding value(against key) and 
+
+value is returned. So if we get unique hash for different keys, the retrieval will be of the order of O(1). All good upto here!
+
+JVM uses equals() as an extra check to avoid the problems due to bad implementation of hashcode(). Suppose an hashcode() method is poorly 
+
+written and is generating the same hashcode for different keys. As the hashcode is same all the keys will be stored at the same memory location 
+
+and only the last one stored can retrieve the corresponding value. But it does not happen this way. JVM checks for the hashcode first and 
+
+then checks the equals() for a key to determine whether it is the same key or a different one. So in case when we have two keys with the 
+
+same hashcode but different negative equals. Now JVM will not overwrite the values rather it will create a linkedlist at the hashcode memory 
+
+bucket and keys will be stored in that. But if both hashcode and equals are written poorly, which means for different keys both hashcode and 
+
+equals are same then values will be overwritten and only the last value will be retrieved.
+
+Ideally our hashcode should be unique for different keys and equals should return negative for different keys. If so, the retrieval 
+
+will be of order O(1). In case when hashcode is generated same for different keys but equals is negative then retrieval will be of order O(n) 
+
+where n is the size of linked list created at that hashcode bucket.
+
+
+
+HashMap uses Key object hashCode() and equals() method to determine the index to put the key-value pair. 
+These methods are also used when we try to get value from HashMap. If these methods are not implemented correctly, 
+two different Key’s might produce same hashCode() and equals() output and in that case rather than storing it at different location, 
+HashMap will consider them same and overwrite them.Similarly all the collection classes that doesn’t store duplicate data use hashCode() 
+and equals() to find duplicates, so it’s very important to implement them correctly. The implementation of equals() and hashCode() 
+should follow these rules.
+
+If o1.equals(o2), then o1.hashCode() == o2.hashCode()should always be true.
+If o1.hashCode() == o2.hashCode is true, it doesn’t mean that o1.equals(o2) will be true.
+
+
+
+
+
+How do you check if a linked list has a recurring loop?
+
+leetcode linked list cycle
+
+public boolean isLoop(LinkedNode head) {
+    LinkedNode fast = head;
+    LinkedNode slow = head;
+
+    while(fast!=null &&fast.next!=null)
+    {
+        slow = slow.next;
+        fast = fast.next.next;
+        if(slow==fast)
+            return true;
+    }
+    return false;
+}
+
+
+
+
+What is the limit of sqrt(x^2+x)-x when x goes to infinity
+
+
+
+
+
+How would you show a correlation between two types of data?
+
+correlation coeffient
+
+
+
+if you have a calculator with only the number zero and every single operator. how can you get the number 24?
+
+0! or exp(0) or cos(0)
+
+
+
+
+
+Write a function to swap integers without using third int?
+
+cc150 19.1
+
+public void swap(int a, int b) {
+    a = a-b;
+    b = a+b;
+    a = b-a;
+}
+or
+
+public void swap(int a, int b) {
+    a = b - a;
+    b = b - a;
+    a = a + b;
+}
+
+public void swap(int a, int b) {
+    a = a^b;
+    b = a^b;
+    a = a^b;
+}
+
+
+
+How do you find 2 missing elements in an array of consecutive integers that are not sorted whose size is N-2
+
+Hashset, or sort it then find or sum = N*(N+1)/2
+
+
+
+
+What is the biggest mistake you ever made?
+
+
+
+
+
+Write shell scripts to search for a given string in all files in given directory.
+
+
+
+
+
+How to find square root of integer?
+
+see leetcode sqrt(x)
+
+public int find squareRoot(int x) {
+    if(x<0)
+        return -1;
+    if(x==0)
+        return 0;
+    int left = 1;
+    int right = x/2+1;
+    while(left<=right)
+    {
+        int mid = (left+right)/2;
+        if(mid<=x/mid && x/(mid+1)<mid+1)
+            return mid;
+        else if(x/mid<mid)
+            right = mid - 1;
+        else left = mid + 1;
+    }
+    return -1;
+}
+
+
+
+
+can there be a thread without a process?
+
+No. A thread is a sub-construct of process. cc150
+
+A process is an instance of program execution. Each process is an independent of CPU time, memory. They are allocated in a separated address.
+one process cannot access another process unless inter-process communications being used sucha as pipes, sockets, files.
+
+A thread uses the same stack space of a process. It is a particular execution path of a process.
+A process can have multiple threads. Threads share their state. one allows others to read and write the same memory.
+When one thread modifies a process resource, the change is instantly visible to sibling threads.
+
+
+
+
+reverse a linked list
+
+public LinkedNode reverse(LinkedNode head) {
+    if(head==null || head.next==null)
+        return head;
+    LinkedNode p1 = head.next;
+    LinkedNode p2 = head.next.next;
+    p1.next = head;
+    head.next - null;
+
+    while(p2!=null)
+    {
+        LinkedNode tmp = p2.next;
+        p2.next = p1;
+        p1 = p2;
+        p2 = tmp;
+    }
+    return p1;
+}
+
+public void reverse(LinkedNode node) {
+    if(node==null)
+        return;
+    if(node.next==null)
+    {
+        head = node;
+        return;
+    }
+    reverse(node.next);
+    node.next.next = node;
+    node.next = null;
+}
+
+programmer interview
+
+
+
+write a program that prints out all possible pairs that can be formed from 20 dancers
+
+String dancers = "abcdefghijklmnopqrst";
+char[] dancersArray = dancers.toCharArray();
+
+for(int i=0; i<dancersArray.length; i++)
+{
+    for(int j=i+1; j<dancersArray.length; j++)
+        System.out.println(dancersArray[i] + dancersArray[j]);
+}
+
+
+combination formula:
+
+int A = 1;
+int C = 1;
+for(int i=1; i<=small; i++)
+{
+    A*=i;
+    C*=n+1-i;
+}
+return C/A;
+
+
+
+
+
+
+
+
+recursive calculate n! Write down code
+
+public int factorial(int n) {
+    if(n<0)
+        return -1;
+    if(n==0)
+        return 1;
+    if(n==1)
+        return 1;
+    return factorial(n-1)*n;
+}
+
+
+
+
+
+
+
+what is normal distribution? What would you think if your data did not fit one?
+
+
+
+
+
+
+What is the difference between dynamic_cast, static_cast?
+
+C++ problem not consider
+
+
+
+
+
+
+Name one of the more efficient sorting algorithms
+
+hashsort?
+
+
+
+
+
+
+How does indexing work in a database? How is it implemented? what happens when user types ABC?
+
+Implemented as a tree. When user types ABC, the db will return all matches/subtrees below C - all ABCD's, ABCE's, etc.
+If there are multiple ABCD, then the lowermost node-leaf-D will point to all the ABCD locations.
+
+also see programmer Interview
+
+An index is a data structure (most commonly B-tree, lookup deletion insertion all can be done in logarithmic time) that stores the value 
+for a specific column in a table. An index is created on a column of table. lets say we created a B tree index on Employee_name column.
+When we search for "Mike" the entire Employee table does not have to be searched instead database use index to find "Mike".
+index also store pointer to the corrsponding rows.
+When a query runs, database first check to see if there is an index on the column bing queried. If yes, database will decide whether it
+makes sense to use it
+
+
+
+
+Four men crossing bridge with a torch logical question.
+
+4 men must cross a bridge
+
+A takes 1 min to cross
+B takes 2 mins to cross
+C takes 5 mins
+D takes 10 mins
+It is night time so they must carry a torch across. How do you get all them across, no more than two travelling at a time
+and don in 17 mins?
+
+A and b cross - 2mins
+A back - 1min
+C and D cross - 10 mins
+B back - 2 mins
+A and B cross - 2 mins
+
+that equals 17 mins
+
+
+
+
+
+
+
+Write a sql query that eliminates duplicated there is no unique index/identifier of any kind that is present.
+
+
+
+
+
+
+
+
+
+
+
+how do you calculate weighted averages?
+
+totalValue = 0
+totalWeight = 0
+
+for each element:
+	totalValue+=element.val * element.weight
+	totalWeight+=element.weight
+
+print "Average=" + (totalValue/totalWeight)
+
+http://goldmansachs-is-fraud.blogspot.com
+
+
+
+
+
+
+Write an algorithm that find the missing number from an array of numbers 0..999,999
+
+
+
+
+Where can you find the configuration files of Tomcat? what is Jeti?
+
+
+
+
+How do you make an instance of an abstract class?
+
+By using anonymous class. from stackoverflow
+
+abstract class my {
+    public void mymethod() {
+        System.out.print("Abstract");
+    }
+}
+
+class poly {
+    public static void main(String a[]) {
+        my m = new my() {};
+        m.mymethod();
+    }
+}
+
+No, you are not creating the instance of your abstract class here. Rather you are creating an instance of an anonymous subclass of 
+your abstract class. And then you are invoking the method on your abstract class reference pointing to subclass object.
+
+also see programmerinterview
+
+class ProgrammerInterview  {
+    public void read() {
+    System.out.println("Programmer Interview!");
+    }
+}
+
+class Website {
+    /*  This creates an anonymous inner class: */
+    ProgrammerInterview pInstance = new ProgrammerInterview() {
+        public void read() {
+            System.out.println("anonymous ProgrammerInterview");
+        }
+    };
+}
+
+What’s actually happening in the code above is that we are creating an instance of a subclass (also known as a child class) of the 
+ProgrammerInterview class. And, the most important thing to understand here is that this instance (pInstance) is actually an 
+instance of an anonymous subclass of the ProgrammerInterview class.
+
+
+
+
+
+
+Draw a singly, doubly and circular linked list
+
+see wikepedia
+
+
+
+
+
+if you dont want a particular data member to be serialised, how do you do it?
+
+Transient keyword
+
+
+
+
+describe some of the design patterns that you have used
+
+
+
+
+
+
+How would you find if a substring appears more than once in a particular string?
+
+String.indexOf lastindexOf
+
+
+
+
+
+Why should you implement hashcode with equals in Java?
+
+You will not be able to recover your object from hashmap if that is used as key in HashMap
+
+
+
+
+how do you measure cup usage on unix box
+
+
+
+
+
+
+Where do you see yourself in 5 years with our company?
+
+
+
+
+
+
+Write a function to display all the leaf node on a tree
+
+public void printLeaf(TreeNode root) {
+    if(root==null)
+        return;
+    if(root.left==null && root.right==null)
+        System.out.println(root.val);
+    printLeaf(root.left);
+    printLeaf(root.right);
+}
+
+
+
+
+
+
+Given an array of integers how do you find the product of all the numbers except for one chosen integer.
+
+multiply all the integers and divide the chosen one
+
+
+
+
+
+
+What is the difference between an abstract class and an interface? if no methods in an abstract class are implemented,
+What is the difference between an abstract class and an interface?
+
+from stackoverflow:
+
+There are three differences:
+
+Interfaces can only declare public methods (i.e. no protected or package-private visible methods) and can not declare any fields
+Subclasses can only extend at most one abstract class, but can implement any number of interfaces
+The abstract class can also have implementations for some or all of the methods
+
+
+from ProgrammerInterview
+A class must be declared abstract when it has one or more abstract methods. abstract method only has heading, but no body
+
+1 abstract class has stronger relationship than interface
+
+2 java does not allow multiple inheritance
+
+3 An abstract class may provide some methods with definitions – so an abstract class can have non-abstract methods with actual 
+
+implementation details. An abstract class can also have constructors and instance variables as well.
+
+if pure abstract class: difference 1 access modifier 2 multiple interface VS one inheritance
+
+
+
+
+
+
+
+you have a grid of 10 rows and 10 columns. Write a program to count how many squares there are. (it is not 100, there is the giant 1
+square, a 1*1 square, 2*2, 3*3..etc from the left corner)
+
+
+
+
+
+Write a program to find the common characters in two strings. After writing the code they asked to reduce the complexity.
+
+It can be done in O(n) time with constant space.
+
+The pseudo code goes like this :
+
+int map1[26], map2[26];
+int common_chars = 0;
+
+for c1 in string1:
+    map1[c1]++;
+
+for c2 in string2:
+    map2[c2]++
+
+for i in 1 to 26:
+    common_chars += min(map1[i], map2[i]);
+
+
+
+
+
+
+Traverse an N*M matrix clockwise. Start from the out most layers, and move to the inner most layer in a spiral fashion
+
+see leetcode spiral matrix i ii
+
+
+
+
+
+
+
+
+if let you design a Facebook, what data base herarchy you should use
+
+
+
+
+
+
+Given an nxn matrix of numbers in ascending order in both dimensions how would you go about finding if the number y is in the matrix.
+
+see leetcode search in a matrix
+
+
+
+
+
+Why can a class not extend 2 super classes in java? Find   the shortest path from one corner to another corner of a cube. 
+
+How would you determine if a linked list is cyclical? Given 3 strings which burn for lengths 5, 10 and 30 minutes, 
+
+how can you measure exactly 15 minutes with 1 string? Contrast abstract class to an interface. 
+
+Write an algorithm to display the first 100 fibonnacci numbers 
+
+for shortest path from one corner to another corner of a cube http://puzzles.nigelcoldwell.co.uk/three.htm
+
+
+
+
+
+Which data structure would you use to organize a phonebook, and how would you optimize it? 
+
+hashtable
+
+
+
+
+
+
+infine black and white dots on a plane,prove that the   distance between 1 black n 1 white is 1unit
+
+
+
+
+
+
+
+
+
+Given a function rand() write a function that deals   52 random cards from a standard deck of playing cards. 
+
+public static void shuffle(){
+        int[] cards = new int[52];
+
+        //--- Initialize
+        for (int i=0; i<cards.length; i++) {
+            cards[i] = i;
+        }
+
+        for (int i=0; i<cards.length; i++) {
+            int randomPosition = rand();
+            int temp = cards[i];
+            cards[i] = cards[randomPosition];
+            cards[randomPosition] = temp;
+        }
+
+        for(int card : cards){
+            System.out.print(" " +card);
+        }
+}
+
+
+
+
+
+
+Given two arrays A and B, find the difference and   intersection of the two.
+
+hash table
+
+if sorted arrays set two pointers at the beginning of A and B and compare. Time Complexity is O(m+n), constant space
+
+
+
+
+you have an array and some 0 in that array. memory is so low that you can not create another array. 
+
+how do you remove 0 from the array? how do you optimize it
+
+two pointers one at begining one at end once beginning pointer encounter a 0 swap it with a non 0 element at end pointer
+
+seem like a problem from leetcode cannot remember...
+
+
+
+
+
+
+How would you implement a queue using any number of stacks?
+
+using 2 stacks see cc150
+
+public class Queue<Integer> {
+    Stack<Integer> s1;
+    Stack<Integer> s2;
+
+    public Queue() {
+        s1 = new Stack<Integer>();
+        s2 = new Stack<Integer>();
+    }
+
+    public void push(int val) {
+        s1.push(val);
+    }
+
+    public int peek() {
+        if(!s2.isEmpty())
+            s2.peek();
+        while(!s1.isEmpty())
+            s2.push(s1.pop());
+        return s2.peek();
+    }
+
+    public int pop() {
+        if(!s2.isEmpty())
+            s2.pop();
+        while(!s1.isEmpty())
+            s2.push(s1.pop());
+        return s2.pop();
+    }
+}
+
+
+
+
+How would you get the last word of a sentence in UNIX/command line?
+
+
+
+
+How would you get the last word of a sentence in   UNIX/command line? 
+
+use awk
+
+
+
+
+
+
+write a program to determine if a number can be expressed as 2^x. for example 4 is 2^2
+
+cc150
+
+n & (n-1)==0
+
+
+
+
+algorithm to traverse binary tree
+
+dfs bfs
+
+
+
+
+
+
+I was asked to describe an efficient string searching   algorithms 
+
+I described a simplified version of the Boyer-Moore and he was satisfied
+
+
+
+
+
+
+What language would you chose during a particular situation?
+
+
+
+
+
+
+Questions on OOP concepts
+
+
+
+
+
+
+
+Difference btwn inner and outer classes. Access modifiers allowed
+
+
+
+
+Access modifier:
+
+Default(No keyword)
+A variable or method declared without any access control modifier is available to any other class in the same package. 
+The fields in an interface are implicitly public static final and the methods in an interface are by default public.
+
+private
+Methods, Variables and Constructors that are declared private can only be accessed within the declared class itself.
+Private access modifier is the most restrictive access level. Class and interfaces cannot be private.
+Variables that are declared private can be accessed outside the class if public getter methods are present in the class.
+Using the private modifier is the main way that an object encapsulates itself and hide data from the outside world.
+
+public
+A class, method, constructor, interface etc declared public can be accessed from any other class. Therefore fields, methods, 
+blocks declared inside a public class can be accessed from any class belonging to the Java Universe.
+However if the public class we are trying to access is in a different package, then the public class still need to be imported.
+Because of class inheritance, all public methods and variables of a class are inherited by its subclasses.
+
+protected
+Variables, methods and constructors which are declared protected in a superclass can be accessed only by the subclasses 
+in other package or any class within the package of the protected members' class.
+The protected access modifier cannot be applied to class and interfaces. Methods, fields can be declared protected, 
+however methods and fields in a interface cannot be declared protected.
+Protected access gives the subclass a chance to use the helper method or variable, while preventing a nonrelated class from trying to use it.
+
+
+
+
+
+What is OOD
+Object-oriented design is the process of planning a system of interacting objects for the purpose of solving a software problem. 
+It is one approach to software design.
+
+An object contains encapsulated data and procedures grouped together to represent an entity. 
+
+
+
+
+
+Mullti-threaded Question
+
+
+
+
+
+
+
+A lot of data structures questions including some like: what is the runtime of a merge sort algorithm? 
+
+worst case, best case and average case
+O(nlogn)
+
+
+
+
+
+
+write a code to find a subset in an array which has the maximum sum. Array can have both negative and positive numbers.
+
+Kadane algorithm consists of a scan through the array values, computing at each position the maximum (positive sum) subarray ending 
+at that position. This subarray is either empty (in which case its sum is zero) or consists of one more element than the 
+maximum subarray ending at the previous position
+
+def max_subarray(A):
+    max_ending_here = max_so_far = 0
+    for x in A:
+        max_ending_here = max(0, max_ending_here + x)
+        max_so_far = max(max_so_far, max_ending_here)
+    return max_so_far
+
+cannot handle all negative integers
+
+from geeksforgeeks:
+
+Time Complexity: O(n)
+Algorithmic Paradigm: Dynamic Programming
+
+Following is another simple implementation suggested by Mohit Kumar. The implementation handles the case when all numbers in array are negative.
+
+int max(int x, int y) {
+    return (y>x) ? y:x;
+}
+ 
+int maxSubArraySum(int a[], int size)
+{
+   int max_so_far = a[0];
+   int curr_max = a[0];
+ 
+   for(int i=1; i<size; i++)
+   {
+        curr_max = max(a[i], curr_max+a[i]);            //global solution and local solution
+        max_so_far = max(max_so_far, curr_max);
+   }
+   return max_so_far;
+}
+
+
+
+
+Design and write a program for change dispenser
+
+
+
+
+
+
+
+Find depth of the binary tree? How would you insert an element in sorted array
+
+public int depth(TreeNode root) {
+    if(root==null)
+        return;
+    return Math.max(depth(root.left), depth(root.right))+1;
+}
+
+this is a three step process. 
+
+private static int[] insertElement(int original[],
+   int element, int index) {
+      int length = original.length;
+      int destination[] = new int[length + 1];
+      System.arraycopy(original, 0, destination, 0, index);
+      destination[index] = element;
+      System.arraycopy(original, index, destination, index
+      + 1, length - index);
+      return destination;
+   }
+
+Find the correct position for the element. Arrays.binarySearch(array, element) will find the correct position for the element. 
+It returns one of two things: a positive number if the element already exists in the array, 
+or a negative number that represents where it should be placed in the array. Quick example: 
+Arrays.binarySearch(new double[]{1,2,3},2) = 1, Arrays.binarySearch(new double[]{1,2,3},2.5) = -3 (element correct position-1). 
+
+Shift the array to insert the element. This can be done with a simple for loop: for(int i=insert_position; i<arr.length-1; i++) arr[i+1] = arr[i]. 
+Note that the array might first have to be re sized to insert the element.
+
+Insert the element. Assign the element to its new position. arr[insert_position] = element.
+
+
+
+
+
+
+What is the complexity of heapsort and why. How about worst case?
+
+O(nlogn)
+
+
+
+
+
+
+If you were to implement XXX, what type of data structure would be optimal and how would implement it using that data structure?
+
+see data structure when to use what
+
+
+
+
+
+
+Why does Java run on any machine while C++ does not? C++ java compare
+
+see ProgrammerInterview
+
+compare C++ vs java
+see http://stackoverflow.com/questions/9192309/the-main-difference-between-java-c
+
+
+
+
+
+Differences between overloading and overriding..They expect u to answer this very perfectly pointing out subtle differences
+
+see programmerInterview
+
+
+
+
+what is your favorite programming language? why?
+
+my favorite programming language is Java. 
+because first it has great popularity. You can discuss it with anyone because almost every developer knows 
+how to write Java code and there are lots of support forum for Java. 
+
+Secondly, Java runs on multiple platforms so it is really easy to deploy. 
+
+Third it has a long history for over 20 years. Now it has become a robust(Java compiler can detect many problems that would first 
+    show up during execution time in other language), stable language and support a large amount of libraries and packages.
+
+Other: Java is simple to code and maintain. Java is object-oriented. Java has rich documentation. Built-in support for multithreading.
+
+remember to mention there are some tasks that Java would be a poor choice. I am familiar with a range of languages and 
+I believe no one language is a universal solution. It’s important to pick the best tool for the job.
+
+
+
+
+Describe the main principles of object-oriented programming
+
+Object-oriented programming (OOP) is a programming paradigm that represents the concept of "objects" that have data fields 
+(attributes that describe the object) and associated procedures known as methods.
+
+Dynamic dispatch – when a method is invoked on an object, the object itself determines what code gets executed by 
+looking up the method at run time in a table associated with the object. This feature distinguishes an object from 
+an abstract data type (or module), which has a fixed (static) implementation of the operations for all instances. 
+It is a programming methodology that gives modular component development while at the same time being very efficient.
+
+Encapsulation - packing of data and functions into a single component
+
+polymorphism - Polymorphism is the ability of an object to take on many forms. 
+The most common use of polymorphism in OOP occurs when a parent class reference is used to refer to a child class object.
+
+Object inheritance - inheritance is when an object or class is based on another object or class, using the same implementation 
+(inheriting from a class) or specifying implementation to maintain the same behavior (realizing an interface; inheriting behavior)
+
+Open recursion – a special variable (syntactically it may be a keyword), usually called this or self, 
+that allows a method body to invoke another method body of the same object. This variable is late-bound; i
+t allows a method defined in one class to invoke another method that is defined later, in some subclass thereof.
+
+
+
+
+
+How do you find the sum of up to the nth number of the fibonacci sequence recursively? iteratively? which is more effective? why?
+
+iteratively is better
+
+The iterative code is much better as this completes in O(n). The recursive code is exponential in nature as we do not store the previous 
+result of Fib(x) anywhere. E.g. While computing Fib(4), it has to compute Fib(3) and Fib(2) but again to compute Fib(5) it goes back to 
+compute Fib(4) and Fib(3) though it ideally should have stored the previously computed value somewhere.
+i.e. If we call, say, fib(5), we produce a call tree that calls the function on the same value many different times:
+
+see http://geekyfry.com/interview/tech-it-interview/algo-ds/fibonacci-iterative-and-recursive-algorithms/
+
+see http://stackoverflow.com/questions/21710756/recursion-vs-iteration-fibonacci-sequence
+
+In the iterative case, the program variables provide a complete description of the state. If we stopped the computation in the middle, 
+to resume it only need to supply the computer with all variables. However, in the recursive process, information is maintained by the computer,
+ therefore "hidden" to the program. This makes it almost impossible to resume the program after stopping it.
+
+see http://www.programcreek.com/2012/10/iteration-vs-recursion-in-java/
+
+
+
+
+How to access databases quickly?
+
+index
+
+
+
+
+
+design an algorithm to detect deadlocks
+
+
+
+
+
+
+
+6. SQL Questions - Write up a School Registration DB Schema 
+Two table of Employee (ID, Name)/Salary History (EMP_ID, SALARY, SAL_BEGIN_DATE)
+Find primary keys/foreign keys. - Find ID of employee whose salary decreased.
+Find ID, total comp of employees - Find ID of employees who got only paid once
+
+Employee
+ID          Name
+0001        Mike
+0002        John
+
+Salary
+EMP_ID      SALARY      SAL_BEGIN_DATE
+0001        100         20140102
+0001        200         20140202
+0001        150         20140302
+0002        300         20140102
+
+CREATE TABLE EMPLOYEE 
+(
+    ID INT NOT NULL,
+    NAME VARCHAR(10) NOT NULL,
+    PRIMARY KEY(ID)
+)
+
+CREATE TABLE SALARY
+(
+    EMP_ID INT NOT NULL,
+    SALARY DECIMAL(18,2) NOT NULL,
+    SAL_BEGIN_DATE DATETIME
+    FOREIGN KEY(EMP_ID) REFERENCES EMPLOYEE(ID)
+)
+
+
+USE SELF-QUERY:
+SELECT S1.EMP_ID
+FROM SALARY S1, SALARY S2
+WHERE S1.EMP_ID = S2.EMP_ID AND S1.SAL_BEGIN_DATE<S2.S2.SAL_BEGIN_DATE AND S1.SALARY>S2.SALARY
+
+SELECT EMP_ID
+FROM SALARY
+GROUP BY EMP_ID
+HAVING COUNT(*)=1
+
+
+
+
+Find the lowest double in an array of numbers?
+
+
+
+
+
+
+
+Explain how Java garbage collection works from a high level. What different algorithms are there?
+
+Automatic garbage collection is the process of looking at heap memory, identifying which objects are in use and which are not, 
+and deleting the unused objects. An in use object, or a referenced object, means that some part of your program still maintains 
+a pointer to that object. An unused object, or unreferenced object, is no longer referenced by any part of your program. 
+So the memory used by an unreferenced object can be reclaimed.
+
+
+
+
+
+
+
+Tell me all the major players in the Java collections framework and the big-O runtime for insertion, deletion, and finding elements
+(ArrayList, LinkedList, HashMap...)
+
+see
+http://javadevelopersenior.com/blog/wp-content/uploads/2013/05/java_collections.pdf
+
+http://infotechgems.blogspot.com/2011/11/java-collections-performance-time.html
+
+
+
+
+Sketch out a simple implementation for a hash table. What properties does the hash function need to have?
+
+public class HashEntry {
+    private int key;
+    private int value;
+
+    HashEntry(int key, int value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+
+
+public class HashMap {
+    private final static int TABLE_SIZE = 128;
+
+    HashEntry[] table;
+
+    HashMap() {
+        table = new HashEntry[TABLE_SIZE];
+        for(int i=0; i<TABLE_SIZE; i++)
+            table[i] = null;
+    }
+
+    public int get(int key) {
+        int hash = (key%TABLE_SIZE);
+        while(table[hash]!=null && table[hash].getKey()!=key)
+            hash = (hash+1)%TABLE_SIZE;
+        if(table[hash]==null)
+            return -1;
+        else
+            return table[hash].getValue();
+    }
+
+    public void put(int key, int value) {
+        int hash = (key%TABLE_SIZE);
+        while(table[hash]!=null && table[hash].getKey()!=key)
+            hash = (hash+1)%TABLE_SIZE;
+        table[hash] = new HashEntry(key, value);
+    }
+}
+
+
+
+
+
+
+
+Polymorphism:
+
+see http://www.douban.com/note/266292253/
+
+
+
+public class JD{
+    public void run(){
+        System.out.println("JD在以120迈的速度在run");
+    }
+}
+
+// 这是我们的核心业务类
+public class Person{
+    public void drive(JD jd){
+        jd.run();
+    }
+
+    public static void main(String args[]){
+        Person p =new Person();
+        JD jd = new JD();
+        p.drive(jd);
+    }
+}
+
+如果你写出这样的代码的话,恭喜你!你中大奖了!---------------------你会被项目精力砍死的!!!!!!!
+
+项目经理为什么会砍你呢?
+因为你写的代码偶合性太强了!
+
+如果我们的需求变了,这个学生后来更有钱了,买了一两Benz.那么我们以前的系统怎么办啊.不要指望你作的系统永远不会变化
+我们的系统只能修改!这就是项目经理砍你的原因
+我们的系统会增加一个Benz类,也有个run()方法
+
+public class Benz{
+    public void run(){
+        System.out.println("Benz在以200迈的速度在run");
+    }
+}
+
+我们的核心业务类也要修改
+
+public class Person{
+
+    /*
+    public void drive(JD jd){
+        jd.run();
+    }
+    */
+
+    public void drive(Benz b){
+        b.run();
+    }
+
+    public static void main(String args[]){
+        Person p =new Person();
+        Benz b = new Benz();
+        p.drive(b);
+    }
+}
+
+
+
+以后的情况,我们可以把车抽象出来:
+
+public abstract class Driver{
+    /*属性*/
+    public void run();//让子类来运行
+}
+
+public Benz extends Driver{
+    public void run(){
+        System.out.println("Benz在以200迈的速度在run");
+    }
+}
+
+public JD extends Driver{
+    public void run(){
+        System.out.println("JD is running...");
+    }
+}
+
+public class Person{
+    private Driver driver;
+
+    public Person(Driver driver){
+       this.driver = driver;
+    }
+
+    public void drive(){
+        driver.run();
+    }
+
+    public void setDriver(Driver driver){//运用参数多态,以后不管买什么车都可以
+        this.driver = driver;
+    }
+
+
+    public static void main(String args[]){
+        Person p =new Person();
+        JD jd = new JD();//刚开始没钱就买辆JD吧
+        p.setDriver(jd);
+        p.drive();
+        
+        Benz benz = new Benz{();//有钱换车了
+        p.setDriver(benz);
+        p.drive();
+    }
+}
+
+
+
+
+
+多态的概念
+　　多态==晚绑定。
+
+　　不要把函数重载理解为多态。
+
+　　因为多态是一种运行期的行为，不是编译期的行为。
+
+　　多态：父类型的引用可以指向子类型的对象。
+
+　　比如 Parent p = new Child();
+
+　　　　当使用多态方式调用方法时，首先检查父类中是否有该方法，如果没有，则编译错误；
+
+　　　　如果有，再去调用子类的该同名方法。
+
+　　（注意此处，静态static方法属于特殊情况，静态方法只能继承，不能重写Override，如果子类中定义了同名同形式的静态方法，它对父类方法只起到隐藏的作用。调用的时候用谁的引用，则调用谁的版本。）
+
+　　（参考学习链接：http://docs.oracle.com/javase/tutorial/java/IandI/override.html）　　
+
+　　如果想要调用子类中有而父类中没有的方法，需要进行强制类型转换，如上面的例子中，将p转换为子类Child类型的引用。
+
+　　因为当用父类的引用指向子类的对象，用父类引用调用方法时，找不到父类中不存在的方法。这时候需要进行向下的类型转换，将父类引用转换为子类引用。     
+
+ 
+
+结合实例说明               
+
+　　下面举个例子（有问题的代码已注释）：
+
+　　主要讲讲两种类型转换和两种编译时候的错误。　
+
+多态示例代码
+
+public class PolyTest
+{
+    public static void main(String[] args)
+    {
+        
+        //向上类型转换
+        Cat cat = new Cat();
+        Animal animal = cat;
+        animal.sing();
+
+                
+        //向下类型转换
+        Animal a = new Cat();
+        Cat c = (Cat)a;
+        c.sing();
+        c.eat();
+
+
+        //编译错误
+        //用父类引用调用父类不存在的方法
+        //Animal a1 = new Cat();
+        //a1.eat();
+        
+        //编译错误
+        //向下类型转换时只能转向指向的对象类型        
+        //Animal a2 = new Cat();
+        //Cat c2 = (Dog)a2;
+        
+
+
+    }
+}
+class Animal
+{
+    public void sing()
+    {
+        System.out.println("Animal is singing!");
+    }
+}
+class Dog extends Animal
+{
+    public void sing()
+    {
+        System.out.println("Dog is singing!");
+    }
+}
+class Cat extends Animal
+{
+    public void sing()
+    {
+        System.out.println("Cat is singing!");
+    }
+    public void eat()
+    {
+        System.out.println("Cat is eating!");
+    }
+}
+
+
+（1）向上类型转换（Upcast）：将子类型转换为父类型。
+
+　　对于向上的类型转换，不需要显示指定，即不需要加上前面的小括号和父类类型名。
+
+（2）向下类型转换（Downcast）：将父类型转换为子类型。
+
+　　对于向下的类型转换，必须要显式指定，即必须要使用强制类型转换。
+
+并且父类型的引用必须指向子类的对象，即指向谁才能转换成谁。
+
+　　不然也会编译出错：
+
+因为父类引用指向的是Cat类的对象，而要强制转换成Dog类，这是不可能的。
+
+
+see http://www.cnblogs.com/mengdd/archive/2012/12/25/2832288.html
+
+
+
+
+
+
+dependency injection
+
+see http://blog.csdn.net/yqj2065/article/details/8510074
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,593 @@
+JVM
+
+java program is first compiled into an intermediate language called java bytecode.
+
+Then JVM does 2 things: 1 translate bytecode into the machine language for a particular computer. 2 execute machine language instructions
+
+JVM is not platform independent since it must translate the bytecode into machine language and machine language depends on operating system.
+
+When you download JVM you will need to choose the targeted operating system of the JVM
+
+All Java programs are compiled into class files that contain bytecodes. These byte codes can be run in any platform and 
+
+hence java is said to be platform independent.
+
+
+
+
+
+Method overloading
+
+When two or more methods in the same class have the exact same name but different parameters, it is call method overloading.
+
+What I mean different parameter is either the number of parameters is different for the methods or parameter types are different.
+
+However, only change the return type of the method or just the name of the method parameter is not overloading.
+
+Overloading happens at compile time.
+
+Method overriding
+
+a derived class redefined an inherited method in its parent class. An overriden method would have the exact same method name, return type,
+
+number of parameters and types of parameters as the method in parent class and the only difference is the definition of the method
+
+Method overriding happens at run time.
+
+
+
+
+
+why have private constructor?
+
+One use is singleton pattern or factory pattern.
+
+Another one is to prevent creation of objects. If a class only has static members those members can be accessed using only the class name and
+
+no instance of the class needs to be created.
+
+Also the class cannot be inheritted
+
+
+
+
+
+Final
+
+when applied to a method it means the method cannot be overriden in a derived class.
+
+when applied to class, the class cannot be inheritted from. Also turn off late binding thus prevent polymorphism.
+
+when applied to an instance variable, the variable cannot be changed. For reference variable it cannot point to any other object on the heap
+
+
+
+
+
+Finally
+
+finally block contains code that will be run whether or not an exception is thrown in a try block. Usually perform close resource operation
+
+(close socket, stream...)
+
+we need to notice that if there is a return statement in try block the finally will still get executed and it will be executed right before
+
+the return statement.
+
+if the finally has a return statement, it will override any exception or returned value that is inside the try/catch block.
+
+
+
+
+
+
+
+Finalize
+
+The is the method JVM runs before it runs garbage collector
+
+
+
+
+
+
+
+
+Generics
+
+Generics is used to allow a type or method to operate on objects of various types while providing compile-time type safety
+
+without:
+List v = new ArrayList();
+v.add("test");
+Integer i = (Integer)v.get(0); // Run time error
+
+with:
+List<String> v = new ArrayList<String>();
+v.add("test");
+Integer i = v.get(0); // (type error)  Compile time error
+
+
+
+
+
+
+
+Access modifier
+
+Default(No keyword)
+A variable or method declared without any access control modifier is available to any other class in the same package. 
+The fields in an interface are implicitly public static final and the methods in an interface are by default public.
+
+private
+Methods, Variables and Constructors that are declared private can only be accessed within the declared class itself.
+Private access modifier is the most restrictive access level. Class and interfaces cannot be private.
+Variables that are declared private can be accessed outside the class if public getter methods are present in the class.
+Using the private modifier is the main way that an object encapsulates itself and hide data from the outside world.
+
+public
+A class, method, constructor, interface etc declared public can be accessed from any other class. Therefore fields, methods, 
+blocks declared inside a public class can be accessed from any class belonging to the Java Universe.
+However if the public class we are trying to access is in a different package, then the public class still need to be imported.
+Because of class inheritance, all public methods and variables of a class are inherited by its subclasses.
+
+protected
+Variables, methods and constructors which are declared protected in a superclass can be accessed only by the subclasses 
+in other package or any class within the package of the protected members' class.
+The protected access modifier cannot be applied to class and interfaces. Methods, fields can be declared protected, 
+however methods and fields in a interface cannot be declared protected.
+Protected access gives the subclass a chance to use the helper method or variable, while preventing a nonrelated class from trying to use it.
+
+
+
+
+
+serializable
+
+it is an interface in java.io package. if a class implents the interface the object of the class can be converted into a sequence of bits socket
+
+it can be written to some storage medium(like a file) or transfer across a network.
+
+if we have a particular data member that we do not want to get saved when an object is serialized. we can declare it as "transient"
+
+
+
+
+
+How to create a thread
+
+1 extend Thread class
+
+public class MyThread extends Thread {
+
+	public void run() {
+
+	}
+}
+
+MyThread m = new MyThread();
+m.start();
+
+
+2 implement Runnable interface
+
+public class MyThread extends AnotherClass implements Runnable {
+
+	public void run() {
+
+	}
+}
+
+MyThread m = new MyThread();
+new Thread(m).start();
+
+
+
+
+
+Interface VS Abstract class
+
+from stackoverflow:
+
+There are three differences:
+
+Interfaces can only declare public methods. All interface are implicitly abstract (i.e. no protected or package-private visible methods) and can not declare any fields
+Subclasses can only extend at most one abstract class, but can implement any number of interfaces
+The abstract class can also have implementations for some or all of the methods
+
+
+from ProgrammerInterview
+A class must be declared abstract when it has one or more abstract methods. abstract method only has heading, but no body
+
+1 abstract class has stronger relationship than interface
+
+2 java does not allow multiple inheritance
+
+3 An abstract class may provide some methods with definitions – so an abstract class can have non-abstract methods with actual 
+
+implementation details. An abstract class can also have constructors and instance variables as well.
+
+if pure abstract class: difference 1 access modifier 2 multiple interface VS one inheritance
+
+
+
+
+
+static
+
+can be used for method or variable. It means the member of a class is not associated with an instance of a class. Instead it belongs to
+
+the class itself
+
+
+
+
+
+
+
+wait(), notify(), notifyAll()
+
+1. The wait(), notify(), and notifyAll() methods 
+   must be executed in synchronized code.
+2. The wait method defined in the Thread class, 
+   can be used to convert a thread from Running state 
+   to Waiting state.
+3. The notify() and notifyAll() methods can be used 
+   to signal and move waiting threads to ready-to-run state.
+
+
+
+
+
+Dynamic binding
+
+the method implementation that is actually called is determined at run-time not at compile time.
+
+
+
+
+
+synchronized
+
+is used to prevent 2 or more threads from accessing a method before one thread finishes execution in those methods.
+
+synchronized method
+
+Method of a class which need to be synchrnoized are declared with "synchrnoized" keyword. if one thread is executing a synchronized
+
+method, all other threads which want to execute any of the synchronized methods on the same objects get blocked.
+
+synchronized statement
+
+It provides synchronization for a group of statements rather that a method as a whole. It needs to provide the object on which these
+
+synchronized statements will be applied.
+
+
+A constructor cannot be synchronized because it does not make sense since only the thread that create the object needs
+
+to access the constructor.
+
+
+
+
+
+Hashtable VS HashMap
+
+1 Hashtable is synchronized while HashMap is not
+
+2 Hashtable cannot accept NULL value while HashMap can accept one NULL for key and multiple NULL for values
+
+3 iterator
+
+
+
+
+
+
+Java passes everything by value
+Pass by reference means, passing the address itself rather than passing the value. Pass by value means passing a copy of the value
+
+
+
+
+Java has reference not pointer. You cannot perform arithmetic operations on reference you can on pointer
+
+
+
+
+downcast means base class is casted into derived class.
+
+
+
+
+An interface can extends other interface
+
+
+
+
+Interface cannot be instantiated but you can write a method with a parameter of an interface type
+
+
+
+
+difference between "==" and "equals()"
+
+
+
+
+
+Java reflection
+
+Reflection is the ability to examine and/or modify the properties or behavior of an object at run-time. It is important to note that reflection
+
+specifically applies to objects
+
+reflection can slow down performance because reflection involves types that are resolved at run time and not at compile time.
+
+reflection can access information that is usually not allowed in non-reflexive code
+
+one common use of relfection is with JUnit
+
+
+
+
+OO main features
+
+Encapsulation - packing of data and functions into a single component
+
+polymorphism - Polymorphism is the ability of an object to take on many forms. 
+The most common use of polymorphism in OOP occurs when a parent class reference is used to refer to a child class object.
+
+Object inheritance - inheritance is when an object or class is based on another object or class, using the same implementation 
+(inheriting from a class) or specifying implementation to maintain the same behavior (realizing an interface; inheriting behavior)
+
+Polymorphism:
+
+see http://www.douban.com/note/266292253/
+
+
+
+public class JD{
+    public void run(){
+        System.out.println("JD在以120迈的速度在run");
+    }
+}
+
+// 这是我们的核心业务类
+public class Person{
+    public void drive(JD jd){
+        jd.run();
+    }
+
+    public static void main(String args[]){
+        Person p =new Person();
+        JD jd = new JD();
+        p.drive(jd);
+    }
+}
+
+如果你写出这样的代码的话,恭喜你!你中大奖了!---------------------你会被项目精力砍死的!!!!!!!
+
+项目经理为什么会砍你呢?
+因为你写的代码偶合性太强了!
+
+如果我们的需求变了,这个学生后来更有钱了,买了一两Benz.那么我们以前的系统怎么办啊.不要指望你作的系统永远不会变化
+我们的系统只能修改!这就是项目经理砍你的原因
+我们的系统会增加一个Benz类,也有个run()方法
+
+public class Benz{
+    public void run(){
+        System.out.println("Benz在以200迈的速度在run");
+    }
+}
+
+我们的核心业务类也要修改
+
+public class Person{
+
+    /*
+    public void drive(JD jd){
+        jd.run();
+    }
+    */
+
+    public void drive(Benz b){
+        b.run();
+    }
+
+    public static void main(String args[]){
+        Person p =new Person();
+        Benz b = new Benz();
+        p.drive(b);
+    }
+}
+
+
+
+以后的情况,我们可以把车抽象出来:
+
+public abstract class Driver{
+    /*属性*/
+    public void run();//让子类来运行
+}
+
+public Benz extends Driver{
+    public void run(){
+        System.out.println("Benz在以200迈的速度在run");
+    }
+}
+
+public JD extends Driver{
+    public void run(){
+        System.out.println("JD is running...");
+    }
+}
+
+public class Person{
+    private Driver driver;
+
+    public Person(Driver driver){
+       this.driver = driver;
+    }
+
+    public void drive(){
+        driver.run();
+    }
+
+    public void setDriver(Driver driver){//运用参数多态,以后不管买什么车都可以
+        this.driver = driver;
+    }
+
+
+    public static void main(String args[]){
+        Person p =new Person();
+        JD jd = new JD();//刚开始没钱就买辆JD吧
+        p.setDriver(jd);
+        p.drive();
+        
+        Benz benz = new Benz{();//有钱换车了
+        p.setDriver(benz);
+        p.drive();
+    }
+}
+
+
+
+
+
+
+ArrayList VS Vector
+
+ArrayList is not thread safe while Vector is synchronized
+
+ArrayList expand by 50% of its size each time while Vector double its size
+
+also see http://www.programcreek.com/2013/03/arraylist-vs-linkedlist-vs-vector/
+
+
+
+Comparator VS Comparable
+
+
+Comparable(compareTo(Object o1))											Comparator(compare(Object o1, Object o2))
+sorting logic in same class  												sorting logic in separate class
+
+class whose objects to be sorted must implement this interface 				class do not need to implement this interface
+
+import java.lang.Comparable 												import java.util.Comparator
+
+
+
+public class Country implements Comparable {
+
+	public int compareTo(Object arg) {
+		Country country = (Country)arg;
+		return (this.countryID < country.countryID) ? -1 : (this.countryID > country.countryID) ? 1:0;
+	}
+}
+
+
+public class CountrySortByID implements Comparator<Country> {
+
+	public int compare(Country c1, Country c2) {
+		return (c1.getCountryID() < c2.getCountryID()) ? -1:(c1.getCountryID() > c2.getCountryID()) ? 1:0;
+	}
+}
+
+
+Normally used for Comparator:
+
+Country india = new Country(1, 'India');
+Country US = new Country(2, 'US');
+Country china = new Country(3, 'China');
+
+List<Country> CountryList = new ArrayList<Country>();
+CountryList.add(india);
+CountryList.add(US);
+CountryList.add(china);
+
+Collections.sort(CountryList, new Comparator<Country>() {
+
+	public int compare(Country c1, Country c2) {
+		return c1.getCountryID.compareTo(c2.getCountryID());
+	}
+});
+
+
+http://www.javacodegeeks.com/2013/03/difference-between-comparator-and-comparable-in-java.html
+
+
+
+
+Q. What if I write static public void instead of public static void?
+
+Answer:
+
+Program compiles and runs properly.
+
+
+Q. In System.out.println(), what is System, out and println?
+
+Answer:
+
+System is a predefined final class, out is a PrintStream object and println is a built-in overloaded method in the out object.
+
+
+Q. What if the static modifier is removed from the signature of the main method?
+
+Or
+
+Q. What if I do not provide the String array as the argument to the method?
+
+Answer:
+
+Program compiles. But at runtime throws an error “NoSuchMethodError”.
+
+
+Q. What if the main method is declared as private?
+
+Answer:
+
+The program compiles properly but at runtime it will give “Main method not public.” message.
+
+
+
+
+
+Garbage Collector
+http://blog.csdn.net/caohaicheng/article/details/38051883
+
+
+
+
+
+1、abstract class 与 interface有什么区别：
+
+含有abstract 修饰的类即为抽象类，抽象类不能被实例化
+抽象类中可以有抽象方法，抽象方法必须在子类实现，如果子类没有完全实现父类的抽象方法，那么子类也必须是abstract修饰
+其实抽象类与普通类的区别就在于它不可被实例化和它可以有抽象的方法。
+接口可以说是抽象类的一个特例，接口中所有的方法都必须是抽象的，接口中的方法默认为public abstract类型，接口中的成员变量默认为public static final
+下面比较一下二者的语法区别：
+（1）抽象类内可以有构造方法，接口中不可以有构造方法
+（2）抽象类中可以有普通的非抽象方法，而接口中的所有方法都必须是抽象的。
+（3）访问类型不同，抽象类的抽象方法可以是public 和 protected  ，接口内的方法只能是public ，并且默认就是public abstract
+（4）抽象类可以包含静态方法，接口中没有
+（5）抽象类和接口中都可以包含静态成员变量，在抽象类中静态成员变量的访问类型任意，而接口中只能是public static final
+（6）一个类可以实现多个接口，但是只能继承一个抽象类
+（7）接口可以继承接口，抽象类可以实现接口
+下面说说两者在应用上的区别：
+接口更多的是在系统架构设计方面发挥作用，主要用于定义模块之间的通信契约。而抽象类在代码实现方面发挥作用，可以实现代码的重用。
+
+
+
+
+
+基本类型
+http://blog.csdn.net/caohaicheng/article/details/38016193
+
+String
+http://blog.csdn.net/caohaicheng/article/details/38018877
+
+异常
+http://blog.csdn.net/caohaicheng/article/details/38025329
