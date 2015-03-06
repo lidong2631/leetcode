@@ -1,0 +1,178 @@
+Array
+
+Two Sum (注意:题目假设只有一个解)
+两种方法 第一种用HashMap 遍历一遍数组 如果target-number[i]没出现在表中 就将number[i]放在表中 否则找到结果输出 时间O(n) 空间O(n)
+
+第二种先排序然后两边夹逼 这种比较好应付不只有一个解的情况 不过这题要求输出数字的index而不是数字本身 所以要多开一个HashMap纪录数字原始的index
+
+所以时间O(nlogn＋n)=O(nlogn) 空间O(n)
+
+
+
+Two Sum ii - input array is sorted
+这题假设数组已排好序 可以直接用两边夹逼的方法做出 时间O(n) 空间O(n)
+
+
+
+3Sum (数组中可能有重复值)
+这题先对数组排序这样处理重复值会比较方便 然后遍历一遍数组每次取一个数 调用Two Sum的subroutine找两个数和为-num[i] 注意这里循环要从后往前走
+
+不然输出就不是从小到大输出OJ过不了 时间O(n^2+nlogn)=O(n^2) 空间O(n)
+
+这题要注意去重有两个地方一个是主循环中if(i<num.length-1 && num[i]==num[i+1])去除取第一个数时的重复
+
+另一个是TwoSum里while(left<right && num[left]==num[left-1]) while(left<right && num[right]==num[right+1])去除取TwoSum时的重复
+
+
+
+3Sum Closest (find three integers that sum is closest to a given number. Return the sum. Only one solution)
+3Sum变体 一样是先排序数组 设closest起始为num[0]+num[1]+num[2]-target 从前往后遍历一遍数组仍然是调用TwoSum找两个数和最接近target-num[i]
+
+如果出来的结果的绝对值小于closest更新closest 最后输出closest+target 注意TwoSum中稍有变化 每次从左右取两个数减target得到localDiff
+
+跟diff比较如果localDiff小就更新diff 然后根据num[left]+num[right]的值继续夹逼target 如果是0就直接返回
+
+
+
+4Sum
+仍是先对数组排序 从后往前扫一遍数组 对于非重复元素 调用3Sum subroutine后面跟3Sum一样 时间O(n^3)
+
+此题还有一种解法可以达到O(n^2logn) 有时间看
+
+
+
+Best Time to Buy and Sell Stock (一次交易的最大利润)
+动态规划 局部解全局解 维护两个量 global到目前为止最好的利润 local在当前天卖出最好的利润 local = Math.max(local+prices[i+1]-prices[i], 0)
+
+也就是知道第i天卖出的最大利润 加上i＋1天与i天的差价 如果这个差价加上i天的最大利润比0还小就是0 代表当天买当天卖 global = Math.max(local, global)
+
+时间O(n) 空间O(1)
+
+
+
+Best Time to Buy and Sell Stock ii (无限次交易的最大利润)
+这题更简单 不限定交易次数那么只要差价大于0就可以一直累加 时间O(n) 空间O(1)
+
+
+
+Best Time to Buy and Sell Stock iii (限定2次交易 扩展到k次)
+难题 维护两个量 global[j]到达第i天最多可以进行j次交易可以获得的最大利润 local[j]到达第i天最多进行j次交易并且最后一次交易在第i天发生的最好利润
+
+local[i][j]=max(local[i-1][j]+diff, global[i-1][j-1]+max(diff,0)) 第一个取local第i-1天j次交易，然后加上今天的差值
+
+(这里因为local[i-1][j]包含第i-1天卖出的交易，所以现在变成第i天卖出，并不会增加交易次数，而且这里无论diff是不是大于0都一定要加上，否则就不满足local[i][j]必须在最后一天卖出的条件了）
+
+第二个是全局到i-1天进行j-1次交易，然后加上今天的交易，如果今天是赚钱的话（也就是前面只要j-1次交易，最后一次交易取当前天）
+
+global[i][j]=max(local[i][j],global[i-1][j])
+
+
+
+Combination Sum (找和为指定target的集合 每个元素可以用无限次)
+NP问题 先排序好处理重复元素 然后丢给helper helper中判断如果target<0返回 target=0找到一组解放到res中 否则循环 注意循环先要判断重复元素因为元素可以无限使用
+
+若前面已用过这个元素 后面再出现就可以直接跳过 每次递归调用helper时start仍是i因为元素可以多次使用
+
+
+
+Combination Sum ii (每个元素只能用一次)
+跟上一题类似 只是递归helper时start值为i＋1因为元素只能用一次 而上一题start仍是i 另外这一题还是递归前还是要判断重复元素 因为虽然一个元素不可以重复使用
+
+但一个元素重复出现多次是允许的 为了避免出现重复结果集只对第一次碰到这个数递归 接下来再碰到就直接跳过
+
+
+
+Construct Binary Tree from Preorder and Inorder Traversal
+树的难题 先用HashMap保存中序遍历的下标以便后面寻找根的下标 然后仍然是用helper递归 这里利用先序遍历找到根的下标 然后递归左右子树
+
+这里麻烦在递归先序的下标 中序比较好处理 root.left = helper(preorder, preStart+1, preStart+index-inStart, inorder, inStart, index-1, map);
+                                                        根后一位就是左子树开始位置   左子树结束位置 index-inStart是先序左子树加根的长度
+root.right = helper(preorder, preStart+1+index-inStart, preEnd, inorder, index+1, inEnd, map);
+                                右子树开始位置 左子树结束位置＋1
+
+
+例子 先序遍历是12453687 中序遍历是42516837 后序遍历是45286731
+                    1
+            2               3
+        4       5       6       7
+                          8
+
+
+Construct Binary Tree from Inorder and Postorder Traversal
+同上一题 递归后序的下标为 root.left = helper(inorder, inStart, index-1, postorder, postStart, postStart+(index-inStart)-1, map);
+                                                                                            左子树结束位置
+root.right = helper(inorder, index+1, inEnd, postorder, postEnd-(inEnd-index), postEnd-1, map);
+                                                        从根往前右子树长度位        根－1是右子树结束位置
+
+
+
+Container With Most Water
+类似TwoSum中的夹逼法 每次迭代比较左右指针谁指的数小 小的那个就是瓶颈 谁小就继续移动谁 维护最大盛水量 这样扫一遍数组后可以得到结果
+
+时间O(n) 空间O(1)
+
+
+
+Find Minimum in Rotated Array i ii (i假定没有重复元素 二有)
+这题i ii用一种解法都可以搞定 参见ii的第一种解法 可以处理有重复和没重复元素的情况 本质也是二分查找 只是不是找指定target而是找最小值
+
+这道题要留意的是下标总是会偏向左 所以在二分时变化是right = mid; left = mid+1要特别体会这点 另外这题ii多加的重复条件会影响复杂度要注意
+
+原先搜索某一个元素，所以可以夹逼到找到元素或者他们交错为止，现在的主要问题是如果l和r相差1以内，那么m就会等于l，如此下面的条件就会跳过r，
+
+而最小元素可能就在r里面，所以终止条件才改成l<r-1使得夹逼就停止在最后两个元素中
+
+
+
+Find Peak Element
+还是二分法思路 如果num[mid]>num[mid+1] right=mid; else left=mid+1 下标的处理跟Find Minimum一样 
+
+就剩两个元素比较时 指针一定落在左边的元素 所以mid+1不会越界 时间O(n) 空间O(1)
+
+
+
+First Missing Positive integer
+思路是找第一个违反A[A[i]-1]=A[i]的元素 遍历一遍数组A 对于A[i]>0&&A[i]<=A.length&&A[A[i]-1]!=A[i]的元素进行交换
+
+交换code为
+int tmp = A[A[i]-1]; 
+A[A[i]-1] = A[i]; 
+A[i]=tmp; 
+i--;
+
+注意第一个判断最后一个条件不能用A[i]!=i+1 只能用A[A[i]-1]!=A[i] 否则碰到重复元素会死循环 就是不停交换两个相同的元素 而用A[A[i]-1]!=A[i]
+
+做判断条件好处是它只检查A[A[i]-1]放的值是不是应放的值A[i]跟当前下标i无关 扫完一遍后再扫一次数组找到第一个不符合规律的数即是结果 如果都符合
+
+就是A.length+1
+
+
+
+Merge Intervals
+先对interval排序 然后扫一遍interval 如果当前interval和结果集中最后一个有重叠 就把结果集中最后一个元素的end设为它和当起interval的end中较大值
+
+排序要用到Comparator接口 具体如下
+Comparator<Interval> comp = new Comparator<Interval>()  
+{  
+    @Override  
+    public int compare(Interval i1, Interval i2)  
+    {  
+        if(i1.start==i2.start)  
+            return i1.end-i2.end;  
+        return i1.start-i2.start;  
+    }  
+};  
+Collections.sort(intervals,comp);  
+
+
+
+
+
+
+
+
+
+
+
+
+
