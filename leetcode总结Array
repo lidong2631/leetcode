@@ -164,6 +164,41 @@ Comparator<Interval> comp = new Comparator<Interval>()
 };  
 Collections.sort(intervals,comp);  
 
+时间O(n) 空间O(1)
+
+
+Insert Intervals
+这题是上一题的进阶版 先扫一遍list找到newInterval.start<intervals.get(i).end 如果有这个interval就先将newInterval.start和intervals.get(i).start
+
+merge 然后将newInterval插入位置i i++跳到下一个位置 从i开始往后扫 只要newInterval.end跟当前interval.get(i)有交集 就将它合并进newInterval
+
+并从原list中remove这个interval 时间O(n) 空间O(1)
+
+
+
+Jump Game
+动态规划题 维护一个到目前为止能跳到的最远距离reach 循环扫一遍数组 对于每一步更新reach=Math.max(reach, A[i]+i) 只要i<=reach就可以一直循环
+
+最后跳出循环判断reach>=A.length-1说明可以完成 否则返回false 时间O(n) 空间O(1)
+
+
+
+Jump Game ii
+上一题的扩展 只是这里要多维护两个量 一个上一次能跳到的最大距离lastReach和最小步数step 只要lastReach大于等于i就不需要多走一步 否则step+1
+
+更新lastReach=reach reach跟上一题一样还是每次都更新 循环后如果reach<A.length-1说明跳不过去返回0 否则返回step
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
