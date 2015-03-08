@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 python 学习之旅
 
 深入Python(1): 字典排序 关于sort()、reversed()、sorted() 一、Python的排序
@@ -160,3 +161,167 @@ sort_ff.append(j)
 
 善用sort() 或 sorted(), a.sort() 已改变其结构，b = a.sort() 是错误的写法! 而 sorted(a, ...)并没有改变a的结构。
 
+=======
+python 学习之旅
+
+深入Python(1): 字典排序 关于sort()、reversed()、sorted() 一、Python的排序
+
+1、reversed()
+
+这个很好理解，reversed英文意思就是：adj. 颠倒的；相反的；（判决等）撤销的
+
+print list(reversed(['dream','a','have','I']))
+#['I', 'have', 'a', 'dream']2、让人糊涂的sort()与sorted()
+
+在Python 中sorted是内建函数(BIF),而sort()是列表类型的内建函数list.sort()。
+
+sorted()
+
+sorted(iterable[, cmp[, key[, reverse]]])
+Return a new sorted list from the items in iterable.
+
+The optional arguments(可选参数) cmp, key, and reverse have the same meaning as those for the list.sort() method (described in section Mutable Sequence Types).
+
+cmp specifies（指定） a custom comparison function of two arguments (iterable(可迭代的) elements) which should return a negative（复数）, zero or positive（正数） number depending on whether the first argument is considered smaller than, equal to, or larger than the second argument: cmp=lambda x,y: cmp(x.lower(), y.lower()). The default value is None.
+
+key specifies a function of one argument that is used to extract a comparison key from each list element: key=str.lower. The default value is None (compare the elements directly).
+
+reverse is a boolean value. If set to True, then the list elements are sorted as if each comparison were reversed.
+
+#字符串排序使用是字典序，而非字母序
+"""sorted()按照字典序排序"""
+lis = ['a','c','z','E','T','C','b','A','Good','Tack']
+print sorted(lis)   #['A', 'C', 'E', 'Good', 'T', 'Tack', 'a', 'b', 'c', 'z'] 
+
+关于字典序：
+
+可参考百度百科。http://baike.baidu.com/view/4670107.htm
+
+根据ASCII排，具体如下：0-9（对应数值48-59）；A-Z（对应数值65-90）；a-z（对应数值97-122）；------------ 
+标准序: 短在前,长在后,等长的依次比字母,如to < up < cap < cat < too < two <boat < boot < card字典序: 依次比字母, 如boat < boot <cap < card < cat < to < too< two < up更有甚者说字典序就是字典的排序，像字典一样。我一直没有找到权威的说明，什么是字典序？？？？求答案！！
+
+sort()
+
+s.sort([cmp[, key[, reverse]]])
+
+ 
+
+三、Python的字典排序
+
+1、关于Python字典的一些特征
+
+无序：
+
+字典，形如 dic = {'a':1 , 'b':2 , 'c': 3},字典中的元素没有顺序，所以dic[0]是有语法错误的。
+
+无重：
+
+不可以有重复的键值，所以 dic.add['c'] = 4后，字典变成 {'a':1 , 'b':2 , 'c': 4}.
+
+2、根据“键”或“键值”进行不同顺序的排序
+
+函数原型：sorted(dic,value,reverse)
+
+解释：dic为比较函数，value 为排序的对象（这里指键或键值），
+
+reverse：注明升序还是降序，True--降序，False--升序（默认）
+
+3、例子：
+
+dic = {'a':31, 'bc':5, 'c':3, 'asd':4, '33':56, 'd':0}
+想把dic的value按照从大到小排序（value都是整数）。
+
+dic = {'a':31, 'bc':5, 'c':3, 'asd':4, '33':56, 'd':0}
+print sorted(dic.iteritems(), key=lambda d:d[1], reverse = False )  
+#[('d', 0), ('c', 3), ('asd', 4), ('bc', 5), ('a', 31), ('33', 56)]解释如下：
+
+（1）、dic.iteritems()，返回字典键值对的元祖集合
+
+
+print dic.iteritems()   #<dictionary-itemiterator object at 0x00B71A80>
+
+for obj in dic.iteritems():
+    print obj,obj[0],obj[1]
+    
+#('a', 31) a 31
+#('c', 3) c 3
+#('d', 0) d 0
+#('bc', 5) bc 5
+#('33', 56) 33 56
+#('asd', 4) asd 4（2）、关于排序对象
+
+上述已经说过，value(或key)为排序的对象（这里指键或键值），然而为什么使用lambda函数呢，这里请参阅：点击阅读
+
+key=lambda d:d[1] 是将键值(value)作为排序对象。
+
+key = lambda d:d[1]
+for i in dic.iteritems():
+    print key(i),   #输出31 3 0 5 56 4，这些都是字典dic的值如果选择 key = lambda d:d[0]，则选择【键Key】作为排序对象。
+
+(3)、reverse
+
+reverse 是否反向，reverse=Ture表示反向。
+
+(4)、注意：
+
+sorted(dic.iteritems(), key=lambda d:d[1], reverse = False )将每一项dic.iteritems()键值对的元祖进行迭代，每一项都作为参数传入key()函数（我说的是这个：key=lambda d:d[1],）中。
+
+ 4、回顾
+
+lis = ['a','bc','c','asd','33','d']
+print sorted(lis)   #['33', 'a', 'asd', 'bc', 'c', 'd']依次比字母, 如boat < boot <cap < card < cat < to < too< two < up5.问题
+
+具体实例可参考：[**python的排序函数sort,sorted在列表排序和字典排序中的应用详解和举例**](http://wangwei007.blog.51cto.com/68019/1100742)
+
+现在有这种情况，排序中排序。如大题号排序，然后大题对应的小题号也排序，如下：
+
+?
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23 lis = [{'Big':3, 'small':2},{'Big':3, 'small':4},{'Big':2, 'small':2}, {'Big':3, 'small':1},{'Big':2, 'small':1},{'Big':1, 'small':1}] 
+  
+# 大题号排序 
+li = sorted(lis, key=lambda s: s['Big']) 
+  
+# 输出： 
+#[{'small': 1, 'Big': 1}, {'small': 2, 'Big': 2}, {'small': 1, 'Big': 2}, {'small': 2, 'Big': 3}, {'s 
+mall': 4, 'Big': 3}, {'small': 1, 'Big': 3}] 
+  
+# 小题号排序： 
+sort_ff = [] 
+no = set([i['Big'] for i in li]) 
+for obj in no: 
+li_ = [] 
+for i in ff: 
+if i['Big'] == obj: 
+li_.append(i) 
+l = sorted(li_, key=lambda s: s['small']) 
+for j in l: 
+sort_ff.append(j) 
+  
+# 输出结果： 
+[{'small': 1, 'Big': 1}, {'small': 1, 'Big': 2}, {'small': 2, 'Big': 2}, {'small': 1, 'Big': 3}, {'small': 2, 'Big': 3}, {'small': 4, 'Big': 3}] 
+
+善用sort() 或 sorted(), a.sort() 已改变其结构，b = a.sort() 是错误的写法! 而 sorted(a, ...)并没有改变a的结构。
+
+>>>>>>> e1726386107db545bdcfa0e769c3d529b5cda120

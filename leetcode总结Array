@@ -106,6 +106,7 @@ root.right = helper(inorder, index+1, inEnd, postorder, postEnd-(inEnd-index), p
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -119,6 +120,67 @@ root.right = helper(inorder, index+1, inEnd, postorder, postEnd-(inEnd-index), p
 
 
 
+=======
+Container With Most Water
+类似TwoSum中的夹逼法 每次迭代比较左右指针谁指的数小 小的那个就是瓶颈 谁小就继续移动谁 维护最大盛水量 这样扫一遍数组后可以得到结果
+
+时间O(n) 空间O(1)
+
+
+
+Find Minimum in Rotated Array i ii (i假定没有重复元素 二有)
+这题i ii用一种解法都可以搞定 参见ii的第一种解法 可以处理有重复和没重复元素的情况 本质也是二分查找 只是不是找指定target而是找最小值
+
+这道题要留意的是下标总是会偏向左 所以在二分时变化是right = mid; left = mid+1要特别体会这点 另外这题ii多加的重复条件会影响复杂度要注意
+
+原先搜索某一个元素，所以可以夹逼到找到元素或者他们交错为止，现在的主要问题是如果l和r相差1以内，那么m就会等于l，如此下面的条件就会跳过r，
+
+而最小元素可能就在r里面，所以终止条件才改成l<r-1使得夹逼就停止在最后两个元素中
+
+
+
+Find Peak Element
+还是二分法思路 如果num[mid]>num[mid+1] right=mid; else left=mid+1 下标的处理跟Find Minimum一样 
+
+就剩两个元素比较时 指针一定落在左边的元素 所以mid+1不会越界 时间O(n) 空间O(1)
+
+
+
+First Missing Positive integer
+思路是找第一个违反A[A[i]-1]=A[i]的元素 遍历一遍数组A 对于A[i]>0&&A[i]<=A.length&&A[A[i]-1]!=A[i]的元素进行交换
+
+交换code为
+int tmp = A[A[i]-1]; 
+A[A[i]-1] = A[i]; 
+A[i]=tmp; 
+i--;
+
+注意第一个判断最后一个条件不能用A[i]!=i+1 只能用A[A[i]-1]!=A[i] 否则碰到重复元素会死循环 就是不停交换两个相同的元素 而用A[A[i]-1]!=A[i]
+
+做判断条件好处是它只检查A[A[i]-1]放的值是不是应放的值A[i]跟当前下标i无关 扫完一遍后再扫一次数组找到第一个不符合规律的数即是结果 如果都符合
+
+就是A.length+1
+
+
+
+Merge Intervals
+先对interval排序 然后扫一遍interval 如果当前interval和结果集中最后一个有重叠 就把结果集中最后一个元素的end设为它和当起interval的end中较大值
+
+否则直接将当前interval加到结果集中
+
+排序要用到Comparator接口 具体如下
+Comparator<Interval> comp = new Comparator<Interval>()  
+{  
+    @Override  
+    public int compare(Interval i1, Interval i2)  
+    {  
+        if(i1.start==i2.start)  
+            return i1.end-i2.end;  
+        return i1.start-i2.start;  
+    }  
+};  
+Collections.sort(intervals,comp);  
+>>>>>>> e1726386107db545bdcfa0e769c3d529b5cda120
 
 
 

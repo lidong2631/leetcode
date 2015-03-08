@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 leetcode一些题目归类：
 
 ---NP： 
@@ -369,4 +370,377 @@ max points in a line(实现题，细节较多)
 
 ---数学模型:
 
+=======
+leetcode一些题目归类：
+
+---NP： 
+
+N-Queens i (经典NP 套路背熟！)
+
+N-Queens ii (跟上一题完全一样 除了是记录多少种解法之外 问题的改变并没有提高复杂度 仍是NP复杂度)
+
+Sudoku Solver (NP问题套路)
+
+Combination Sum
+
+Combinations
+
+Permutations
+
+Permutations ii
+
+unique binary search tree ii
+
+restore IP address(segment, isValid())
+
+subsets i(递归非递归都可以 递归用回溯从空集开始一个个建立子集 非递归则是从无到有建立子集)
+
+subsets ii(带重复的集合 和i解法差不多 多个检查 递归是start lastSize 非递归是start size)
+
+combination(简单NP问题)
+
+permutation i (NP问题套路 只是这里要加一个boolean[] used表示元素是否已经放到结果中 这样不会出现重复)
+
+permutation ii (跟上题基本一样 只是这里允许重复 所以要先排序 然后每次递归前判断如果前后两个值相等且前一个值已经被遍历过就直接continue下一个循环)
+
+combination sum i (标准NP套路 记得排序去重)
+
+combination sum ii (跟i基本一样 只是每个元素只能用一次 所以递归时传的index应是当前元素的下一个 并且这里仍然要判断相邻元素是否重复 因为重复元素出现在数组里是允许的)
+
+
+
+---DP:
+
+Word Break
+
+jump game i(局部解 全局解思想 搞清楚局部(A[i]+i)和全局(Math.max(global, local)的递推式)
+
+jump game ii
+
+maximum subarray(局部解 全局解)
+
+Candy(也有些两边夹逼的思想, 左扫一遍右扫一遍)
+
+Triangle(一维dp)
+
+Pascal's Triangle i 
+
+Pascal's Triangle ii(对于ii 记得是从后往前扫)
+
+Distinct subsequences(二维dp)
+
+interleaving string(标准二维dp)
+
+unique binary search tree(二维dp)
+
+Decode ways(一维dp 主要if条件)
+
+scramble strings(三维dp 难！！)
+
+edit distance(二维dp)
+
+climbing stairs(一维dp 实质是fibonacci数列 递归递推两种解法 递归会超时)
+
+minimum path sum(二维dp 是unique paths i ii的general版本)
+
+unique paths i(二维dp 较简单 空间上用一维数组有优化 这道题还可以用组合公式直接求解 是最优解)
+
+unique paths ii(加了障碍 仍是二维dp 需要判断grid[i][j]是否为1 空间上跟i同用一维数组优化)
+
+
+
+---Binary Search 二分法:
+
+search in a rotated array i (二分法变体 无重复值 首先判断mid到right是否有序(A[mid]是否小于A[right])然后看target落在哪个区间相应调整left或right
+
+search in a rotated array ii (带重复值的二分旋转 跟i差不多 只是当left==mid时将left++看能不能不等 也因此最坏时间复杂度会到O(n))
+
+search a 2D matrix (两次二分法 先列再行 最终确定是否能找到元素)
+
+sqrt(x) (left=1 right=x/2+1 二分法不断缩范围 如果能找到mid返回mid 否则返回right)
+
+pow (递归非递归两种解法 递归法比较好理解就三种情况n%==2 n>0和其他情况 但没有越界的判断)
+
+search insert position (跟标准二分法写法相同 只不过最后没找到return left就好了)
+
+search for a range (三遍二分法 第一遍检查数组是否存在target 如果存在 分别对找到的target左右两边做二分查找找边缘)
+
+median of two sorted array
+
+
+
+---Sort:
+
+merge sorted array(从后往前遍历两个数组 将大的那个数组的值放到结果数组中)
+
+merge two sorted list(归并排序的归并 三个while)
+
+insertion sort list(插入排序 4步)
+
+sort color(计数排序 要熟记 本题的解法是用双指针 p1在首位 p2在尾部 扫一遍数组 碰到0就跟p1交换同时p1后移一位 碰到2就跟p2交换同时p2前移一位 碰到1就继续扫)
+
+first missing positive integer (计数排序的思想 将数组里的数按照A[i]=i+1的顺序放 第二遍扫时第一个不符合顺序的即是结果)
+
+merge k sorted list (两种解法 1用二分法递归到底 然后用merge two sorted list将两个list merge然后慢慢回溯 2 用heapsort)
+
+
+
+---LinkedList基本操作:
+
+reorder list 	(快慢指针拆分链表, reverse linkedlist, merge linkedlist)
+
+linked list cycle(快慢指针找cycle)
+
+linked list cycle ii(数学论证题)
+
+reverse nodes in k-group
+
+Copy List With Random Pointer(三步 1 在每个节点后深拷贝一份 2 给拷贝节点random指针 3 按要求连接节点)
+
+reverse linked list ii(两步 1 循环m-1次走到m点前一个位置 2 循环n-m次逐一将相邻两节点的指针reverse)
+
+partition List(新建两个头节点 将小于x的node append到第一个节点后 大于x的node append到第二个节点后 最后连接)
+
+remove duplicates from sorted list i (从头往后滤 如果是重复值就p.next=p.next.next一直往后指直到非重复值时p=p.next)
+
+remove duplicates from sorted list ii (双指针p1 p2 如果是重复值p1 keep going到最后一个重复值 如果p2的next值是p1说明中间没有重复值 p1p2都向后1步 否则p1去p2的next)
+
+remove duplicates from sorted array i (双指针p1=1 p2=1 如果相邻元素是重复值A[p1]==A[p1-1] p1 keep going如果不相等了A[p2]=A[p1] p2++ 最后返回p2)
+
+remove duplicates from sorted array ii (比i多用一个count变量 扫一遍数组重复值count++ 如果count>2 continue 否则不同值A[res++]=A[i])
+
+rotate list (简单题 注意n可能超过链表长度 要先取余 而rotate只需要将对应节点设为head并把它前一节点的next设为null就可以了)
+
+swap nodes in pairs (简单题 建立新节点指向头节点 然后两两交换节点)
+
+reverse nodes in k-group (这题是swap nodes的通用情况 从头往后扫 扫到k就执行一次subroutine reverse 一直到不足k节点 这题主要好好记住reverse linkedlist的subroutine)
+
+remove nth node from end of list (简单题 双指针相差n 一起移动当前指针的next指向空时将后一个指针的next指向next.next 注意处理无效n的情况)
+
+
+
+---Tree:
+
+preorder/inorder/postorder/levelorder
+
+sum root to leaf
+
+binary tree maximum path sum
+
+Populating next right pointers in each node i (i假设树是complete binary tree)
+
+Populating next right pointers in each node ii (有点像层序遍历 ii要求树不是complete binary tree 一种解法可以应对两题 不过写法略繁琐)
+
+binary tree level order traversal i (层序遍历 从上到下)
+
+binary tree level order traversal ii(层序遍历 从下到上 只是在i基础上加个Collections.reverse())
+
+binary tree zigzag level order traversal(层序遍历的变体 两个stack实现 一个currLevelStack 一个nextLevelStack 每次判断是奇数行还是偶数行 奇数从后push 偶数从头push)
+
+Flatten binary tree to linked list (递归然后回溯时将 节点右节点连到左节点的右孩子 再将节点左节点挂到右节点 最后左节点置null)
+
+Path sum i 
+
+Path sum ii (递归)
+
+Minimum Depth of binary tree(递归 非递归两种解法 递归很简单 非递归就是while里面三个if判断)
+
+Maxmum Depth of binary tree (同上)
+
+Balanced binary tree(递归到底 再回溯)
+
+convert sorted list to binary search tree(二分法 利用中序遍历的思想递归)
+
+convert sorted array to binary search tree(同上)
+
+construct binary tree from preorder and inorder traversal(这两个题算树里的难题 也是用递归 根据前序或后序先找到root 再从中序中劈半 注意递归的起始终止位置)
+
+construct binary tree from inorder and postorder traversal
+
+symmetric tree(递归 非递归)
+
+same tree
+
+recover binary search tree(利用bst中序遍历有序特点用两个list pre res 如果只有一次违反顺序交换那两个值 如果两次 交换第一次的第一个数和第二次的第二个数)
+
+validate binary search tree(两种方法 1查中序遍历查是不是升序比recover binary search tree还简单 2 递归看左子树的每个结点是否比当前结点值小，右子树的每个结点是否比当前结点值大)
+
+
+
+
+---数组相关
+
+merge interval (这题主要是对interval排序时重写了Comparator接口的compare方法 然后对interval排好序后扫一遍list 如果后一个的start比前一个的end小就merge)
+
+insert interval (先一个while将比newinterval开始小的区间加到list 然后分别处理newinterval start(if) end(while) 最后将end后的区间加到list)
+
+remove element (简单题 从后往前扫一遍 设置j指向最后的元素 遇到值是val的就和j指向的值交换 j-- 最后j+1即是所求)
+
+
+
+---递归
+
+generate parentheses(递归解法不难 cc150题 看下相关katalan数介绍 如果这题求有多少组结果直接用katalan递推公式就可以了)
+
+
+
+---Graph:
+
+clong graph(BFS, DFS)
+
+
+
+---特殊无套路
+
+largest rectangle in histogram(三种解法 最优解强！！)
+
+maximal rectangle(利用了largest rectangle in histogram做subroutine 还有动态规划的思想)
+
+count and say (纯实现题 重复数组就count++不重复就将count和前一个字符append到stringbuilder里 注意最后循环完要将剩下的字符加到结果里)
+
+valid sudoku (两层循环 每次对没填数字的格子判断该行和该列及九宫格里有没有重复数字)
+
+next permutation (逆向扫一遍找到第一个违反升序的数 从那个数往后扫找到第一个大于它的数交换两个数 最后再将这个数后面的数reverse 要注意reverse的写法)
+
+
+
+---窗口
+
+minimum window substring(左右窗口移动 用一个map记录字典单词出现次数 如果count==T.length 则当前字符串已经有所有字典的字符 开始移动左窗口 遍历一遍字符串找最小的串)
+
+substring with concatenation of all words (过程有点繁琐 不过看程序还好)
+
+longest substring without repeating characters(窗口问题中最简单的题 用一个set记录遍历的字符 正常移动有窗口 如果重复移动左窗口并剔除set中的记录直到子串不再有重复 过程维护最大长度)
+
+
+
+---矩阵操作
+
+set matrix zeroes (这题主要了解空间复杂度如何从O(m*n)到O(m+n)到O(1))
+
+spiral matrix i (旋转遍历矩阵 left->right, up->down, right->left, down->up 每次direction+1)
+
+spiral matrix ii (跟i基本一样 只是维护一个num变量 每次加1)
+
+rotate image (两种方法 1先求转置矩阵 再逐行reverse 2 直接转 主要看下直接转的解法 cc150原题)
+
+
+
+flood fill递归:
+
+word search(上下左右四个方向递归)
+
+
+
+---中间往两边扫:
+
+longest consecutive sequence(借助图的思想 把数字看成图的顶点，而边就是他相邻的数字，然后进行深度优先搜索)
+
+
+
+---左扫一遍 右扫一遍：
+
+Trapping Rain Water (用一数组 左扫一遍放当前bar左边最大值 右扫一遍比较当前bar和左右最大值得较小值大小 如果当前bar小就可以加水量)
+
+
+
+---数值计算
+
+plus one(简单题 google最喜欢面试题 要注意扩展 如两个数组相加 及BigInteger设计问题)
+
+add binary(注意实现细节就好了 算法没什么)
+
+permutation sequence(数学题 每次算fac 然后用k除看它在第几个fac group 然后fac除以上一个阶继续)
+
+multiply string
+
+divide two integer
+
+reverse integer (简单题 注意符号和越界问题)
+
+add two number (两链表相加 cc150题 简单但要注意系列 另外扩展两个数组相加 及OO设计)
+
+two sum (简单题 用一map记录数值和索引 当map中出现target-numbers[i]时即得到了解 最后index要加1)
+
+3sum
+
+3sum cloest
+
+
+
+---位操作:
+
+Single Number(i借助于异或操作 更通用的解法在i)
+
+Single Number ii(统计每一位1的次数 然后跟3取余)
+
+
+
+---两边往中间夹逼：
+
+Trapping Rain Water第三种方法
+
+Container With Most Water (左右指针往中间扫 取两者较小值计算面积 如果左小则左指针右移 反之右指针左移 过程中维护maxArea)
+
+
+
+---Palindrome:
+
+Longest Palindrome Substring
+
+partition palindrome i ii (这里面有用到valid palindrome subroutine 但这题返回二维boolean数组 而valid palindrome只是返回true/false即可)
+
+valid palindrome (while循环左右每个字符一一比较 首先isValid检验是否是alphanumeric character或数字 然后isSame比较是否相等)
+
+palindrome number(这题要熟记套路 注意不能将整数转字符串因为不许开额外空间 还有负数不是回文数 其他就是套路 每次左右数一个个比较)
+
+longest palindrome substring (简单题 遍历2*length-1次数 每次两个指针left right如果指向的字符相等就各向外扩散1直到不等 过程维护一个maxlen取最大长度)
+
+
+
+---String操作：
+
+reverse words in a string
+
+length of last word(简单题 从后往前扫 扫到第一个非空格的字符或字符串结束记录位置 再从这个位置开始扫扫到下一个空格或字符串结束 两个位置相减即可)
+
+anagram (首先简单版判断两个词是不是anagram 方法一用hashmap 方法二排序 这道题先将每个字符串排序然后建立一个hashmap key为anagram values为所有anagram为这个词的字符串)
+
+implement strStr (判断一个字符串是否是另一个字串 用的brute force 两层循环 逐一比较字符是否相等不等就返回false 还有一种rolling hash方法)
+
+letter combination of a phone number (迭代递归两种解法 要建立一个dict映射数字和字符 都不难)
+
+longest common prefix (简单题 设置一flag 每次逐一比较数组每个元素对应字符是否相等 如果不等flag为false并break 注意内部for循环从0开始为了应对空集[""]的情况)
+
+roman to integer (简单题 直接看程序吧 也没什么算法思想 主要搞清楚罗马数字表达方式即可)
+
+integer to roman (同上)
+
+String to integer atio (这题简单 只是corner case要注意 一个是去空格 一个是判断是否是数字字符 还有个是数字越界情况)
+
+zigzag conversion (cc150题 纯实现题 注意下93到104行的zigzag读取即可)
+
+
+
+---Stack相关:
+
+evaluate reverse polish notation
+
+simplify path(简化unix路径操作)
+
+longest valid parentheses(左括号进栈右括号出栈 出站后如果栈空则当前有效长度为i-start+1 否则i-stack.peek() 栈空时插入右括号start=i+1)
+
+valid parentheses (简单题 用一个stack 循环扫一次字符串 碰到([{入栈 碰到)]}如果栈为空或栈顶元素不为对应左括号返回false 最后扫完如果栈不为空也返回false )
+
+
+
+---几何计算:
+
+max points in a line(实现题，细节较多)
+
+
+
+---数学模型:
+
+>>>>>>> e1726386107db545bdcfa0e769c3d529b5cda120
 gas station
