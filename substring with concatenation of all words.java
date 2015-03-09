@@ -24,19 +24,19 @@ public class Solution {
                         currMap.put(tmpStr, currMap.get(tmpStr)+1);
                     else
                         currMap.put(tmpStr, 1);
-                    if(currMap.get(tmpStr)<=map.get(tmpStr))		//如果currMap里这个词出现次数小于等于map中的出现次数 说明还没有重复多余的词出现 count可以加1
-                        count++;
+                    if(currMap.get(tmpStr)<=map.get(tmpStr))    //如果currMap里这个词出现次数小于等于map中的出现次数 
+                        count++;                                //说明还没有重复多余的词出现 count为有效 可以加1
                     else
                     {
-                        while(currMap.get(tmpStr)>map.get(tmpStr))		//否则如果大于 则单词出现次数大于了L中词出现次数 则需要左移左窗口 每次将对应词在currMap出现次数－1 直到这个词tmpStr不大于map中出现次数 才可以继续右移右窗口
-                        {
+                        while(currMap.get(tmpStr)>map.get(tmpStr))		//否则如果大于 则单词出现次数大于了L中词出现次数 需要左移左窗口 
+                        {                //每次将对应词在currMap出现次数－1 直到将tmpStr这个词的值减到小于等于map中出现次数 才可以继续右移右窗口
                             String str = S.substring(left, left+L[0].length());
                             currMap.put(str, currMap.get(str)-1);
                             left+=L[0].length();
                         }
                     }
-                    if(count==L.length)		//如果count等于L的长度 则找到所有合法相连的单词 将结果加到res中 将左窗口左移一个单词长 更新currMap 继续右移找下一个合法结果
-                    {
+                    if(count==L.length)		//如果count等于L的长度 则找到所有合法相连的单词 将结果加到res中 将左窗口左移一个单词长
+                    {                       //从这个位置开始下一轮检索 同时更新currMap将当前单词value－1 继续右移找下一个合法结果
                         res.add(left);
                         String str = S.substring(left, left+L[0].length());
                         currMap.put(str, currMap.get(str)-1);
@@ -57,6 +57,84 @@ public class Solution {
 }
 
 Note: code ganker版改写 还是窗口思想 左移左窗口右移右窗口 感觉是minimum window substring, longest substring without repeating和这题中最难的 细节很多
+
+注意这个解法不对 过不了OJ 会报如下错误 
+
+Input:  "aaabbbc", ["a","a","b","b","c"]
+Output: [4]
+Expected:   []
+
+错误原因是少了如下代码
+if(currMap.containsKey(removeStr)) {
+    currMap.put(removeStr, currMap.get(removeStr)-1);
+    if(currMap.get(removeStr)<map.get(removeStr))
+        count--;
+}
+也就是对应的count没有－－ 导致其一直是4最后碰到c直接符合条件返回了 下面的代码是正确的 以下面的为准 注意105到110和117到119
+
+
+
+
+
+public class Solution {
+    public List<Integer> findSubstring(String S, String[] L) {
+        if(S==null || S.length()==0 || L==null || L.length==0)
+            return null;
+        List<Integer> res = new ArrayList<Integer>();
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        for(int i=0; i<L.length; i++) {
+            if(map.containsKey(L[i]))
+                map.put(L[i], map.get(L[i])+1);
+            else
+                map.put(L[i], 1);
+        }
+        for(int i=0; i<L[0].length(); i++) {
+            int left = i; int count = 0;
+            HashMap<String, Integer> currMap = new HashMap<String, Integer>();
+            for(int j=i; j<=S.length()-L[0].length(); j+=L[0].length()) {
+                String tmp = S.substring(j, j+L[0].length());
+                if(map.containsKey(tmp)) {
+                    if(currMap.containsKey(tmp))
+                        currMap.put(tmp, currMap.get(tmp)+1);
+                    else
+                        currMap.put(tmp, 1);
+                    if(currMap.get(tmp)<=map.get(tmp))
+                        count++;
+                    else {
+                        while(currMap.get(tmp)>map.get(tmp)) {
+                            String removeStr = S.substring(left, left+L[0].length());
+                            if(currMap.containsKey(removeStr)) {
+                                currMap.put(removeStr, currMap.get(removeStr)-1);
+                                if(currMap.get(removeStr)<map.get(removeStr))
+                                    count--;
+                            }
+                            left+=L[0].length();
+                        }
+                    }
+                    if(count==L.length) {
+                        res.add(left);
+                        String removeStr = S.substring(left, left+L[0].length());
+                        if(currMap.containsKey(removeStr)) {
+                            currMap.put(removeStr, currMap.get(removeStr)-1);
+                        }
+                        left+=L[0].length();
+                        count--;
+                    }
+                }
+                else {
+                    currMap.clear();
+                    left= j + L[0].length();
+                    count = 0;
+                }
+            }
+        }
+        return res;
+    }
+}
+
+
+
+
 
 
 

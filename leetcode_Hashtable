@@ -1,0 +1,30 @@
+Longest Substring Without Repeating Characters
+窗口思想 维护一个窗口的左右边界 正常情况下右边界移动 并将遇到的字符放入一个HashSet中 当遇到重复字符时先更新maxLen 然后开始移动左边界直到左右指针 
+
+指向同一个字符 过程中将遇到的字符从HashSet remove 最后左右指针各跳一位开始寻找新的长度 时间O(2*n)=O(n) 空间O(n)
+
+
+
+Minimum Window Substring
+窗口思想 先将所有子串的字符mapp到HashMap里 然后循环 右窗开始走碰到对应子串的字符就将其哈希表值减1 这里用一个count维护得到的子串长度 当所有子串字符都遇到了
+
+count等于子串长度 开始走左窗口压缩 碰到子串的字符就把其哈希表值加1 当某个子串字符的值大于0 说明左窗口再走就凑不齐子串所有的字符了 计算一下当前长度如果小于
+
+minLen就更新结果 这样当右窗口到达字符串尾部就得到最终结果 时间O(2*n)=O(n) 空间O(n)
+
+
+
+Substring with Concatenation of All Words
+窗口思路 先将所有单词都map到字典里 然后内外双循环 外层循环遍历L[0].length次 而内循环从0,1...L[0].length-1 每次右窗口以L[0].length为步长递增
+
+每次取S的一个长度为L[0].length的substring 如果该字符串不在字典里 将当前字典清空 count重置为0 左窗口移动一个单词长 否则该字符串在字典中 
+
+要更新当前循环的字典currMap 如果currMap里该字符串的value小于字典map里对应的值 就说明该字符串不是多余的重复单词 合法序列长度count++ 
+
+否则如果是重复的单词则当前序列无法构成解(题目要求each word exactly once) 我们要移动左窗口 过程中将遇到的单词在currMap里的值更新 
+
+如果某单词currMap里的值小于map的值了还要将count－1 当count等于L的元素个数时我们得到一个解将结果保存并移动左窗口以及更新currMap 从下一个单词位置开始继续
+
+时间上每一个单词不会被访问超过2次一次左窗口一次右窗口所以是O(2*n/L*L)=O(n) 其中2*n为两次扫过字符床S的字符数 而每次循环以L[0].length为步长递增
+
+所以要除以L 再加上外循环循环了L[0].length次 所以要乘以L 空间O(m*L)就是字典的长度

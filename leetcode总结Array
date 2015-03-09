@@ -208,6 +208,77 @@ Jump Game ii
 
 
 
+Largest Rectangle in Histogram
+维护一个栈 栈里的元素是递增的 扫一遍数组如果当前元素小于栈顶元素那么就一直出栈直到栈顶元素小于当前元素 在这个过程中计算每个矩阵的面积 关键代码如下
+peekIndex = stack.pop();
+int width = stack.isEmpty()?i:i-stack.peek()-1;
+maxArea = Math.max(maxArea, width*height[peekIndex]);
+
+最后循环结束还要检查下栈是否为空 不为空要将元素都弹出计算面积 时间O(n) 空间最坏O(n)
+
+
+
+Maximal Rectangle
+这题是上一题的扩展 求0-1矩阵面积最大的全1矩阵 对于矩阵每一行可以用上一题的routine来求出最大面积 一共有m行所以要调m次 在计算的过程中只需要维护上一行
+
+的高度就可以了 如果下一行对应元素为0则高度是0 否则时上一行高度加1 这样在线性时间里就可以完成对高度的更新 Largest Rectangle in Histogram的复杂度
+
+为O(n) 而计算一行高度的复杂度也为O(n) 所以每一行的复杂度是O(n+n)=O(n) 总时间复杂度O(m*n) 空间上需要保存一行直方图的高度O(n)加上Largest Rectangle
+
+in Histogram所使用的空间O(n) 总空间复杂度还是O(n)
+
+
+
+Longest Consecutive Sequence
+这题借用了图的思想 将每个元素看作图的一个顶点 相邻的数就是它的边 做一次深度优先遍历 找出当前元素的最大连续子串过程中移除用过的元素
+
+实现上先将所有元素放入一个HashSet 只要set不空就一直循环 每次从set中取出一个元素 找它相邻左右的元素是否在set中 在就将长度＋1并将此元素从set中移除
+
+最后更新最大长度 退出循环时返回最大长度即可
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

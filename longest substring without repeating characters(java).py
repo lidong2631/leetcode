@@ -82,28 +82,30 @@ public class Solution {
         HashSet<Character> set = new HashSet<Character>();
         while(right<s.length())
         {
-            if(set.contains(s.charAt(right)))
+            if(set.contains(s.charAt(right)))   //如果是重复字符 移动right不会得到更好结果 要移动left
             {
-                if(maxLen<right-left)
+                if(maxLen<right-left)           //先更新一下maxLen
                     maxLen = right - left;
-                while(s.charAt(left)!=s.charAt(right))
-                {
+                while(s.charAt(left)!=s.charAt(right))  //只要left和right指向的字符不是同一个字符 说明跟right重复的字符在left后面
+                {                                       //可以将left字符从set中remove 同时left跳到下一位 因为里面不会有更好的结果
                     set.remove(s.charAt(left));
                     left++;
                 }
-                left++;
+                left++;                             //如果left和right指向同一个字符(98行) left和right各跳一位
             }
             else
-                set.add(s.charAt(right));
-            right++;
+                set.add(s.charAt(right));     //如果不是重复字符 将这个字符加到set里
+            right++;                        //正常情况right移动
         }
-        if(maxLen<right-left)
+        if(maxLen<right-left)           //最后再更新一次maxLen
             maxLen = right - left;
         return maxLen;
     }
 }
 
 Note: code ganker解法 这种解法在字符串中很常见 左右窗口移动  类似的还有minimum window, Substring with Concatenation of All Words
+
+记得看下code ganker的评论 在cleancode book 有这个题的更简洁解法
 
 
 

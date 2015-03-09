@@ -105,22 +105,22 @@ public class Solution {
         {
             if(map.containsKey(S.charAt(i)))
             {
-                map.put(S.charAt(i), map.get(S.charAt(i))-1);
-                if(map.get(S.charAt(i))>=0)                     //移动右窗口
+                map.put(S.charAt(i), map.get(S.charAt(i))-1);   //每次发现一个在字典里的字符 将字典对应的value－1
+                if(map.get(S.charAt(i))>=0)   //如果字典中此字符的值仍大于等于0 则是有效的构成子串的字符count应加1 否则小于0说明此字符的数量已超过子串需要的数量 我们不能将count+1
                     count++;
                 while(count==T.length())                //如果count等于T.length()则我们已经在S中凑齐字典里的词 开始移动左窗口
                 {
-                    if(map.containsKey(S.charAt(leftP)))
+                    if(map.containsKey(S.charAt(leftP)))    //如果字典有这个字符则要做对应处理 否则不是子串的字符我们可以跳过
                     {
-                        map.put(S.charAt(leftP), map.get(S.charAt(leftP))+1);
-                        if(map.get(S.charAt(leftP))>0)          //如果map.get(S.charAt(leftP))>0 则已经压缩到头
+                        map.put(S.charAt(leftP), map.get(S.charAt(leftP))+1);   //开始压缩 先把map中对应的值＋1 说明左窗口移动过了此字符
+                        if(map.get(S.charAt(leftP))>0)  //如果此时字典中此字符的数量大于0 说明已经压缩到头 否则如果小于等于0说明仍有大于等于1个此字符在两指针中间
                         {
-                            if(minLen>i-leftP+1)                //比较一下如果比minLen小 更新结果
+                            if(minLen>i-leftP+1)        //满足上面条件就可以看一下当前长度是否小于minLen 是就更新结果
                             {
-                                res = S.substring(leftP, i+1);
+                                res = S.substring(leftP, i+1);  //更新结果字符串res和minLen长度
                                 minLen = i-leftP+1;
                             }
-                            count--;        //count减1
+                            count--;        //count减1 可以跳出111行的循环了
                         }
                     }
                     leftP++;
