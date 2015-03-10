@@ -39,6 +39,59 @@ Note: 以上解法time limit exceed 下面java的解法可以ac 但两种解法�
 
 
 
+public class Solution {
+    public void solveSudoku(char[][] board) {
+        if(board==null || board.length==0 || board[0].length==0)
+            return;
+        helper(board, 0, 0);
+    }
+    
+    private boolean helper(char[][] board, int i, int j) {
+        if(j>=9)
+            return helper(board, i+1, 0);
+        if(i==9)
+            return true;
+        if(board[i][j]=='.') {
+            for(int k=1; k<=9; k++) {
+                board[i][j] = (char)(k+'0');
+                if(isValid(board, i, j)) {
+                    if(helper(board, i, j)) //这里不写j+1也可 应为递归下一轮会执行else里语句一样j会加1
+                        return true;
+                }
+                board[i][j] = '.';
+            }
+            return false;       //这里写return false也可以
+        }
+        else {
+            return helper(board, i, j+1);
+        }
+    }
+    
+    private boolean isValid(char[][] board, int row, int col) {
+        char tmp = board[row][col];
+        board[row][col] = '#';
+        for(int i=0; i<9; i++) {
+            if(board[row][i]==tmp)
+                return false;
+        }
+        for(int j=0; j<9; j++) {
+            if(board[j][col]==tmp)
+                return false;
+        }
+        for(int i=row/3*3; i<row/3*3+3; i++) {
+            for(int j=col/3*3; j<col/3*3+3; j++) {
+                if(board[i][j]==tmp)
+                    return false;
+            }
+        }
+        board[row][col] = tmp;
+        return true;
+    }
+}
+
+
+
+
 
 public class Solution {
     public void solveSudoku(char[][] board) {
@@ -59,13 +112,13 @@ public class Solution {
         {
             for(int k=1;k<=9;k++)               
             {
-                board[i][j] = (char)(k+'0');       //从1到9循环依次尝试填入当前格子 这里递归下一个格子前先isValid判断下当前格子是否符合要求 符合才继续递归
-                if(isValid(board,i,j))
+                board[i][j] = (char)(k+'0');  //从1到9循环依次尝试填入当前格子
+                if(isValid(board,i,j))  //这里递归下一个格子前先isValid判断下当前格子是否符合要求 符合才继续递归
                 {
                     if(helper(board,i,j+1))
                         return true;
                 }
-                board[i][j] = '.';          //如果以当前k值填入 递归下一个格子得不到解 则跳回上一级 65行helper返回false 需要尝试下一个值给当前格子 如果都尝试过也不行 则本轮递归到75行返回false 需在再上一轮换值尝试
+                board[i][j] = '.';   //如果以当前k值填入递归下一个格子得不到解或not valid 则将这个格子值重置为空
             }
         }
         else

@@ -79,11 +79,11 @@ public class Solution {
         ListNode p = newNode;
         while(p.next!=null && p.next.next!=null)
         {
-            ListNode tmp = p.next.next;
-            p.next.next = tmp.next;
-            tmp.next = p.next;
-            p.next = tmp;
-            p = p.next.next;
+            ListNode tmp = p.next.next; //得到当前组第二个元素
+            p.next.next = tmp.next; //当前组第一个元素next指向下一组第一个元素
+            tmp.next = p.next;  //当前组第二个元素next指向第一个元素
+            p.next = tmp;   //前一组第二个元素指向当前组第一个元素
+            p = p.next.next;    //移动指针到下一组
         }
         return newNode.next;
     }

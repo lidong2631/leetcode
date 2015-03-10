@@ -28,3 +28,26 @@ Substring with Concatenation of All Words
 时间上每一个单词不会被访问超过2次一次左窗口一次右窗口所以是O(2*n/L*L)=O(n) 其中2*n为两次扫过字符床S的字符数 而每次循环以L[0].length为步长递增
 
 所以要除以L 再加上外循环循环了L[0].length次 所以要乘以L 空间O(m*L)就是字典的长度
+
+
+
+Longest Substring with At Most Two Distinct Characters
+窗口思路 跟Longest Substring Without Repeating Characters差不多 这里我们用一个字典记录每一个字符出现的次数 正常情况下右窗口走 碰到新字符
+
+count++ 否则只是更新其字典里对应的value 当count大于2时说明出现3个不同字符 此时移动有窗口无法得到更好结果要移动左窗口 将遇到的字符对应字典值
+
+-1 如果某个字符字典值为0说明它已经不在系列里了 count-- 如此循环结束就可得到结果 时间O(n) 空间O(n)
+
+
+
+Single Number
+位运算思路 一般思路和Single Number ii一样 用一个整型数组digits统计元素出现次数 将数组中的数对应的位分别加到digits对应的元素中 统计完后对每一位取余3
+
+结果中就只剩下出现一次的元素 时间O(n) 空间是32个元素的数组O(1) 另外这题可以用取巧的方法 对数组中每一个数做一次异或运算非常简单
+
+
+
+Max Points on a Line
+几何运算题 思路如下 1 外循环遍历所有点 2 内循环遍历i后所有的点 3 判断 相同点还是x或y相同或算斜率 4 更新map4 取本轮循环最大数＋numSame 
+
+更新globalMax 时间O(n^2) 空间O(n)哈希表长度

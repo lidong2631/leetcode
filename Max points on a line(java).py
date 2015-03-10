@@ -121,6 +121,9 @@ T:O(n^2) S:O(n)
 
 brute force方法见code ganker第一种解法 O(n^3)
 
+注意 在code ganker评论里提到
+java的编译器会判断两个double是否相等是判断了类似于fabs(a,b)<10e-10这样的语句，而c++则直接比他们的位，所以double在C++中不能作为key
+
 
 
 
