@@ -88,10 +88,10 @@ public class Solution {
         ListNode curr = head;
         while(curr.next!=null)
         {
-            if(curr.val>curr.next.val)
+            if(curr.val>curr.next.val)  //不是递增顺序 就从head开始找到大于current.next.val的数
             {
                 ListNode prev = newNode;
-                while(prev.next.val<curr.next.val)
+                while(prev.next.val<curr.next.val)//从头开始找到第一个大于current.next.val的节点
                     prev = prev.next;
                 ListNode tmp = curr.next;       //这里要记住那4步
                 curr.next = curr.next.next;

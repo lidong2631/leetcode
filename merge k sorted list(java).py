@@ -97,6 +97,57 @@ Note：时间复杂度为 O(nklogk) 可以联想merge sort这个要mergesort k�
 
 
 
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode mergeKLists(List<ListNode> lists) {
+        if(lists==null || lists.size()==0)
+            return null;
+        PriorityQueue<ListNode> heap = new PriorityQueue(10, new Comparator<ListNode>(){
+            public int compare(ListNode l1, ListNode l2) {
+                return l1.val-l2.val;
+            }
+        });
+        for(int i=0; i<lists.size(); i++) {
+            if(lists.get(i)!=null)
+                heap.offer(lists.get(i));
+        }
+        ListNode curr = heap.poll();
+        ListNode pre = curr;
+        ListNode head = curr;
+        while(heap.size()>0) {
+            if(curr.next!=null)
+                heap.offer(curr.next);
+            curr = heap.poll();
+            pre.next = curr;
+            pre = curr;
+        }
+        return head;
+    }
+}
+
+我的写法 这种解法有个地方要注意 就是127 - 132 不能写成如下
+ while(heap.size()>0) {
+    curr = heap.poll();
+    pre.next = curr;
+    pre = curr;
+    if(curr.next!=null)
+        heap.offer(curr.next);
+}
+假设碰到这个case {1,2,2}, {1,1,2}会出错{1,1,1,2} 因为while前已经poll了一次 进入while后首先poll一次 这样此时heap就空了 之后每次循环如果
+
+都是对同一个list一弹出一进入 当这个list为空时if(curr.next!=null)这一步就不会再加元素了 这样就会跳出while循环而其他list的元素还没有加上
+
+所以这里要特别注意不可以这样让heap始终维持在空的状态 至少要有一个元素在里面 这样新进来的元素才可以与之比较
 
 
 
