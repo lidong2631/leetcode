@@ -1,3 +1,59 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head==null || head.next==null)
+            return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode curr = head;
+        ListNode pre = dummy;
+        int count = 0;
+        while(curr!=null) {
+            count++;
+            ListNode next = curr.next;
+            if(count==k) {              //计数 每到k就将这个group reverse
+                pre = reverse(pre, next);
+                count = 0;
+            }
+            curr = next;
+        }
+        return dummy.next;
+    }
+    
+    private ListNode reverse(ListNode pre, ListNode end) {
+        //if(pre==null || pre.next==null)
+            //return pre;
+        ListNode head = pre.next;
+        ListNode curr = pre.next.next;
+        while(curr!=end) {          //跟swap nodes in pairs类似 先保存curr.next 然后反转指针 pre curr分别后移一位
+            ListNode next = curr.next;     //iterative reverse here same as reverse linked list i
+            curr.next = pre.next;
+            pre.next = curr;
+            curr = next;
+        }
+        head.next = end;
+        return head;
+    }
+}
+
+
+
+
+
+
+
+
+
 
 
 from code ganker:
@@ -39,7 +95,7 @@ private ListNode reverse(ListNode pre, ListNode end)
     ListNode cur = pre.next.next;
     while(cur!=end)
     {
-        ListNode next = cur.next;
+        ListNode next = cur.next; 
         cur.next = pre.next;
         pre.next = cur;
         cur = next;
