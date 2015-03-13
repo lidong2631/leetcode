@@ -1,7 +1,0 @@
-# Write your MySQL query statement below
-SELECT Score,
-       (SELECT COUNT(DISTINCT(Score))+1 FROM Scores s2 WHERE s1.Score < s2.Score) As Rank
-FROM Scores s1
-ORDER BY Score DESC
-
-This solution is also easily adaptable to solve the problem if changed to ask for {(1,10}, {2,10}, {3,20}) returns ({10,1},(10,1),{20,3}). Just remove the DISTINCT on Score, you will get the answer.

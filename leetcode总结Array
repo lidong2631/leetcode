@@ -238,24 +238,59 @@ Longest Consecutive Sequence
 
 
 
+Majority Element
+Moore voting algorithm 扫一遍数组 维护一个count和一个curr变量 如果相同变量count＋1 否则count－1 如果count为0 则更新curr为num[i] 因为存在
+
+大于半数的元素 所以这样累加抵消的最终结果一定是那个大于半数的数 时间O(n) 空间O(1)
 
 
 
+Maximum Subarray
+经典动态规划问题 局部解全局解 递推式为 local[i+1] = Math.max(A[i+1], local[i]+A[i+1]), global[i+1] = Math.max(local[i+1], global[i])
+
+时间O(n) 空间O(1)
 
 
 
+Maximum Product Subarray
+还是局部最优全局最优 只是要多维护一个当前最小值 因为乘法的特性 现在很小的值可以和后面负数产生最大值 其他跟Maximum Subarray那题差不多
 
 
 
+Median of Two Sorted Arrays
+求两个有序数组的中位数 时间要在log(m+n) k初始为A B数组长度的一半 每次两个数组各取第k/2号元素 比较大小 如果A小就把A[k/2]以前的元素都剔除掉 如果B小就把
+
+B[k/2]以前的元素都剔除掉 相等就直接返回 这样每次都能删除k/2个元素 当k最终等于1时返回Math.min(A[startA], B[startB]) 或若最终A的长度为0就返回
+
+B[startB+k-1] 时间O(log(m+n)) 空间O(log(m+n))
 
 
 
+Merge Sorted Array
+因为A has enough space所以从A的m+n-1个元素开始 比较A[m-1]和B[n-1]将大的值放入A[m+n-1] 如此循环直到一个数组为空 之后如果B中还有元素依次放入A
+
+A中元素已经就位不用管了 时间O(n) 空间O(1)
 
 
 
+Unique Paths
+动态规划 递推式为res[i][j] = res[i][j-1]+res[i-1][j] 维护一个列大小的一维数组 从第一行开始扫 每次更新res[j]+=res[j-1] 最后返回res[n-1]
+
+时间O(m*n) 空间O(n)
 
 
 
+Unique Paths ii
+思路同上一题 只是这里有不能走的格子 递推式是若当前格子不为1则同上一题res[i][j]=res[i][j-1]+res[i-1][j] 否则res[i][j]=0 还是从第一行开始扫
+
+每次判断一下当前格子是否为1 然后用对应递推式更新即可 时间O(m*n) 空间O(n)
+
+
+
+Minimum Path Sum
+跟Unique Paths系列差不多 只是这次每个格子有值相当于有权重 仍然是用一维数组 首先给数组赋初值将第一行每个元素的累加值放到对应数组元素中 然后从第二行开始
+
+更新res的值 如果是第一列元素res[j]+=grid[i][j] 否则res[j] = Math.min(res[j], res[j-1]) + grid[i][j] 时间O(m*n) 空间O(n)
 
 
 
