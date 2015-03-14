@@ -318,14 +318,35 @@ Plus One
 
 
 
+Remove Duplicates from Sorted Array
+设index为1 从数组第二个元素开始扫 每次比较index-1和i指向的元素是否相等 若相等A[index]=A[i] index++ 否则进入下一次循环 最后返回index即可
+
+时间O(n) 空间O(1)
 
 
 
+Remove Duplicates from Sorted Array ii
+跟上题思路类似 只是可以重复一次 设index为2 从数组第三个元素开始扫 比较index-2和i指向的元素是否相等 若相等A[index]=A[i] index++ 
+
+否则进入下一次循环 时间O(n) 空间O(1)
 
 
 
+Remove Element
+两种解法 思路差不多 从前往后扫 时间O(n) 空间O(1)
+for(int i=0; i<=len; i++) {
+    if(A[i]==elem)
+        A[i--] = A[len--]; 
+}
 
-
+从后往前
+for(int i=A.length-1; i>-1; i--)
+{
+    if(A[i]==elem)  
+    {
+        A[i] = A[j--];   
+    }
+}
 
 
 

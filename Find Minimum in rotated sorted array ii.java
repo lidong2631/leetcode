@@ -1,3 +1,28 @@
+from cleanCode 这个版本cleanCode原始稍有差异
+
+public class Solution {
+    public int findMin(int[] num) {
+        int left = 0; int right = num.length-1;
+        while(left<right && num[left]>=num[right]) {    //这里一定要写= 因为有重复元素
+            int mid = (left + right)/2;
+            if(num[mid]>num[right])
+                left = mid + 1;
+            else if(num[mid]<num[right])    //也可以写num[mid]<num[left]
+                right = mid;
+            else        //这里加一个判断如果想等则right--
+                right--;        //也可以写left++
+        }
+        return num[left];
+    }
+}
+
+这题时间复杂度最坏可以是O(n)
+
+
+
+
+
+
 see code ganker 评论 更简单的解法 仍沿用上一题思路 追寻rotate那边
 
 public class Solution {

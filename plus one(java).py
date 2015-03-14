@@ -73,7 +73,8 @@ public void plusOne(List<Integer> digits) {
             digits.set(i, 0);
         }
     }
-    
+    digits.add(0);
+    digits.set(i, 1);
 }
 
 
