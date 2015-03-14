@@ -294,16 +294,27 @@ Minimum Path Sum
 
 
 
+Next Permutation
+从后往前扫一遍数组 找到第一个违反递增顺序的元素 如果不存在返回最大的序列 否则再从这个元素往后扫找到比它大的数中最小的那个交换他们的位置 在就将
+
+他们交换位置 并把后面的元素reverse即可 最坏要扫三次 时间O(3*n)=O(n) 空间O(1)
 
 
 
+Pascal Triangle
+根据行数创建杨辉三角 思路很简单 先创建第一行 然后从第二行开始循环  时间O(n^2) 空间O(1)
 
 
 
+Pascal Triangle ii
+求k行的杨辉三角 比上一题还容易 时间O(n^2) 空间O(1)
 
 
 
+Plus One
+循环加1操作 每次更新digits[i]和carry 如果carry不为0就一直循环 为0则返回结果 最后如果还有进位则要新建一个长度为digits.length+1数组 
 
+将头元素设为1 时间O(n) 空间一般是O(1) 最坏为O(n)
 
 
 
