@@ -49,28 +49,32 @@ class Solution:
 
 
 
-public class Solution {
-    public int[] plusOne(int[] digits) {
-        if(digits==null || digits.length==0)
-            return digits;
-        int carry = 1;
-        int digit = 0;
-        for(int i=digits.length-1; i>=0; i--) {
-            digit = digits[i];                  //digit临时存储digits[i]因为它后面会被更新
-            digits[i] = (digits[i]+carry)%10;
-            carry = (digit+carry)/10;
-            if(carry==0)            //判读carry等于0要放后面 不然程序会先跳出for循环去new新的数组而不会返回digits  case [0], 1
-                return digits;
+
+From cleanCode
+
+Q: Could the number be negative
+A: No. Assume it is a non-negative number
+
+Q: How are the digits ordered in the list? For example, is the number 12 represented by [1,2] or [2,1]?
+A: The digits are stored such that the most significant digit is at the head of the list
+
+Q: Could the number contain leading zeros, such as [0,0,1]?
+A: No
+
+
+public void plusOne(List<Integer> digits) {
+    for(int i=digits.size()-1, i>=0; i--) {
+        int digit = digits.get(i);
+        if(digit<9) {
+            digits.set(i, digit+1);
+            return;
         }
-        int[] newDigits = new int[digits.length+1];
-        newDigits[0] = 1;
-        for(int i=1; i<newDigits.length; i++)   //这2句不需要
-            newDigits[i] = 0;
-        return newDigits;
+        else {
+            digits.set(i, 0);
+        }
     }
+    
 }
-
-
 
 
 
@@ -84,10 +88,10 @@ public class Solution {
         int digit = 0;
         for(int i=digits.length-1; i>=0; i--)
         {
-            digit = (digits[i]+carry)%10;
+            digit = (digits[i]+carry)%10;   ////digit临时存储digits[i]因为它后面会被更新
             carry = (digits[i]+carry)/10;
             digits[i] = digit;
-            if(carry==0)            //如果carry等于0 就可以直接返回数组digits了
+            if(carry==0)      //判读carry等于0要放后面 不然程序会先跳出for循环去new新的数组而不会返回digits  case [0], 1
                 return digits;
         }
         int[] res = new int[digits.length+1];       //否则最坏情况 new一个新数组 记得长度为digis.length+1

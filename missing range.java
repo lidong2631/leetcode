@@ -1,4 +1,49 @@
-<<<<<<< HEAD
+From cleanBook:
+
+Q: What if the given array is empty?
+A: Then you should return ["0->99"] as those ranges are missing
+
+Q: What if the given array contains all elements from the ranges?
+A: Return an empty list, which means no range is missing
+
+public class Solution {
+    public List<String> findMissingRanges(int[] A, int lower, int upper) {
+        List<String> res = new ArrayList<String>();
+        if(A==null || A.length==0) {    //如果数组为空 整个区间都missing 我们要返回"lower->upper"
+            res.add(getRange(lower, upper));
+            return res;
+        }
+        int prev = lower-1;     //prev指向每个区间的前一个元素 从lower-1开始
+        for(int i=0; i<=A.length; i++) {    //注意这里循环终止为i<=A.length
+            int curr = (i==A.length)?upper+1:A[i];  //判断如果i==A.length说明数组都遍历完 要取upper+1 否则去数组元素值
+            if(curr-prev>=2)                    //如果差大于等于2存在missing range 加到最终结果
+                res.add(getRange(prev+1, curr-1));
+            prev = curr;    //更新prev
+        }
+        return res;
+    }
+    
+    private String getRange(int from, int to) {
+        return (from==to)?String.valueOf(from):String.valueOf(from)+"->"+String.valueOf(to);
+    }
+}
+
+官方给的解法 很巧妙 我们人为在lower前加一个元素-1 upper后加一个元素100 这样可以很方便地处理很多pesky case 这里先判断数组是否为空
+
+是就直接返回"lower->upper" 否则prev初始从lower-1开始 每次循环判断i是否为A.length 如果是说明数组已遍历完接下来要看看A[A.length-1]
+
+到upper是否有missing range 不是就取A[i]然后比较A[i]和prev的差是否大于等于2 是就存在missing range 调用getRange得到一组解加到最终结果中
+
+最后返回最终结果
+
+
+
+
+
+
+
+用循环不变式的思路做
+
 public class Solution {
     public List<String> findMissingRanges(int[] A, int lower, int upper) {
         List<String> res = new ArrayList<String>();
@@ -30,6 +75,11 @@ public class Solution {
 [], 1, 1
 [-1], -1, -1
 [-1], -2, -1
+
+
+
+
+
 
 
 

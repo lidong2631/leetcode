@@ -82,24 +82,63 @@ Partition List
 
 
 Merge Two Sorted Lists
+简单题 新建一个节点 三个while l1!=null&&l2!=null l1!=null l2!=null 每次判断大小接到节点后即可 时间O(m+n) 空间O(1)
 
 
 
+Merge k Sorted Lists
+分布式应用中重要操作 两个做法 第一用mergesort 实现方式大致等同Sort List 这里是left=0 right=lists.size()-1 每次int mid=(left+right)/2
+
+然后递归mergesort(lists,left,mid) mergesort(lists,mid+1,right) merge部分跟Merge Two Sorted Lists相同 时间O(nklogk) 空间O(n)
+
+另一种解法是heapsort 思路是维护一个heap 先将k sorted lists所有头节点放进去 根据heap的特性heap里的值就排好序了 然后每次将堆顶元素弹出
+
+放到最终结果中并将弹出元素的next元素放入堆中 时间O(nklogk) 空间O(n)
 
 
 
+Linked List Cycle
+设置快慢指针 若两指针能最终遇到则有cycle 否则如果跳出循环则没有cycle 时间O(n) 空间O(1)
 
 
 
+Linked List Cycle ii
+找cycle起始点 主要是数学证明 知道原理写程序很简单 就是先快慢指针当他们相遇时 将快指针放回head处然后两指针一起以相同速度走再次相遇即为cycle起始点
 
 
 
+Intersection of Two Linked Lists
+这题有很多做法 我的做法是先计算两个链表的长度让长的那个先走l2-l1步 然后两指针一起走 相遇时即为Intersection
 
 
 
+Insertion Sort List
+插入排序的实现 新建头节点 开始扫链表如果不满足递增顺序就将不满足的元素插入到前面排好序序列中对应位置 时间O(n^2) 空间O(1)
 
 
 
+Copy List with Random Pointer
+两种做法 第一种借助哈希表 先扫一遍原链表 每次新建一个对应的新节点 并将map.put(oldNode, newNode) 然后在扫一次原链表 这次copy random指针
+
+每次copyNode.random = map.get(node.random); 时间O(2*n)=O(n) 空间O(n)
+
+第二种方法不需要线性空间 要扫三次链表 前面我们需要一个哈希表的原因是当我们访问一个结点时可能它的随机指针指向的结点还没有访问过，结点还没有创建，
+
+所以我们需要线性的额外空间。想避免使用额外空间，我们只能通过利用链表原来的数据结构来存储结点 第一次扫描对每个结点进行复制，然后把复制出来的
+
+新节点接在原结点的next 第二次扫描中我们把旧结点的随机指针赋给新节点的随机指针node.next.random = node.random.next 最后一次扫描我们把链表拆成两个
+
+只要把每隔两个结点分别相连对链表进行分割即可 时间O(n) 空间O(1)
+
+
+
+Convert Sorted List to Binary Search Tree
+先扫一遍得到节点数量 之后递归建立左子树 然后建立root 将ListNode设为下一个节点 递归右子树 return root 时间O(logn) 空间O(logn)+O(n)
+
+
+
+Add Two Numbers
+每次新建一个节点 将l1.val l2.val carry加起来存在节点里 然后如果l1 l2还有剩余值将他们都加起来 最后如果carry还有一位要再新建节点
 
 
 

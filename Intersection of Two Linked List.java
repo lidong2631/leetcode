@@ -32,10 +32,14 @@ public class Solution {
             for(int i=0; i<lenB-lenA; i++)
                 pB = pB.next;
         }
-        while(pA!=pB) {
+        while(pA!=pB) {     //这里有个有意思的地方 当A和B没有交点 则最终pA pB均为null 在java中null==null
             pA = pA.next;
             pB = pB.next;
         }
         return pA;
     }
 }
+
+注意这题引发一个问题就是java中null值是可以跟object相比较 null和null也可以比较 在java中是相等的(null==null)=true
+
+另外这题有多个解法 看cleanbook
