@@ -131,7 +131,7 @@ public String reverseWords(String s) {
     int right=0;
     while(right<res.length()){
         while(right<res.length() && res.charAt(right)!=' '){
-     right++;
+            right++;
         }
         int next = right+1;
         right--;
@@ -146,7 +146,9 @@ public String reverseWords(String s) {
     return res.toString();
 }
 
-可以看出，两种方法并没有哪种有明显优势。之所以列出第二种方法是因为有些题用这种方法确实不错，有时候可以借鉴一下这个想法，就是先反转整体，再反转局部。比如说左旋转一个数组，用这种方法可以用常量空间搞定，大家可以想想哈。
+可以看出，两种方法并没有哪种有明显优势。之所以列出第二种方法是因为有些题用这种方法确实不错，有时候可以借鉴一下这个想法，就是先反转整体，再反转局部。
+
+比如说左旋转一个数组，用这种方法可以用常量空间搞定，大家可以想想哈。
 
 
 
