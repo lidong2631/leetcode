@@ -351,7 +351,145 @@ for(int i=A.length-1; i>-1; i--)
 
 
 Rotate Array
+<<<<<<< HEAD
 思路比较简单 先反转整个数组 然后
+=======
+先对这个数组反转 然后反转0到k－1 再反转k到num.length-1即可
+
+
+
+Rotate Image
+矩阵相关操作 考察数组的操作 一层一层旋转 每次都是保存上 然后上变左 左变下 下变右 右变上 循环为
+for(int layer=0; layer<matrix.length/2; layer++)
+    for(int i=layer; i<matrix.length-1-layer; i++)
+
+
+
+Search Insert Position
+二分法变体 仍然是二分法套路 每次取mid值等于直接返回 大于right=mid-1 小于left=mid+1 如果最后出循环仍没有找到就返回left 时间O(logn) 空间O(1)
+
+
+
+Search a 2D Matrix
+二分法变体 用两次二分法 第一次确定行数 如果target超出行数范围则matrix没有target 否则确定行数后找列数 最后返回结果 时间O(logn) 空间O(1)
+
+
+
+Search for a Range
+二分法变体 三次二分法 第一次找值是否存在 第二次找左边界的值 查找条件为
+if(A[m]==target)  
+    newR = m - 1;
+else
+    newL = m + 1;
+第三遍找右边界的值 查找条件同上 时间O(logn) 空间O(1)
+
+
+
+Search in Rotated Sorted Array
+二分法变体 旋转一次的有序数组 在二分时要先判断哪边有序 然后二分 时间O(logn) 空间O(1)
+
+
+
+Search in Rotated Sorted Array ii
+同上一题 只是这里有重复数字 仍是上一题的解法 只是当无法切一半时要将left++或right-- 时间最坏是O(n) 空间O(1)
+
+
+
+Set Matrix Zeroes
+先判断矩阵第一行和第一列是否有0 标记好 然后一行行扫矩阵 如果碰到0就把这个元素对应的行数和列数存在第一行和第一列里 之后再扫一遍矩阵如果某个元素对应第一行
+
+或第一列为0则将这个元素设为0 最后根据标记将第一行和第一列设为0即可 时间O(m*n) 空间O(1)
+
+
+
+Sort Colors
+这题主要复习计数排序的思路 最好的思路是利用元素只有3种值的特点 扫一遍数组维护2个指针 一个将指向的数字变为1一个变味0 i将碰到的所有元素变为2 这样扫完一遍就
+
+得到了结果 时间O(n) 空间O(1)
+
+
+
+Spiral Matrix
+执行一个while循环 维护4个变量left, right, up, down代表4个方向和一个当前方向的变量direction 每次读取direction方向的变量并加到结果集 当left>right
+
+或者up<down时退出循环返回结果 时间O(m*n) 空间O(1)
+
+
+
+Spiral Matrix ii
+同上一题 还是每次读一行或一列的值 加到结果数组中 时间O(n*n) 空间O(1)
+
+
+
+Subsets
+先排序 然后递归从空集开始每次把数组新的元素加到已有的所有集合中 时间O(2^n) 空集O(2^n)
+
+
+
+Subsets ii
+同上一题 会有重复元素 需要用一个变量lastSize标记上一次结果集的最后一个集合 如果下一个元素是重复的就把这个元素加到最后一个集合里构成新的子集 而其他的子集
+
+上一次已经加过了所以不用再加了 时间空间仍是指数级的
+
+
+
+Trapping Rain Water
+两种解法 第一种扫两遍 先左扫一遍 记录每个bar左边最大高度 再右扫一遍 记录每个bar右边最大高度并用左右最大高度的较小值跟bar自己比较 如果大于就把差值加到结果中
+
+否则bar乘不了水 时间O(2*n)=O(n) 空间O(n)
+
+第二种解法只需要扫一次数组 比较左右指针 取小的那边开始走 如果下一个元素更小就把差值加到结果中 否则重新比较左右指针大小 直到它们相遇为止 时间O(n) 空间O(1)
+
+
+
+Triangle
+动态规划题 建立一个数组sum[triangle.size()] sum[0]=triangle.get(0).get(0) 从第二行开始每次从后往前扫 单独处理第一个和最后一个元素 对于一般的元素
+
+取上一行相邻两个元素中最小的那个加上当前行对应元素值 代码如下
+sum[i] = sum[i-1] + triangle.get(i).get(i);     
+for(int j=i-1; j>=1; j--) {                    
+    sum[j] = sum[j]<sum[j-1]?sum[j]:sum[j-1] + triangle.get(i).get(j);
+}
+sum[0] += triangle.get(i).get(0);
+
+
+
+Word Search
+图的思想 深度优先遍历 从某一点出发 如果当前元素是word中对应的字母 将当前字符标记为已访问继续递归上下左右四条边 如果最终长度等于word返回true 否则
+
+如果坐标超出范围 或该字符已被访问过 或它不等于对应word中的字符返回false 如果从一个新的字符出发要重置访问标记 时间复杂度 空间O(m*n)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> f577b1f2d86f7991c70d64a63aead74e3fa827a4
 
 
 
