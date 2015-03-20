@@ -131,8 +131,8 @@ public class Solution {
         
         for(int block=0; block<9; block++) {    //验证9个格子
             boolean[] map = new boolean[9];
-            for(int i=block/3*3; i<block/3*3+3; i++) {
-                for(int j=block%3*3; j<block%3*3+3; j++) {
+            for(int i=block/3*3; i<block/3*3+3; i++) {  //对应列
+                for(int j=block%3*3; j<block%3*3+3; j++) {  //对应行
                     if(board[i][j]!='.') {
                         if(map[(int)(board[i][j]-'1')])
                             return false;

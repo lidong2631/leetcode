@@ -118,30 +118,30 @@ public class Solution {
                     if(helper(board,i,j+1))
                         return true;
                 }
-                board[i][j] = '.';   //如果以当前k值填入递归下一个格子得不到解或not valid 则将这个格子值重置为空
             }
+            board[i][j] = '.';   //如果k从1到9填入递归下一个格子都得不到解 则将这个格子值重置为空 我们要回溯到上一轮换一个数字重试
         }
         else
         {
             return helper(board,i,j+1);         //如果当前格子有数字 就跳过它递归下一个格子
         }
-        return false;
-    }
+        return false;   //注意这里helper的return值是必要的 当111行if没找到结果就会到这里返回false 然后回溯到上一轮递归118行才可以判断
+    }                   //看code ganker评论
 
     private boolean isValid(char[][] board, int row, int col) {     //这里的写法仍然是上一题里python版写法
         char tmp = board[row][col];
-        board[row][col] = '#';
+        board[row][col] = '#';  //保存当前格子的值然后设其为'#' 以排除自身的干扰
         for(int i=0; i<9; i++)
             if(board[row][i]==tmp)
                 return false;
         for(int j=0; j<9; j++)
             if(board[j][col]==tmp)
                 return false;
-        for(int i=0; i<3; i++)
+        for(int i=0; i<3; i++)      //判断小格子的值是否重复 循环3*3次
             for(int j=0; j<3; j++)
-                if(board[row/3*3+i][col/3*3+j]==tmp)
+                if(board[row/3*3+i][col/3*3+j]==tmp)    //判断跟当前格子在同一个小格子的其他格子
                     return false;
-        board[row][col] = tmp;
+        board[row][col] = tmp;  //判断完再将它设回原始值
         return true;
     }
 }
