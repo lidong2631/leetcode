@@ -72,6 +72,79 @@ class Solution:
 
 
 
+from cleanCode
+
+问问题
+Make sure you communicate with your interviewer if the string can have characters other than 'a'-'z' (Digits? Upper case letter?
+
+Does it contain ASCII characters only? Or even unicode character sets?)
+
+第一种解法 左右窗口思路同code ganker 默认是ASCII 用了一个256的数组存储字符 code很简洁
+
+public int lengthOfLongestSubstring(String s) {
+    boolean[] exist = new boolean[256];
+    int i = 0, maxLen = 0;      //i相当于左窗口
+    for(int j=0; j<s.length(); j++) {   //j相当于右窗口
+        while(exist[s.charAt(j)]) {        //如果是重复字符 依次将重复元素前的每个字符的标记重设为false i++
+            exist[s.charAt(i)] = false;
+            i++;
+        }
+        exist[s.charAt(j)] = true;  //不是重复字符 将这个标记下来 并检查是否大于maxLen
+        maxLen = Math.max(maxLen, j-i+1);
+    }
+    return maxLen;
+}
+
+扫两遍数组O(2*n) = O(n)  空间O(1)
+
+如果不是ASCII字符 就要用set 同code ganker解法
+
+
+
+
+
+
+public int lengthOfLongestSubstring(String s) {
+    int[] charMap = new int[256];   //charMap里保存这个字符在s中的index
+    Arrays.fill(charMap, -1);
+    int i = 0, maxLen = 0;
+    for(int j=0; j<s.length(); j++) {
+        if(charMap[s.charAt(j)]>=i) {   //因为i初始为0 charMap里的元素都初始为-1 如果charMap里的元素大于i 说明是重复字符
+            i = charMap[s.charAt(j)] + 1;   //i跳到重复字符的下一位
+        }
+        charMap[s.charAt(j)] = j;   //非重复字符 将这个字符在charMap中的值设为j 并更新maxLen
+        maxLen = Math.max(maxLen, j-i+1);
+    }
+    return maxLen;
+}
+
+只需要遍历一遍数组 charMap中存的是字符在s中的索引 如果出现重复字符i直接跳到下一个字符
+
+
+
+
+
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s==null || s.length()==0)
+            return 0;
+        HashSet<Character> set = new HashSet<Character>();
+        int i = 0, maxLen = 0;
+        for(int j=0; j<s.length(); j++) {
+            while(set.contains(s.charAt(j))) {
+                set.remove(s.charAt(i));
+                i++;
+            }
+            set.add(s.charAt(j));
+            maxLen = Math.max(maxLen, j-i+1);
+        }
+        return maxLen;
+    }
+}
+
+用Hashset代替256位array 可以处理非ASCII情况 这题用上述3种解法就可以了 code ganker版没有这个简洁
+
+
 
 
 public class Solution {
