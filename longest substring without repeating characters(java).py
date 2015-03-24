@@ -97,7 +97,7 @@ public int lengthOfLongestSubstring(String s) {
 
 扫两遍数组O(2*n) = O(n)  空间O(1)
 
-如果不是ASCII字符 就要用set 同code ganker解法
+如果不是ASCII字符 就要用set 下面第二种解法
 
 
 

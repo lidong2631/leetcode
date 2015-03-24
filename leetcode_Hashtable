@@ -1,7 +1,11 @@
 Longest Substring Without Repeating Characters
-窗口思想 维护一个窗口的左右边界 正常情况下右边界移动 并将遇到的字符放入一个HashSet中 当遇到重复字符时先更新maxLen 然后开始移动左边界直到左右指针 
+窗口思想 维护一个窗口的左右边界 正常情况下右边界移动每次更新maxLen 并将遇到的字符放入一个256位的charMap中 当遇到重复字符移动左边界到重复字符的下一位 
 
-指向同一个字符 过程中将遇到的字符从HashSet remove 最后左右指针各跳一位开始寻找新的长度 时间O(2*n)=O(n) 空间O(n)
+过程中将遇到的字符置为false  时间O(2*n)=O(n) 空间O(n)
+
+这题还有O(n)的解法只扫一遍 只是charMap中保存字符在字符串中的索引 维护左窗口i 每次比较如果charMap[s.charAt(j)]>=i 说明是重复字符 更新i 否则set
+
+charMap[s.charAt(j)]=j并更新maxLen
 
 
 
@@ -34,9 +38,9 @@ Substring with Concatenation of All Words
 Longest Substring with At Most Two Distinct Characters
 窗口思路 跟Longest Substring Without Repeating Characters差不多 这里我们用一个字典记录每一个字符出现的次数 正常情况下右窗口走 碰到新字符
 
-count++ 否则只是更新其字典里对应的value 当count大于2时说明出现3个不同字符 此时移动有窗口无法得到更好结果要移动左窗口 将遇到的字符对应字典值
+numDistinct++ 否则只是更新其字典里对应的value 当numDistinct大于2时说明出现3个不同字符 此时移动有窗口无法得到更好结果要移动左窗口 将遇到的字符对应字典值
 
--1 如果某个字符字典值为0说明它已经不在系列里了 count-- 如此循环结束就可得到结果 时间O(n) 空间O(n)
+-1 如果某个字符字典值为0说明它已经不在系列里了 numDistinct-- 如此循环结束就可得到结果 时间O(n) 空间O(n)
 
 
 
@@ -65,3 +69,34 @@ Sudoku Solver
 NP问题 递归调用helper方法 如果当前格子为'.'则逐一试1到9九个数字如果是valid就递归下一个格子 isValid函数类似上一题只是这里不需要整个棋盘都判断
 
 只需要判断当前行列和3*3的小格子就好 之前都已是valid 如果一行判断完跳到下一行return helper(board, i+1, 0) 当所有行都判断完就返回true
+
+
+
+Anagrams
+每次读一个字符串 排序 在Hashmap<String, List<String>>中找是否有对应key 没有就新建一个健值对 否则将这个词加到对应key的list里 最后返回size大于1的list
+
+即可 时间O(nklogk) 空间O(nk)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
