@@ -73,13 +73,24 @@ NP问题 递归调用helper方法 如果当前格子为'.'则逐一试1到9九�
 
 
 Anagrams
-每次读一个字符串 排序 在Hashmap<String, List<String>>中找是否有对应key 没有就新建一个健值对 否则将这个词加到对应key的list里 最后返回size大于1的list
+每次读一个字符串 排序 在Hashmap<String, List<String>>中找是否有对应key 没有就新建一个健值对 否则将这个词加到对应key的list里 
+最后返回size大于1的list
 
 即可 时间O(nklogk) 空间O(nk)
 
 
 
+Binary Tree Inorder Traversal
+三种方式 递归 迭代 Morris 时间都是O(n) 空间分别为O(logn) O(logn) O(1)
 
+
+
+Copy List with Random Pointer
+两种解法 第一种利用哈希表 扫一遍链表每次复制对应节点并将原始节点和新建节点放入哈希表 再扫一遍链表利用哈希表的信息copy random指针
+
+第二种解法扫三遍链表 第一遍将每个节点copy一份放在节点后面 第二遍扫复制random指针 具体为curr.next.random = curr.random.next 第三遍拆分
+
+第二种解法空间为O(1) 
 
 
 
