@@ -99,7 +99,7 @@ public class Solution {
             else
                 map.put(T.charAt(i), 1);
         }
-        int leftP = 0; int count = 0; int minLen = S.length()+1;        //记得minLen初始值为S.length()+1
+        int leftP = 0; int count = 0; int minLen = S.length()+1;  //记得minLen初始值必须为S.length()+1 不能是S.length() 不然碰到case "a" "a"在118行会判断错误 
         String res = "";
         for(int i=0; i<S.length(); i++)
         {

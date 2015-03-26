@@ -33,7 +33,7 @@ public class Solution {
             if(count[s.charAt(j)]==0)   //如果count中对应值为0 说明是新字符
                 numDistinct++;
             count[s.charAt(j)]++;
-            while(numDistinct>2) {  //只要numDistinct大于2 移动左窗口直到窗口中只有2辆distinct字符
+            while(numDistinct>2) {  //只要numDistinct大于2 移动左窗口直到窗口中只有2个distinct字符
                 count[s.charAt(i)]--;
                 if(count[s.charAt(i)]==0)
                     numDistinct--;

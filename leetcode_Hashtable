@@ -1,53 +1,112 @@
 Longest Substring Without Repeating Characters
-窗口思想 维护一个窗口的左右边界 正常情况下右边界移动每次更新maxLen 并将遇到的字符放入一个256位的charMap中 当遇到重复字符移动左边界到重复字符的下一位 
+窗口思路 如果是ASCII
+1
+用一个256 boolean数组标记是否重复
+for i=0； i<S.length(); i++
+	while exists[S.charAt(i)] 只要重复字符
+		exists[j] = false
+		j++;
+	exists[i] = true 不是重复 设为true
+	maxLen = Math.max(maxLen, i-j+1);
+return maxLen
 
-过程中将遇到的字符置为false  时间O(2*n)=O(n) 空间O(n)
+2
+上一种解法要扫两遍 可以只扫一遍 数组不标记是否重复 而是存字符的索引
+int charMap[] = new int[256];
+Arrays.fill(charMap, -1);
+int j=0;
+for i=0; i<S.length(); i++
+	if charMap[S.charAt(i)]>=j 重复字符出现
+		j = charMap[S.charAt(i)]+1; j跳到这个字符的下一位
+	charMap[S.charAt(i)] = j;	非重复就更新charMap
+	更新maxLen
+return maxLen
 
-这题还有O(n)的解法只扫一遍 只是charMap中保存字符在字符串中的索引 维护左窗口i 每次比较如果charMap[s.charAt(j)]>=i 说明是重复字符 更新i 否则set
+如果不是ASCII 就要用set替代256数组 
 
-charMap[s.charAt(j)]=j并更新maxLen
-
-
-
-Minimum Window Substring
-窗口思想 先将所有子串的字符mapp到HashMap里 然后循环 右窗开始走碰到对应子串的字符就将其哈希表值减1 这里用一个count维护得到的子串长度 当所有子串字符都遇到了
-
-count等于子串长度 开始走左窗口压缩 碰到子串的字符就把其哈希表值加1 当某个子串字符的值大于0 说明左窗口再走就凑不齐子串所有的字符了 计算一下当前长度如果小于
-
-minLen就更新结果 这样当右窗口到达字符串尾部就得到最终结果 时间O(2*n)=O(n) 空间O(n)
+时间O(n) 空间O(1) 如果用set就要O(n)
 
 
-
-Substring with Concatenation of All Words
-窗口思路 先将所有单词都map到字典里 然后内外双循环 外层循环遍历L[0].length次 而内循环从0,1...L[0].length-1 每次右窗口以L[0].length为步长递增
-
-每次取S的一个长度为L[0].length的substring 如果该字符串不在字典里 将当前字典清空 count重置为0 左窗口移动一个单词长 否则该字符串在字典中 
-
-要更新当前循环的字典currMap 如果currMap里该字符串的value小于字典map里对应的值 就说明该字符串不是多余的重复单词 合法序列长度count++ 
-
-否则如果是重复的单词则当前序列无法构成解(题目要求each word exactly once) 我们要移动左窗口 过程中将遇到的单词在currMap里的值更新 
-
-如果某单词currMap里的值小于map的值了还要将count－1 当count等于L的元素个数时我们得到一个解将结果保存并移动左窗口以及更新currMap 从下一个单词位置开始继续
-
-时间上每一个单词不会被访问超过2次一次左窗口一次右窗口所以是O(2*n/L*L)=O(n) 其中2*n为两次扫过字符床S的字符数 而每次循环以L[0].length为步长递增
-
-所以要除以L 再加上外循环循环了L[0].length次 所以要乘以L 空间O(m*L)就是字典的长度
 
 
 
 Longest Substring with At Most Two Distinct Characters
-窗口思路 跟Longest Substring Without Repeating Characters差不多 这里我们用一个字典记录每一个字符出现的次数 正常情况下右窗口走 碰到新字符
+for i=0; i<s.length(); i++
+	if(count[s.charAt(j)]==0)  
+        numDistinct++;
+    count[s.charAt(j)]++;
+    while(numDistinct>2) {  
+        count[s.charAt(i)]--;
+        if(count[s.charAt(i)]==0)
+            numDistinct--;
+        i++;
+    }
+    maxLen = Math.max(maxLen, j-i+1);
+}
+return maxLen;
 
-numDistinct++ 否则只是更新其字典里对应的value 当numDistinct大于2时说明出现3个不同字符 此时移动有窗口无法得到更好结果要移动左窗口 将遇到的字符对应字典值
-
--1 如果某个字符字典值为0说明它已经不在系列里了 numDistinct-- 如此循环结束就可得到结果 时间O(n) 空间O(n)
+时间O(2*n) 空间O(1)
 
 
 
-Single Number
-位运算思路 一般思路和Single Number ii一样 用一个整型数组digits统计元素出现次数 将数组中的数对应的位分别加到digits对应的元素中 统计完后对每一位取余3
 
-结果中就只剩下出现一次的元素 时间O(n) 空间是32个元素的数组O(1) 另外这题可以用取巧的方法 对数组中每一个数做一次异或运算非常简单
+Minimum Window Substring
+窗口思路
+HashMap<Character, Integer> map 记录T中每个字符出现的次数
+for T
+	map初始化赋值
+for i=0; i<S.length(); i++
+	if map中有这个字符
+		map中对应值-1
+		if 减完后map中对应值>=0 则这个不是重复多余字符
+			count要加1
+		while count等于T的长度 可以左移窗口
+			if map包含这个字符
+				更新map中的值
+				if 更新map值后>0 则压缩到头
+					if 得到这个结果 i-leftP+1<minLen
+						更新minLen和结果
+					count--因为有效字符被移除一个
+			leftP++
+return res
+
+时间O(n) 空间O(T)
+
+
+
+
+
+Substring with Concatenation of All Words
+窗口思路
+HashMap<String, Integer> map 记录L中对应单词出现次数
+for T
+	map初始化赋值
+for i=0; i<L[0].length(); i++ 外循环
+	HashMap<String, Integer> currMap 记录当前得到的字典中的单词的出现次数
+	int count = 0, left = i; count记录当前循环已得到的字典中词的个数
+	for j=i; j<=S.length()-L[0].length(); j+=L[0].length()		内循环
+		拿到当前字符串currStr = S.substring(j, j+L[0].length());
+		if map中有currStr	
+			更新currMap中的值 if currMap.get(currStr)+1
+							  else	currMap.put(currStr, 1)
+			if currMap中的值<=Map中的值
+				count++
+			else
+				while currMap中的值>Map中的值 就要一直左移窗口直到把这个多余字符去掉
+					拿到left指的单词tmpstr = S.substring(left, left+L[0].length()) 将tmpStr在currMap中的值-1 更新count left右移一个单词
+			if count等于L长度
+				找到一个解 加入结果 更新currMap count 右移left
+		else map中没有
+			count=0 清空currMap left右移到j+L[0].length()
+
+时间O(2*n/L) 每一次循环最多左右窗口各扫一次 一共L次所以总时间为O(2*n/L*L)=O(n) 空间O(m*L)
+
+
+
+
+
+
+Single Number i ii
 
 
 

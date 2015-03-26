@@ -78,9 +78,9 @@ if(currMap.containsKey(removeStr)) {
 
 public class Solution {
     public List<Integer> findSubstring(String S, String[] L) {
-        if(S==null || S.length()==0 || L==null || L.length==0)
-            return null;
         List<Integer> res = new ArrayList<Integer>();
+        if(S==null || S.length()==0 || L==null || L.length==0)
+            return res;
         HashMap<String, Integer> map = new HashMap<String, Integer>();
         for(int i=0; i<L.length; i++) {
             if(map.containsKey(L[i]))
@@ -88,43 +88,41 @@ public class Solution {
             else
                 map.put(L[i], 1);
         }
+        
         for(int i=0; i<L[0].length(); i++) {
-            int left = i; int count = 0;
+            int count = 0, left = i;
             HashMap<String, Integer> currMap = new HashMap<String, Integer>();
             for(int j=i; j<=S.length()-L[0].length(); j+=L[0].length()) {
-                String tmp = S.substring(j, j+L[0].length());
-                if(map.containsKey(tmp)) {
-                    if(currMap.containsKey(tmp))
-                        currMap.put(tmp, currMap.get(tmp)+1);
+                String currStr = S.substring(j, j+L[0].length());
+                if(map.containsKey(currStr)) {
+                    if(currMap.containsKey(currStr))
+                        currMap.put(currStr, currMap.get(currStr)+1);
                     else
-                        currMap.put(tmp, 1);
-                    if(currMap.get(tmp)<=map.get(tmp))
+                        currMap.put(currStr, 1);
+                    if(currMap.get(currStr)<=map.get(currStr)) {
                         count++;
+                    }
                     else {
-                        while(currMap.get(tmp)>map.get(tmp)) {
-                            String removeStr = S.substring(left, left+L[0].length());
-                            if(currMap.containsKey(removeStr)) {
-                                currMap.put(removeStr, currMap.get(removeStr)-1);
-                                if(currMap.get(removeStr)<map.get(removeStr))
-                                    count--;
-                            }
+                        while(currMap.get(currStr)>map.get(currStr)) {
+                            String tmpStr = S.substring(left, left+L[0].length());
+                            currMap.put(tmpStr, currMap.get(tmpStr)-1);
                             left+=L[0].length();
+                            if(currMap.get(tmpStr)<map.get(tmpStr))
+                                count--;
                         }
                     }
                     if(count==L.length) {
                         res.add(left);
-                        String removeStr = S.substring(left, left+L[0].length());
-                        if(currMap.containsKey(removeStr)) {
-                            currMap.put(removeStr, currMap.get(removeStr)-1);
-                        }
-                        left+=L[0].length();
+                        String tmpStr = S.substring(left, left+L[0].length());
+                        currMap.put(tmpStr, currMap.get(tmpStr)-1);
                         count--;
+                        left+=L[0].length();
                     }
                 }
                 else {
                     currMap.clear();
-                    left= j + L[0].length();
                     count = 0;
+                    left = j+L[0].length();
                 }
             }
         }
