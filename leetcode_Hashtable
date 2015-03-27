@@ -50,6 +50,7 @@ return maxLen;
 
 
 
+
 Minimum Window Substring
 窗口思路
 HashMap<Character, Integer> map 记录T中每个字符出现的次数
@@ -105,8 +106,71 @@ for i=0; i<L[0].length(); i++ 外循环
 
 
 
-
 Single Number i ii
+位运算
+对于i可以用异或解 更通用的解法利用位运算
+int[32] digits
+for(i=0; i<32; i++)
+	for(j=0; j<A.length; j++)
+		digits[i] += (A[j]>>i)&1;
+int res
+for(int i=0; i<32; i++)
+	res+=(digits[i]%n(<<i;
+
+
+
+
+
+Fraction to Recurring Decimal
+位运算
+if numerator==0, denominator==0 判断0
+
+StringBuffer res
+
+if((numerator<0)^(denominator<0)) 判断是否异号
+	res.append("-")
+
+long num, long den 转long 有可能是最小负数-2147483648
+
+integral = num/den 将整数位加入结果
+res.append(integral)
+
+res.append(".") 加小数点
+
+HashMap<Long, Integer> map map记录每一个余数和它对应的位置 当出现重复余数即得到循环小数
+
+while(remainder!=0)
+	if map.containsKey(remainder)
+		return res.substring(0, map.get(remainder)) + "(" + res.substring(map.get(remainder), res.length()) + ")";
+	map.put(remainder, res.length());
+	res.append(remainder/den);
+	remainder = (remainder%den)*10;
+return res.toString();
+
+时间O(n) 空间O(n)
+
+
+
+
+
+Repeated DNA Sequences
+位运算 用2位二进制数表示A C G T这四个字符
+int mask = 0x3FFFF, sequence=toInt(s.substring(0, 10));
+HashMap<Integer, Integer> map 保存对应二进制序列出现的次数
+map.put(sequence, 1)
+for i=10; i<s.length(); i++
+	sequence = (sequence&mask)<<2|toInt(s.charAt(i));
+	if(map.containsKey(sequence)) {
+		if map.get(sequence)==1
+			add to result
+		map.put(sequence, map.get(sequence)+1);
+	}
+	else
+		map.put(sequence, 1);
+
+时间O(n) 空间O(n)
+
+
 
 
 
@@ -150,6 +214,10 @@ Copy List with Random Pointer
 第二种解法扫三遍链表 第一遍将每个节点copy一份放在节点后面 第二遍扫复制random指针 具体为curr.next.random = curr.random.next 第三遍拆分
 
 第二种解法空间为O(1) 
+
+
+
+
 
 
 

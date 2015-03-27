@@ -83,3 +83,57 @@ public class Solution {
 时间O(n)  ?空间最坏O(n^2)  这题主要考核位运算 要注意凡是一定范围的字符都可以考虑转换成二进制表示 
 
 这题可以扩展为不止4个字符 k个字符
+
+
+
+
+
+public class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+        List<String> res = new ArrayList<String>();
+        if(s==null || s.length()<10)
+            return res;
+        int mask = 0x3FFFF;
+        int sequence = toInt(s.substring(0, 10));
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        map.put(sequence, 1);
+        for(int i=10; i<s.length(); i++) {
+            sequence = ((sequence&mask)<<2)|toInt(s.charAt(i));
+            if(map.containsKey(sequence)) {
+                if(map.get(sequence)==1)
+                    res.add(s.substring(i-9, i+1));
+                map.put(sequence, map.get(sequence)+1);
+            }
+            else
+                map.put(sequence, 1);
+        }
+        return res;
+    }
+    
+    private int toInt(String str) {
+        int res = 0;
+        for(int i=0; i<str.length(); i++) {
+            res = (res<<2)|toInt(str.charAt(i));
+        }
+        return res;
+    }
+    
+    private int toInt(char c) {
+        if(c=='A')
+            return 0;
+        else if(c=='C')
+            return 1;
+        else if(c=='G')
+            return 2;
+        else
+            return 3;
+    }
+}
+
+
+
+
+
+
+
+

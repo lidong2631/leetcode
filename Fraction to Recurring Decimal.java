@@ -40,6 +40,8 @@ public class Solution {
 
 Line 15: error: incompatible types: possible lossy conversion from long to int
 
+-2147483648 的绝对值还是自身 http://stackoverflow.com/questions/5444611/math-abs-returns-wrong-value-for-integer-min-value
+
 另外复习 原码 反码 补码 http://blog.csdn.net/zq602316498/article/details/39404043
 
 http://blog.csdn.net/ljiabin/article/details/42025037
