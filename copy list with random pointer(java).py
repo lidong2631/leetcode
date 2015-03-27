@@ -204,13 +204,14 @@ public class Solution {
         if(head==null)
             return null;
         RandomListNode node = head;
+        
         while(node!=null) {
             RandomListNode newNode = new RandomListNode(node.label);
             newNode.next = node.next;
             node.next = newNode;
-            node = node.next.next;
+            node = newNode.next;
         }
-
+        
         node = head;
         while(node!=null) {
             if(node.random!=null)
@@ -219,14 +220,15 @@ public class Solution {
         }
         
         node = head;
-        RandomListNode newHead = head.next;
-        RandomListNode p = newHead;
+        RandomListNode p = head.next;
+        RandomListNode newHead = p;
         while(node!=null) {
-            node.next = node.next.next;
-            if(p.next!=null)
+            node.next = p.next;
+            if(p.next!=null) {
                 p.next = p.next.next;
+                p = p.next;
+            }
             node = node.next;
-            p = p.next;
         }
         return newHead;
     }

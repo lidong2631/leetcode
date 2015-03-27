@@ -111,7 +111,7 @@ public class Solution {
         {
             char[] charStr = strs[i].toCharArray();     //这里将string转成char Array排序后再转回
             Arrays.sort(charStr);
-            String str = new String(charStr);
+            String str = new String(charStr);//String.valueOf(charStr)也可以
             if(map.containsKey(str))
             {
                 map.get(str).add(strs[i]);      //如果已经有映射关系 直接在对应list里面加上这个string就好了
