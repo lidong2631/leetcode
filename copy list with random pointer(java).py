@@ -199,36 +199,34 @@ Note：这题是用哈希表做的深拷贝 时间O(n), 空间O(n) 有点绕要�
  *     RandomListNode(int x) { this.label = x; }
  * };
  */
+
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
         if(head==null)
             return null;
-        RandomListNode node = head;
-        
-        while(node!=null) {
-            RandomListNode newNode = new RandomListNode(node.label);
-            newNode.next = node.next;
-            node.next = newNode;
-            node = newNode.next;
+        RandomListNode p1 = head;
+        while(p1!=null) {
+            RandomListNode newNode = new RandomListNode(p1.label);
+            newNode.next = p1.next;;
+            p1.next = newNode;
+            p1 = p1.next.next;
         }
-        
-        node = head;
-        while(node!=null) {
-            if(node.random!=null)
-                node.next.random = node.random.next;
-            node = node.next.next;
+        p1 = head;
+        while(p1!=null) {
+            if(p1.random!=null)
+                p1.next.random = p1.random.next;
+            p1 = p1.next.next;
         }
-        
-        node = head;
-        RandomListNode p = head.next;
-        RandomListNode newHead = p;
-        while(node!=null) {
-            node.next = p.next;
-            if(p.next!=null) {
-                p.next = p.next.next;
-                p = p.next;
+        RandomListNode newHead = head.next;
+        p1 = head;
+        RandomListNode p2 = newHead;
+        while(p1!=null) {
+            p1.next = p1.next.next;
+            if(p2.next!=null) {
+                p2.next = p2.next.next;
+                p2 = p2.next;
             }
-            node = node.next;
+            p1 = p1.next;
         }
         return newHead;
     }

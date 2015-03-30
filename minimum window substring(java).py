@@ -87,6 +87,51 @@ class Solution:
 
 
 
+
+public class Solution {
+    public String minWindow(String S, String T) {
+        if(S==null || S.length()==0 || T==null || T.length()==0)
+            return "";
+        int leftP = 0, count = 0, minLen = S.length()+1;
+        String res = "";
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        for(int i=0; i<T.length(); i++) {
+            if(map.containsKey(T.charAt(i)))
+                map.put(T.charAt(i), map.get(T.charAt(i))+1);
+            else
+                map.put(T.charAt(i), 1);
+        }
+        for(int i=0; i<S.length(); i++) {
+            if(map.containsKey(S.charAt(i))) {
+                map.put(S.charAt(i), map.get(S.charAt(i))-1);
+                if(map.get(S.charAt(i))>=0)
+                    count++;
+            }
+            while(count==T.length()) {
+                if(map.containsKey(S.charAt(leftP))) {
+                    map.put(S.charAt(leftP), map.get(S.charAt(leftP))+1);
+                    if(map.get(S.charAt(leftP))>0) {
+                        if(minLen>i-leftP+1) {
+                            minLen = i-leftP+1;
+                            res = S.substring(leftP, i+1);
+                        }
+                        count--;
+                    }
+                }
+                leftP++;
+            }
+        }
+        return res;
+    }
+}
+
+110 while 写在if 外面也可以ac
+
+
+
+
+
+
 public class Solution {
     public String minWindow(String S, String T) {
         if(S==null || S.length()==0 || T==null || T.length()==0)
