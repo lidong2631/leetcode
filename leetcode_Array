@@ -1,16 +1,37 @@
 Array
 
 Two Sum (注意:题目假设只有一个解)
-两种方法 第一种用HashMap 遍历一遍数组 如果target-number[i]没出现在表中 就将number[i]放在表中 否则找到结果输出 时间O(n) 空间O(n)
+两种方法 第一种用HashMap 
+HashMap<Integer, Integer> map 保存数字和其对应索引
+for i=0; i<numbers.length; i++
+    if(map.containsKey(target-numbers[i]))
+        保存结果 返回
+    map中存入记录
+return res
+
+时间O(n) 空间O(n)
+
 
 第二种先排序然后两边夹逼 这种比较好应付不只有一个解的情况 不过这题要求输出数字的index而不是数字本身 所以要多开一个HashMap纪录数字原始的index
+时间O(nlogn＋n)=O(nlogn) 空间O(n)
 
-所以时间O(nlogn＋n)=O(nlogn) 空间O(n)
+
 
 
 
 Two Sum ii - input array is sorted
-这题假设数组已排好序 可以直接用两边夹逼的方法做出 时间O(n) 空间O(n)
+这题假设数组已排好序 可以直接用两边夹逼的方法做出 
+while(left<right)
+    if(numbers[left]+numbers[right]==target)
+        保持结果 返回
+    else if >target
+        right--;
+    else
+        left++;
+return res;
+
+时间O(n) 空间O(1)
+
 
 
 
@@ -62,23 +83,56 @@ public class TowSum {
 
 
 
+
 3Sum (数组中可能有重复值)
-这题先对数组排序这样处理重复值会比较方便 然后遍历一遍数组每次取一个数 调用Two Sum的subroutine找两个数和为-num[i] 注意这里循环要从后往前走
+Arrays.sort(num);
+for(int i=num.length-1; i>=2; i--)
+    判断重复 continue
+    List<List<Integer>>　item = twoSum(num, i-1; -num[i]);
+    for(int i=0; i<item.size(); i++)
+        item.add(num[i]);
+    res.addAll(item);
 
-不然输出就不是从小到大输出OJ过不了 时间O(n^2+nlogn)=O(n^2) 空间O(n)
+List<list<Integer>>　twoSum(int[] num, int end, int target) {
+    while(left<right)
+        if ==target
+            加入结果
+            left++; right--;
+            while left<right && num[left]==num[left-1]
+                left++;
+            while left<right && num[right]==num[right+1]
+                right--;
+        else if >target
+            right--;
+        else left++
+}
+时间O(n^2)    空间O(n)
 
-这题要注意去重有两个地方一个是主循环中if(i<num.length-1 && num[i]==num[i+1])去除取第一个数时的重复
 
-另一个是TwoSum里while(left<right && num[left]==num[left-1]) while(left<right && num[right]==num[right+1])去除取TwoSum时的重复
 
 
 
 3Sum Closest (find three integers that sum is closest to a given number. Return the sum. Only one solution)
-3Sum变体 一样是先排序数组 设closest起始为num[0]+num[1]+num[2]-target 从前往后遍历一遍数组仍然是调用TwoSum找两个数和最接近target-num[i]
+3Sum变体
+初始化global_minDiff = num[0]+num[1]+num[2]-target
+Arrays.sort(num);
+for i=0; i<num.length-2; i++
+    int diff = twoSum(num, i+1, -num[i]);
+    if global_minDiff大 更新
+return target+global_minDiff;
 
-如果出来的结果的绝对值小于closest更新closest 最后输出closest+target 注意TwoSum中稍有变化 每次从左右取两个数减target得到localDiff
+int twoSum(int[] num, int start, int target)
+初始化minDiff
+while(left<right)
+    if ==target
+        return;
+    int localDiff = num[left]+num[right]-target;
+    if minDiff大 更新
+    if >target
+        right--;
+    else left++;
 
-跟diff比较如果localDiff小就更新diff 然后根据num[left]+num[right]的值继续夹逼target 如果是0就直接返回
+
 
 
 
