@@ -143,30 +143,48 @@ while(left<right)
 
 
 
-Best Time to Buy and Sell Stock (一次交易的最大利润)
-动态规划 局部解全局解 维护两个量 global到目前为止最好的利润 local在当前天卖出最好的利润 local = Math.max(local+prices[i+1]-prices[i], 0)
 
-也就是知道第i天卖出的最大利润 加上i＋1天与i天的差价 如果这个差价加上i天的最大利润比0还小就是0 代表当天买当天卖 global = Math.max(local, global)
+
+Best Time to Buy and Sell Stock (一次交易的最大利润)
+动态规划 局部解全局解
+for i=1; i<prices.length; i++
+    local = Math.max(local[i]+prices[i]-prices[i-1], 0);
+    global = Math.max(global, local);
 
 时间O(n) 空间O(1)
 
 
 
+
+
 Best Time to Buy and Sell Stock ii (无限次交易的最大利润)
-这题更简单 不限定交易次数那么只要差价大于0就可以一直累加 时间O(n) 空间O(1)
+这题更简单 不限定交易次数那么只要差价大于0就可以一直累加 
+for i=1; i<prices.length; i++
+    if(prices[i]-prices[i-1]>0)
+        maxProfit+=prices[i]-prices[i-1];
+时间O(n) 空间O(1)
+
+
 
 
 
 Best Time to Buy and Sell Stock iii (限定2次交易 扩展到k次)
-难题 维护两个量 global[j]到达第i天最多可以进行j次交易可以获得的最大利润 local[j]到达第i天最多进行j次交易并且最后一次交易在第i天发生的最好利润
-
-local[i][j]=max(local[i-1][j]+diff, global[i-1][j-1]+max(diff,0)) 第一个取local第i-1天j次交易，然后加上今天的差值
-
-(这里因为local[i-1][j]包含第i-1天卖出的交易，所以现在变成第i天卖出，并不会增加交易次数，而且这里无论diff是不是大于0都一定要加上，否则就不满足local[i][j]必须在最后一天卖出的条件了）
-
-第二个是全局到i-1天进行j-1次交易，然后加上今天的交易，如果今天是赚钱的话（也就是前面只要j-1次交易，最后一次交易取当前天）
-
+local[i][j]=max(local[i-1][j]+diff, global[i-1][j-1]+max(diff,0)) 
 global[i][j]=max(local[i][j],global[i-1][j])
+for i=1; i<prices.length; i++
+    int diff = prices[i]-prices[i-1];
+    for(j=2; j>=1; j--)
+        local[j] = Math.max(local[j]+diff, global[j-1]+Math.max(diff,0));
+        global[j] = Math.max(local[j], global[j]);
+
+
+
+
+
+Best Time to Buy and Sell Stock iv
+ii iii结合
+
+
 
 
 
