@@ -189,16 +189,37 @@ ii iii结合
 
 
 Combination Sum (找和为指定target的集合 每个元素可以用无限次)
-NP问题 先排序好处理重复元素 然后丢给helper helper中判断如果target<0返回 target=0找到一组解放到res中 否则循环 注意循环先要判断重复元素因为元素可以无限使用
+NP问题
+Arrays.sort(candidates);
+helper(candidates, 0, new ArrayList<Integer>(), target, res);
 
-若前面已用过这个元素 后面再出现就可以直接跳过 每次递归调用helper时start仍是i因为元素可以多次使用
+if target==0
+if target<0
+for i=start; i<candidates.length; i++
+    if(i>0 && candidates[i]==candidates[i-1])
+        continue;
+    item.add();
+    helper(candidates, i, item, target-candidates[i], res);
+    item.remove();
+
+
 
 
 
 Combination Sum ii (每个元素只能用一次)
-跟上一题类似 只是递归helper时start值为i＋1因为元素只能用一次 而上一题start仍是i 另外这一题还是递归前还是要判断重复元素 因为虽然一个元素不可以重复使用
+Arrays.sort(candidates);
+helper(candidates, 0, new ArrayList<Integer>(), target, res);
 
-但一个元素重复出现多次是允许的 为了避免出现重复结果集只对第一次碰到这个数递归 接下来再碰到就直接跳过
+if target==0
+if target<0 || start==candidates.length;
+for i=start; i<candidates.length; i++
+    if i>start && candidates[i]==candidates[i-1]
+        continue;
+    item.add();
+    helper(candidates, i+1, item, target-candidates[i], res);
+    item.remove();
+
+    
 
 
 
