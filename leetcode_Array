@@ -224,83 +224,193 @@ for i=start; i<candidates.length; i++
 
 
 Construct Binary Tree from Preorder and Inorder Traversal
-树的难题 先用HashMap保存中序遍历的下标以便后面寻找根的下标 然后仍然是用helper递归 这里利用先序遍历找到根的下标 然后递归左右子树
+树题 递归
+HashMap<Integer, Integer> map 保存中序值和索引的对应关系
+helper(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1, map);
 
-这里麻烦在递归先序的下标 中序比较好处理 root.left = helper(preorder, preStart+1, preStart+index-inStart, inorder, inStart, index-1, map);
-                                                        根后一位就是左子树开始位置   左子树结束位置 index-inStart是先序左子树加根的长度
-root.right = helper(preorder, preStart+1+index-inStart, preEnd, inorder, index+1, inEnd, map);
-                                右子树开始位置 左子树结束位置＋1
+TreeNode helepr() {
+    if inL>inR || preL>preR
+        return null;
+    TreeNode root = new TreeNode(preorder[preL]);
+    int index = map.get(preorder[preL]);
+    root.left = 
+    root.right = 
+    return root;
+}
 
 
-例子 先序遍历是12453687 中序遍历是42516837 后序遍历是45286731
-                    1
-            2               3
-        4       5       6       7
-                          8
+
 
 
 Construct Binary Tree from Inorder and Postorder Traversal
-同上一题 递归后序的下标为 root.left = helper(inorder, inStart, index-1, postorder, postStart, postStart+(index-inStart)-1, map);
-                                                                                            左子树结束位置
-root.right = helper(inorder, index+1, inEnd, postorder, postEnd-(inEnd-index), postEnd-1, map);
-                                                        从根往前右子树长度位        根－1是右子树结束位置
-
-
-
-<<<<<<< HEAD
+同上
 
 
 
 
 
-
-
-
-
-
-
-
-
-=======
 Container With Most Water
-类似TwoSum中的夹逼法 每次迭代比较左右指针谁指的数小 小的那个就是瓶颈 谁小就继续移动谁 维护最大盛水量 这样扫一遍数组后可以得到结果
+求两条垂直x轴的线和x轴围成的container里能乘的最大水量
+while left<right
+    int diff
+    if diff>0
+        int localWater = (right-left)*height[left];
+        maxWater = maxWater<localWater ? localWater:maxWater;
+        left++;
+    else
+        同上 right
 
 时间O(n) 空间O(1)
 
 
 
-Find Minimum in Rotated Array i ii (i假定没有重复元素 二有)
-这题i ii用一种解法都可以搞定 参见ii的第一种解法 可以处理有重复和没重复元素的情况 本质也是二分查找 只是不是找指定target而是找最小值
 
-这道题要留意的是下标总是会偏向左 所以在二分时变化是right = mid; left = mid+1要特别体会这点 另外这题ii多加的重复条件会影响复杂度要注意
 
-原先搜索某一个元素，所以可以夹逼到找到元素或者他们交错为止，现在的主要问题是如果l和r相差1以内，那么m就会等于l，如此下面的条件就会跳过r，
+Trapping Rain Water
+上一题的进阶版 不是和x轴围 而是和中间其他高度围
 
-而最小元素可能就在r里面，所以终止条件才改成l<r-1使得夹逼就停止在最后两个元素中
+两种解法 第一种扫两遍 先左扫一遍 再右扫一遍
+for(int i=1; i<A.length-1; i++) {
+    leftMax = Math.max(leftMax, A[i-1]);
+    maxL[i] = leftMax;
+}
+int rightMax = 0;
+for(int i=A.length-2; i>0; i--) {
+    rightMax = Math.max(rightMax, A[i+1]);
+    water+=Math.min(maxL[i], rightMax)>A[i]?Math.min(maxL[i], rightMax)-A[i]:0;
+}
+
+时间O(2*n)=O(n) 空间O(n)
+
+第二种解法只需要扫一次数组 比较左右指针 取小的那边开始走 如果下一个元素更小就把差值加到结果中 否则重新比较左右指针大小 
+while(left<right) {
+    int minHeight = Math.min(A[left], A[right]);
+    if(A[left]==minHeight) {
+        left++;
+        while(left<right && A[left]<=minHeight) {
+            water+=minHeight-A[left];
+            left++;
+        }
+    }
+    else {
+        right 同上
+    }
+
+时间O(n) 空间O(1)
+
+
+
+
+
+Find Minimum in Rotated Array i (i假定没有重复元素 二有)
+while left<right &&　num[left]>num[right]
+    int mid = (left_right)/2;
+    if(num[mid]>num[right])
+        left = mid + 1;
+    else
+        right = mid;
+return num[left];
+
+时间O(logn) 空间O(1)
+
+
+
+
+
+Find Minimum in Rotated Array ii
+while left<right
+    int mid = (left+right)/2;
+    if(num[mid]>num[right])
+        left = mid + 1;
+    else if(num[mid]<num[right])
+        right = mid;
+    else
+        right--;
+return num[left];
+
+时间O(logn) 空间O(1)
+
+
+
+
+
+Search in Rotated Sorted Array
+while(left<=right)
+    if target==A[mid]
+        return mid;
+    if(A[mid]>A[right]) {
+        if(A[left]<=target && target<A[mid])
+            right = mid - 1;
+        else
+            left = mid + 1;
+    }
+    else {
+        if(A[mid]<target && target<=A[right])
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+时间O(logn) 空间O(1)
+
+
+
+
+
+Search in Rotated Sorted Array ii
+while left<=right
+    if target==A[mid]
+        return mid;
+    if(A[mid]>A[right]) {
+        if(A[left]<=target && target<A[mid])
+            right = mid - 1;
+        else
+            left = mid + 1;
+    }
+    else if(A[mid]<A[right]) {
+        if(A[mid]<target && target<=A[right])
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    else
+        right--;
+时间最坏是O(n) 空间O(1)
+
+
 
 
 
 Find Peak Element
-还是二分法思路 如果num[mid]>num[mid+1] right=mid; else left=mid+1 下标的处理跟Find Minimum一样 
+还是二分法思路 
+while(left<right) {
+    int mid = (left+right)/2;
+    if(num[mid]<num[mid+1])
+        left = mid + 1;
+    else
+        right = mid;
+}
+return left;
+时间O(logn) 空间O(1)
 
-就剩两个元素比较时 指针一定落在左边的元素 所以mid+1不会越界 时间O(n) 空间O(1)
+
 
 
 
 First Missing Positive integer
-思路是找第一个违反A[A[i]-1]=A[i]的元素 遍历一遍数组A 对于A[i]>0&&A[i]<=A.length&&A[A[i]-1]!=A[i]的元素进行交换
+for i=0; i<A.length; i++
+    if(A[i]>0 && A[i]<A.length+1 && A[A[i]-1]=A[i])
+        int tmp = A[A[i]-1];
+        A[A[i]-1] = A[i];
+        A[i] = tmp;
+        i--;
+for i=0; i<A.length; i++
+    if A[i]!=i+1;
+        return i+1;
+return A.length+1;
 
-交换code为
-int tmp = A[A[i]-1]; 
-A[A[i]-1] = A[i]; 
-A[i]=tmp; 
-i--;
+时间O(n) 空间O(1)
 
-注意第一个判断最后一个条件不能用A[i]!=i+1 只能用A[A[i]-1]!=A[i] 否则碰到重复元素会死循环 就是不停交换两个相同的元素 而用A[A[i]-1]!=A[i]
 
-做判断条件好处是它只检查A[A[i]-1]放的值是不是应放的值A[i]跟当前下标i无关 扫完一遍后再扫一次数组找到第一个不符合规律的数即是结果 如果都符合
-
-就是A.length+1
 
 
 
@@ -326,12 +436,17 @@ Collections.sort(intervals,comp);
 时间O(n) 空间O(1)
 
 
+
+
+
 Insert Intervals
 这题是上一题的进阶版 先扫一遍list找到newInterval.start<intervals.get(i).end 如果有这个interval就先将newInterval.start和intervals.get(i).start
 
 merge 然后将newInterval插入位置i i++跳到下一个位置 从i开始往后扫 只要newInterval.end跟当前interval.get(i)有交集 就将它合并进newInterval
 
 并从原list中remove这个interval 时间O(n) 空间O(1)
+
+
 
 
 
@@ -526,13 +641,7 @@ else
 
 
 
-Search in Rotated Sorted Array
-二分法变体 旋转一次的有序数组 在二分时要先判断哪边有序 然后二分 时间O(logn) 空间O(1)
 
-
-
-Search in Rotated Sorted Array ii
-同上一题 只是这里有重复数字 仍是上一题的解法 只是当无法切一半时要将left++或right-- 时间最坏是O(n) 空间O(1)
 
 
 
@@ -574,12 +683,6 @@ Subsets ii
 
 
 
-Trapping Rain Water
-两种解法 第一种扫两遍 先左扫一遍 记录每个bar左边最大高度 再右扫一遍 记录每个bar右边最大高度并用左右最大高度的较小值跟bar自己比较 如果大于就把差值加到结果中
-
-否则bar乘不了水 时间O(2*n)=O(n) 空间O(n)
-
-第二种解法只需要扫一次数组 比较左右指针 取小的那边开始走 如果下一个元素更小就把差值加到结果中 否则重新比较左右指针大小 直到它们相遇为止 时间O(n) 空间O(1)
 
 
 

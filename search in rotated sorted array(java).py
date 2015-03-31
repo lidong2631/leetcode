@@ -31,7 +31,33 @@ if A[left] <= target < A[mid]:  这里要有等号 反例如1,3,5 1 下面情况
 
 
 
+根据cleanCode改编
 
+public class Solution {
+    public int search(int[] A, int target) {
+        if(A==null || A.length==0)
+            return -1;
+        int left = 0, right = A.length-1;
+        while(left<=right) {
+            int mid = (left+right)/2;
+            if(A[mid]==target)
+                return mid;
+            if(A[mid]>A[right]) {
+                if(A[left]<=target && target<A[mid])
+                    right = mid - 1;
+                else
+                    left = mid + 1;
+            }
+            else {
+                if(A[mid]<target && target<=A[right])
+                    left = mid + 1;
+                else
+                    right = mid - 1;
+            }
+        }
+        return -1;
+    }
+}
 
 public class Solution {
     public int search(int[] A, int target) {

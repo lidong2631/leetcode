@@ -22,6 +22,24 @@ Note: We use "prev" to keep track of the maximum distance that has been reached 
 
 
 
+public class Solution {
+    public int jump(int[] A) {
+        if(A==null || A.length<2)
+            return 0;
+        int step = 1, lastReach = A[0], reach = A[0];
+        for(int i=1; i<A.length&&i<=reach; i++) {
+            reach = Math.max(reach, i+A[i]);
+            if(i>lastReach) {
+                step++;
+                lastReach = reach;
+            }
+        }
+        if(reach<A.length-1)
+            return -1;
+        return step;
+    }
+}
+
 
 
 public class Solution {

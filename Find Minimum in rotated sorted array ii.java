@@ -43,7 +43,6 @@ public class Solution {
 
 
 
-<<<<<<< HEAD
 =======
 public class Solution {
     public int findMin(int[] num) {

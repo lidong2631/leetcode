@@ -33,7 +33,34 @@ Note: 这题有三种解法 上面的解为第二种解法 第二遍过时应该
 
 
 
+public class Solution {
+    public int trap(int[] A) {
+        if(A==null || A.length<2)
+            return 0;
+        int left = 0, right = A.length-1;
+        int water = 0;
+        while(left<right) {
+            int minHeight = Math.min(A[left], A[right]);
+            if(A[left]==minHeight) {
+                left++;
+                while(left<right && A[left]<=minHeight) {
+                    water+=minHeight-A[left];
+                    left++;
+                }
+            }
+            else {
+                right--;
+                while(left<right && A[right]<=minHeight) {
+                    water+=minHeight-A[right];
+                    right--;
+                }
+            }
+        }
+        return water;
+    }
+}
 
+只扫一遍 贪心思想+夹逼
 
 
 public class Solution {
@@ -74,7 +101,25 @@ public class Solution {
 
 
 
-
+public class Solution {
+    public int trap(int[] A) {
+        if(A==null || A.length<2)
+            return 0;
+        int water = 0;
+        int leftMax = 0;
+        int[] maxL = new int[A.length];
+        for(int i=1; i<A.length-1; i++) {
+            leftMax = Math.max(leftMax, A[i-1]);
+            maxL[i] = leftMax;
+        }
+        int rightMax = 0;
+        for(int i=A.length-2; i>0; i--) {
+            rightMax = Math.max(rightMax, A[i+1]);
+            water+=Math.min(maxL[i], rightMax)>A[i]?Math.min(maxL[i], rightMax)-A[i]:0;
+        }
+        return water;
+    }
+}
 
 public class Solution {
     public int trap(int[] A) {
@@ -99,38 +144,6 @@ public class Solution {
 第二遍写的 左扫一遍右扫一遍 思路类似Candy那题
 
 
-
-
-
-
-
-
-
-
-public class Solution {
-    public int trap(int[] A) {
-        if(A==null || A.length<3)
-            return 0;
-        int[] tmp = new int[A.length];
-        int leftMost = A[0];
-        for(int i=1; i<A.length; i++) {
-            if(A[i]>leftMost)
-                leftMost = A[i];
-            tmp[i] = leftMost;
-        }
-        int water = 0; int rightMost = A[A.length-1];
-        for(int j=A.length-2; j>=1; j--) {
-            if(A[j]>rightMost)
-                rightMost = A[j];
-            water+=Math.min(tmp[j], rightMost)-A[j]>0 ? Math.min(tmp[j], rightMost)-A[j]:0;
-        }
-        return water;
-    }
-}
-
-Note: 左扫一遍 右扫一遍 对于i 点 如果它左边最高bar和右边最高bar的较小值大于A[i] 则说明i可以贮水 可以把较小值和A[i]的差加到res中
-
-这种算法要熟记
 
 
 

@@ -9,7 +9,7 @@ public class Solution {
             int mid = (left+right)/2;
             if(num[mid]>num[right])
                 left = mid +1;
-            else
+            else            //这里换成else if(nuj[mid]<num[right])也可以 while循环内部不会有num[mid]==num[right]的情况 因为没有重复元素
                 right = mid;
         }
         return num[left];
