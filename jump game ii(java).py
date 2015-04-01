@@ -26,10 +26,10 @@ public class Solution {
     public int jump(int[] A) {
         if(A==null || A.length<2)
             return 0;
-        int step = 1, lastReach = A[0], reach = A[0];
-        for(int i=1; i<A.length&&i<=reach; i++) {
+        int step = 0, lastReach = 0, reach = 0;
+        for(int i=0; i<A.length&&i<=reach; i++) {
             reach = Math.max(reach, i+A[i]);
-            if(i>lastReach) {
+            if(i>lastReach) {   //注意这里if要放reach前面 先判断再更新reach的值 否则会出下面的错误
                 step++;
                 lastReach = reach;
             }
@@ -39,6 +39,10 @@ public class Solution {
         return step;
     }
 }
+
+Input:  [1,2,3]
+Output:     1
+Expected:   2
 
 
 
