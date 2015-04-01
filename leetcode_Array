@@ -415,22 +415,19 @@ return A.length+1;
 
 
 Merge Intervals
-先对interval排序 然后扫一遍interval 如果当前interval和结果集中最后一个有重叠 就把结果集中最后一个元素的end设为它和当起interval的end中较大值
-
-否则直接将当前interval加到结果集中
-
-排序要用到Comparator接口 具体如下
-Comparator<Interval> comp = new Comparator<Interval>()  
-{  
-    @Override  
-    public int compare(Interval i1, Interval i2)  
-    {  
-        if(i1.start==i2.start)  
-            return i1.end-i2.end;  
-        return i1.start-i2.start;  
-    }  
-};  
-Collections.sort(intervals,comp);  
+Comparator<Interval> cmp = new Comparator<Interval>(){
+    public int compare(Interval i1, Interval i2) {
+        if(i1.start==i2.start)
+            return i1.end-i2.end;
+        return i1.start-i2.start;
+    }
+};
+Collections.sort(intervals, cmp);
+for(int i=1; i<intervals.size(); i++)
+    if(intervals.get(i).start<=intervals.get(i-1).end)
+        intervals.get(i-1).end = Math.max(intervals.get(i-1).end, intervals.get(i).end);
+        intervals.remove(i);
+        i--;
 
 时间O(n) 空间O(1)
 
@@ -439,11 +436,18 @@ Collections.sort(intervals,comp);
 
 
 Insert Intervals
-这题是上一题的进阶版 先扫一遍list找到newInterval.start<intervals.get(i).end 如果有这个interval就先将newInterval.start和intervals.get(i).start
+这题是上一题的进阶版 
+while(i<intervals.size() && intervals.get(i).end<newInterval.start)
+    i++;
+if(i<intervals.size());
+    newInterval.start = Math.min(newInterval, intervals.get(i).start);
+intervals.add(i, newInterval);
+i++;
+while(i<intervals.size() &&　newInterval.end>=intervals.get(i).start)
+    newInterval.end = Math.max(newInterval.end, intervals.get(i).end);
+    intervals.remove(i);
 
-merge 然后将newInterval插入位置i i++跳到下一个位置 从i开始往后扫 只要newInterval.end跟当前interval.get(i)有交集 就将它合并进newInterval
-
-并从原list中remove这个interval 时间O(n) 空间O(1)
+时间O(n) 空间O(1)
 
 
 
@@ -482,51 +486,113 @@ return step;
 
 
 Largest Rectangle in Histogram
-维护一个栈 栈里的元素是递增的 扫一遍数组如果当前元素小于栈顶元素那么就一直出栈直到栈顶元素小于当前元素 在这个过程中计算每个矩阵的面积 关键代码如下
-peekIndex = stack.pop();
-int width = stack.isEmpty()?i:i-stack.peek()-1;
-maxArea = Math.max(maxArea, width*height[peekIndex]);
+第一种做法对于每一个高度 分别往左右走找到它的最大面积 最后取所有最大面积中最大的 时间O(n^2) 空间O(1)
 
-最后循环结束还要检查下栈是否为空 不为空要将元素都弹出计算面积 时间O(n) 空间最坏O(n)
+第二种做法 利用栈维护一个递增序列
+for i=0; i<height.length; i++;
+    if(stack.isEmpty() || height[i]>height[stack.peek()])
+        stack.push(i);
+    else {
+        int currIndex = stack.pop();
+        int width = stack.isEmpty()? i:i-stack.peek()-1;
+        maxArea = Math.max(maxArea, width*height[i]);
+        i--;
+    }
+while(!stack.isEmpty()) {
+    int currIndex = stack.pop();
+    int width = stack.isEmpty()? i:i-stack.peek()-1;
+    maxArea = Math.max(maxArea, width*height[i]);
+}
+
+时间O(n) 空间O(n)
+
+
 
 
 
 Maximal Rectangle
-这题是上一题的扩展 求0-1矩阵面积最大的全1矩阵 对于矩阵每一行可以用上一题的routine来求出最大面积 一共有m行所以要调m次 在计算的过程中只需要维护上一行
+这题是上一题的扩展 
+for int i=0; i<matrix.length; i++
+    for int j=0; j<matrix[0].length; j++
+        height[j] = matrix[i][j]=='0'? 0:height[j]+1;
+    maxArea = Math.max(maxArea, largestRect(height));
 
-的高度就可以了 如果下一行对应元素为0则高度是0 否则时上一行高度加1 这样在线性时间里就可以完成对高度的更新 Largest Rectangle in Histogram的复杂度
+时间上Largest Rectangle in Histogram的复杂度为O(n) 而计算一行高度的复杂度也为O(n) 所以每一行的复杂度是O(n+n)=O(n) 
 
-为O(n) 而计算一行高度的复杂度也为O(n) 所以每一行的复杂度是O(n+n)=O(n) 总时间复杂度O(m*n) 空间上需要保存一行直方图的高度O(n)加上Largest Rectangle
+总时间复杂度O(m*n) 空间上需要保存一行直方图的高度O(n)加上Largest Rectangle in Histogram所使用的空间O(n) 总空间复杂度还是O(n)
 
-in Histogram所使用的空间O(n) 总空间复杂度还是O(n)
+
 
 
 
 Longest Consecutive Sequence
-这题借用了图的思想 将每个元素看作图的一个顶点 相邻的数就是它的边 做一次深度优先遍历 找出当前元素的最大连续子串过程中移除用过的元素
+1 先排序在统计最长连续子序列 时间O(nlogn)
 
-实现上先将所有元素放入一个HashSet 只要set不空就一直循环 每次从set中取出一个元素 找它相邻左右的元素是否在set中 在就将长度＋1并将此元素从set中移除
+2
+HashSet<Integer> set 记录所有数
 
-最后更新最大长度 退出循环时返回最大长度即可
+while(!set.isEmpty()) {
+    Iterator i = set.iterator();
+    int n = (int)i.next();
+    set.remove(n);
+    int left = n-1; l = 0;
+    while(set.contains(left)) {
+        l++;
+        set.remove(left);
+        left--;
+    }
+    right同left
+    maxLen = Math.max(maxLen, l+1+r);
+}
+
+时间O(n) 空间O(n)
+
+
 
 
 
 Majority Element
-Moore voting algorithm 扫一遍数组 维护一个count和一个curr变量 如果相同变量count＋1 否则count－1 如果count为0 则更新curr为num[i] 因为存在
-
-大于半数的元素 所以这样累加抵消的最终结果一定是那个大于半数的数 时间O(n) 空间O(1)
-
-
-
-Maximum Subarray
-经典动态规划问题 局部解全局解 递推式为 local[i+1] = Math.max(A[i+1], local[i]+A[i+1]), global[i+1] = Math.max(local[i+1], global[i])
+Moore voting algorithm
+for i=0; i<num.length; i++
+    if(count==0)
+        major = num[i];
+        count++;
+    else if(major==num[i])
+        count++;
+    else count--;
 
 时间O(n) 空间O(1)
 
 
 
+
+
+Maximum Subarray
+动态规划问题 递推式为 local[i+1] = Math.max(A[i+1], local[i]+A[i+1]), global[i+1] = Math.max(local[i+1], global[i])
+int local = A[0], global = A[0];
+for(int i=1; i<A.length; i++) {
+    local = Math.max(local+A[i], A[i]);
+    global = Math.max(global, local);
+}
+
+时间O(n) 空间O(1)
+
+
+
+
+
 Maximum Product Subarray
-还是局部最优全局最优 只是要多维护一个当前最小值 因为乘法的特性 现在很小的值可以和后面负数产生最大值 其他跟Maximum Subarray那题差不多
+int maxLocal = A[0], minLocal = A[0], maxCopy = A[0];
+for(int i=1; i<A.length; i++) {
+    int maxCopy = maxLocal;
+    maxLocal = Math.max(maxLocal*A[i], Math.max(A[i], minLocal*A[i]));
+    minLocal = Math.min(minLocal*A[i], Math.min(A[i], maxCopy*A[i]));
+    global = Math.max(global, maxLocal);
+}
+
+时间O(n) 空间O(1)
+
+
 
 
 
@@ -540,9 +606,19 @@ B[startB+k-1] 时间O(log(m+n)) 空间O(log(m+n))
 
 
 Merge Sorted Array
-因为A has enough space所以从A的m+n-1个元素开始 比较A[m-1]和B[n-1]将大的值放入A[m+n-1] 如此循环直到一个数组为空 之后如果B中还有元素依次放入A
+int indexA = m-1, indexB = n-1, index = m+n-1;
+while(indexA>=0 && indexB>=0) {
+    if(A[indexA]>B[indexB])
+        A[index--] = A[indexA--];
+    else
+        A[index--] = B[indexB--];
+}
+while(indexB>=0)
+    A[index--] = B[indexB--];
 
-A中元素已经就位不用管了 时间O(n) 空间O(1)
+时间O(n) 空间O(1)
+
+
 
 
 

@@ -97,7 +97,15 @@ public class Solution {
     }
 }
 
-
+89到95可替换为
+while(i<intervals.size()) {
+    if(intervals.get(i-1).end>=intervals.get(i).start) {
+        intervals.get(i-1).end = Math.max(intervals.get(i-1).end, intervals.get(i).end);
+        intervals.remove(i);
+    }
+    else
+        i++;
+}
 
 
 

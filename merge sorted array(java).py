@@ -66,7 +66,7 @@ class Solution:
 
 public class Solution {
     public void merge(int A[], int m, int B[], int n) {
-        int indexA = m-1;
+        int indexA = m-1;   //这里不能用A.length-1 因为A的长度超过m+n 要用m-1
         int indexB = n-1;
         int len = m+n-1;
         while(indexA>=0 && indexB>=0)
