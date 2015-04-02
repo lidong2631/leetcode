@@ -597,11 +597,31 @@ for(int i=1; i<A.length; i++) {
 
 
 Median of Two Sorted Arrays
-求两个有序数组的中位数 时间要在log(m+n) k初始为A B数组长度的一半 每次两个数组各取第k/2号元素 比较大小 如果A小就把A[k/2]以前的元素都剔除掉 如果B小就把
+if((A.length+B.length)%2==1)
+else
 
-B[k/2]以前的元素都剔除掉 相等就直接返回 这样每次都能删除k/2个元素 当k最终等于1时返回Math.min(A[startA], B[startB]) 或若最终A的长度为0就返回
+private int helper(A, startA, endA, B, startB, endB, k) {
+    lenA = endA-startA+1;
+    lenB = endB-startB+1;
+    if(lenA>lenB)
+        return helper(B, startB, endB, A, startA, endA, k);
+    if(k==1)
+        return Math.min(A[startA], B[startB]);
+    if(lenA==0)
+        return B[startB+k-1];
+    int posA = Math.min(k/2, lenA);
+    int posB = k-posA;
+    if(A[startA+posA-1]==B[startB+posB-1])
+        return A[startA+posA-1];
+    else if(A[startA+posA-1]>B[startB+posB-1])
+        return helper(A, startA, startA+postA-1, B, startB+posB, endB, k-posB);
+    else
+        return helper(A, startA+posA, endA, B, startB, startB+posB+1, k-posA);
+}
 
-B[startB+k-1] 时间O(log(m+n)) 空间O(log(m+n))
+时间O(log(m+n)) 空间O(logk)
+
+
 
 
 
@@ -623,23 +643,50 @@ while(indexB>=0)
 
 
 Unique Paths
-动态规划 递推式为res[i][j] = res[i][j-1]+res[i-1][j] 维护一个列大小的一维数组 从第一行开始扫 每次更新res[j]+=res[j-1] 最后返回res[n-1]
+动态规划 递推式为res[i][j] = res[i][j-1]+res[i-1][j]
+res[0] = 1
+for int i=0; i<m; i++
+    for int j=1; j<n; j++
+        res+=res[j-1]
 
 时间O(m*n) 空间O(n)
 
 
 
-Unique Paths ii
-思路同上一题 只是这里有不能走的格子 递推式是若当前格子不为1则同上一题res[i][j]=res[i][j-1]+res[i-1][j] 否则res[i][j]=0 还是从第一行开始扫
 
-每次判断一下当前格子是否为1 然后用对应递推式更新即可 时间O(m*n) 空间O(n)
+
+Unique Paths ii
+思路同上一题 只是这里有不能走的格子 递推式是若当前格子不为1则同上一题res[i][j]=res[i][j-1]+res[i-1][j] 否则res[i][j]=0 
+res[0] = 1;
+for i=0; i<obstacleGrid.length; i++
+    for j=0; j<obstacleGrid[0].length; j++
+        if(obstacleGrid[i][j]==1)
+            res[j] = 0;
+        else
+            if(j>0)
+                res[j]+=res[j-1];
+
+时间O(m*n) 空间O(n)
+
+
 
 
 
 Minimum Path Sum
-跟Unique Paths系列差不多 只是这次每个格子有值相当于有权重 仍然是用一维数组 首先给数组赋初值将第一行每个元素的累加值放到对应数组元素中 然后从第二行开始
+带权重的最小路径和 如果是第一列元素res[j]=res[j-1]+grid[i][j] 否则res[j] = Math.min(res[j], res[j-1]) + grid[i][j] 
+res[0] = grid[0][0];
+for(int i=1; i<grid[0].length; i++)
+    res[j] = res[j-1] + grid[0][i];
+for i=1; i<grid.length; i++
+    for j=0; j<grid[0].length; j++
+        if(j==0)
+            res[j]+=grid[i][0];
+        else
+            res[j] = grid[i][j]+Math.min(res[j], res[j-1]);
 
-更新res的值 如果是第一列元素res[j]+=grid[i][j] 否则res[j] = Math.min(res[j], res[j-1]) + grid[i][j] 时间O(m*n) 空间O(n)
+时间O(m*n) 空间O(n)
+
+
 
 
 
