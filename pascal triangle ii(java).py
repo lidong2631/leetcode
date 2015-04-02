@@ -37,7 +37,7 @@ class Solution:
 public class Solution {
     public List<Integer> getRow(int rowIndex) {
         List<Integer> res = new ArrayList<Integer>();
-        if(rowIndex<0)
+        if(rowIndex<=0)
             return res;
         res.add(1);
         for(int i=1; i<rowIndex+1; i++) {

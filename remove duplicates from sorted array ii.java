@@ -1,14 +1,11 @@
-<<<<<<< HEAD
 public class Solution {
     public int removeDuplicates(int[] A) {
-        if(A==null || A.length==0)
-            return 0;
-        if(A.length==1) return 1;
-        if(A.length==2) return 2;
+        if(A.length<3)
+            return A.length;
         int index = 2;
         for(int i=2; i<A.length; i++) {
             if(A[i]!=A[index-2]) {
-                A[index] = A[i];
+                A[index]=A[i];
                 index++;
             }
         }
@@ -17,12 +14,6 @@ public class Solution {
 }
 
 非常好的解法 from code ganker评论 通过比较A[i]和A[index-2] 来移动index 代码很简洁 而且如果题目换成允许重复3次4次之类也可以类推
-
-
-
-
-
-
 
 
 

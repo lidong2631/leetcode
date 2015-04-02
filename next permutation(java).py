@@ -32,6 +32,42 @@ Note: python reverse()没有返回值 不可以用这种形式 return num.revers
 
 
 
+public class Solution {
+    public void nextPermutation(int[] num) {
+        if(num==null || num.length<2)
+            return;
+        int i=num.length-2;
+        while(i>=0 && num[i]>=num[i+1])
+            i--;
+        if(i<0) {
+            reverse(num, 0);
+            return;
+        }
+        int mark = i;
+        i=num.length-1;
+        while(num[i]<=num[mark])
+            i--;
+        int tmp = num[mark];
+        num[mark] = num[i];
+        num[i] = tmp;
+        reverse(num, mark+1);
+    }
+    
+    private void reverse(int[] num, int left) {
+        int right = num.length-1;
+        while(left<right) {
+            int tmp = num[left];
+            num[left] = num[right];
+            num[right] = tmp;
+            left++;
+            right--;
+        }
+    }
+}
+
+
+
+
 
 public class Solution {
     public void nextPermutation(int[] num) {
