@@ -75,8 +75,26 @@ public class Solution {
 
 
 
+public class Solution {
+    public List<List<Integer>> subsets(int[] S) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        res.add(new ArrayList<Integer>());
+        if(S==null || S.length==0)
+            return res;
+        Arrays.sort(S);
+        for(int i=0; i<S.length; i++) {
+            int size = res.size();
+            for(int j=0; j<size; j++) {
+                List<Integer> item = new ArrayList<Integer>(res.get(j));
+                item.add(S[i]);
+                res.add(item);
+            }
+        }
+        return res;
+    }
+}
 
-
+非递归
 
 
 

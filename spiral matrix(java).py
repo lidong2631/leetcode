@@ -50,7 +50,7 @@ public class Solution {
                 for(int i=left; i<=right; i++) {
                     res.add(matrix[up][i]);
                 }
-                up++;
+                up++;       //这后面不能加continue不然会跳过73行
             }
             if(direction==1) {
                 for(int i=up; i<=down; i++) {
