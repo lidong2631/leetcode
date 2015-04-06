@@ -47,9 +47,44 @@ class Solution:
 关于矩阵的一些操作
 1 顺时针转90度： 两种方式 一个先求转置再每行反转 一个两层循环由外向内一个个转
 
-2 顺时针180度： 求转置 之后沿着斜对角线一个反转
+2 顺时针(逆时针)180度： 直接转 更简单 每次将两行对应逆序交换即可
+
+1   2  3  4             16 15 14 13
+5   6  7  8             12 11 10  9
+9  10 11 12             8  7  6   5
+13 14 15 16             4  3  2   1
+public class Solution {
+    public void rotate(int[][] matrix) {
+        for(int layer=0; layer<matrix.length/2; layer++) {
+            for(int i=0; i<matrix.length; i++) {
+                int tmp = matrix[layer][i];
+                matrix[layer][i] = matrix[matrix.length-1-layer][matrix.length-1-i];
+                matrix[matrix.length-1-layer][matrix.length-1-i] = tmp;
+            }
+        }
+    }
+}
+
+
 
 3 顺时针270度： 相当于逆时针90度 方法同1
+public class Solution {
+    public void rotate(int[][] matrix) {
+        for(int layer=0; layer<matrix.length/2; layer++) {
+            for(int i=layer; i<matrix.length-1-layer; i++) {
+                int tmp = matrix[layer][i];
+                matrix[layer][i] = matrix[i][matrix.length-1-layer];
+                matrix[i][matrix.length-1-layer] = matrix[matrix.length-1-layer][matrix.length-1-i];
+                matrix[matrix.length-1-layer][matrix.length-1-i] = matrix[matrix.length-1-i][layer];
+                matrix[matrix.length-1-i][layer] = tmp;
+            }
+        }
+    }
+}
+
+
+
+
 
 
 
