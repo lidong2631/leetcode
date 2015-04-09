@@ -71,10 +71,10 @@ public class Solution {
         if(dividend==0) return 0;
         
         int res = 0;
-        if(dividend==Integer.MIN_VALUE) //当dividend为最小负整数   res初始为1    dividend加一个divisor的绝对值相当于在商里面加1
+        if(dividend==Integer.MIN_VALUE) //当dividend为最小负整数 res初始为1 
         {
             res = 1;
-            dividend+=Math.abs(divisor);
+            dividend+=Math.abs(divisor); //dividend加divisor为了防止后面取digit时越界
         }
         
         if(divisor==Integer.MIN_VALUE)  //如果除数是最小负整数 一定返回1  java里对Integer.MIN_VALUE一般都会特殊处理
@@ -96,10 +96,10 @@ public class Solution {
         {
             if(dividend>=divisor)
             {
-                dividend-=divisor;  //每次dividend减去divisor res自身 + 1左移digit位
-                res+=1<<digit;
+                dividend-=divisor;  //每次dividend减去divisor res自身+(1左移digit位)
+                res+=(1<<digit);
             }
-            divisor>>=1;    //取下一个divisor digit--
+            divisor>>=1;    //取下一个divisor即divisor/2 digit--
             digit--;
         }
         return negative? -res : res;

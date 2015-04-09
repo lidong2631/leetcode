@@ -53,6 +53,25 @@ class Solution:
 
 
 
+public class Solution {
+    public int sqrt(int x) {
+        int left = 1, right = x/2+1;        //注意left从1开始 否则x如果是0就变成除数是0
+        while(left<=right) {
+            int mid = (left+right)/2;
+            if(x/mid>=mid && x/(mid+1)<mid+1) //等于mid 或在mid到mid+1之间
+                return mid;
+            else if(x/mid<mid)
+                right = mid - 1;
+            else if(x/(mid+1)>=mid+1)
+                left = mid + 1;
+        }
+        return right;   //think about 0
+    }
+}
+
+
+
+
 
 
 

@@ -55,6 +55,24 @@ return sign*num；
 
 
 
+Sqrt(x)
+left = 1, right = x/2+1;
+while left<=right
+	mid = (left+right)/2;
+	if(x/mid>=mid && x/(mid+1)<mid+1)
+		return mid;
+	else if(x/mid<mid)
+		right = mid - 1;
+	else if(x/(mid+1)>mid+1)
+		left = mid + 1;
+return right;
+
+时间O(logn) 空间O(1)
+
+
+
+
+
 Reverse Integer
 while x!=0
 	if Math.abs(ret)>214743864
