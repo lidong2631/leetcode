@@ -1,4 +1,44 @@
-<<<<<<< HEAD
+public class Solution {
+    public double pow(double x, int n) {
+        if(n==0)
+            return 1.0;
+        double res = 1.0;
+        if(n<0) {
+            if(x>=1.0/Double.MAX_VALUE || x<=-1.0/Double.MAX_VALUE) //判断x取倒数会不会越界
+                x = 1.0/x;
+            else
+                return Double.MAX_VALUE;
+            if(n==Integer.MIN_VALUE) {  //如果n是最小整数 为防止取绝对值越界 预先处理
+                res*=x;
+                n++;
+            }
+        }
+        n = Math.abs(n);    //这里要先取绝对值再判断sign 如果n是负数取余数会是负的 不可能等于1
+        boolean sign = (n%2==1 && x<0);
+        x = Math.abs(x);
+        while(n>0) {
+            if((n&1)==1) {  //每次n对应位是1 就将对应x乘入结果
+                if(res>Double.MAX_VALUE/x)  //判断结果res是不是要越界了
+                    return Double.MAX_VALUE;
+                res*=x;
+            }
+            x*=x;   //累乘x n右移一位
+            n>>=1;
+        }
+        return sign?-res:res;
+    }
+}
+
+看code ganker评论 jdk文档 和http://stackoverflow.com/questions/3884793/minimum-values-and-double-min-value-in-java
+
+java中double类型是对称的 即-Double.MAX_VALUE和Double.MAX_VALUE绝对值相同 Double.MIN_VALUE是最小的positive, nonzero浮点数
+
+时间O(logn) 空间O(1)
+
+
+
+
+
 public class Solution {
     public double pow(double x, int n) {
         if(n==0) return 1.0;
@@ -31,40 +71,40 @@ from code ganker:
 因为迭代次数等于n的位数，所以算法的时间复杂度是O(logn)。代码如下：
 
 public double pow(double x, int n) {
-&nbsp; &nbsp; if(n==0)
-&nbsp; &nbsp; &nbsp; &nbsp; return 1.0;
-&nbsp; &nbsp; double res = 1.0; &nbsp;&nbsp;
-&nbsp; &nbsp; if(n<0)
-&nbsp; &nbsp; {
-&nbsp; &nbsp; &nbsp; &nbsp; if(x>=1.0/Double.MAX_VALUE||x<=1.0/Double.MIN_VALUE)
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = 1.0/x;
-&nbsp; &nbsp; &nbsp; &nbsp; else
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return Double.MAX_VALUE;
-&nbsp; &nbsp; &nbsp; &nbsp; if(n==Integer.MIN_VALUE)
-&nbsp; &nbsp; &nbsp; &nbsp; {
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; res *= x;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; n++;
-&nbsp; &nbsp; &nbsp; &nbsp; }
-&nbsp; &nbsp; }
-&nbsp; &nbsp; n = Math.abs(n);
-&nbsp; &nbsp; boolean isNeg = false;
-&nbsp; &nbsp; if(n%2==1 && x<0)
-&nbsp; &nbsp; {
-&nbsp; &nbsp; &nbsp; &nbsp; isNeg = true;
-&nbsp; &nbsp; }
-&nbsp; &nbsp; x = Math.abs(x);
-&nbsp; &nbsp; while(n>0)
-&nbsp; &nbsp; {
-&nbsp; &nbsp; &nbsp; &nbsp; if((n&1) == 1)
-&nbsp; &nbsp; &nbsp; &nbsp; {
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(res>Double.MAX_VALUE/x)
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return Double.MAX_VALUE;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; res *= x;
-&nbsp; &nbsp; &nbsp; &nbsp; }
-&nbsp; &nbsp; &nbsp; &nbsp; x *= x;
-&nbsp; &nbsp; &nbsp; &nbsp; n = n>>1;
-&nbsp; &nbsp; }
-&nbsp; &nbsp; return isNeg?-res:res;
+    if(n==0)
+        return 1.0;
+    double res = 1.0;   
+    if(n<0)
+    {
+        if(x>=1.0/Double.MAX_VALUE||x<=1.0/-Double.MAX_VALUE)
+            x = 1.0/x;
+        else
+            return Double.MAX_VALUE;
+        if(n==Integer.MIN_VALUE)
+        {
+            res *= x;
+            n++;
+        }
+    }
+    n = Math.abs(n);
+    boolean isNeg = false;
+    if(n%2==1 && x<0)
+    {
+        isNeg = true;
+    }
+    x = Math.abs(x);
+    while(n>0)
+    {
+        if((n&1) == 1)
+        {
+            if(res>Double.MAX_VALUE/x)
+                return Double.MAX_VALUE;
+            res *= x;
+        }
+        x *= x;
+        n = n>>1;
+    }
+    return isNeg?-res:res;
 }
 
 以上代码中处理了很多边界情况，这也是数值计算题目比较麻烦的地方。比如一开始为了能够求倒数，我们得判断倒数是否越界，
