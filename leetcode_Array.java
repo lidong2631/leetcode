@@ -881,6 +881,21 @@ for i=1; i<=rowIndex; i++
 
 
 
+Triangle
+动态规划题 递推式sum[i][j]=min(sum[i-1][j-1],sum[i-1][j])+triangle[i][j]
+for i=1; i<triangle.size(); i++
+    sum[i] = sum[i-1] + triangle.get(i).get(i);     
+    for(int j=i-1; j>=1; j--) {                    
+        sum[j] = sum[j]<sum[j-1]?sum[j]:sum[j-1] + triangle.get(i).get(j);
+    }
+    sum[0] += triangle.get(i).get(0);
+
+时间O(n^2) 空间O(n)
+
+
+
+
+
 Plus One
 for i=digits.length-1; i>=0; i--
     if(digits[i]<9) {
@@ -960,10 +975,18 @@ reverse(nums, k, nums.length-1);
 
 
 Rotate Image
-矩阵相关操作 考察数组的操作 一层一层旋转 每次都是保存上 然后上变左 左变下 下变右 右变上 循环为
-for(int layer=0; layer<matrix.length/2; layer++)
-    for(int i=layer; i<matrix.length-1-layer; i++)
+矩阵相关操作 考察数组的操作 一层一层旋转 顺时针旋转和逆时针旋转90度差不多只是赋值不同 而旋转180度则为对应两行每次逆序交换数值
+for(int layer=0; layer<matrix.length/2; layer++) {
+    for(int i=layer; i<matrix.length-1-layer; i++) {
+        int tmp = matrix[layer][i];
+        matrix[layer][i] = matrix[matrix.length-1-i][layer];
+        matrix[matrix.length-1-i][layer] = matrix[matrix.length-1-layer][matrix.length-1-i];
+        matrix[matrix.length-1-layer][matrix.length-1-i] = matrix[i][matrix.length-1-layer];
+        matrix[i][matrix.length-1-layer] = tmp;
+    }
+}
 
+时间O(n^2) 空间O(1)
 
 
 
@@ -1101,6 +1124,7 @@ while l<=r && up<=down
 
 
 
+<<<<<<< HEAD:leetcode_Array.java
 
 Triangle
 动态规划题 建立一个数组sum[triangle.size()] sum[0]=triangle.get(0).get(0) 从第二行开始每次从后往前扫 单独处理第一个和最后一个元素 对于一般的元素
@@ -1116,6 +1140,8 @@ sum[0] += triangle.get(i).get(0);
 
 
 
+=======
+>>>>>>> 1e155d3a014dcb754239fee1930340b843421578:leetcode_Array
 Word Search
 boolean[][] used = new boolean[board.length][board[0].length];
 for i=0; i<board.length; i++
