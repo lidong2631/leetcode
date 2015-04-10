@@ -1065,6 +1065,7 @@ set first row col
 
 
 Sort Colors
+<<<<<<< HEAD:leetcode_Array
 两种解法 1 计数排序 2如下
 int index0 = 0;
 int index1 = 0;
@@ -1081,6 +1082,33 @@ for(int i=0; i<A.length; i++) {
 时间O(n) 空间O(1)
 
 
+=======
+1 计数排序
+int[] c = new int[3];
+int[] res = new int[A.length];
+for int i=0; i<A.length; i++
+    c[A[i]]+=1;
+for int i=1; i<3; i++
+    c[i]+=c[i-1];
+for int i=A.length-1; i>=0; i--
+    res[c[A[i]]-1] = A[i];
+    c[A[i]]--;
+for int i=0; i<A.length; i++
+    A[i] = res[i];
+
+2 
+int index1 = 0, index2 = 0;
+for(int i=0; i<A.length; i++)
+    if(A[i]==0)
+        A[i]=2;
+        A[index1++] = 1;
+        A[index0++] = 0;
+    else if(A[i]==1)
+        A[i]=2;
+        A[index1++] = 1;
+
+时间O(n) 空间O(1)
+>>>>>>> 855d3e42a08dbc7790166f20db2004754988236e:leetcode_Array.java
 
 
 
@@ -1115,10 +1143,46 @@ while l<=r && up<=down
 
 
 
-Word Search
-图的思想 深度优先遍历 从某一点出发 如果当前元素是word中对应的字母 将当前字符标记为已访问继续递归上下左右四条边 如果最终长度等于word返回true 否则
+<<<<<<< HEAD:leetcode_Array.java
 
-如果坐标超出范围 或该字符已被访问过 或它不等于对应word中的字符返回false 如果从一个新的字符出发要重置访问标记 时间复杂度 空间O(m*n)
+Triangle
+动态规划题 建立一个数组sum[triangle.size()] sum[0]=triangle.get(0).get(0) 从第二行开始每次从后往前扫 单独处理第一个和最后一个元素 对于一般的元素
+
+取上一行相邻两个元素中最小的那个加上当前行对应元素值 代码如下
+sum[i] = sum[i-1] + triangle.get(i).get(i);     
+for(int j=i-1; j>=1; j--) {                    
+    sum[j] = sum[j]<sum[j-1]?sum[j]:sum[j-1] + triangle.get(i).get(j);
+}
+sum[0] += triangle.get(i).get(0);
+
+
+
+
+
+=======
+>>>>>>> 1e155d3a014dcb754239fee1930340b843421578:leetcode_Array
+Word Search
+boolean[][] used = new boolean[board.length][board[0].length];
+for i=0; i<board.length; i++
+    for j=0; j<board[0].length; j++
+        if(helper(board, 0, i, j, word, used))
+            return true;
+return false;
+
+helper(char[][] board, int index, int i, int j, String word, boolean[][] used) {
+    if(index==word.length())
+        return true;
+    if(i<0 || j<0 ||　i>=board.length || j>=board[0].length || word.charAt(index)!=board[i][j] || used[i][j])
+        return false;
+    used[i][j] = true;
+    boolean res = (helepr(board, index+1, i+1, j, word, used) ||
+        helper(board, index+1, i, j+1, word, used) ||
+        helper(board, index+1, i-1, j, word, used) ||
+        helper(board, index+1, i, j-1, word, used))
+    used[i][j] = false;
+    return res;
+}
+时间复杂度 空间O(m*n)
 
 
 

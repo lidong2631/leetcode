@@ -54,7 +54,7 @@ public class Solution {
         }
         if(i<n && s.charAt(i)=='.') {
             i++;
-            while(i<n && Character.isDigit(s.charAt(i))) {
+            while(i<n && Character.isDigit(s.charAt(i))) {  //这个while写if外面也可以
                 i++;
                 isNumeric = true;
             }
@@ -75,4 +75,6 @@ public class Solution {
     }
 }
 
-增加了对e的考虑 如1.6347e-4. 2e10 注意e后面的数字可以接正负号 也可以是4.这样
+增加了对e的考虑 如1.6347e-4 2e10 注意e后面的数字可以接正负号 但不可以是4.这样
+
+时间O(n) 空间O(1)
