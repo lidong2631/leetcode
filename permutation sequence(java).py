@@ -121,15 +121,15 @@ public class Solution {
         StringBuilder res = new StringBuilder();
         List<Integer> num = new ArrayList<Integer>();
         int fac = 1;
-        for(int i=2; i<n; i++)      //i到n－1 fac=(n-1)*(n-2)*...*1
+        for(int i=2; i<n; i++)      //fac = (n-1)!
             fac*=i;
-        for(int i=1; i<=n; i++)
+        for(int i=1; i<=n; i++)     //num = 1234...n
             num.add(i);
         int round = n-1;            //round = n-1
         while(round>=0)
         {
-            int index = k/fac;      //每次定位k在不在这个fac group
-            k = k%fac;              
+            int index = k/fac;      //每次先定位当前数字是第几个
+            k = k%fac;              //更新k
             res.append(num.get(index));     //将num[index]值加到res中
             num.remove(index);              //从num中移除index对应的值
             if(round>0)                     //如果round大于0 fac到下一个group fac=(n-2)*(n-3)*...*1
