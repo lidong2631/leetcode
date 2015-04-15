@@ -79,6 +79,61 @@ return right;
 
 
 
+Roman to Integer
+for i=0; i<s.length(); i++
+	switch(s.charAt(i))
+		case 'I':
+			if(i<s.length()-1 && (s.charAt(i+1)=='V' || s.charAt(i+1)=='X'))
+				res-=1;
+			else
+				res+=1;
+			break;
+		case 'V':
+			res+=5;
+		case 'X:':
+		case 'L':
+		case 'C':
+		case 'D':
+		case 'M':
+return res;
+时间O(n) 空间O(1)
+
+
+
+
+
+Integer to Roman
+int digit = 1000;
+List<Integer> tmp = new ArrayList<Integer>();
+while(digit>0)
+	tmp.add(num/digit);
+	num%=digit;
+	digit/=10;
+StringBuilder res = new StringBuilder();
+res.add(convert(tmp.get(0), '', '', 'M'));
+...
+...
+...
+return res.toString();
+
+convert(int digit, int ten, int five, int one) {
+	StringBuilder sb = new StringBuilder();
+	switch(digit) {
+		case '9':
+		case '8':case'7':case'6':case'5':
+		case '4':
+		case '3':case'2':case'1':
+		case '0':
+	}
+	return sb.toString();
+}
+
+时间O(整数位数) 空间O(1)
+
+
+
+
+
 Reverse Integer
 while x!=0
 	if Math.abs(ret)>214743864
@@ -87,6 +142,47 @@ while x!=0
 	x/=10;
 
 时间O(n) 空间O(1)
+
+
+
+
+
+Plus One
+for i=digits.length-1; i>=0; i--
+    if(digits[i]<9) {
+        digits[i]+=1;
+        return digits;
+    }
+    else
+        digits[i] = 0;
+int[] res = new int[digits.length+1];
+res[0] = 1;
+
+时间O(n) 空间一般是O(1) 最坏为O(n)
+
+
+
+
+
+Permutation Sequence
+k--;
+StringBuilder res = new StringBuilder();
+List<Integer> num = new ArrayList<Integer>();
+int fac = 1;
+for i=2; i<n; i++
+	fac*=n;
+for i=1; i<n; i++
+	num.add(i);
+round = n-1;
+while(round>=0)
+	int index = k/fac;
+	k%=fac;
+	res.append(index);
+	num.remove(index);
+	if(round>0)
+		fac/=round;
+	round--;
+时间O(n^2) 空间O(n)
 
 
 
@@ -106,6 +202,43 @@ while x!=0
 
 时间O(n) 空间O(1)
 
+
+
+
+
+Multiply Strings
+for i=num1.length()+num2.length(); i>0; i--
+	for j=Math.min(i-1, num1.length(); j>0; j--)
+		if(i-j<=num2.length())
+			num+=(int)(num1.charAt(j-1)-'0')*(int)(num2.charAt(i-j-1)-'0');
+	if(num!=0 || i!=1)
+		res.append(num%10);
+	num/=10;
+return res.reverse().toString();
+
+时间O(n) 空间O(1)
+
+
+
+
+
+Max Points on a Line
+几何运算题 
+for i=0; i<points.length-1; i++
+	localMax=1; numSame=0; double ratio=0.0; HashMap<Double, Integer> map
+	for(j=i+1; j<points.length; j++)
+		if 相同点
+			numSame++;
+			continue;
+		else if y相等 ratio=
+		else if x相等 ratio=
+		else ratio=
+		if map.containsKey(ratio)
+		else map.put(ratio, 2)
+	更新localMax, globalMax
+return globalMax
+
+时间O(n^2) 空间O(n)哈希表长度
 
 
 
@@ -166,3 +299,25 @@ while n>0
 return sign?-res:res;
 
 时间O(logn) 空间O(1)
+
+
+
+
+
+Add Two Numbers
+while(l1!=null && l2!=null)
+	val = (l1.val+l2.val+carry)%10;
+	carry = (l1.val+l2.val+carry)/10;
+	p.next = new ListNode(val);
+	p = p.next; l1 = l1.next; l2 = l2.next;
+while(l1!=null)
+
+while(l2!=null)
+
+if(carry!=0)
+	p.next = new ListNode(carry);
+
+时间O(n) 空间O(1)
+
+
+

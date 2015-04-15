@@ -142,6 +142,7 @@ public class Solution {
 
 Note: 看注释 没什么说的
 
+时间O(n^2) 空间O(n)
 
 
 
