@@ -106,6 +106,35 @@ public String multiply(String num1, String num2) {
 
 
 
+public class Solution {
+    public String multiply(String num1, String num2) {
+        if(num1==null || num2==null || num1.length()==0 || num2.length()==0)
+            return "";
+        if(num1.charAt(0)=='0' || num2.charAt(0)=='0')
+            return "0";
+        StringBuilder res = new StringBuilder();
+        int num = 0;
+        for(int i=num1.length()+num2.length(); i>0; i--) {
+            for(int j=Math.min(i-1, num1.length()); j>0; j--) { //每次比较i-1和第一个数的长度 决定从第一个数的第几位开始算
+                if(i-j<=num2.length())  //判断第二个数是否还能右移
+                    num+=(int)(num1.charAt(j-1)-'0')*(int)(num2.charAt(i-j-1)-'0');
+            }
+            if(i!=1 || num!=0)  //最高一位是不是0
+                res.append(num%10);
+            num/=10;
+        }
+        return res.reverse().toString();    //最后要进行一次reverse，因为是一个O(m+n)的操作，不会影响算法复杂度
+    }
+}
+
+i从右往左扫
+0 0 0 1 2 1
+0 0 0 1 2 1
+
+时间O((m+n)*n) ??
+
+
+
 from code ganker:
 
 这道题属于数值操作的题目，其实更多地是考察乘法运算的本质。基本思路是和加法运算还是近似的，只是进位和结果长度复杂一些。我们仍然是从低位到高位对每一位进行计算，

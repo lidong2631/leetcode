@@ -904,7 +904,7 @@ for i=digits.length-1; i>=0; i--
     }
     else
         digits[i] = 0;
-int[] res
+int[] res = new int[digits.length+1];
 res[0] = 1;
 
 时间O(n) 空间一般是O(1) 最坏为O(n)
