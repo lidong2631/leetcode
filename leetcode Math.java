@@ -243,6 +243,57 @@ return globalMax
 
 
 
+
+Fraction to Recurring Decimal
+位运算
+if numerator==0, denominator==0 判断0
+
+StringBuffer res
+
+if((numerator<0)^(denominator<0)) 判断是否异号
+	res.append("-")
+
+long num, long den 转long 有可能是最小负数-2147483648
+
+integral = num/den 将整数位加入结果
+res.append(integral)
+
+res.append(".") 加小数点
+
+HashMap<Long, Integer> map map记录每一个余数和它对应的位置 当出现重复余数即得到循环小数
+
+while(remainder!=0)
+	if map.containsKey(remainder)
+		return res.substring(0, map.get(remainder)) + "(" + res.substring(map.get(remainder), res.length()) + ")";
+	map.put(remainder, res.length());
+	res.append(remainder/den);
+	remainder = (remainder%den)*10;
+return res.toString();
+
+时间O(n) 空间O(n)
+
+
+
+
+
+Factorial Trailing Zeros
+
+
+
+
+
+Excel Sheet Column Number
+
+
+
+
+
+Excel Sheet Column Titla
+
+
+
+
+
 Divide Two Integers
 1 被除数减除数 直到小于等于0 时间O(n)
 
