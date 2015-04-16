@@ -27,4 +27,13 @@ public class Solution {
     }
 }
 
+http://www.geeksforgeeks.org/count-trailing-zeroes-factorial-number/
+
 此解法来自geekforgeek 时间O(logn) 空间O(1) 这个题在cc150和programmerInterview中都有 不过解法也是用的第一个解
+
+http://bookshadow.com/weblog/2014/12/30/leetcode-factorial-trailing-zeroes/
+
+n!后缀0的个数 = n!质因子中5的个数
+              = floor(n/5) + floor(n/25) + floor(n/125) + ....
+
+programmerinterview也有这题 http://www.programmerinterview.com/index.php/java-questions/find-trailing-zeros-in-factorial/

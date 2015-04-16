@@ -321,3 +321,17 @@ if(carry!=0)
 
 
 
+
+
+Add Binary
+while(indexA>=0 && indexB>=0)
+	int num = carry + (int)(a.charAt(indexA)-'0') + (int)(b.charAt(indexB)-'0');
+    carry = num/2;
+    num%=2;
+    res.append(num);
+    indexA--; indexB--; 
+while indexA>=0
+while indexB>=0
+if carry==1
+	res.append(1);
+return res.reverse().toString();
