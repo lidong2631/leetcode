@@ -1,4 +1,5 @@
 Valid Number
+顺序扫
 顺序： whitespace->'+/-'->isNumeric->'.'->digit->'e'->'+/-'->digit->whitespace-> isNumeric&&i==n
 
 while i<n && isWhitespace
@@ -34,6 +35,7 @@ return isNumeric && i==n;
 
 
 String to Integer(atoi)
+顺序扫
 顺序: whitespace->'+/-'->digit->>maxDiv10->sign*num
 
 maxDiv10 = Integer.MAX_VALUE/10;
@@ -80,6 +82,7 @@ return right;
 
 
 Roman to Integer
+简单映射
 for i=0; i<s.length(); i++
 	switch(s.charAt(i))
 		case 'I':
@@ -103,6 +106,7 @@ return res;
 
 
 Integer to Roman
+简单映射
 int digit = 1000;
 List<Integer> tmp = new ArrayList<Integer>();
 while(digit>0)
@@ -207,6 +211,7 @@ while x!=0
 
 
 Multiply Strings
+1
 for i=num1.length()+num2.length(); i>0; i--
 	for j=Math.min(i-1, num1.length(); j>0; j--)
 		if(i-j<=num2.length())
@@ -217,6 +222,8 @@ for i=num1.length()+num2.length(); i>0; i--
 return res.reverse().toString();
 
 时间O(n) 空间O(1)
+
+2 Fast Fourier Transform
 
 
 
