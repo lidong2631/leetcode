@@ -27,4 +27,4 @@ public class Solution {
     }
 }
 
-用StringBuilder 注意最后要reverse
+用StringBuilder 注意最后要reverse 时间O(n) 空间O(1)

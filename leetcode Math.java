@@ -277,18 +277,33 @@ return res.toString();
 
 
 Factorial Trailing Zeros
+if(n<0)
+	return 0;
+while n>0
+	count+=n/5;
+	n/=5;
+return count;
 
 
 
 
 
 Excel Sheet Column Number
+for i=s.length()-1; i>=0; i--
+	res+=(int)(s.charAt(i)-'A'+1)*Math.pow(26, count++);
+时间O(n) 空间O(1)
 
 
 
 
 
 Excel Sheet Column Titla
+while(n>0)
+	int diff = (n-1)%26;
+	res.append((char)('A'+diff));
+	n = (n-1)/26;
+return res.reverse().toString();
+时间O(n) 空间O(1)
 
 
 
