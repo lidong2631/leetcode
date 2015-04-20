@@ -318,8 +318,8 @@ TreeNode helepr() {
         return null;
     TreeNode root = new TreeNode(preorder[preL]);
     int index = map.get(preorder[preL]);
-    root.left = 
-    root.right = 
+    root.left = helper(preorder, preL+1, preL+index-inL, inorder, inL, index-1, map);
+    root.right = helper(preorder, index-inL+preL+1, preR, inorder, index+1, inR, map);
     return root;
 }
 

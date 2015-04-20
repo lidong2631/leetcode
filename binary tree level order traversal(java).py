@@ -77,39 +77,36 @@ public class Solution {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         if(root==null)
             return res;
-        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>(); //java中实现Queue接口的类很多 用LinkedList就可以了
+        List<Integer> item = new ArrayList<Integer>();
         queue.offer(root);
-        int currLevel = 1;
-        int nextLevel = 0;
-        List<Integer> tmpList = new ArrayList<Integer>();
-        while(!queue.isEmpty())
-        {
+        int currLevel = 1, nextLevel = 0;
+        while(!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
             currLevel--;
-            TreeNode node = queue.poll();
-            tmpList.add(node.val);
-            if(node.left!=null)
-            {
+            item.add(curr.val);
+            if(curr.left!=null) {
+                queue.offer(curr.left);
                 nextLevel++;
-                queue.offer(node.left);
             }
-            if(node.right!=null)
-            {
+            if(curr.right!=null) {
+                queue.offer(curr.right);
                 nextLevel++;
-                queue.offer(node.right);
             }
-            if(currLevel==0)
-            {
+            if(currLevel==0) {
                 currLevel = nextLevel;
                 nextLevel = 0;
-                res.add(tmpList);
-                tmpList = new ArrayList<Integer>();
+                res.add(item);
+                item = new ArrayList<Integer>();
             }
         }
         return res;
     }
 }
 
+这题要看code ganker的问题解答 解释了一些很基础的问题
 
+时间O(n) 空间O(n)
 
 
 

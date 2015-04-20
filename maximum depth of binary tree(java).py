@@ -55,27 +55,23 @@ public class Solution {
     public int maxDepth(TreeNode root) {
         if(root==null)
             return 0;
-        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
-        int currNum = 1;
-        int nextNum = 0;
-        int level = 0;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.offer(root);
-        while(!queue.isEmpty())			//如果队列为空 则表示遍历到底
-        {
-            TreeNode node = queue.poll();
+        int currNum = 1, nextNum = 0, level = 1;
+        while(!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
             currNum--;
-            if(node.left!=null)
-            {
-                queue.add(node.left);		//一层层遍历 逐个将每一层地节点加到队列中
+            if(curr.left==null && curr.right==null &&queue.isEmpty())
+                return level;
+            if(curr.left!=null) {
+                queue.offer(curr.left);
                 nextNum++;
             }
-            if(node.right!=null)
-            {
-                queue.add(node.right);
+            if(curr.right!=null) {
+                queue.offer(curr.right);
                 nextNum++;
             }
-            if(currNum==0)
-            {
+            if(currNum==0) {
                 currNum = nextNum;
                 nextNum = 0;
                 level++;

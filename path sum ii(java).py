@@ -115,7 +115,7 @@ public class Solution {
         {
             item.add(root.left.val);
             helper(root.left, sum-root.left.val, item, res);
-            item.remove(item.size()-1);         //记得将之前加的(116行)再去掉 否则会影响后面的结果
+            item.remove(item.size()-1);         //记得将之前加的(116行)再去掉 保护现场
         }
         if(root.right!=null)
         {
@@ -127,6 +127,8 @@ public class Solution {
 }
 
 Note: 注意下111 118 124的注释 这种题基本都这个套路 只是注意下注释的地方就好
+
+看code ganker问题解答
 
 
 
