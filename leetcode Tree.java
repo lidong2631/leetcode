@@ -495,6 +495,22 @@ Binary Search Tree Iterator
 
 
 Balanced Binary Tree
+递归 过程维护深度并判断左右子树的深度差 0或正数代表深度 －1表示已不平衡
+
+return helper(root)>=0;
+
+int helper(TreeNode root)
+    if(root==null)
+        return 0;
+    int left = helper(root.left);
+    int right = helper(root.right);
+    if(left<0 || right<0)
+        return -1;
+    if(Math.abs(left-right)>=2)
+        return -1;
+    return Math.max(left, right)+1;
+
+时间O(n) 空间O(1)
 
 
 

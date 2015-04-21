@@ -95,6 +95,77 @@ class Solution:
 
 
 
+From cleanCode:
+1 DFS
+/**
+ * Definition for undirected graph.
+ * class UndirectedGraphNode {
+ *     int label;
+ *     List<UndirectedGraphNode> neighbors;
+ *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+ * };
+ */
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if(node==null)
+            return null;
+        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
+        return DFS(node, map);
+    }
+    
+    private UndirectedGraphNode DFS(UndirectedGraphNode node, Map<UndirectedGraphNode, UndirectedGraphNode> map) {
+        if(map.containsKey(node))
+            return map.get(node);
+        UndirectedGraphNode nodeCopy = new UndirectedGraphNode(node.label);
+        map.put(node, nodeCopy);
+        for(UndirectedGraphNode neighbor : node.neighbors) {
+            nodeCopy.neighbors.add(DFS(neighbor, map));
+        }
+        return nodeCopy;
+    }
+}
+
+时间O(n) 空间O(n)
+
+
+2 BFS
+/**
+ * Definition for undirected graph.
+ * class UndirectedGraphNode {
+ *     int label;
+ *     List<UndirectedGraphNode> neighbors;
+ *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+ * };
+ */
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if(node==null)
+            return null;
+        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
+        UndirectedGraphNode nodeCopy = new UndirectedGraphNode(node.label);
+        Queue<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
+        map.put(node, nodeCopy);
+        queue.add(node);
+        while(!queue.isEmpty()) {
+            UndirectedGraphNode curr = queue.poll();
+            for(UndirectedGraphNode p : curr.neighbors) {    
+                if(map.containsKey(p)) {
+                    map.get(curr).neighbors.add(map.get(p));
+                }
+                else {
+                    UndirectedGraphNode pCopy = new UndirectedGraphNode(p.label);
+                    map.put(p, pCopy);
+                    map.get(curr).neighbors.add(pCopy);
+                    queue.add(p);
+                }
+            }
+        }
+        return nodeCopy;
+    }
+}
+
+时间O(n) 空间O(n)
+
 
 
 /**
