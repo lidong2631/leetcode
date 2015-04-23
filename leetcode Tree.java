@@ -517,25 +517,183 @@ int helper(TreeNode root)
 
 
 Binary Tree Inorder Traversal
+1 递归
+private void helper(TreeNode root, List<Integer> res) {
+    if(root==null)
+        return;
+    helper(root.left, res);
+    res.add(root.val);
+    helper(root.right, res);
+}
+
+时间O(n) 空间O(logn)
+
+2 非递归
+while(!stack.empty() || root!=null)
+    if(root!=null) {
+        root = root.left;
+        stack.push(root);
+    }
+    else {
+        TreeNode root = stack.pop();
+        res.add(root.val);
+        root = root.right;
+    }
+
+时间O(n) 空间O(logn)
+
+3 Morris
+TreeNode curr = root; TreeNode pre = null;
+while(curr!=null) {
+    if(curr.left!=null) {
+        pre = curr.left;
+        while(pre.right!=null && pre.right!=curr)
+            pre = pre.right;
+        if(pre.right==null) {
+            pre.right = curr;
+            curr = curr.left;
+        }
+        else {
+            pre.right=null;
+            res.add(curr.val);
+            curr = curr.right;
+        }
+    }
+    else {
+        res.add(curr.val);
+        curr = curr.right;
+    }
+}
+
+时间O(n) 空间O(1)
 
 
 
 
 
 Binary Tree Preorder Traversal
+1 递归
+private void helper(TreeNode root, List<Integer> res) {
+    if(root==null)
+        return;
+    res.add(root.val);
+    helper(root.left, res);
+    helper(root.right, res);
+}
+
+时间O(n) 空间O(logn)
+
+2 非递归
+while(!stack.empty() || root!=null) {
+    if(root!=null) {
+        res.add(root.val);
+        stack.push(root);
+        root = root.left;
+    }
+    else {
+        root= stack.pop();
+        root = root.right;
+    }
+}
+
+时间O(n) 空间O(logn)
+
+3 Morris
+while(curr!=null) {
+    if(curr.left!=null) {
+        pre = curr.left;
+        while(pre.right!=null && pre.right!=curr)
+            pre = pre.right;
+        if(pre.right==null) {
+            pre.right = curr;
+            res.add(curr.val);
+            curr = curr.left;
+        }
+        else {
+            pre.right=null
+            curr =curr.right;
+        }
+    }
+    else {
+        res.add(curr.val);
+        curr = curr.right;
+    }
+}
+
+时间O(n) 空间O(1)
 
 
 
 
 
 Binary Tree Postorder Traversal
+1 递归
+helper(TreeNode root, List<Integer> res) {
+    if(root==null)
+        return;
+    helper(root.left, res);
+    helper(root.right, res);
+    res.add(root.val);
+}
 
+2 非递归
+while(!stack.empty() ||　root!=null) {
+    if(root!=null) {
+        stack.push(root);
+        root = root.left;
+    }
+    else {
+        TreeNode peek = stack.peek();
+        if(peek.right!=null && peek.right!=pre)
+            root = peek.right;
+        else {
+            stack.pop();
+            res.add(peek.val);
+            pre = peek;
+        }
+    }
+}
 
+3 Morris
+while(curr!=null) {
+    if(curr.left!=null) {
+        pre = curr.left;
+        while(pre.right!=null && pre.right!=curr)
+            pre = pre.right;
+        if(pre.right==null) } {
+            pre.right = curr;
+            curr = curr.left;
+        }
+        else {
+            reverse(curr.left, pre);
+            TreeNode tmp = pre;
+            while(tmp!=curr.left) {
+                res.add(tmp.val);
+                tmp = tmp.right;
+            }
+            res.add(tmp.val);
+            reverse(pre, curr.left);
+            pre.right = null;
+            curr = curr.right;
+        }
+    }
+    else {
+        curr = curr.right;
+    }
+}
 
+void reverse(TreeNode start, TreeNode end) {
+    if(start==end)
+        return;
+    TreeNode pre = start;
+    TreeNode curr = start.right;
+    TreeNode next = null;
+    while(pre!=end) {
+        next = curr.right;
+        curr.right = pre;
+        pre = curr;
+        curr = next;
+    }
+}
 
-
-
-
-
-
-
+时间O(n) 空间O(1)

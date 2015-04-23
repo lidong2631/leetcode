@@ -177,6 +177,74 @@ Note: from code ganker 跟preorder inorder一个套路 方便记忆
 code ganker 还有一种Morris解法 有时间可以看看 先熟练掌握递归和迭代
 
 
+Morris
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        TreeNode dummy = new TreeNode(0);
+        dummy.left = root;
+        TreeNode curr = dummy;
+        TreeNode pre = null;
+        while(curr!=null) {
+            if(curr.left!=null) {   //这部分都大致相同
+                pre = curr.left;
+                while(pre.right!=null && pre.right!=curr)
+                    pre = pre.right;
+                if(pre.right==null) {
+                    pre.right = curr;
+                    curr = curr.left;
+                }
+                else {
+                    reverse(curr.left, pre);
+                    TreeNode tmp = pre;
+                    while(tmp!=curr.left) {
+                        res.add(tmp.val);
+                        tmp = tmp.right;
+                    }
+                    res.add(tmp.val);
+                    reverse(pre, curr.left);
+                    pre.right=null;
+                    curr = curr.right;
+                }
+            }
+            else {
+                curr = curr.right;
+            }
+        }
+        return res;
+    }
+    
+    private void reverse(TreeNode start, TreeNode end) {    //这里类似于linkedlist反转
+        if(start==end)
+            return;
+        TreeNode pre = start;
+        TreeNode curr = start.right;
+        TreeNode next = null;
+        while(pre!=end) {
+            next = curr.right;
+            curr.right = pre;
+            pre = curr;
+            curr = next;
+        }
+    }
+}
+
+
+时间O(n) 空间O(1)
+
+
+
+
+
 
 
 跟Binary Tree Inorder Traversal以及Binary Tree Preorder Traversal一样，二叉树的后序遍历我们还是介绍三种方法，第一种是递归，第二种是迭代方法，

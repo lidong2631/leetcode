@@ -132,7 +132,11 @@ public class Solution {
     }
 }
 
-Morris遍历 常熟空间复杂度 时间复杂度是O(2n) = O(n) 利用叶子节点的空孩子指针做成线索 实现向上走的功能
+Morris遍历 常熟空间复杂度 时间复杂度是O(2n) = O(n) 利用叶子节点的空孩子指针做成线索 实现向上走的功能 
+
+但要注意它会暂时改变数的结构 所以under certain situation may not be fit well
+
+
 
 用线索二叉树实现
 
