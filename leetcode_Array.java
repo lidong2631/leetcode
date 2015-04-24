@@ -1065,24 +1065,7 @@ set first row col
 
 
 Sort Colors
-<<<<<<< HEAD:leetcode_Array
-两种解法 1 计数排序 2如下
-int index0 = 0;
-int index1 = 0;
-for(int i=0; i<A.length; i++) {
-    if(A[i]==0) {
-        A[i] = 2;
-        A[index1++] = 1;
-        A[index0++] = 0;
-    }
-    else if(A[i]==1) {
-        A[i] = 2;
-        A[index1++] = 1;
-    }
-时间O(n) 空间O(1)
 
-
-=======
 1 计数排序
 int[] c = new int[3];
 int[] res = new int[A.length];
@@ -1108,7 +1091,6 @@ for(int i=0; i<A.length; i++)
         A[index1++] = 1;
 
 时间O(n) 空间O(1)
->>>>>>> 855d3e42a08dbc7790166f20db2004754988236e:leetcode_Array.java
 
 
 
