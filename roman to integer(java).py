@@ -59,6 +59,30 @@ from wikipedia:
 
 
 
+From cleanCode
+
+public class Solution {
+    public int romanToInt(String s) {
+        Map<Character, Integer> map = new HashMap<Character, Integer>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+        
+        int total = 0, curr = 0, prev = 0;
+        for(Character c: s.toCharArray()) {
+            curr = map.get(c);
+            total+=(curr>prev)?curr-2*prev:curr;
+            prev = curr;
+        }
+        return total;
+    }
+}
+思路关键就是如果前一个数大于后一个数 就加后一个数 否则就加后一个数并减去2倍前一个数
+
 
 
 public class Solution {
@@ -101,44 +125,6 @@ public class Solution {
 }
 
 from code ganker 简单题
-
-
-
-
-public class Solution {
-    public int romanToInt(String s) {
-        if(s==null || s.length()==0)
-            return 0;
-        
-        HashMap<Character, Integer> dict = new HashMap<Character, Integer>();
-        dict.put('M', 1000);
-        dict.put('D', 500);
-        dict.put('C', 100);
-        dict.put('L', 50);
-        dict.put('X', 10);
-        dict.put('V', 5);
-        dict.put('I', 1);
-        
-        char last = s.charAt(0);
-        int num = dict.get(last);
-        for(int i=1; i<s.length(); i++)
-        {
-            if(dict.get(s.charAt(i))==dict.get(last))       //表示罗马数字的三种情况 两个数相等
-                num+=dict.get(s.charAt(i));
-            else if(dict.get(s.charAt(i))<dict.get(last))   //前一个数大于后一个数 右加左减
-            {
-                num+=dict.get(s.charAt(i));
-                last = s.charAt(i);
-            }
-            else
-                num = num + dict.get(s.charAt(i)) - 2*dict.get(last);   //前一个数小于后一个数
-        }
-        return num;
-    }
-}
-
-Note: 根据python版改编 code ganker版没看 都差不多 这题思路很简单 就是搞清楚罗马数字的表示方式就可以了
-
 
 
 

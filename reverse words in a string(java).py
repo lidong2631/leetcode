@@ -8,6 +8,41 @@ Note: join(), split(), slicing operation [::-1]
 
 
 
+1 What constitute a word?
+A sequence of non-space characters
+
+2 Does tab or newline character count as space characters?
+Assume the input does not contain any tabs or newline characters
+
+3 Could the input string contain leading or trailing spaces?
+Yes. However, your reversed string should not contain leading or trailing spaces
+
+4 How about multiple spaces between two words?
+reduce them to a single space in reversed words
+
+
+
+From cleanCode
+public class Solution {
+    public String reverseWords(String s) {
+        int j = s.length();
+        StringBuilder res = new StringBuilder();
+        for(int i=s.length()-1; i>=0; i--) {
+            if(s.charAt(i)==' ')
+                j = i;
+            else if(i==0 || s.charAt(i-1)== ' ') {
+                if(res.length()!=0)
+                    res.append(' ');
+                res.append(s.substring(i, j));
+            }
+        }
+        return res.toString();
+    }
+}
+
+时间O(n) 空间O(n)
+
+
 
 
 public class Solution {

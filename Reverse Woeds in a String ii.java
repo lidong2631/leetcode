@@ -31,3 +31,5 @@ public class Solution {
 }
 
 同rotate array及reverse string i第二种解法 先全部反转再局部反转 时间O(n) 空间 O(1)
+
+看一下cleanCode challenge 1 2
