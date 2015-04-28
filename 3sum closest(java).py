@@ -89,7 +89,7 @@ public class Solution {
     }
 }
 
-Note: 根据code ganker改编 这题跟3sum区别不大 具体看注视
+Note: 根据code ganker改编 这题跟3sum区别不大 注意要取绝对值
 
 
 

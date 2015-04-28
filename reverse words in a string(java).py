@@ -23,9 +23,11 @@ reduce them to a single space in reversed words
 
 
 From cleanCode
+While iterating the string in reverse order, we keep track of a word’s begin and end position
+
 public class Solution {
     public String reverseWords(String s) {
-        int j = s.length();
+        int j = s.length();             //注意j从s.length()开始
         StringBuilder res = new StringBuilder();
         for(int i=s.length()-1; i>=0; i--) {
             if(s.charAt(i)==' ')

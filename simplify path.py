@@ -121,6 +121,46 @@ class Solution:
 
 
 
+public class Solution {
+    public String simplifyPath(String path) {
+        int i = 0;
+        Stack<String> stack = new Stack<String>();
+        while(i<path.length()) {
+            int index = i;
+            StringBuilder tmp = new StringBuilder();
+            while(i<path.length() && path.charAt(i)!='/') { //每次取两个'/'之间的字符
+                tmp.append(path.charAt(i));
+                i++;
+            }
+            if(index!=i) {
+                String tmpStr = tmp.toString();
+                if(tmpStr.equals("..")) {   //如果是".." 弹栈
+                    if(!stack.empty())
+                        stack.pop();
+                }
+                else if(!tmpStr.equals("."))    //否则如果不是"." 进栈
+                    stack.push(tmpStr);
+            }
+            i++;
+        }
+        if(stack.empty())   //最后要看一下栈是空 就输出根路径"/"
+            return "/";
+        String res = "";
+        while(!stack.empty()) {
+            res="/"+stack.pop()+res;
+        }
+        return res;
+    }
+}
+使用一个栈来解决问题。遇到'..'弹栈，遇到'.'不操作，其他情况下压栈
+根据code ganker改写的
+
+时间O(n) 空间O(n)
+
+
+
+
+
 
 
 public class Solution {

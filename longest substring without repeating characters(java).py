@@ -85,7 +85,7 @@ public int lengthOfLongestSubstring(String s) {
     boolean[] exist = new boolean[256];
     int i = 0, maxLen = 0;      //i相当于左窗口
     for(int j=0; j<s.length(); j++) {   //j相当于右窗口
-        while(exist[s.charAt(j)]) {        //如果是重复字符 依次将重复元素前的每个字符的标记重设为false i++
+        while(exist[s.charAt(j)]) {        //这里while不可以改成if 错误answer "abba"
             exist[s.charAt(i)] = false;
             i++;
         }

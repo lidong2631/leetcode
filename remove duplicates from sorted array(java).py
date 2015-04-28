@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class Solution:
     # @param a list of integers
     # @return an integer
@@ -121,7 +120,3 @@ public int removeDuplicates(int[] A) {
 
 这个题目操作有所不同，不过难度也差不多，有兴趣的朋友可以看看。
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 015e529f3936b1f47d4f49e77c4ccb00a3bbe9ab

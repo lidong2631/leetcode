@@ -35,8 +35,6 @@ public class Solution {
     }
     
     private void helper(String s, int index, int segment, String item, List<String> res) {
-        if(index>=s.length())
-            return;
         if(segment==4) {
             String sub = s.substring(index);
             if(isValid(sub)) {

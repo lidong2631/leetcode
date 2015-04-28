@@ -54,6 +54,26 @@ class Solution:
 
 
 
+From cleanCode
+public class Solution {
+    public boolean isPalindrome(String s) {
+        int left = 0, right = s.length()-1;
+        while(left<right) {
+            while(left<right && !Character.isLetterOrDigit(s.charAt(left))) //注意这里只判断字符和数字
+                left++;
+            while(left<right && !Character.isLetterOrDigit(s.charAt(right)))
+                right--;
+            if(Character.toLowerCase(s.charAt(left))!=Character.toLowerCase(s.charAt(right)))
+                return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+}
+
+时间O(n) 空间O(1)
+这题注意如果不是alphanumeric letters 或数字 它认为是valid palindrome
 
 
 

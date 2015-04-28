@@ -112,7 +112,7 @@ public class Solution {
                 tmp.add(num[left]);                             //
                 tmp.add(num[right]);                            // 
                 res.add(tmp);                                   //
-                left++;     //这里单独写left++ right--不然相等后就不会继续找下一个解而是停住 之前我省略这里以为就写whlile里就够不对
+                left++;     //这里单独写left++ right--不然相等后就不会继续找下一个解而是停住 之前我省略这里以为就写while就够不对
                 right--;
                 while(left<right && num[left]==num[left-1]) //不一样
                     left++;

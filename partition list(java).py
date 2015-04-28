@@ -9,7 +9,7 @@ class Solution:
     # @param head, a ListNode
     # @param x, an integer
     # @return a ListNode
-    def partition(self, head, x):
+def partition(self, head, x):
         head1 = ListNode(0)     #
         head2 = ListNode(0)
         tmp = head              #
@@ -111,7 +111,7 @@ public class Solution {
                 p1.next = tmp;
                 tmp = tmp.next;
                 p1 = p1.next;
-                p1.next = null;
+                p1.next = null;     //注意这里一定要将next置为null 否则最后会形成cycle list
             }
             else
             {
