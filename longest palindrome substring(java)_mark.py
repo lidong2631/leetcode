@@ -51,6 +51,66 @@ class Solution:
 
 
 
+from cleanCode
+public class Solution {
+    public String longestPalindrome(String s) {
+        int start = 0, end = 0;
+        for(int i=0; i<s.length(); i++) {
+            int len1 = expand(s, i, i);
+            int len2 = expand(s, i, i+1);
+            int len = Math.max(len1, len2);
+            if(len>end-start) {
+                start = i-(len-1)/2;
+                end = i+len/2;
+            }
+        }
+        return s.substring(start, end+1);
+    }
+    
+    private int expand(String s, int left, int right) {
+        while(left>=0 && right<s.length() && s.charAt(left)==s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return right-left-1;
+    }
+}
+
+O(n^2) O(1)
+
+
+from code ganker dp Solution
+
+public class Solution {
+    public String longestPalindrome(String s) {
+        boolean[][] isValid = new boolean[s.length()][s.length()];
+        int maxLen = 0;
+        String res = "";
+        for(int i=s.length()-1; i>=0; i--) {
+            for(int j=i; j<s.length(); j++) {
+                if(s.charAt(i)==s.charAt(j) && (j-i<=2 || isValid[i+1][j-1])) {
+                    isValid[i][j] = true;
+                    if(maxLen<j-i+1) {
+                        maxLen = j-i+1;
+                        res = s.substring(i, j+1);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+}
+
+O(n^2) O(n^2)
+
+更牛逼的算法Manacher O(n)搞定
+
+扩展 如果要返回所有最长回文串，只需要稍做变化就可以，维护一个集合，如果等于当前最大的，
+
+即加入集合，否则，如果更长，则清空集合，加入当前这个
+
+
+
 
 
 public class Solution {

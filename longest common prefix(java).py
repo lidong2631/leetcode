@@ -24,17 +24,13 @@ public class Solution {
         StringBuilder res = new StringBuilder();
         if(strs==null || strs.length==0)
             return res.toString();
-        boolean flag = true;
         int index = 0;
-        while(flag) {
+        while(index<strs[0].length()) {
             for(int i=0; i<strs.length; i++) {
-                if(index>=strs[i].length() || strs[i].charAt(index)!=strs[0].charAt(index)) {
-                    flag = false;
-                    break;
-                }
+                if(index>=strs[i].length() || strs[i].charAt(index)!=strs[0].charAt(index)) //如果不等就返回结果
+                    return res.toString();
             }
-            if(flag)
-                res.append(strs[0].charAt(index));
+            res.append(strs[0].charAt(index));  //否则每次将相等的字符加入结果
             index++;
         }
         return res.toString();
@@ -43,7 +39,7 @@ public class Solution {
 
 时间O(m*n) 空间O(m)
 
-Note: code ganker版改编 brute force 思路简单 只是要注意内循环i从0开始是为了应对leetcode的空集测试 看code ganker解释
+Note: from code ganker评论 brute force 思路简单 只是要注意内循环i从0开始是为了应对leetcode的空集测试 看code ganker解释
 
 Runtime Error Message:  Line 14: java.lang.ArrayIndexOutOfBoundsException: 0
 Last executed input:    []

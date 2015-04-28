@@ -72,6 +72,86 @@ class Solution:
 
 
 
+public class Solution {
+    private Map<Character, String> map = new HashMap<Character, String>(){{
+        put('2', "abc");
+        put('3', "def");
+        put('4', "ghi");
+        put('5', "jkl");
+        put('6', "mno");
+        put('7', "pqrs");
+        put('8', "tuv");
+        put('9', "wxyz");
+        put('0', " ");
+    }};
+        
+    
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<String>();
+        if(digits==null || digits.length()==0)
+            return res;
+        res.add("");
+        for(int i=0; i<digits.length(); i++) {
+            String curr = map.get(digits.charAt(i));
+            List<String> tmp = new ArrayList<String>();
+            for(int j=0; j<res.size(); j++) {
+                for(int k=0; k<curr.length(); k++) {
+                    tmp.add(res.get(j) + Character.toString(curr.charAt(k)));
+                }
+            }
+            res = tmp;
+        }
+        return res;
+    }
+}
+
+迭代
+
+
+
+public class Solution {
+    private Map<Character, String> map = new HashMap<Character, String>(){{
+        put('2', "abc");
+        put('3', "def");
+        put('4', "ghi");
+        put('5', "jkl");
+        put('6', "mno");
+        put('7', "pqrs");
+        put('8', "tuv");
+        put('9', "wxyz");
+        put('0', " ");
+    }};
+        
+    
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<String>();
+        if(digits==null || digits.length()==0)
+            return res;
+        helper(digits, 0, "", res);
+        return res;
+    }
+    
+    private void helper(String digits, int index, String item, List<String> res) {
+        if(index==digits.length()) {
+            res.add(item);
+            return;
+        }
+        
+        String curr = map.get(digits.charAt(index));
+        for(int j=0; j<curr.length(); j++) {
+            helper(digits, index+1, item+Character.toString(curr.charAt(j)), res);
+        }
+    }
+}
+
+递归
+
+时间空间复杂度都是O(k^n) 递归 非递归都是 
+
+
+
+
+
 
 
 public class Solution {

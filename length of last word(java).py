@@ -10,7 +10,24 @@ class Solution:
 
 
 
+public class Solution {
+    public int lengthOfLastWord(String s) {
+        int j = s.length(), count = 0;
+        for(int i=s.length()-1; i>=0; i--) {
+            if(s.charAt(i)==' ')
+                j = i;
+            else if(i==0 || s.charAt(i-1)==' ') {
+                count = j - i;
+                break;
+            }
+        }
+        return count;
+    }
+}
 
+根据cleanCode reverse words in a string 改编 仍是确定最后单词的起始和结束位置即可
+
+O(n) O(1)
 
 
 

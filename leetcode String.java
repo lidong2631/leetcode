@@ -42,6 +42,31 @@ return stack.empty();
 
 
 
+Longest Valid Parentheses
+for(int i=0; i<s.length(); i++) {
+    if(s.charAt(i)=='(')
+        stack.push(i);
+    else {
+        if(stack.empty())
+            start = i+1;
+        else {
+            stack.pop();
+            if(stack.empty())
+                maxLen = Math.max(maxLen, i-start+1);
+            else
+                maxLen = Math.max(maxLen, i-stack.peek());
+        }
+    }
+}
+
+O(n) O(n)
+
+))()()  ))(()
+
+
+
+
+
 Valid Palindrome
 双指针
 int left = 0, right = s.length()-1;
@@ -206,6 +231,44 @@ for(Character c : s.toCharArray()) {
 
 
 Integer to Roman
+int digit = 1000;
+List<Integer> tmp = new ArrayList<Integer>();
+while(digit>0) {
+    tmp.add(num/digit);
+    num%=digit;
+    digit/=10;
+}
+StringBuilder res = new StringBuilder();
+res.append(convert(tmp.get(0), ' ', ' ', 'M'));
+res.append(convert(tmp.get(1), 'M', 'D', 'C'));
+res.append(convert(tmp.get(2), 'C', 'L', 'X'));
+res.append(convert(tmp.get(3), 'X', 'V', 'I'));
+
+private String convert(int digit, char ten, char five, char one) {
+    StringBuilder sb = new StringBuilder();
+    switch(digit) {
+        case 9:
+            sb.append(one);
+            sb.append(ten);
+            break;
+        case 8: case 7: case 6: case 5:
+            sb.append(five);
+            for(int i=5; i<digit; i++)
+                sb.append(one);
+            break;
+        case 4:
+            sb.append(one);
+            sb.append(five);
+            break;
+        case 3: case 2: case 1:
+            for(int i=0; i<digit; i++)
+                sb.append(one);
+            break;
+    }
+    return sb.toString();
+}
+
+O(n) O(1)
 
 
 
@@ -347,6 +410,7 @@ int read(char[] buf, int n) {
 
 
 One Edit Distance
+modify insert append
 int m = s.length(), n = t.length();
 if(m>n)
     return isOneEditDistance(t, s);
@@ -356,10 +420,10 @@ int i = 0;
 while(i<m && s.charAt(i)==t.charAt(i))
     i++;
 if(i==m)
-    return n-m==1;
-if(n==m)
+    return n-m==1;  //append
+if(n==m)    //modify
     i++;
-while(i<m && s.charAt(i)==t.charAt(i+n-m))
+while(i<m && s.charAt(i)==t.charAt(i+n-m))  //modify insert
     i++;
 return i==m;
 
@@ -369,28 +433,168 @@ return i==m;
 
 
 
+Multiply Strings
+模拟乘法 每一位数的求解 对应位相乘最后相加
+
+for(int i=num1.length()+num2.length(); i>0; i--) {
+    for(int j=Math.min(i-1, num1.length()); j>0; j--) {
+        if(i<=j+num2.length()) {
+            num+=(int)(num1.charAt(j-1)-'0')*(int)(num2.charAt(i-1-j)-'0');
+        }
+    }
+    if(i!=1 || num!=0)
+        res.append(num%10);
+    num/=10;
+}
+return res.reverse().toString();
+
+O((m+n)^2) O(1)
 
 
 
 
 
+Minimum Window Substring
+双指针
+int leftP = 0, count = 0;
+for(int i=0; i<T.length(); i++) {
+    if(map.containsKey(T.charAt(i)))
+        map.put(T.charAt(i), 1);
+    else
+        map.put(T.charAt(i), map.get(T.charAt(i))+1);
+}
+for(int i=0; i<S.length(); i++) {
+    if(map.containsKey(S.charAt(i)))
+        map.put(S.charAt(i), map.get(S.charAt(i))-1);
+        if(map.get(S.charAt(i))>=0)
+            count++;
+    while(count==T.length()) {
+        if(map.containsKey(S.charAt(leftP))) {
+            map.put(S.charAt(leftP), map.get(S.charAt(leftP))+1);
+            if(map.get(S.charAt(leftP))>0) {
+                if(i-leftP+1<maxLen) {
+                    maxLen = i-leftP+1;
+                    res = S.substring(leftP, i-leftP+1);
+                }
+                count--;
+            }
+        }
+        leftP++;
+    }
+}
+
+O(n) O(T)
 
 
 
 
 
+Longest Substring Without Repeating Character
+双指针
+boolean[] charMap = new boolean[256];
+int j = 0, maxLen = 0;
+for(int i=0; i<s.length(); i++) {
+    while(charMap[s.charAt(i)]) {
+        charMap[s.charAt(j)] = false;
+        j++;
+    }
+    charMap[s.charAt(i)] = true;
+    maxLen = Math.max(maxLen, i-j+1);
+}
+
+O(n) O(1)
 
 
 
 
 
+Longest Substring With At Most Two Distinct Characters
+双指针
+int[] count = new int[256];
+int maxLen = 0, j = 0, numDistinct = 0;
+for(int i=0; i<s.length(); i++) {
+    if(count[s.charAt(i)]==0)
+        numDistinct++;
+    count[s.charAt(i)]++;
+    while(numDistinct>2) {
+        count[s.charAt(j)]--;
+        if(count[s.charAt(j)]==0)
+            numDistinct--;
+        j++;
+    }
+    maxLen = Math.max(maxLen, i-j+1);
+}
 
 
 
 
 
+Longest Common Prefix
+暴力法 一个个比较
+StringBuilder res = new StringBuilder();
+if(strs==null ||　strs.length==0)
+    return res;
+int index = 0;
+while(index<strs[0].length()) {
+    for(int i=0; i<strs.length; i++) {
+        if(index>=strs[0].length() ||　strs[i].charAt(i)!=strs[0].charAt(i))
+            return res.toString();
+    }
+    res.append(strs[0].charAt(index));
+    index++;
+}
+
+O(m*n) O(m)
 
 
 
 
 
+Letter Combination of a Phone Number
+类似于组合的题目 要熟悉递归非递归解法
+1 递归
+helper(digits, 0, "", res);
+
+private void helper(String digits, int index, String item, List<String> res) {
+    if(index==digits.length()) {
+        res.add(item);
+        return;
+    }
+    String curr = map.get(digits.charAt(index));
+    for(int i=0; i<curr.length(); i++) {
+        helper(digits, index+1, item+Character.toString(curr.charAt(i)), res);
+    }
+}
+
+O(k^n) O(k^n)
+
+2 非递归
+res.add("");
+for(int i=0; i<digits.length(); i++) {
+    String curr = map.get(digits.charAt(i));
+    List<String> item = new ArrayList<String>();
+    for(int j=0; j<res.size(); j++) {
+        for(int k=0; k<curr.length(); k++) {
+            item.add(res.get(j)+Character.toString(curr.charAt(k)));
+        }
+    }
+    res = item;
+}
+
+O(k^n) O(k^n)
+
+
+
+
+
+Length of Last Word
+for(int i=s.length（）-1； i>=0; i--) {
+    if(s.charAt(i)==' ')
+        j = i;
+    else if(i==0 || s.charAt(i-1)==' ') {
+        count = j-i;
+        break;
+    }
+}
+
+O(n) O(1)

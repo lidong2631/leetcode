@@ -114,9 +114,9 @@ public class Solution {
             return "0";
         StringBuilder res = new StringBuilder();
         int num = 0;
-        for(int i=num1.length()+num2.length(); i>0; i--) {
-            for(int j=Math.min(i-1, num1.length()); j>0; j--) { //每次比较i-1和第一个数的长度 决定从第一个数的第几位开始算
-                if(i-j<=num2.length())  //判断第二个数是否还能右移
+        for(int i=num1.length()+num2.length(); i>0; i--) {  //j指向第一个数 左移 i指向第二个数 右移
+            for(int j=Math.min(i-1, num1.length()); j>0; j--) { //判断j从第一个数第几位开始取
+                if(i<=j+num2.length())  //判断第二个数是否还能右移
                     num+=(int)(num1.charAt(j-1)-'0')*(int)(num2.charAt(i-j-1)-'0');
             }
             if(i!=1 || num!=0)  //最高一位是不是0
@@ -128,10 +128,10 @@ public class Solution {
 }
 
 i从右往左扫
-0 0 0 1 2 1
-0 0 0 1 2 1
+0 0 0 1 2 1   <-- j
+0 0 0 1 2 1   --> i
 
-时间O((m+n)*n) ??
+时间O((m+n)^2) 空间O(1)
 
 
 
