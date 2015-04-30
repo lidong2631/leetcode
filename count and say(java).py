@@ -22,39 +22,32 @@ class Solution:
 
 
 
-
-
 public class Solution {
     public String countAndSay(int n) {
-        if(n<=0)
-            return "";
-        String s = "1";         //从1开始
-        for(int i=2; i<n+1; i++)    //从2开始循环
-            s = CountAndSay(s);
-        return s;
-    }
-    
-    private String CountAndSay(String str) {
-        StringBuilder tmp = new StringBuilder();
-        int count = 1;
-        for(int i=1; i<str.length(); i++)       //循环从1开始
-        {
-            if(str.charAt(i)!=str.charAt(i-1))  //两个相邻字符不相同
-            {   
-                tmp.append(count);
-                tmp.append(str.charAt(i-1));
-                count = 1;
+        String res = "1";
+        for(int i=2; i<=n; i++) {
+            StringBuilder tmp = new StringBuilder();
+            int count = 1;
+            for(int j=1; j<res.length(); j++) {
+                if(res.charAt(j)==res.charAt(j-1))
+                    count++;
+                else {
+                    tmp.append(count);
+                    tmp.append(res.charAt(j-1));
+                    count = 1;
+                }
             }
-            else                //重复字符
-                count++;
+            tmp.append(count);
+            tmp.append(res.charAt(res.length()-1));
+            res = tmp.toString();
         }
-        tmp.append(count);                      //最后循环完将剩余字符加到tmp中 因为i从1开始所以最后一定有剩余
-        tmp.append(str.charAt(str.length()-1));
-        return tmp.toString();
+        return res;
     }
 }
 
-Note: python版和code ganker版结合 其实两个版本差不多 只是python版单独写了个函数 这题主要考对既定的算法写程序实现
+code ganker版 具体实现题 注意复杂度的分析
+
+
 
 
 

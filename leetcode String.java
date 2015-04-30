@@ -598,3 +598,84 @@ for(int i=s.length（）-1； i>=0; i--) {
 }
 
 O(n) O(1)
+
+
+
+
+
+Interleaving String
+
+
+
+
+
+Compare Version Number
+for(int i1=0, i2=0; i1<version1.length() || i2<version2.length(); i1++, i2++) {
+    int num1 = 0;
+    while(i1<version1.length() && version1.charAt(i1)!='.')
+        num1 = 10*num1 + (int)(version1.charAt(i1++) - '0');
+    int num2 = 0;
+    while(i2<version2.length() && version2.charAt(i2)!='.')
+        num2 = 10*num2 + (int)(version2.charAt(i2++) - '0');
+    if(num1>num2) return 1;
+    else if(num1<num2) return -1;
+}
+return 0;
+
+O(n) O(1)
+
+
+
+
+
+Anagrams
+for(int i=0; i<strs.length; i++) {
+    char[] arr = strs[i].toCharArray();
+    Arrays.sort(arr);
+    String str = new String(arr);
+    if(map.containsKey(str)) {
+        map.get(str).add(strs[i]);
+    }
+    else {
+        List<String> item = new ArrayList<String>();
+        item.add(strs[i]);
+        map.put(str, item);
+    }
+}
+Iterator i = map.values().iterator();
+while(i.hasNext()) {
+    List<String> anagram = (List<String>)i.next();
+    if(anagram.size()>1)
+        res.addAll(anagram);
+}
+
+O(n*klogk) O(nk)
+
+
+
+
+
+Add Binary
+int indexA = a.length()-1, indexB = b.length()-1;
+int carry = 0;
+while(indexA>=0 && indexB>=0) {
+    int num = (int)(a.charAt(indexA)-'0' + b.charAt(indexB) - '0') + carry;
+    carry = num/2;
+    num%=2;
+    res.append(num);
+    indexA--; indexB--;
+}
+while(indexA>=0)
+
+while(indexB>=0)
+
+if(carry==1)
+
+return res.reverse().toString();
+
+O(n) O(1)
+
+
+
+
+

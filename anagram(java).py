@@ -90,9 +90,9 @@ public class Solution {
 
 第二遍写的 思路就是每读一个string先排序 然后在hashmap里看有没有这个纪录 如果有把这个string放进去 否则建一个新的键值对放它
 
-这样走一遍后再扫一遍hashmap将值有2个或以上的string加入最终结果即可 该算法的时间复杂度是O(nklogk)，其中O(klogk)是对每一个字符串排序（如果用线性算法也可以提高）。
+这样走一遍后再扫一遍hashmap将值有2个或以上的string加入最终结果即可 该算法的时间复杂度是O(nklogk)，
 
-空间复杂度则是O(nk)，即hashmap的大小
+其中O(klogk)是对每一个字符串排序（如果用线性算法也可以提高）。空间复杂度则是O(nk)，即hashmap的大小
 
 
 
