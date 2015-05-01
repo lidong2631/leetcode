@@ -79,6 +79,43 @@ class Solution:
 
 
 
+public class Solution {
+    public int numDecodings(String s) {
+        if(s==null || s.length()==0 || s.charAt(0)=='0')
+            return 0;
+        int num1 = 1, num2 = 1, num3 = 1;
+        for(int i=1; i<s.length(); i++) {
+            if(s.charAt(i)=='0') {
+                if(s.charAt(i-1)=='1' || s.charAt(i-1)=='2')    //10 20 res[i] = res[i-2]
+                    num3 = num1;
+                else               //00 30 40   return 0
+                    return 0;
+            }
+            else {
+                if(s.charAt(i-1)=='0' || s.charAt(i-1)>='3')    //01-09 30-99 res[i] = res[i-1]
+                    num3 = num2;
+                else {
+                    if(s.charAt(i-1)=='2' && s.charAt(i)>='7')  //27-29 res[i] = res[i-1]
+                        num3 = num2; 
+                    else                //11-19 21-26 rs[i] = res[i-1] +　res[i-2]
+                        num3 = num1 + num2;
+                }
+            }
+            num1 = num2;
+            num2 = num3;
+        }
+        return num2;
+    }
+}
+
+注意num1代表res[i-2] num2代表res[i-1]
+
+O(n) O(1)
+
+
+
+
+
 这道题要求解一个数字串按照字符串编码方式可解析方式的数量。看到这种求数量的，我们很容易想到动态规划来存储前面信息，然后迭代得到最后结果。
 
 我们维护的量res[i]是表示前i个数字有多少种解析的方式，接下来来想想递归式，有两种方式：第一种新加进来的数字不然就是自己比较表示一个字符，

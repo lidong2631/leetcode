@@ -606,10 +606,74 @@ O(n) O(1)
 Interleaving String
 
 
+Generate Parentheses
+helper(n, n, new String(), res);
+return res;
+
+private void helper(int left, int right, String item, List<String> res) {
+    if(right<left)
+        return;
+    if(left==0 && right==0)
+        res.add(item);
+    if(left>0)
+        helper(left-1, right, item+"(", res);
+    if(right>0)
+        helper(left, right-1, item+")", res);
+}
+
+O(结果)
+
+
+
+
+
+Decode Ways
+一维dp
+int num1 = 1, num2 = 1, num3 = 1;
+for(int i=1; i<s.length(); i++) {
+    if(s.charAt(i)=='0') {
+        if(s.charAt(i-1)=='1' or s.charAt(i-1)=='2')
+            num3 = num1;
+        else
+            return 0;
+    }
+    else {
+        if(s.charAt(i-1)=='0' || s.charAt(i-1)>='3')
+            num3 = num2;
+        else {
+            if(s.charAt(i-1)=='2' && s.charAt(i)>='7')
+                num3 = num2;
+            else
+                num3 = num1 + num2;
+        }
+    }
+    num1 = num2;
+    num2 = num3;
+}
+
+O(n) O(1)
+
+
+
+
+
+Count and Say
+具体实现题
+String res = "1";
+for(int i=2; i<=n; i++) {
+    StringBuilder tmp = new StringBuilder();
+    int count = 1;
+    for(int j=1; j<res.length(); j++) {
+        if(res.charAt(j)==res.charAt(j-1))
+    }
+}
+
+
 
 
 
 Compare Version Number
+将version字符转换成数字比较大小
 for(int i1=0, i2=0; i1<version1.length() || i2<version2.length(); i1++, i2++) {
     int num1 = 0;
     while(i1<version1.length() && version1.charAt(i1)!='.')
@@ -629,6 +693,7 @@ O(n) O(1)
 
 
 Anagrams
+
 for(int i=0; i<strs.length; i++) {
     char[] arr = strs[i].toCharArray();
     Arrays.sort(arr);
@@ -656,6 +721,7 @@ O(n*klogk) O(nk)
 
 
 Add Binary
+数值操作
 int indexA = a.length()-1, indexB = b.length()-1;
 int carry = 0;
 while(indexA>=0 && indexB>=0) {
