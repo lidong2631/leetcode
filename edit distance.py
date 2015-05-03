@@ -60,6 +60,39 @@ class Solution:
 
 
 
+public class Solution {
+    public int minDistance(String word1, String word2) {
+        if(word1.length()==0)
+            return word2.length();
+        if(word2.length()==0)
+            return word1.length();
+        String minWord = word1.length()>word2.length()?word2:word1;
+        String maxWord = word1.length()>word2.length()?word1:word2;
+        int[] res = new int[minWord.length()+1];
+        for(int i=0; i<minWord.length(); i++) {
+            res[i] = i;
+        }
+        for(int i=0; i<maxWord.length(); i++) {
+            int[] tmp = new int[minWord.length()+1];
+            tmp[0] = i+1;
+            for(int j=0; j<minWord.length(); j++) {
+                if(minWord.charAt(j)==maxWord.charAt(i))
+                    tmp[j+1] = res[j];
+                else {
+                    tmp[j+1] = Math.min(res[j], Math.min(tmp[j], res[j+1]))+1;  //三种情况
+                }
+            }
+            res = tmp;
+        }
+        return res[minWord.length()];
+    }
+}
+
+code ganker版 二维降一维 看评论 O(m*n) O(min(m, n))
+
+
+
+
 
 
 public class Solution {

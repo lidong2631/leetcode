@@ -433,6 +433,12 @@ return i==m;
 
 
 
+Edit Distance
+
+
+
+
+
 Multiply Strings
 模拟乘法 每一位数的求解 对应位相乘最后相加
 
@@ -622,6 +628,26 @@ private void helper(int left, int right, String item, List<String> res) {
 }
 
 O(结果)
+
+
+
+
+
+Distinct Subsequences
+二维dp 空间降到一维 好理解
+if(s.length()==0)
+    return 0;
+if(t.length()==0)
+    return 1;
+int[] res = new int[t.length()+1];
+res[0] = 1;
+for(int i=0; i<s.length(); i++) {
+    for(int j=t.length()-1; j>=0; j++)
+        res[j+1] = (s.charAt(i)==t.charAt(j)?res[j]:0) + res[j+1];
+}
+return res[t.length()];
+
+O(m*n) O(m)
 
 
 
