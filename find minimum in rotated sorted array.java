@@ -12,7 +12,7 @@ public class Solution {
             else            //这里换成else if(nuj[mid]<num[right])也可以 while循环内部不会有num[mid]==num[right]的情况 因为没有重复元素
                 right = mid;
         }
-        return num[left];
+        return num[left];   //这里只能写num[left] 如果没被rotate过就只能返回num[left]而不能返回num[right]
     }
 }
 

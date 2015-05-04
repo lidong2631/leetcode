@@ -8,7 +8,7 @@ public class Solution {
             else
                 right = mid;
         }
-        return left;
+        return left;    //return left或right都可以
     }
 }
 

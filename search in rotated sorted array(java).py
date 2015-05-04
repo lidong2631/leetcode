@@ -42,7 +42,7 @@ public class Solution {
             int mid = (left+right)/2;
             if(A[mid]==target)
                 return mid;
-            if(A[mid]>A[right]) {
+            if(A[mid]>A[right]) {       //先按find minimum那样对数组分区 然后判断target落在哪里
                 if(A[left]<=target && target<A[mid])
                     right = mid - 1;
                 else

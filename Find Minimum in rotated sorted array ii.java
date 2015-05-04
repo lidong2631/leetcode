@@ -9,7 +9,7 @@ public class Solution {
                 left = mid + 1;
             else if(num[mid]<num[right])    //也可以写num[mid]<num[left]
                 right = mid;
-            else        //这里加一个判断如果想等则right--
+            else        //num[left]==num[mid]==num[right]
                 right--;        //也可以写left++
         }
         return num[left];

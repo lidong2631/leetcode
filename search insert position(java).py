@@ -73,7 +73,7 @@ public int searchInsert(int[] A, int target) {
 }
 
 
-
+这题用code ganker的解法 比较好 简单明了
 
 
 
@@ -127,9 +127,11 @@ public int searchInsert(int[] A, int target) {
     return l;
 }
 
-注意以上实现方式有一个好处，就是当循环结束时，如果没有找到目标元素，那么l一定停在恰好比目标大的index上，r一定停在恰好比目标小的index上，所以个人比较推荐这种实现方式。
+注意以上实现方式有一个好处，就是当循环结束时，如果没有找到目标元素，那么l一定停在恰好比目标大的index上，r一定停在恰好比目标小的index上，
 
-二分查找是一个非常经典的方法，不过一般在面试中很少直接考二分查找，会考一些变体，例如Search in Rotated Sorted Array，Search for a Range和Search a 2D Matrix，
+所以个人比较推荐这种实现方式。二分查找是一个非常经典的方法，不过一般在面试中很少直接考二分查找，会考一些变体，
+
+例如Search in Rotated Sorted Array，Search for a Range和Search a 2D Matrix，
 
 思路其实是类似的，稍微变体一下即可，有兴趣可以练习一下哈。
 
