@@ -73,7 +73,7 @@ public class Solution {
         if(dividend==Integer.MIN_VALUE) //当dividend为最小负整数 res初始为1 
         {
             res = 1;
-            dividend+=Math.abs(divisor); //dividend加divisor为了防止后面取digit时越界
+            dividend+=Math.abs(divisor); //dividend加divisor为了防止后面取绝对值时越界
         }
         
         if(divisor==Integer.MIN_VALUE)  //如果除数是最小负整数 直接返回res
@@ -105,7 +105,19 @@ public class Solution {
     }
 }
 
-Note: 根据code gakner改编 这题体现了java中数值矗立的问题 要好好体会   EX 512/36=14   512 = 36*8 + 36*4 + 36*2=504
+Note: 根据code gakner改编 这题体现了java中数值矗立的问题 要好好体会   
+
+>>>为无符号右移 java中有三种位移动运算符 << >> >>>前两个是有符号移动 若移动数字为正则补0否则补1
+
+带符号右移就是将那个数转为2进制然后在前面补0或1 如果是正数就补0 负数补1
+例如11 >> 2，则是将数字11右移2位 
+计算过程： 
+11的二进制形式为：0000 0000 0000 0000 0000 0000 0000 1011，然后把低位的最后两个数字移出，因为该数字是正数，所以在高位补零。
+则得到的最终结果是0000 0000 0000 0000 0000 0000 0000 0010。转换为十进制是2。
+http://blog.csdn.net/weizhaozhe/article/details/3936489
+
+
+EX 512/36=14   512 = 36*8 + 36*4 + 36*2=504
 
 另外看divideTwoNumber.java 
 

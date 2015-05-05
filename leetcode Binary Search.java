@@ -15,6 +15,23 @@ return res;
 
 
 Sqrt(x)
+if(x<0)
+	return -1;
+if(x==0)
+	return 0;
+int left = 1, right = x/2+1;
+while(left<=right) {
+	int mid = (left+right)/2;
+	if(x/mid>=mid && x/(mid+1)<mid+1)
+		return mid;
+	else if(x/mid<mid)
+		right = mid - 1;
+	else
+		left = mid + 1;
+}
+return right;
+
+O(logn) O(1)
 
 
 
@@ -203,6 +220,49 @@ O(logn) O(1)
 
 
 
+Pow(x, n)
+二分递归 此解法没考虑越界
+if(n==0)
+	return 1.0;
+double half = myPow(x, n/2);
+if(n%2==0)
+	return half*half;
+else if(n>0)
+	return half*half*x;
+else
+	return half*half/x;
+
+O(logn) O(1)
+
+
+
+
+
+Median of Two Sorted Array
+private double helper(int[] nums1, int l1, int r1, int[] nums2, int l2, int r2, int k) {
+    int m = r1-l1+1;
+    int n = r2-l2+1;
+    if(m>n)
+        return helper(nums2, l2, r2, nums1, l1, r1, k);
+    if(m==0)
+        return nums2[l2+k-1];
+    if(k==1)
+        return Math.min(nums1[l1], nums2[l2]);
+    int pos1 = Math.min(k/2, m);
+    int pos2 = k-pos1;
+    if(nums1[l1+pos1-1]==nums2[l2+pos2-1])
+        return nums1[l1+pos1-1];
+    else if(nums1[l1+pos1-1]<nums2[l2+pos2-1])
+        return helper(nums1, l1+pos1, r1, nums2, l2, l2+pos2-1, k-pos1);
+    else
+        return helper(nums1, l1, l1+pos1-1, nums2, l2+pos2, r2, k-pos2);
+
+O(logk) O(logk)
+
+
+
+
+
 Find Peak Element
 int left = 0, right = num.length-1;
 while(left<right) {
@@ -213,5 +273,42 @@ while(left<right) {
 		right = mid;
 }
 return num[left];
+
+O(logn) O(1)
+
+
+
+
+
+Divide Two Integers
+以2的幂为底的一组基
+if(dividend==Integer.MIN_VALUE && divisor==-1)
+    return Integer.MAX_VALUE;
+if(divisor==0)
+    return Integer.MAX_VALUE;
+int res = 0;
+if(dividend==Integer.MIN_VALUE) {
+    res = 1;
+    dividend+=Math.abs(divisor);
+}
+if(divisor==Integer.MIN_VALUE)
+    return res;
+boolean sign = ((dividend^divisor)>>>31)==1;
+dividend = Math.abs(dividend);
+divisor = Math.abs(divisor);
+int digit = 0;
+while((dividend>>1)>=divisor) {
+    divisor<<=1;
+    digit++;
+}
+while(digit>=0) {
+    if(dividend>=divisor) {
+        dividend-=divisor;
+        res+=(1<<digit);
+    }
+    divisor>>=1;
+    digit--;
+}
+return sign?-res:res;
 
 O(logn) O(1)
