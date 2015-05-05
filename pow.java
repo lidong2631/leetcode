@@ -48,7 +48,7 @@ public class Solution {
         else if(n>0)
             return half*half*x;
         else
-            return half/x*half;
+            return half*half/x;
     }
 }
 
