@@ -41,7 +41,7 @@ from code ganker:
  */
 public class Solution {
     public ListNode mergeKLists(List<ListNode> lists) {
-        if(lists == null || lists.size() == 0)
+        if(lists == null || lists.size() == 0)      //注意
             return null;
         return helper(lists, 0, lists.size()-1);        //调用helper
     }
@@ -110,7 +110,7 @@ Note：时间复杂度为 O(nklogk) 可以联想merge sort这个要mergesort k�
  */
 public class Solution {
     public ListNode mergeKLists(List<ListNode> lists) {
-        if(lists==null || lists.size()==0)
+        if(lists==null || lists.size()==0)      //注意 要写上
             return null;
         PriorityQueue<ListNode> heap = new PriorityQueue(10, new Comparator<ListNode>(){
             public int compare(ListNode l1, ListNode l2) {
@@ -118,7 +118,7 @@ public class Solution {
             }
         });
         for(int i=0; i<lists.size(); i++) {
-            if(lists.get(i)!=null)
+            if(lists.get(i)!=null)          //这里要注意判断下元素是不是空
                 heap.offer(lists.get(i));
         }
         ListNode curr = heap.poll();
