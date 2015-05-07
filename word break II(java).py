@@ -83,6 +83,34 @@ class Solution:
 
 
 
+public class Solution {
+    public List<String> wordBreak(String s, Set<String> wordDict) {
+        List<String> res = new ArrayList<String>();
+        if(s==null || s.length()==0)
+            return res;
+        helper(s, wordDict, 0, "", res);
+        return res;
+    }
+    
+    private void helper(String s, Set<String> wordDict, int start, String item, List<String> res) {
+        if(start>=s.length()) {
+            res.add(item);
+            return;
+        }
+        StringBuilder tmp = new StringBuilder();
+        for(int i=start; i<s.length(); i++) {
+            tmp.append(s.charAt(i));
+            if(wordDict.contains(tmp.toString())) {
+                String newItem = item.length()>0?item+" "+tmp.toString():tmp.toString();
+                helper(s, wordDict, i+1, newItem, res);
+            }
+        }
+    }
+}
+
+用NP套路的递归解法即可 看code ganker评论里面有简练版的dp解
+
+
 
 ppublic class Solution {
     public List<String> wordBreak(String s, Set<String> dict) {

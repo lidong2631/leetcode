@@ -95,7 +95,21 @@ public class Solution {
 
 Note: 利用动态规划 时间复杂度O(m*n), 空间O(n) 这里要注意空间我们只用了一维数组 省掉了一维 是以每一行为单位循环 然后下一行直接用上一行已有的结果
 
-code ganker提到还可以用内循环拿到O(min(m,n))的空间 有空可以想想
+code ganker提到还可以用内循环拿到O(min(m,n))的空间 见下面code 更优解法
+
+public class Solution {
+    public int uniquePaths(int m, int n) {
+        int min = m>n?n:m;
+        int max = m>n?m:n;
+        int[] res = new int[min];
+        res[0] = 1;
+        for(int i=0; i<max; i++) {
+            for(int j=1; j<min; j++)
+                res[j]+=res[j-1];
+        }
+        return res[min-1];
+    }
+}
 
 
 public class Solution {
