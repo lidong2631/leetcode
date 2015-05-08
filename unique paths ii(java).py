@@ -80,6 +80,31 @@ class Solution:
 
 
 
+public class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        if(obstacleGrid==null || obstacleGrid.length==0 || obstacleGrid[0].length==0)
+            return 0;
+        int max = obstacleGrid.length>obstacleGrid[0].length ? obstacleGrid.length:obstacleGrid[0].length;
+        int min = obstacleGrid.length>obstacleGrid[0].length ? obstacleGrid[0].length:obstacleGrid.length;
+        int[] res = new int[min];
+        res[0] = 1;
+        for(int i=0; i<max; i++) {
+            for(int j=0; j<min; j++) {
+                if(obstacleGrid.length>=obstacleGrid[0].length && obstacleGrid[i][j]==1)    //判断行列哪个大 然后判断对应的obstacleGrid[i][j](行大于等于列)或obstacleGrid[j][i](列大于行)是否等于1
+                    res[j] = 0;
+                else if(obstacleGrid[0].length>obstacleGrid.length && obstacleGrid[j][i]==1)
+                    res[j] = 0;
+                else if(j>0)
+                    res[j]+=res[j-1];
+            }
+        }
+        return res[min-1];
+    }
+}
+
+取行和列中小的那个，然后把小的放在内层循环，空间复杂度就是O(min(m,n))
+
+
 
 
 public class Solution {
@@ -87,7 +112,7 @@ public class Solution {
         if(obstacleGrid==null || obstacleGrid.length==0 || obstacleGrid[0].length==0)
             return 0;
         int res[] = new int[obstacleGrid[0].length];
-        res[0] = 1;         //初始化res[0]等于1
+        res[0] = 1;         //这里必须写 不然这个case过不了[[0]]
         for(int i=0; i<obstacleGrid.length; i++) {      //从第一行第一列开始
             for(int j=0; j<obstacleGrid[0].length; j++) {
                 if(obstacleGrid[i][j]==1)       //如果是1就设这个res[j]为0 没有路可走了
