@@ -74,6 +74,11 @@ public class Solution {
 Note: 简单一维动态规划 实质是fibonacci数列
 
 
+http://www.geeksforgeeks.org/program-for-nth-fibonacci-number/
+O(logn)解法
+Fibonacci数列通项公式 http://baike.baidu.com/view/816.htm
+
+
 
 
 from code ganker:
