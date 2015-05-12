@@ -33,7 +33,7 @@ public class Solution {
         for(int i=1; i<triangle.size(); i++) {
             sum[i] = sum[i-1] + triangle.get(i).get(i);     //从末尾元素开始
             for(int j=i-1; j>=1; j--) {                     //动态规划处理中间元素
-                sum[j] = sum[j]<sum[j-1]?sum[j]:sum[j-1] + triangle.get(i).get(j);
+                sum[j] = (sum[j]<sum[j-1]?sum[j]:sum[j-1]) + triangle.get(i).get(j);    //这里要写括号！！！
             }
             sum[0] += triangle.get(i).get(0);       //最后处理第一个元素
         }
@@ -45,6 +45,8 @@ public class Solution {
 }
 
 动态规划的简单题 从上往下扫 每次从行尾开始 每个元素存储上一行相邻的较小值加自身
+
+O(n^2) O(n)
 
 
 
