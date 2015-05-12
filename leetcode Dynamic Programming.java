@@ -131,7 +131,6 @@ private List<TreeNode> helper(int left, int right) {
 
 
 
-<<<<<<< HEAD
 Triangle
 int[] sum = new int[triangle.size()];
 sum[0] = triangle.get(0).get(0);
@@ -143,44 +142,11 @@ for(int i=1; i<triangle.size(); i++) {
 }
 
 O(n^2) O(n)
-=======
-Decode Ways
-一维dp 几种情况要分清楚
-（1）00：res[i]=0（无法解析，没有可行解析方式）；
-（2）10, 20：res[i]=res[i-2]（只有第二种情况成立）；
-（3）11-19, 21-26：res[i]=res[i-1]+res[i-2]（两种情况都可行）；
-（4）01-09, 27-99：res[i]=res[i-1]（只有第一种情况可行）；
-
-int num1 = 1, num2 = 1, num3 = 1;
-for(int i=1; i<s.length(); i++) {
-	if(s.charAt(i)=='0') {
-		if(s.charAt(i-1)=='1' || s.charAt(i-1)=='2')
-			num3 = num1;
-		else
-			return 0;
-	}
-	else {
-		if(s.charAt(i-1)=='0' || s.charAt(i-1)>=3)
-			num3 = num2;
-		else {
-			if(s.charAt(i-1)=='2' && s.charAt(i)>='7')
-				num3 = num2;
-			else
-				num3 = num1 + num2;
-		}
-	}
-	num1 = num2;
-	num2 = num3;
-}
-
-O(n) O(1)
->>>>>>> b8f9552bb2258b414b0417ac982a3e4e5ddec5db
 
 
 
 
 
-<<<<<<< HEAD
 Scramble String
 boolean[][][] res = new boolean[s1.length()][s2.length()][s1.length()+1];
 for(int i=0; i<s1.length(); i++) {
@@ -235,44 +201,11 @@ private boolean[][] getDict(String s) {
 }
 
 时间复杂度取决结果的数量 最坏指数 空间O(n^2)
-=======
-Climbing Stairs
-if(n<=0)
-	return 0;
-if(n==1)
-	return 1;
-int p1 = 2, p2 = 1;
-for(int i=3; i<=n; i++) {
-	int p = p1+p2;
-	p2 = p1;
-	p1 = p;
-}
-return p1
-
-O(n) O(1)
-还有O(logn)解法
 
 
 
 
 
-Best Time to Buy and Sell Stock
-一维dp 
-递推式 local[i+1] = Math.max(local[i]+prices[i+1]-prices[i], 0), global[i+1] = Math.max(global[i], local[i+1])
-int global = 0, local = 0;
-for(int i=1; i<prices.length; i++) {
-	local = Math.max(local+prices[i]-prices[i-1], 0);
-	global = Math.max(global, local);
-}
-
-O(n) O(1)
->>>>>>> b8f9552bb2258b414b0417ac982a3e4e5ddec5db
-
-
-
-
-
-<<<<<<< HEAD
 Partition Palindrome ii
 跟word break一个套路
 boolean[][] dict = new boolean[s.length()][s.length()];
@@ -297,24 +230,12 @@ private boolean[][] getDict(String s) {
 }
 
 O(n^2) O(n^2)
-=======
-Best Time to Buy and Sell Stock ii
-不算dp 只要差值大于0 就可以累加
-int res = 0;
-for(int i=1; i<prices.length; i++) {
-	int diff = prices[i]-prices[i-1];
-	if(diff>0)
-		res += diff;
-}
-O(n) O(1)
->>>>>>> b8f9552bb2258b414b0417ac982a3e4e5ddec5db
 
 
 
 
 
-<<<<<<< HEAD
-Minimum Path Sum
+Minimum Path Sum / Naximum Path Sum
 int[] res = new int[grid[0].length];
 res[0] = grid[0][0];
 for(int i=1; i<grid[0].length; i++)
@@ -330,29 +251,11 @@ for(int i=1; i<grid.length; i++) {
 return res[grid[0].length-1];
 
 O(m*n) O(m)
-=======
-Best Time to Buy and Sell Stock iii
-难题 二维dp
-递推式 int diff = prices[i]-prices[i-1]
-	local[i][j] = Math.max(global[i-1][j-1]+Math.max(diff, 0), local[i-1][j]+diff)
-	global[i][j] = Math.max(local[i][j], global[i-1][j])
-for(int i=1; i<prices.length; i++) {
-	int diff = prices[i]-prices[i];
-	for(int j=2; j>=1; j--) {
-		local[j] = Math.max(global[j-1]+Math.max(diff, 0), local[j]+diff);
-		global[j] = Math.max(global[j], local[j]);
-	}
-}
-return global[2];
-
-O(n), O(1)
->>>>>>> b8f9552bb2258b414b0417ac982a3e4e5ddec5db
 
 
 
 
 
-<<<<<<< HEAD
 Maximum Subarray
 一维dp
 int local = nums[0], global = nums[0];
@@ -370,72 +273,160 @@ O(n) O(1)
 
 
 Maximum Product Subarray
+一维dp
+int maxLocal = A[0], minLocal = A[0], global = A[0];
+for(int i=1; i<A.length; i++) {
+    int maxCopy = maxLocal;
+    maxLocal = Math.max(maxLocal*A[i], Math.max(A[i], minLocal*A[i]));
+    minLocal = Math.min(minLocal*A[i], Math.min(A[i], maxCopy*A[i]));
+    global = Math.max(global, maxLocal);
+}
+return global;
+
+O(n) O(1)
 
 
 
 
 
+Distinct Subsequences
+if(S.length()==0)
+    return 0;
+if(T.length()==0)
+    return 1;
+int[] res = new int[T.length()+1];
+res[0] = 1;
+for(int i=0; i<S.length(); i++) {
+    for(int j=T.length()-1; j>=0; j--)
+        res[j+1] = (S.charAt(i)==T.charAt(j))?res[j]:0 + res[j+1];
+}
+return res[T.length()];
+
+O(m*n) O(n)
+
+
+
+    
+
+Decode Ways
+一维dp 几种情况要分清楚
+（1）00：res[i]=0（无法解析，没有可行解析方式）；
+（2）10, 20：res[i]=res[i-2]（只有第二种情况成立）；
+（3）11-19, 21-26：res[i]=res[i-1]+res[i-2]（两种情况都可行）；
+（4）01-09, 27-99：res[i]=res[i-1]（只有第一种情况可行）；
+
+int num1 = 1, num2 = 1, num3 = 1;
+for(int i=1; i<s.length(); i++) {
+    if(s.charAt(i)=='0') {
+        if(s.charAt(i-1)=='1' || s.charAt(i-1)=='2')
+            num3 = num1;
+        else
+            return 0;
+    }
+    else {
+        if(s.charAt(i-1)=='0' || s.charAt(i-1)>=3)
+            num3 = num2;
+        else {
+            if(s.charAt(i-1)=='2' && s.charAt(i)>='7')
+                num3 = num2;
+            else
+                num3 = num1 + num2;
+        }
+    }
+    num1 = num2;
+    num2 = num3;
+}
+
+O(n) O(1)
 
 
 
 
 
+Climbing Stairs
+if(n<=0)
+    return 0;
+if(n==1)
+    return 1;
+int p1 = 2, p2 = 1;
+for(int i=3; i<=n; i++) {
+    int p = p1+p2;
+    p2 = p1;
+    p1 = p;
+}
+return p1
+
+O(n) O(1)
+还有O(logn)解法
 
 
 
 
 
+Best Time to Buy and Sell Stock
+一维dp 
+递推式 local[i+1] = Math.max(local[i]+prices[i+1]-prices[i], 0), global[i+1] = Math.max(global[i], local[i+1])
+int global = 0, local = 0;
+for(int i=1; i<prices.length; i++) {
+    local = Math.max(local+prices[i]-prices[i-1], 0);
+    global = Math.max(global, local);
+}
+
+O(n) O(1)
 
 
 
 
 
+Best Time to Buy and Sell Stock ii
+不算dp 只要差值大于0 就可以累加
+int res = 0;
+for(int i=1; i<prices.length; i++) {
+    int diff = prices[i]-prices[i-1];
+    if(diff>0)
+        res += diff;
+}
+O(n) O(1)
+
+
+
+
+Best Time to Buy and Sell Stock iii
+难题 二维dp
+递推式 int diff = prices[i]-prices[i-1]
+    local[i][j] = Math.max(global[i-1][j-1]+Math.max(diff, 0), local[i-1][j]+diff)
+    global[i][j] = Math.max(local[i][j], global[i-1][j])
+for(int i=1; i<prices.length; i++) {
+    int diff = prices[i]-prices[i];
+    for(int j=2; j>=1; j--) {
+        local[j] = Math.max(global[j-1]+Math.max(diff, 0), local[j]+diff);
+        global[j] = Math.max(global[j], local[j]);
+    }
+}
+return global[2];
+
+O(n), O(1)
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
 Best Time to Buy and Sell Stock iv
 if(k>prices.length)
-	return maxProfit2(prices);
+    return maxProfit2(prices);
 int local[] = new int[k+1];
 int global[] = new int[k+1];
 for(int i=1; i<prices.length; i++) {
-	int diff = prices[i]-prices[i-1];
-	for(int j=k; j>=1; j++) {
-		local[j] = Math.max(global[j-1]+Math.max(diff, 0), local[j]+diff);
-		global[j] = Math.max(global[j], local[j]);
-	}
+    int diff = prices[i]-prices[i-1];
+    for(int j=k; j>=1; j++) {
+        local[j] = Math.max(global[j-1]+Math.max(diff, 0), local[j]+diff);
+        global[j] = Math.max(global[j], local[j]);
+    }
 }
 return global[k];
 
 O(n*k), O(n)
->>>>>>> b8f9552bb2258b414b0417ac982a3e4e5ddec5db
+
 
 
 
