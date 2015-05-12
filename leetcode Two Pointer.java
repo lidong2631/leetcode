@@ -302,7 +302,7 @@ for(int i=0; i<T.length(); i++) {
     if(map.containsKey(T.charAt(i)))
         map.put(T.charAt(i), map.get(T.charAt(i))+1);
     else
-        map.put(T.charAt(i), 1);
+       map.put(T.charAt(i), 1);
 }
 for(int i=0; i<S.length(); i++) {
     if(map.containsKey(S.charAt(i)))

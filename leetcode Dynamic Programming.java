@@ -289,7 +289,76 @@ O(n) O(1)
 
 
 
+Longest Valid Parentheses
+好像跟dp没太大关系
+用剩余栈的栈顶元素位置信息作为当前合法数据的判断依据
+Stack<Integer>　stack = new Stack<Integer>();
+int start = 0, maxLen = 0;
+for(int i=0; i<s.length(); i++) {
+    if(s.charAt(i)=='(')
+        stack.push(i);
+    else {
+        if(stack.empty())
+            start = i+1;
+        else {
+            stack.pop();
+            if(stack.empty())
+                maxLen = Math.max(maxLen, i-start+1);
+            else
+                maxLen = Math.max(maxLen, i-stack.peek());
+        }
+    }
+}
+
+O(n) O(n)
+
+
+
+
+
+House Robber
+一维dp 递推式为maxRob[i+1] = Math.max(maxRob[i], maxRob[i-1]+num[i]) 
+即取上一次rob的最大利润和上上次rob的最大利润+当前的钱数的最大值
+if(num==null || num.length==0)
+    return 0;
+int[] maxRob = new int[2];
+maxRob[1] = num[0];
+for(int i=1; i<num.length; i++) {
+    int tmp = maxRob[1];
+    maxRob[1] = Math.max(maxRob[1], maxRob[0]+num[i]);
+    maxRob[0] = tmp;
+}
+return maxRob[1];
+
+O(n) O(1)
+
+
+
+
+
+Dungeon Game
+思路类似于unique path 只是变成从右下走到左上
+递推式为res[i][j] = Math.min(Math.max(res[i][j+1]-dungeon[i][j], 1), Math.max(res[i+1][j]-dungeon[i][j], 1))
+int[] res = new int[n+1];
+res[n] = 1;
+for(int i=n-1; i>=0; i--)
+    res[i] = Math.max(res[i+1]-dungeon[dungeon.length-1][j], 1);
+
+for(int i=dungeon.length-2; i>=0; i--) {
+    for(int j=dungeon[0].length-1; j>=0; j--) {
+        res[j] = Math.min(Math.max(res[j]-dungeon[i][j], 1), Math.max(res[j+1]-dungeon[i][j], 1));
+    }
+}
+return res[0];
+
+O(m*n), O(n)
+
+
+
+
+
 Distinct Subsequences
+还是一维dp套路
 if(S.length()==0)
     return 0;
 if(T.length()==0)
@@ -344,6 +413,7 @@ O(n) O(1)
 
 
 Climbing Stairs
+一维dp 实质是Fibonacci Subsequences
 if(n<=0)
     return 0;
 if(n==1)
@@ -412,6 +482,7 @@ O(n), O(1)
 
 
 Best Time to Buy and Sell Stock iv
+ii iii的合体
 if(k>prices.length)
     return maxProfit2(prices);
 int local[] = new int[k+1];

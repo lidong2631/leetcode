@@ -1,38 +1,34 @@
 public class Solution {
     public static void main(String[] args) {
         Solution s = new Solution();
-        ListNode p1 = new ListNode(2);
-        ListNode p2 = new ListNode(1);
-        p1.next = p2;
-        p2.next = null;
-        ListNode p = s.partition(p1, 2);
-        // while(p!=null)
-            // System.out.println(p.val);
+        int[][] dungeon = {{0,0,0}, {-1,0,0}, {2,0,-2}};
+        System.out.println(s.calculateMinimumHP(dungeon));
     }
-    
-    public ListNode partition(ListNode head, int x) {
-        ListNode p1 = new ListNode(0), head1 = p1;
-        ListNode p2 = new ListNode(0), head2 = p2;
-        ListNode p = head;
-        while(p!=null) {
-            if(p.val<x) {
-                p1.next = p;
-                p = p.next;
-                p1 = p1.next;
-            }
-            else {
-                p2.next = p;
-                p = p.next;
-                p2 = p2.next;
-            }
+
+    public int calculateMinimumHP(int[][] dungeon) {
+        int m = dungeon.length;
+        int n = dungeon[0].length;
+        
+        int[] res = new int[n+1];
+        res[n] = 1;
+        for(int i=n-1; i>=0; i--) {
+            res[i] = Math.max(res[i+1]-dungeon[m-1][i], 1);
+            System.out.print(res[i]);
         }
-        System.out.println(p1.val);
-        System.out.println(p2.val);
-        p1.next = head2.next;
-        System.out.println(p1.val);
-        System.out.println(p1.next.val);
-        System.out.println(p1.next.next.val);
-        System.out.println(p1.next.next.next.val);
-        return head1.next;
+        System.out.println();
+        for(int i=m-2; i>=0; i--) {
+            for(int j=n-1; j>=0; j--) {
+                if(j==n-1) {
+                    res[j] = Math.max(res[j]-dungeon[i][j], 1);
+                    System.out.print(res[j]);
+                }
+                else {
+                    res[j] = Math.min(Math.max(res[j]-dungeon[i][j], 1), Math.max(res[j+1]-dungeon[i][j], 1));
+                    System.out.print(res[j]);
+                }
+            }
+            System.out.println();
+        }
+        return res[0];
     }
 }
