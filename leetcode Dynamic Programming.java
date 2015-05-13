@@ -170,6 +170,37 @@ O(n^4) O(n^3)
 
 
 
+Wildcard Matching
+(1)p[j]不是'*' 只要判断如果当前s的i和p的j上的字符一样（如果有p在j上的字符是'?'，也是相同），并且res[i]==true，则更新res[i+1]为true，否则res[i+1]=false;  
+(2)p[j]是'*'。因为'*'可以匹配任意字符串，所以在前面的res[i]只要有true，那么剩下的res[i+1], res[i+2],...,res[s.length()]就都是true了。
+
+if(p.length()==0)
+    return s.length()==0;
+boolean[] res = new booleanp[s.length()+1];
+res[0] = true;
+for(int j=0; j<p.length(); j++) {
+    for(int i=s.length()-1; i>=0; i--) {
+        if(p.charAt(j)=='*') {
+            res[i+1] = res[i] && (p.charAt(j)==s.charAt(i) || p.charAt(j)=='?');
+        }
+        else {
+            int i=0;
+            while(i<=s.length() && !res[i])
+                i++;
+            while(i<=s.length()) {
+                res[i] = true;
+            }
+        }
+    }
+    res[0] = res[0] && (p.charAt(j)=='*');
+}
+
+O(m*n) O(n)
+
+
+
+
+
 Palindrome Partitioning
 Longest Palindrome + Word Break ii 先用Longest Palindrome套路建立字典 然后用word break ii方法保存所有结果
 
@@ -289,8 +320,55 @@ O(n) O(1)
 
 
 
-Maximal Rectangle
+Largest Rectangle in Histogram
+利用栈顶元素来记录位置信息 同类型的题目有longest valid Parentheses
+if(height==null || height.length==0)
+    return 0;
+Stack<Integer> stack = new Stack<Integer>();
+int i = 0, maxArea = 0;
+while(i<height.length) {
+    if(stack.empty() || height[i]>height[stack.peek()])
+        stack.push(i);
+    else {
+        int index = stack.pop();
+        int width = stack.empty()?i:i-stack.peek()-1;
+        int currArea = width*height[index];
+        maxArea = Math.max(maxArea, currArea);
+        i--;
+    }
+    i++;
+}
+while(!stack.empty()) {
+    int index = stack.pop();
+    int width = stack.empty()?i:i-stack.peek()-1;
+    int currArea = width*height[index];
+    maxArea = Math.max(maxArea, currArea);
+}
+return maxArea;
 
+O(n) O(n)
+
+
+
+
+
+Maximal Rectangle
+用到了上一题largest Rectangle in Histogram做subroutine计算每一次的最大面积 在每一行计算高度时用到了dp的思想
+int[] height = new int[matrix[0].length];
+int maxArea = 0;
+for(int i=0; i<matrix.length; i++) {
+    for(int j=0; j<matrix[0].length; j++) {
+        height[j] = matrix[i][j]=='0'?0:height[j]+1;
+    }
+    maxArea = Math.max(maxArea, largestRect(height));
+}
+return maxArea;
+
+private int largestRect(int[] height) {
+
+}
+
+O(m*n) O(n)
 
 
 
