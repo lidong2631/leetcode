@@ -69,17 +69,17 @@ public class Solution {
         String minWord = word1.length()>word2.length()?word2:word1;
         String maxWord = word1.length()>word2.length()?word1:word2;
         int[] res = new int[minWord.length()+1];
-        for(int i=0; i<minWord.length(); i++) {
+        for(int i=0; i<minWord.length(); i++) { //跟空字符串比较
             res[i] = i;
         }
         for(int i=0; i<maxWord.length(); i++) {
             int[] tmp = new int[minWord.length()+1];
-            tmp[0] = i+1;
+            tmp[0] = i+1;       //初始化tmp 意思为空字符串跟有i＋1个字符的序列需要i＋1次编辑
             for(int j=0; j<minWord.length(); j++) {
                 if(minWord.charAt(j)==maxWord.charAt(i))
                     tmp[j+1] = res[j];
                 else {
-                    tmp[j+1] = Math.min(res[j], Math.min(tmp[j], res[j+1]))+1;  //三种情况
+                    tmp[j+1] = Math.min(res[j], Math.min(tmp[j], res[j+1]))+1;  //三种情况 res[j]->res[i-1][j-1] tmp[j]->res[i][j-1]
                 }
             }
             res = tmp;
@@ -87,6 +87,8 @@ public class Solution {
         return res[minWord.length()];
     }
 }
+
+res[i][j] = min(res[i-1][j], res[i][j-1], res[i-1][j-1])+1
 
 code ganker版 二维降一维 看评论 O(m*n) O(min(m, n))
 

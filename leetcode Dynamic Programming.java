@@ -289,6 +289,13 @@ O(n) O(1)
 
 
 
+Maximal Rectangle
+
+
+
+
+
+
 Longest Valid Parentheses
 好像跟dp没太大关系
 用剩余栈的栈顶元素位置信息作为当前合法数据的判断依据
@@ -311,6 +318,62 @@ for(int i=0; i<s.length(); i++) {
 }
 
 O(n) O(n)
+
+
+
+
+Interleaving Strings
+二维dp 递推式为res[i][j] = res[i-1][j]&&s1.charAt(i-1)==s3.charAt(i+j-1) || res[i][j-1]&&s2.charAt(j-1)==s3.charAt(i+j-1)
+
+if(s1.length()+s2.length()!=s3.length())
+    return false;
+String minWord = s1.length()>s2.length()?s2:s1;
+String maxWord = s1.length()>s2.length()?s1:s2;
+boolean[] res = new boolean[minWord.length()+1];
+res[0] = true;
+for(int i=0; i<minWord.length(); i++)
+    res[i+1] = res[i]&&minWord.charAt(i)==s3.charAt(i);
+for(int i=0; i<maxWord.length(); i++) {
+    res[0] = res[0]&&maxWord.charAt(i)==s3.charAt(i);
+    for(int j=0; j<minWord.length(); j++) {
+        res[j+1] = res[j]&&minWord.charAt(j)==s3.charAt(i+j+1) || res[j+1]&&maxWord.charAt(i)==s3.charAt(i+j+1);
+    }
+}
+return res[minWord.length()];
+
+O(m*n) O(min(m,n))
+
+
+
+
+
+Edit Distance
+二维dp 递推式
+如果i j字符相同 则res[i][j] = res[i-1][j-1]
+否则 res[i][j] = Math.min(res[i-1][j-1]+1(i,j字符相等) + Math.min(res[i-1][j]+1, res[i][j-1]+1))
+if(s1.length()==0)
+    return s2.length();
+if(s2.length()==0)
+    return s1.length();
+String maxWord = s1.length()>s2.length()?s1:s2;
+String minWord = s1.length()>s2.length()?s2:s1;
+for(int i=0; i<minWord.length(); i++)
+    res[i] = i;
+for(int i=0; i<maxWord.length(); i++) {
+    int[] tmp = new int[minWord.length()+1];
+    tmp[0] = i+1;
+    for(int j=0; j<minWord.length(); j++) {
+        if(maxWord.charAt(i)==minWord.charAt(j))
+            tmp[j+1] = res[j];
+        else
+            tmp[j+1] = Math.min(res[j], Math.min(res[j+1], tmp[j]))+1;
+    }
+    res = tmp;
+}
+return res[minWord.length()];
+
+O(m*n) O(min(m,n))
+
 
 
 
