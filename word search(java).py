@@ -48,136 +48,43 @@ Note: 典型的递归题 像这种棋盘式题目 大都用两层循环遍历所
 
 
 
-
-
-
-
-
-
-题意：
-
-Given a 2D board and a word, find if the word exists in the grid.
-
-The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
-
-For example,
-Given board =
-
-[
-  ["ABCE"],
-  ["SFCS"],
-  ["ADEE"]
-]
-word = "ABCCED", -> returns true,
-word = "SEE", -> returns true,
-word = "ABCB", -> returns false.
-
-解题思路：使用dfs来搜索，为了避免已经用到的字母被重复搜索，将已经用到的字母临时替换为'#'就可以了。不知道用bfs可行否。
-
-代码：
-
-
-class Solution:
-    # @param board, a list of lists of 1 length string
-    # @param word, a string
-    # @return a boolean
-    def exist(self, board, word):
-        def dfs(x, y, word):
-            if len(word)==0: return True
-            #up
-            if x>0 and board[x-1][y]==word[0]:
-                tmp=board[x][y]; board[x][y]='#'
-                if dfs(x-1,y,word[1:]):
-                    return True
-                board[x][y]=tmp
-            #down
-            if x<len(board)-1 and board[x+1][y]==word[0]:
-                tmp=board[x][y]; board[x][y]='#'
-                if dfs(x+1,y,word[1:]):
-                    return True
-                board[x][y]=tmp
-            #left
-            if y>0 and board[x][y-1]==word[0]:
-                tmp=board[x][y]; board[x][y]='#'
-                if dfs(x,y-1,word[1:]):
-                    return True
-                board[x][y]=tmp
-            #right
-            if y<len(board[0])-1 and board[x][y+1]==word[0]:
-                tmp=board[x][y]; board[x][y]='#'
-                if dfs(x,y+1,word[1:]):
-                    return True
-                board[x][y]=tmp
-            return False
-                
-        for i in range(len(board)):
-            for j in range(len(board[0])):
-                if board[i][j]==word[0]:
-                    if(dfs(i,j,word[1:])):
-                        return True
-        return False
-
-
-
-
 public class Solution {
     public boolean exist(char[][] board, String word) {
         if(word==null || word.length()==0)
             return true;
-        if(board.length==0 || board[0].length==0 || board==null)
+        if(board==null || board.length==0 || board[0].length==0)
             return false;
-        for(int i=0; i<board.length; i++)
-        {
-            for(int j=0; j<board[0].length; j++)
-            {
-                if(board[i][j]==word.charAt(0))
-                    if(dfs(i, j, board, word.substring(1)))
-                        return true;
+        boolean[][] used = new boolean[board.length][board[0].length];
+        for(int i=0; i<board.length; i++) {
+            for(int j=0; j<board[0].length; j++) {
+                if(search(board, 0, i, j, used, word))
+                    return true;
             }
         }
         return false;
     }
     
-    private boolean dfs(int row, int col, char[][] board, String word) {
-        if(word.length()==0)
+    private boolean search(char[][] board, int index, int i, int j, boolean[][] used, String word) {
+        if(index==word.length())
             return true;
-        if(row>0 && board[row-1][col]==word.charAt(0))
-        {
-            char tmp = board[row][col];
-            board[row][col] = '#';
-            if(dfs(row-1, col, board, word.substring(1)))
-                return true;
-            board[row][col] = tmp;
-        }
-        if(col>0 && board[row][col-1]==word.charAt(0))
-        {
-            char tmp = board[row][col];
-            board[row][col] = '#';
-            if(dfs(row, col-1, board, word.substring(1)))
-                return true;
-            board[row][col] = tmp;
-        }
-        if(row<board.length-1 && board[row+1][col]==word.charAt(0))
-        {
-            char tmp = board[row][col];
-            board[row][col] = '#';
-            if(dfs(row+1, col, board, word.substring(1)))
-                return true;
-            board[row][col] = tmp;
-        }
-        if(col<board[0].length-1 && board[row][col+1]==word.charAt(0))
-        {
-            char tmp = board[row][col];
-            board[row][col] = '#';
-            if(dfs(row, col+1, board, word.substring(1)))
-                return true;
-            board[row][col] = tmp;
-        }
-        return false;
+        if(i<0 || j<0 || i>=board.length || j>=board[0].length || used[i][j] || word.charAt(index)!=board[i][j])
+            return false;
+        used[i][j] = true;
+        boolean res = (search(board, index+1, i+1, j, used, word)
+                        || search(board, index+1, i-1, j, used, word)
+                        || search(board, index+1, i, j+1, used, word)
+                        || search(board, index+1, i, j-1, used, word));
+        used[i][j] = false;
+        return res;
     }
 }
 
-Note: 这题两种解法都差不多 只是时间复杂度有些想不明白 要多想想 看似是np问题 其实不是
+O（m^2*n^2)
+
+递归题 类似于dfs 但复杂度比dfs高 因为访问过的节点还会再被访问 最坏复杂度为O(m*n*4^(len(word))) 意思是一共m*n个点 每个点要走4个方向
+
+每个方向最多可能递归len(word)次 看code ganker评论
+
 
 
 
