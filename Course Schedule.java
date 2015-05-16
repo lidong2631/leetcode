@@ -37,3 +37,5 @@ public class Solution {
         return false;
     }
 }
+
+问题的本质是detect whether a graph has cycle

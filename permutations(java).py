@@ -83,6 +83,36 @@ Note: NP问题套路 记住 这个问题的迭代解法下次再看也不难 见
 
 
 
+public class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if(nums==null || nums.length==0)
+            return res;
+        List<Integer> first = new ArrayList<Integer>();
+        first.add(nums[0]);
+        res.add(first);
+        for(int i=1; i<nums.length; i++) {
+            List<List<Integer>> curRes = new ArrayList<List<Integer>>();
+            for(int j=0; j<res.size(); j++) {
+                List<Integer> item = new ArrayList<Integer>(res.get(j));
+                for(int k=0; k<item.size()+1; k++) {
+                    List<Integer> tmp = new ArrayList<Integer>(item);
+                    tmp.add(k, nums[i]);
+                    curRes.add(tmp);
+                }
+            }
+            res = curRes;
+        }
+        return res;
+    }
+}
+
+非递归解 假设有了当前前i个元素的所有permutation，当第i+1个元素加进来时，我们要做的就是将这个元素带入每一个之前的结果，并且放到每一个结果的各个位置中。
+
+因为之前的结果没有重复，所以带入新元素之后也不会有重复
+
+
+
 
 from code ganker:
 

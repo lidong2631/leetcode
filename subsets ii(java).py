@@ -165,7 +165,7 @@ public class Solution {
                 tmp.add(num[i]);
                 res.add(tmp);
             }
-            if(i<num.length-1 && num[i]==num[i+1])
+            if(i<num.length-1 && num[i]==num[i+1])  //这里不可以写i>0 && nums[i]==nums[i-1]想一下就知道了要跟后面的比较 不能跟前面的比较
             {
                 start = size;
             }
