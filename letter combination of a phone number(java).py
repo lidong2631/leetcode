@@ -90,7 +90,7 @@ public class Solution {
         List<String> res = new ArrayList<String>();
         if(digits==null || digits.length()==0)
             return res;
-        res.add("");
+        res.add("");            //要先加一个空元素才能循环
         for(int i=0; i<digits.length(); i++) {
             String curr = map.get(digits.charAt(i));
             List<String> tmp = new ArrayList<String>();

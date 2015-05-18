@@ -307,26 +307,337 @@ return res;
 
 
 
+Permutation ii
+只对第一个未被使用的递归 如果第一个重复元素前面的元素没被访问过就跳过递归
+List<List<Integer>> res = new ArrayList<List<Integer>>();
+if(nums==null || nums.length==0)
+	return res;
+Arrays.sort(nums);
+helper(nums, new boolean[nums.length], new ArrayList<Integer>(), res);
+return res;
+
+private helper(int[] nums, boolean[] used, List<Integer> item, List<List<Integer>> res) {
+	if(item.size()>nums.length) {
+		res.add(new ArrayList<Integer>(item));
+		return;
+	}
+	for(int i=0; i<nums.length; i++) {
+		if(i>0 && !used[i-1] && nums[i]==nums[i-1])
+			continue;
+		if(!used[i]) {
+			used[i] = true;
+			item.add(nums[i]);
+			helper(nums, used, item, res);
+			used[i] = false;
+			item.remove(item.size()-1);
+		}
+	}
+}
 
 
 
 
 
+Permutation Sequence
+if(n<=0)
+	return "";
+k--;
+int fac = 1;
+for(int i=2; i<n; i++)
+	fac*=i;
+StringBuilder res = new StringBuilder();
+List<Integer> item = new ArrayList<Integer>();
+for(int i=1; i<=n; i++)
+	item.add(i);
+int round = n-1;
+while(round>=0) {
+	int index = k/fac;
+	k%=fac;
+	res.append(item.get(index));
+	item.remove(index);
+	if(round>0)
+		fac/=round;
+	round--;
+}
+return res.toString();
+
+O(n^2) O(n)
 
 
 
 
 
+Palindrome Partitioning
+word break ii + getDict()
+List<List<String>> res = new ArrayList<List<String>>();
+if(s==null || s.length()==0)
+	return res;
+helper(s, getDict(s), 0, new ArrayList<String>(), res);
+return res;
+
+private void helper(String s, boolean[][] dict, int start, List<String> item, List<List<String>> res) {
+    if(start==s.length()) {
+        res.add(new ArrayList<String>(item));
+        return;
+    }
+    for(int i=start; i<s.length(); i++) {
+        if(dict[start][i]) {
+            item.add(s.substring(start, i+1));
+            helper(s, dict, i+1, item, res);
+            item.remove(item.size()-1);
+        }
+    }
+}
+
+private boolean[][] getDict(String s) {
+    boolean[][] res = new boolean[s.length()][s.length()];
+    for(int i=s.length()-1; i>=0; i--) {
+        for(int j=i; j<s.length(); j++) {
+            if(s.charAt(i)==s.charAt(j) && (j-i<2 || res[i+1][j-1]))
+                res[i][j] = true;
+        }
+    }
+    return res;
+}
+
+指数级复杂度
 
 
 
 
 
+N Queens
+经典np问题 循环＋递归 一行一行扫 每一行一列列试 如果合法就递归 一样的套路
+List<String[]> res = new ArrayList<String[]>();
+helper(0, n, new int[n], res);
+return res;
+
+private void helper(int row, int n, int[] colForRow, List<String[]> res) {
+	if(row==n) {
+		String[] item = new String[n];
+		for(int i=0; i<n; i++) {
+			StringBuilder sb = new StringBuilder();
+			for(int j=0; j<n; j++) {
+				if(colForRow[i]==j)
+					sb.append('Q');
+				else
+					sb.append('.');
+			}
+			item[i] = sb.toString();
+		}
+		res.add(item);
+	}
+	for(int i=0; i<n; i++) {
+		colForRow[row] = i;
+		if(isValid(row, colForRow)) {
+			helper(row+1, n, colForRow, res);
+		}
+	}
+}
+
+private boolean isValid(int row, int[] colForRow) {
+	for(int i=0; i<row; i++) {
+		if(colForRow[i]==colForRow[row] || Math.abs(colForRow[i]-colForRow[row])==Math.abs(i-row))
+			return false;
+	}
+	return true;
+}
+
+指数级复杂度
 
 
 
 
 
+N Queens ii
+套路跟上一题完全一样 只是找到一个结果时是累加数量而不保存整个结果 复杂度还是一样
+List<Integer> res = new ArrayList<Integer>();
+res.add(0);
+helper(0, n, new int[n], res);
+return res.get(0);
+
+private void helper(int row, int n, int[] colForRow, List<Integer> res) {
+	if(row==n) {
+		res.set(0, res.get(0)+1);
+		return;
+	}
+	for(int i=0; i<n; i++) {
+		colForRow[row] = i;
+		if(isValid(row, colForRow)) {
+			helper(row+1, n, colForRow, res);
+		}
+	}
+}
+
+private boolean isValid(int row, int[] colForRow) {
+	for(int i=0; i<row; i++) {
+		if(colForRow[i]==colForRow[row] || Math.abs(colForRow[i]-colForRow[row])==Math.abs(i-row))
+			return false;
+	}
+	return true;
+}
+
+
+
+
+
+Letter Combination of a Phone Number
+1 非递归
+List<String> res = new ArrayList<String>();
+if(digits==null || digits.length()==0)
+	return res;
+res.add("");
+for(int i=0; i<digits.length(); i++) {
+	List<String> tmp = new ArrayList<String>();	//每次新建一个list
+	String digit = map.get(digits.charAt(i));	//新的选择字符
+	for(int j=0; j<res.size(); j++) {
+		for(int k=0; k<digit.length(); k++) {
+			tmp.add(res.get(j)+Character.toString(digit.charAt(k)));
+		}
+	}
+	res = tmp;
+}
+return res;
+
+private Map<Character, String> map = new HashMap<Character, String>() {{
+	put('2', "abc");
+    put('3', "def");
+    put('4', "ghi");
+    put('5', "jkl");
+    put('6', "mno");
+    put('7', "pqrs");
+    put('8', "tuv");
+    put('9', "wxyz");
+    put('0', " ");
+}};
+
+2 递归
+List<String> res = new ArrayList<String>();
+if(digits==null || digits.length()==0)
+	return res;
+helper(digits, 0, "", res);
+return res;
+
+private void helper(String digits, int index, String item, List<String> res) {
+	if(index==digits.length()) {
+		res.add(item);
+		return;
+	}
+	String curr = map.get(digits.charAt(index));
+	for(int i=0; i<curr.length(); i++)
+		helper(digits, index+1, item+Character.toString(curr.charAt(i)), res);
+}
+
+O(k^n) O(k^n)
+
+
+
+
+
+Generate Parentheses
+模型是catalan number
+List<String> res = new ArrayList<String>();
+if(n<=0)
+	return res;
+helper(n, n, "", res);
+return res;
+
+private void helper(int left, int right, String item, List<String> res) {
+	if(right<left)
+		return;
+	if(left==0 && right==0) {
+		res.add(item);
+		return;
+	}
+	if(left>0)
+		helper(left-1, right, item+"(", res);
+	if(right>0)
+		helper(left, right-1, item+")", res);
+}
+
+
+
+
+
+Combinations
+求组合 元素只要到了k个就可以返回一个结果 实现的代码跟Combination Sum非常类似而且更加简练，因为不用考虑重复元素的情况
+List<List<Integer>> res = new ArrayList<List<Integer>>();
+if(n<=0 || k<=0)
+	return res;
+helper(n, k, 1, new ArrayList<Integer>(), res);
+return res;
+
+private void helper(int n, int k, int start, List<Integer> item, List<List<Integer>> res) {
+	if(item.size()==k) {
+		res.add(new ArrayList<Integer>(item));
+		return;
+	}
+	for(int i=1; i<=n; i++) {
+		item.add(i);
+		helper(n, k, i+1, item, res);
+		item.remove(item.size()-1);
+	}
+}
+
+O(n!/k!)
+
+
+
+
+
+Combination Sum
+for循环中第一步有一个判断 为了去除重复元素产生重复结果的影响 这里每个数可以重复使用 所以重复的元素也就没有作用了 应该跳过那层递归
+List<List<Integer>> res = new ArrayList<List<Integer>>();
+if(candidates==null || candidates.length==0)
+    return res;
+Arrays.sort(candidates);
+helper(candidates, 0, target, new ArrayList<Integer>(), res);
+return res;
+
+private void helper(int[] candidates, int index, int target, List<Integer> item, List<List<Integer>> res) {
+    if(target<0)
+        return;
+    if(target==0) {
+        res.add(new ArrayList<Integer>(item));
+        return;
+    }
+    for(int i=index; i<candidates.length; i++) {
+        if(i>0 && candidates[i]==candidates[i-1])
+            continue;
+        item.add(candidates[i]);
+        helper(candidates, i, target-candidates[i], item, res);
+        item.remove(item.size()-1);
+    }
+}
+
+
+
+
+
+Combination Sum ii
+只对于第一次得到这个数进行递归，接下来就跳过这个元素了，因为接下来的情况会在上一层的递归函数被考虑到 ex 1 1 2
+List<List<Integer>> res = new ArrayList<List<Integer>>();
+if(num==null || num.length==0)
+    return res;
+Arrays.sort(num);
+helper(num, 0, target, new ArrayList<Integer>(), res);
+return res;
+
+private void helper(int[] num, int start, int target, List<Integer> item, List<List<Integer>> res) {
+    if(target==0) {
+        res.add(new ArrayList<Integer>(item));
+        return;
+    }
+    if(target<0 || start>=num.length)
+        return;
+    for(int i=start; i<num.length; i++) {
+        if(i>start && num[i]==num[i-1])
+            continue;
+        item.add(num[i]);
+        helper(num, i+1, target-num[i], item, res);
+        item.remove(item.size()-1);
+    }
+}
 
 
 

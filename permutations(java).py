@@ -81,6 +81,8 @@ public class Solution {
 
 Note: NP问题套路 记住 这个问题的迭代解法下次再看也不难 见code ganker解法二
 
+看code ganker评论 有一个扩展 相邻原素不能重复比如5665不行，但是5656可以 那应该就是判断和上个元素的关系
+
 
 
 public class Solution {
