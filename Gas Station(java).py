@@ -81,6 +81,23 @@ class Solution:
 
 
 
+public class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        for(int i=0; i<gas.length; i++) {
+            int vol = 0;
+            for(int j=i; j<gas.length+i; j++) {
+                vol = vol+gas[j%gas.length]-cost[j%gas.length];
+                if(vol<0)
+                    break;
+            }
+            if(vol>=0)
+                return i;
+        }
+        return -1;
+    }
+}
+
+brute force解 已每个油站为起点都走一遍看是否可以完成 O(n^2) 会超时
 
 
 
