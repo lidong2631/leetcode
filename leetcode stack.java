@@ -158,13 +158,166 @@ while(!stack.isEmpty()) {
 }
 return maxArea;
 
+O(n) O(n)
+
 
 
 
 
 Maximal Rectangle
+if(matrix==null || matrix.length==0 || matrix[0].length==0)
+    return 0;
+int maxArea = 0;
+int[] height = new int[matrix[0].length];
+for(int i=0; i<matrix.length; i++) {
+    for(int j=0; j<matrix[0].length; j++) {
+        height[j] = matrix[i][j]=='0'?0:height[j]+1;
+    }
+    maxArea = Math.max(maxArea, largestRect(height));
+}
+return maxArea;
+
+private int largestRect(int[] height) {
+    if(height==null || height.length==0)
+        return 0;
+    Stack<Integer> stack = new Stack<Integer>();
+    int i = 0, maxArea = 0;
+    for(; i<height.length; i++) {
+        if(stack.empty() || height[stack.peek()]<height[i])
+            stack.push(i);
+        else {
+            int index = stack.pop();
+            int width = stack.empty()?i:i-stack.peek()-1;
+            maxArea = Math.max(maxArea, width*height[index]);
+            i--;
+        }
+    }
+    while(!stack.empty()) {
+        int index = stack.pop();
+        int width = stack.empty()?i:i-stack.peek()-1;
+        maxArea = Math.max(maxArea, width*height[index]);
+    }
+    return maxArea;
+}
+
+O(m*n) O(n)
+
 
 
 
 
 Evaluate Reverse Polish Notation
+从左往右扫 碰到数压栈 碰到运算符出栈计算并将结果压栈 对于波兰式思路类似 只是从右往左扫
+if(tokens==null || tokens.length==0)
+    return 0;
+Stack<Integer> stack = new Stack<Integer>();
+for(int i=0; i<tokens.length; i++) {
+    if(tokens[i].equals("+")) {
+        stack.push(stack.pop()+stack.pop());
+    }
+    else if(tokens[i].equals("-")) {
+        stack.push(-stack.pop()+stack.pop());
+    }
+    else if(tokens[i].equals("*")) {
+        stack.push(stack.pop()*stack.pop());
+    }
+    else if(tokens[i].equals("/")) {
+        int oper1 = stack.pop();
+        int oper2 = stack.pop();
+        stack.push(oper2/oper1);
+    }
+    else {
+        stack.push(Integer.parseInt(tokens[i]));
+    }
+}
+return stack.pop();
+
+O(n) O(n)
+
+
+
+
+
+Binary Tree ZigZag Level Order Traversal
+在level order traversal基础上加了栈的使用 来颠倒顺序 这里是一层层处理的不像level order那样一直往queue里放值 所以有两层循环
+List<List<Integer>> res = new ArrayList<List<Integer>>();
+    if(root==null)
+        return res;
+Stack<TreeNode> curr = new Stack<TreeNode>();
+curr.push(root);
+Stack<TreeNode> next = new Stack<TreeNode>();
+
+List<Integer> item = new ArrayList<Integer>();
+item.add(root.val);
+res.add(item);
+int level = 1;
+while(!curr.empty()) {
+    item = new ArrayList<Integer>();
+    while(!curr.empty()) {
+        TreeNode node = curr.pop();
+        if(level%2==0) {
+            if(node.left!=null) {
+                item.add(node.left.val);
+                next.push(node.left);
+            }
+            if(node.right!=null) {
+                item.add(node.right.val);
+                next.push(node.right);
+            }
+        }
+        else {
+            if(node.right!=null) {
+                item.add(node.right.val);
+                next.push(node.right);
+            }
+            if(node.left!=null) {
+                item.add(node.left.val);
+                next.push(node.left);
+            }
+        }
+    }
+    curr = next;
+    next = new Stack<TreeNode>();
+    level++;
+    if(item.size()>0)
+        res.add(item);
+}
+
+O(n) O(n)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

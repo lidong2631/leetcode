@@ -35,22 +35,6 @@ leetcode-Evaluate Reverse Polish Notation这题就是这种情况，如果用pyt
 
 
 
-
-
-
-
-
-from code ganker:
-
-思路：
-
-1 用LinkedList实现一个栈
-
-2 循环遍历一遍tokens 如果等于运算符就pop出两个元素 做运算 再将结果push回stack 如果是数字就直接push
-
-3 最后pop 返回结果
-
-
 public class Solution {
     public int evalRPN(String[] tokens) {
         if(tokens == null || tokens.length == 0)
@@ -83,11 +67,15 @@ public class Solution {
     }
 }
 
-Note:这题解法跟python版一样 可以扩展为波兰式求解，中缀表达式求解 可以看看
+以上代码中有一个没有周全的地方是没有对逆波兰式错误的情况进行出错处理，其实也不难，就是每次pop操作检查栈空情况，如果栈空，则说明出错。还有就是最后检查一下栈的size，
 
-逆波兰式错误的情况进行出错处理，其实也不难，就是每次pop操作检查栈空情况，如果栈空(isEmpty())，则说明出错。还有就是最后检查一下栈的size，
+如果不是1也说明运算数多了，返回错误
 
-如果不是1也说明运算数多了，返回错误。
+对于波兰式 思路是类似的 只是从右往左扫一遍 碰到数字压栈 碰到操作符pop出两个操作数运算出结果进栈
+
+
+
+
 
 另这题碰到一个问题就是java中char跟string的区别
 
@@ -96,9 +84,6 @@ char is one character. String is zero or more characters.
 char is a primitive type. String is a class.
 
 顺便看java LinkedList
-
-T:O(n) S:O(n)
-
 
 
 
