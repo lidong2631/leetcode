@@ -152,3 +152,104 @@ for(int i=0; i<num.length; i++) {
 	prev = bucketMax[i];
 }
 return maxGap;
+
+
+
+
+
+Largest Number
+有点怪的排序 通过比较两个数转成字符串值大小来排序 
+if(num==null || num.length==0)
+    return null;
+List<Integer> res = new ArrayList<Integer>();
+for(int i=0; i<num.length; i++)
+    res.add(num[i]);
+Collections.sort(res, new Comparator<Integer>() {
+    public int compare(Integer i1, Integer i2) {
+        String s1 = i1 + i2;
+        String s2 = i2 + i1;
+        return s2.compareTo(s1);
+    }
+});
+StringBuilder sb = new StringBuilder();
+for(int i=0; i<res.size(); i++)
+    sb.append(res.get(i));
+if(sb.charAt(0)=='0')
+    return "0";
+return sb.toString();
+
+O(logn) O(n)
+
+
+
+
+
+Insertion Sort
+插入排序链表版
+if(head==null)
+    return null;
+ListNode dummy = new ListNode(0);
+dummy.next = head;
+ListNode curr = head;
+while(curr.next!=null) {
+    if(curr.val>curr.next.val) {
+        ListNode prev = dummy;
+        while(prev.next.val<curr.next.val)
+            prev = prev.next;
+        ListNode tmp = curr.next;
+        curr.next = curr.next.next;
+        tmp.next = prev.next;
+        prev.next = tmp;
+    }
+    else
+        curr = curr.next;
+}
+return dummy.next;
+
+O(n^2) O(1)
+
+
+
+
+
+Insert Interval
+先找到newInterval插入的位置 合并start并插入 然后往后一个个扫 只要在newInterval end范围内就并入newInterval并删除原始的interval
+if(intervals==null || intervals.size()==0) {
+    List<Interval> res = new LinkedList<Interval>();
+    res.add(newInterval);
+    return res;
+}
+int i=0;
+while(i<intervals.size() && newInterval.start>intervals.get(i).end)
+    i++;
+if(i<intervals.size())
+    newInterval.start = Math.min(intervals.get(i).start, newInterval.start);
+intervals.add(i, newInterval);
+i++;
+while(i<intervals.size() && newInterval.end>=intervals.get(i).start) {
+    newInterval.end = Math.max(intervals.get(i).end, newInterval.end);
+    intervals.remove(i);
+}
+return intervals;  
+
+O(n) O(1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
