@@ -1,3 +1,5 @@
+http://algorithm.yuanbin.me/binary_search/find_peak_element.html
+
 public class Solution {
     public int findPeakElement(int[] num) {
         int left = 0, right = num.length-1;

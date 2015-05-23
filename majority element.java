@@ -1,22 +1,44 @@
 public class Solution {
     public int majorityElement(int[] num) {
-        int curr = 0;
-        int counter = 0;
+        int counter = 0, curr = 0;
         for(int i=0; i<num.length; i++) {
             if(counter==0) {
                 curr = num[i];
                 counter++;
             }
-            else if(num[i]==curr)
+            else if(curr==num[i]) {
                 counter++;
+            }
             else
                 counter--;
         }
+        counter = 0;        //后面只是判断curr是不是majority leetcode假设一定有解 实际应该有这步
+        for(int i=0; i<num.length; i++) {
+            if(num[i]==curr)
+                counter++;
+        }
+        if(counter<=num.length/2)
+            return -1;
         return curr;
     }
 }
 
 Moore voting algorithm 非常好的解法 时间O(n) 空间O(1)
+
+1. Get an element occurring most of the time in the array. This phase will make sure that if there is a majority element 
+then it will return that only.
+
+2. Check if the element obtained from above step is majority element.
+
+The algorithm for first phase that works in O(n) is known as Moore’s Voting Algorithm. Basic idea of the algorithm is if 
+
+we cancel out each occurrence of an element e with all the other elements that are different from e then e will exist till 
+
+end if it is a majority element.
+
+
+
+
 
 See GeeksforGeeks 扩展题http://www.geeksforgeeks.org/majority-element/
  

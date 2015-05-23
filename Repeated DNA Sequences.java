@@ -80,6 +80,8 @@ public class Solution {
     }
 }
 
+Rolling Hash思想 实质是Rabin Karp Algorithm 见RabinKarp.java得实现
+
 时间O(n)  ?空间最坏O(n^2)  这题主要考核位运算 要注意凡是一定范围的字符都可以考虑转换成二进制表示 
 
 这题可以扩展为不止4个字符 k个字符
