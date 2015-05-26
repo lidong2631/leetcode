@@ -1,18 +1,4 @@
-import java.util.*;
-
 public class Solution {
-    public static void main(String[] args) {
-        int[][] buildings = {{2,13,10}, {10,17,25}, {12,20,14}};
-        Solution s = new Solution();
-        List<int[]> res = s.getSkyline(buildings);
-        // int[] end = {buildings[buildings.length-1][1], 0};
-        // res.add(end);
-        for(int i=0; i<res.size(); i++) {
-            System.out.print(res.get(i)[0] + " " + res.get(i)[1]);
-            System.out.println();
-        }
-    }
-
     public List<int[]> getSkyline(int[][] buildings) {
         List<int[]> res = new ArrayList<int[]>();
         if(buildings==null || buildings.length==0 || buildings[0].length==0)
@@ -24,6 +10,8 @@ public class Solution {
                 i--;
             }
         }
+        //int[] end = {buildings[buildings.length-1][1], 0};
+        //res.add(end);
         return res;
     }
     
@@ -32,10 +20,6 @@ public class Solution {
             List<int[]> res = new ArrayList<int[]>();
             res.add(new int[]{buildings[left][0], buildings[left][2]});
             res.add(new int[]{buildings[left][1], 0});
-            for(int i=0; i<res.size(); i++) {
-                System.out.print(res.get(i)[0] + " " + res.get(i)[1]);
-                System.out.println();
-            }
             return res;
         }
         int mid = (left+right)/2;
@@ -77,10 +61,13 @@ public class Solution {
             res.add(new int[]{l2.get(j)[0], l2.get(j)[1]});
             j++;
         }
-        System.out.println("merge");
-        for(int k=0; k<res.size(); k++)
-            System.out.print(res.get(k)[0] + " " + res.get(k)[1] + " ");
-        System.out.println("done merge");
         return res;
     }
 }
+
+类似Merge sort解法 只是这里是二维的 O(nlogn)
+
+http://www.geeksforgeeks.org/divide-and-conquer-set-7-the-skyline-problem/
+
+
+还有一个中解法用heap
