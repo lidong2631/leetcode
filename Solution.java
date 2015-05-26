@@ -1,34 +1,48 @@
 public class Solution {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[][] dungeon = {{0,0,0}, {-1,0,0}, {2,0,-2}};
-        System.out.println(s.calculateMinimumHP(dungeon));
+        String str = s.shortestPalindrome("aacecaaa");
+        System.out.println(str);
     }
 
-    public int calculateMinimumHP(int[][] dungeon) {
-        int m = dungeon.length;
-        int n = dungeon[0].length;
-        
-        int[] res = new int[n+1];
-        res[n] = 1;
-        for(int i=n-1; i>=0; i--) {
-            res[i] = Math.max(res[i+1]-dungeon[m-1][i], 1);
-            System.out.print(res[i]);
+    public String shortestPalindrome(String s) {
+        if(s==null || s.length()==0)
+            return "";
+        return getLongestPalindrome(s);
+    }
+    
+    private String preProcess(String s) {
+        int len = s.length();
+        String str = "^";
+        for(int i=0; i<len; i++) {
+            str+="#"+s.charAt(i);
         }
-        System.out.println();
-        for(int i=m-2; i>=0; i--) {
-            for(int j=n-1; j>=0; j--) {
-                if(j==n-1) {
-                    res[j] = Math.max(res[j]-dungeon[i][j], 1);
-                    System.out.print(res[j]);
-                }
-                else {
-                    res[j] = Math.min(Math.max(res[j]-dungeon[i][j], 1), Math.max(res[j+1]-dungeon[i][j], 1));
-                    System.out.print(res[j]);
-                }
+        str+="#$";
+        return str;
+    }
+    
+    private String getLongestPalindrome(String str) {
+        char[] s = preProcess(str).toCharArray();
+        int N = s.length;
+        int[] p = new int[N+1];
+        int id = 0, mx = 0, maxLen = 0;
+        for(int i=1; i<N-1; i++) {
+            p[i] = mx>i?Math.min(p[2*id-i], mx-i):1;
+            while(s[i+p[i]]==s[i-p[i]])
+                p[i]++;
+            if(i+p[i]>mx) {
+                mx = i + p[i];
+                id = i;
+                if(i==p[i])
+                    maxLen = mx;
             }
-            System.out.println();
         }
-        return res[0];
+        maxLen = maxLen/2-1;
+        StringBuilder res = new StringBuilder();
+        for(int i=str.length()-1; i>=maxLen; i--) {
+            res.append(str.charAt(i));
+        }
+        res.append(str);
+        return res.toString();
     }
 }
