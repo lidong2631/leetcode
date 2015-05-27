@@ -68,6 +68,91 @@ class Solution:
 
 
 
+From cleanCode:
+
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+        if(root==null)
+            return true;
+        return isSubtreeLessThan(root.left, root.val)
+            && isSubtreeGreaterThan(root.right, root.val)
+            && isValidBST(root.left) && isValidBST(root.right);
+    }
+    
+    private boolean isSubtreeLessThan(TreeNode p, int val) {
+        if(p==null)
+            return true;
+        return p.val<val && isSubtreeLessThan(p.left, val) && isSubtreeLessThan(p.right, val);
+    }
+    
+    private boolean isSubtreeGreaterThan(TreeNode p, int val) {
+        if(p==null)
+            return true;
+        return p.val>val && isSubtreeGreaterThan(p.left, val) && isSubtreeGreaterThan(p.right, val);
+    }
+}
+
+暴力法 很没有效率 worst case O(n^2) O(n) stack space
+
+
+Top-down recursion
+public boolean isValidBST(TreeNode root) {
+    return valid(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+}
+
+private boolean valid(TreeNode p, int low, int high) {
+    if(p==null)
+        return true;
+    return p.val>low && p.val<high && valid(p.left, low, p.val) && valid(p.right, p.val, high);
+}
+
+much better top-down recursion O(n) O(n)
+
+The above method wont work if tree contains the smallest or the largest integer value. We could use null value instead
+
+public boolean isValidBST(TreeNode root) {
+    return valid(root, null, null);
+}
+
+private boolean valid(TreeNode p, Integer low, Integer high) {
+    if(p==null)
+        return true;
+    return (low==null || p.val>low) && (high==null || p.val<high)
+        && valid(p.left, low, p.val) && valid(p.right, p.val, high);
+}
+
+
+In-order traversal
+
+private TreeNode prev;
+public boolean isValidBST(TreeNode root) {
+    prev = null;
+    return isMonotonicIncreasing(root);
+}
+
+private boolean isMonotonicIncreasing(TreeNode p) {
+    if(p==null)
+        return true;
+    if(isMonotonicIncreasing(p.left)) {
+        if(prev!=null && p.val<=prev.val)
+            return false;
+        prev = p;
+        return isMonotonicIncreasing(p.right);
+    }
+    return false;
+}
+
+O(n) O(n)
+
 
 
 

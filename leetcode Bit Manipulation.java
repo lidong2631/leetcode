@@ -232,9 +232,14 @@ O(n) O(1)
 
 
 Bitwise AND of Numbers Range
+最后的数是该数字范围内所有的数的左边共同1的部分
+int mask = 0xFFFFFFFF;
+while((m&mask)!=(n&mask)) {
+	mask<<=1;
+}
+return mask&m;
 
-
-
+O(n) O(1)
 
 
 
