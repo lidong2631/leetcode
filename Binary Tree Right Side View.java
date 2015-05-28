@@ -37,4 +37,6 @@ public class Solution {
     }
 }
 
-树的层序遍历 跟Binary Tree Level Order Traversal基本一样 时间O(n) 空间O(n)
+树的层序遍历 跟Binary Tree Level Order Traversal基本一样 唯一不同是当currLevel为0时要将结果加入res 即只保留最右侧的节点
+
+时间O(n) 空间O(n)

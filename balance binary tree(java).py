@@ -108,7 +108,7 @@ Note: 这个解法根据python版改的 下面的是code ganker的版本 python�
  */
 public class Solution {
     public boolean isBalanced(TreeNode root) {
-        return helper(root)>=0;             //大于0代表返回的是数的最大高度 否则小于0代表not balanced
+        return helper(root)>=0;             //大于0代表返回的是数的最大高度 否则-1代表not balanced
     }
     
     private int helper(TreeNode root) {

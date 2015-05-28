@@ -118,7 +118,7 @@ class Solution:
 
 
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -131,7 +131,7 @@ public class Solution {
         if(root==null)
             return 0;
         ArrayList<Integer> res = new ArrayList<Integer>();
-        res.add(Integer.MIN_VALUE);
+        res.add(null);      //放null可以处理节点值为Integer.MIN_VALUE的情况
         helper(root, res);
         return res.get(0);
     }
@@ -142,7 +142,9 @@ public class Solution {
         int left = helper(root.left, res);
         int right = helper(root.right, res);
         int curr = root.val+(left>0?left:0)+(right>0?right:0);
-        if(curr>res.get(0))
+        if(res.get(0)==null)
+            res.set(0, curr);
+        else if(curr>res.get(0))
             res.set(0, curr);
         return root.val+Math.max(left, Math.max(right, 0));
     }

@@ -371,6 +371,350 @@ return 0;
 
 
 
+Flatten Binary Tree to Linked List
+List<TreeNode> pre = new ArrayList<TreeNode>();
+pre.add(null);
+helper(root, pre);
+
+private void helper(TreeNode root, List<TreeNode> pre) {
+	if(root==null)
+		return;
+	TreeNode right = root.right;
+	if(pre.get(0)!=null) {
+		pre.get(0).left = null;
+		pre.get(0).right = root;
+	}
+	pre.set(0, root);
+	helper(root.left, pre);
+	helper(right, pre);
+}
+
+O(n) O(logn)
+
+
+
+
+
+Course Schedule
+本质是检测有向图是否有cycle
+
+if(prerequisites==null || prerequisites.length==0 || prerequisites[0].length==0)
+	return true;
+boolean[] visited = new boolean[prerequisites.length];
+boolean[] recStack = new boolean[prerequisites.length];
+List<List<Integer>> res = new ArrayList<List<Integer>>();
+
+for(int i=0; i<numCourses; i++) {
+	res.add(new ArrayList<Integer>());
+}
+for(int i=0; i<prerequisites.length; i++) {
+	for(int j=1; j<prerequisites[i].length; j++) {
+		res.get(prerequisites[i][0]).add(prerequisites[i][j]);
+	}
+}
+for(int i=0; i<numCourses; i++) {
+	if(hasCycle(i, visited, recStack, res))
+		return false;
+}
+return true;
+
+private boolean hasCycle(int v, boolean[] visited, boolean[] recStack, List<List<Integer>> res) {
+	if(!visited[v]) {
+		visited[v] = true;
+		recStack[v] = true;
+
+		List<Integer> item = res.get(v);
+		for(int i=0; i<item.size(); i++) {
+			if(!visited[item.get(i)] && hasCycle(item.get(i), visited, recStack, res))
+				return true;
+			else if(recStack[item.get(i)])
+				return true;
+		}
+	}
+	recStack[v] = false;
+	return false;
+}
+
+O(E+V) O(n) n is numCourses
+
+
+
+
+
+Course Schedule ii
+上一题的扩展 不光判断有没有环 还要topological sort输出结果
+int[] resArr = new int[numCourses];
+for(int i=0; i<numCourses; i++)     //这里是为了应对没有先修课的情况 如2，[] 这时应该返回[0,1] 而不是[0,0]
+    resArr[i] = i;
+if(prerequisites==null || prerequisites.length==0 || prerequisites[0].length==0)
+    return resArr;
+boolean[] visited = new boolean[numCourses];
+boolean[] recStack = new boolean[numCourses];
+List<Integer> check = new ArrayList<Integer>(); //check判断是否有cycle 0为无环 1有环
+check.add(0);
+
+List<List<Integer>> res = new ArrayList<List<Integer>>();
+for(int i=0; i<numCourses; i++)
+    res.add(new ArrayList<Integer>());
+for(int i=0; i<prerequisites.length; i++) {
+    for(int j=1; j<prerequisites[i].length; j++)
+        res.get(prerequisites[i][0]).add(prerequisites[i][j]);
+}
+
+Queue<Integer> queue = new LinkedList<Integer>();
+for(int i=0; i<numCourses; i++) {
+    if(!visited[i] && check.get(0)==0)
+        tps(i, visited, recStack, check, queue, res);
+}
+if(check.get(0)==1) {  //根据check的值输出结果
+    int[] tmp = {};     //有环
+    return tmp;
+}
+int i=0;            //正常无环情况
+while(queue.size()>0) {
+    resArr[i] = queue.poll();
+    i++;
+}
+return resArr;
+
+O(E+V) O(n)
+
+
+
+
+
+Convert Sorted List to Binary Tree
+利用中序遍历扫一遍 从无到有把一棵树构造出来
+if(head==null)
+	return null;
+List<ListNode> list = new ArrayList<ListNode>();
+list.add(head);
+ListNode curr = head;
+int count = 0;
+while(curr!=null) {
+	curr = curr.next;
+	count++;
+}
+return helper(list, 0, count-1);
+
+private TreeNode helper(List<ListNode> list, int left, int right) {
+	if(left>right)
+		return null;
+	int mid = (left+right)/2;
+	TreeNode left = helper(list, left, mid-1);
+	TreeNode root = list.get(0);
+
+	root.left = left;
+	list.set(0, list.get(0).next);
+	root.right = helper(list, mid+1, right);
+}
+
+O(n) O(logn)+O(n)
+
+
+
+
+
+Convert Sorted Array to Binary Tree
+比convert sorted list还简单
+if(num==null || num.length==0)
+	return null;
+return helper(num, 0, num.length-1);
+
+private TreeNode helper(int[] num, int left, int right) {
+	if(left>right)
+		return null;
+	int mid = (left+right)/2;
+	TreeNode root = new TreeNode(num[mid]);
+	root.left = helper(num, left, mid-1)；
+	root.right = helper(num, mid+1, right);
+}
+
+O(n) O(logn)+O(n)
+
+
+
+
+
+Construct Binary Tree From Inorder and Preorder Traversal
+if(preorder==null || preorder.length==0 || inorder==null || inorder.length==0)
+	return null;
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+for(int i=0; i<inorder.length; i++) {
+	map.put(inorder[i], i);
+}
+return helper(preorder, 0， preorder.length-1, inorder, 0, inorder.length-1, map);
+
+private TreeNode helper(int[] preorder, int preL, int preR, int[] inorder, inL, inR, Map<Integer, Integer> map) {
+	if(preL>preR || inL>inR)
+		return null;
+	TreeNode root = new TreeNode(preorder[preL]);
+	int index = map.get(preorder[preL]);
+	root.left = helper(preorder, preL+1, preL+index-inL, inorder, inL, index-1, map);
+	root.right = helper(preorder, preL+1+index-inL, preR, inorder, index+1, inR, map);
+	return root;
+}
+
+O(n) O(n)
+
+
+
+
+
+Construct Binary Tree From Inorder and Postorder Traversal
+if(postorder==null || postorder.length=0 || inorder==null || inorder.length==0)
+	return null;
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+for(int i=0; i<inorder.length; i++) {
+	map.put(inorder[i], i);
+}
+return helper(postorder, 0， postorder.length-1, inorder, 0, inorder.length-1, map);
+
+private TreeNode helper(int[] postorder, int postL, int postR, int[] inorder, inL, inR, Map<Integer, Integer> map) {
+	if(postL>postR || inL>inR)
+		return null;
+	TreeNode root = new TreeNode(postorder[postR]);
+	int index = map.get(postorder[postR]);
+	root.left = helper(postorder, postL, postL+index-inL-1, inorder, inL, index-1, map);
+	root.right = helper(postorder, postR-(inR-index), preR-1, inorder, index+1, inR, map);
+	return root;
+}
+
+O(n) O(n)
+
+
+
+
+
+Clone Graph
+1 dfs dfs一般是for loop遍历一个点所有分支 然后里面一个dfs递归每一条路
+if(node==null)
+    return null;
+Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
+return DFS(node, map);
+}
+
+private UndirectedGraphNode DFS(UndirectedGraphNode node, Map<UndirectedGraphNode, UndirectedGraphNode> map) {
+if(map.containsKey(node))
+    return map.get(node);
+UndirectedGraphNode nodeCopy = new UndirectedGraphNode(node.label);
+map.put(node, nodeCopy);
+for(UndirectedGraphNode neighbor : node.neighbors) {
+    nodeCopy.neighbors.add(DFS(neighbor, map));
+}
+return nodeCopy;
+}
+
+O(n) O(n)
+
+2 bfs bfs一般是用一个queue储存一层的点 一层层往下扫
+if(node==null)
+    return null;
+Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
+UndirectedGraphNode nodeCopy = new UndirectedGraphNode(node.label);
+Queue<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
+map.put(node, nodeCopy);
+queue.add(node);
+while(!queue.isEmpty()) {
+    UndirectedGraphNode curr = queue.poll();
+    for(UndirectedGraphNode p : curr.neighbors) {    
+        if(map.containsKey(p)) {
+            map.get(curr).neighbors.add(map.get(p));
+        }
+        else {
+            UndirectedGraphNode pCopy = new UndirectedGraphNode(p.label);
+            map.put(p, pCopy);
+            map.get(curr).neighbors.add(pCopy);
+            queue.add(p);
+        }
+    }
+}
+return nodeCopy;
+
+
+
+
+
+Binary Tree Right Side View
+树的层序遍历套路 唯一不同是当currLevel为0时要将结果加入res 即只保留最右侧的节点
+List<Integer> res = new ArrayList<Integer>();
+if(root==null)
+    return res;
+LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+queue.offer(root);
+int currLevel = 1;
+int nextLevel = 0;
+while(!queue.isEmpty()) {
+    currLevel--;
+    TreeNode node = queue.poll();
+    if(node.left!=null) {
+        nextLevel++;
+        queue.offer(node.left);
+    }
+    if(node.right!=null) {
+        nextLevel++;
+        queue.offer(node.right);
+    }
+    if(currLevel==0) {
+        currLevel = nextLevel;
+        nextLevel = 0;
+        res.add(node.val);
+    }
+}
+return res;
+
+
+
+
+
+Binary Tree Maximum Path Sum
+一个结点自身的最长路径就是它的左子树返回值（如果大于0的话），加上右子树的返回值（如果大于0的话），再加上自己的值。
+
+而返回值则是自己的值加上左子树返回值，右子树返回值或者0（注意这里是“或者”，而不是“加上”，因为返回值只取一支的路径和）。
+
+在过程中求得当前最长路径时比较一下是不是目前最长的，如果是则更新
+if(root==null)
+	return 0;
+List<Integer> res = new ArrayList<Integer>();
+res.add(null);
+helper(root, res);
+return res.get(0);
+
+private int helper(TreeNode root, List<Integer> res) {
+	if(root==null)
+		return 0;
+	int left = helper(root.left, res);
+	int right = helper(root.right, res);
+	int curr = root.val+(left>0?left:0)+(right>0?right:0);
+	if(res.get(0)==null)
+		res.set(0, curr);
+	else if(res.get(0)<curr)
+		res.set(0, curr);
+	return root.val+Math.max(left, Math.max(right, 0));
+}
+
+O(n) O(logn)
+
+
+
+
+
+Balanced Binary Tree
+return helper(root)>=0;
+
+private int helper(TreeNode root) {
+	if(root==null)
+		return 0;
+	int left = helper(root.left);
+	int right = helper(root.right);
+	if(left<0 || right<0)
+		return -1;
+	else if(Math.abs(left-right)>=2)
+		return -1;
+	return Math.max(left, right) + 1;
+}
+
+O(n) O(logn)
 
 
 
@@ -378,29 +722,4 @@ return 0;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 

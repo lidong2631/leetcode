@@ -149,10 +149,10 @@ public class Solution {
         while(!queue.isEmpty()) {
             UndirectedGraphNode curr = queue.poll();
             for(UndirectedGraphNode p : curr.neighbors) {    
-                if(map.containsKey(p)) {
+                if(map.containsKey(p)) {            //如果map中有这个节点记录 只要将它连入当前点的neighbor即可
                     map.get(curr).neighbors.add(map.get(p));
                 }
-                else {
+                else {                              //否则要新建点 map更新记录 连入neighbor 加入队列
                     UndirectedGraphNode pCopy = new UndirectedGraphNode(p.label);
                     map.put(p, pCopy);
                     map.get(curr).neighbors.add(pCopy);
