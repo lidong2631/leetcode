@@ -283,12 +283,6 @@ O(row*col)
 
 
 
-Minimum Depth of Binary Tree
-
-
-
-
-
 Maximum Depth of Binary Tree
 1 递归
 if(root==null)
@@ -300,7 +294,6 @@ O(n) O(logn)
 2 非递归
 if(root==null)
 	return 0;
-int level = 0;
 Queue<TreeNode> queue = new LinkedList<TreeNode>();
 queue.add(root);
 int level = 1;
@@ -331,6 +324,80 @@ O(n) O(n)
 
 
 Minimum Depth of Binary Tree
+1 递归
+if(root==null)
+    return 0;
+if(root.left==null)
+    return minDepth(root.right)+1;
+if(root.right==null)
+    return minDepth(root.left)+1;
+return Math.min(minDepth(root.left), minDepth(root.right))+1;
+
+O(n) O(logn)
+
+2 非递归
+if(root == null)
+    return 0;
+Queue<TreeNode> queue = new LinkedList<TreeNode>();
+int curr = 1, next = 0;
+int level = 1;
+queue.offer(root);
+while(!queue.isEmpty())
+{
+    TreeNode cur = queue.poll();
+    if(cur.left==null && cur.right==null)
+        return level;
+    curr--;
+    if(cur.left!=null)
+    {
+        queue.offer(cur.left);
+        next++;
+    }
+    if(cur.right!=null)
+    {
+        queue.offer(cur.right);
+        next++;
+    }
+    if(lastNum==0)
+    {
+        curr = next;
+        next = 0;
+        level++;
+    }
+}
+return 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
