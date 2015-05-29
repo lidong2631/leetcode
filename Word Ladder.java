@@ -36,7 +36,8 @@ public class Solution {
     }
 }
 
-
+其实可以不用visited 每次在字典中找到一个单词就删除他 参考下面
+http://www.cnblogs.com/TenosDoIt/p/3443512.html
 
 
 from code ganker:
