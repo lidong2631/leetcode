@@ -26,7 +26,7 @@ class Solution:
 
 
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -42,12 +42,9 @@ public class Solution {
     }
     
     private void helper(TreeNode root, int level, List<List<Integer>> res) {
-        if(root!=null)
-        {
-            if(res.size()<level+1)
-            {
-                List<Integer> tmpList = new ArrayList<Integer>();
-                res.add(new ArrayList(tmpList));            //这地方是list of list的注意点
+        if(root!=null) {
+            if(res.size()<level+1) {    //如果是第一次到这一层 要新加一个list进res
+                res.add(new ArrayList<Integer>());
             }
             res.get(level).add(root.val);
             helper(root.left, level+1, res);

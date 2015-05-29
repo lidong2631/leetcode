@@ -36,6 +36,8 @@ public class Solution {
     }
 }
 
+时间复杂度 感觉是26*L*size(dict) 看code ganker评论
+
 其实可以不用visited 每次在字典中找到一个单词就删除他 参考下面
 http://www.cnblogs.com/TenosDoIt/p/3443512.html
 

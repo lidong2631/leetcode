@@ -70,4 +70,22 @@ public class Solution {
 http://www.geeksforgeeks.org/divide-and-conquer-set-7-the-skyline-problem/
 
 
-还有一个中解法用heap
+还有一个解法用heap
+http://www.shuatiblog.com/blog/2014/07/01/The-Skyline-Problem/
+https://briangordon.github.io/2014/08/the-skyline-problem.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

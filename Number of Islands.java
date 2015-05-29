@@ -59,16 +59,16 @@ public class Solution {
             return 0;
         int row = grid.length;
         int col = grid[0].length;
-        int res = 0;
+        int count = 0;
         for(int i=0; i<row; i++) {
             for(int j=0; j<col; j++) {
                 if(grid[i][j]=='1') {
                     bfs(grid, i, j);
-                    res++;
+                    count++;
                 }
             }
         }
-        return res;
+        return count;
     }
 
     private void bfs(char[][] grid, int i, int j) {
