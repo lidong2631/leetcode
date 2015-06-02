@@ -42,7 +42,7 @@ public class Trie {
                 return false;
             p = p.children[index];
         }
-        return p!=null && p.endOfWord;
+        return p!=null && p.endOfWord;  //这里不用写p!=null
     }
 
     // Returns if there is any word in the trie
@@ -64,3 +64,10 @@ public class Trie {
 // Trie trie = new Trie();
 // trie.insert("somestring");
 // trie.search("key");
+
+
+O(key_length) O(Alphabet_size * key_length *N)
+
+
+
+
