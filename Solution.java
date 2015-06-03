@@ -1,86 +1,37 @@
-import java.util.*;
-
 public class Solution {
     public static void main(String[] args) {
-        int[][] buildings = {{2,13,10}, {10,17,25}, {12,20,14}};
         Solution s = new Solution();
-        List<int[]> res = s.getSkyline(buildings);
-        // int[] end = {buildings[buildings.length-1][1], 0};
-        // res.add(end);
-        for(int i=0; i<res.size(); i++) {
-            System.out.print(res.get(i)[0] + " " + res.get(i)[1]);
-            System.out.println();
-        }
+        char[][] matrix = {{'1', '1'}, {'1', '1'}};
+        int i = s.maximalSquare(matrix);
+        System.out.println(i);
     }
 
-    public List<int[]> getSkyline(int[][] buildings) {
-        List<int[]> res = new ArrayList<int[]>();
-        if(buildings==null || buildings.length==0 || buildings[0].length==0)
-            return res;
-        res = findSkyline(buildings, 0, buildings.length-1);
-        for(int i=0; i<res.size(); i++) {
-            if(i>0 && res.get(i)[1]==res.get(i-1)[1]) {
-                res.remove(i);
-                i--;
+    public int maximalSquare(char[][] matrix) {
+        if(matrix==null || matrix.length==0 || matrix[0].length==0)
+            return 0;
+        int maxLen = 0;
+        int res[][] = new int[matrix.length][matrix[0].length];
+        for(int i=0; i<matrix.length; i++) {
+            res[i][0] = Character.getNumericValue(matrix[i][0]);
+            System.out.println(res[i][0]);
+            maxLen = Math.max(maxLen, res[i][0]);
+        }
+        for(int j=0; j<matrix[0].length; j++) {
+            res[0][j] = Character.getNumericValue(matrix[0][j]);
+            System.out.println(res[0][j]);
+            maxLen = Math.max(maxLen, res[0][j]);
+        }
+        for(int i=1; i<matrix.length; i++) {
+            for(int j=1; j<matrix[0].length; j++) {
+                System.out.println("res[i-1][j] " + Character.getNumericValue(res[i-1][j]));
+                System.out.println("res[i][j-1] " + Character.getNumericValue(res[i][j-1]));
+                System.out.println("res[i-1][j-1] " + Character.getNumericValue(res[i-1][j-1]));
+
+                res[i][j] = Math.min(Math.min(res[i-1][j], res[i][j-1]),res[i-1][j-1]) + 1;
+                System.out.println("res[i][j] " + res[i][j]);
+                maxLen = Math.max(maxLen, res[i][j]);
             }
         }
-        return res;
-    }
-    
-    private List<int[]> findSkyline(int[][] buildings, int left, int right) {
-        if(left==right) {
-            List<int[]> res = new ArrayList<int[]>();
-            res.add(new int[]{buildings[left][0], buildings[left][2]});
-            res.add(new int[]{buildings[left][1], 0});
-            for(int i=0; i<res.size(); i++) {
-                System.out.print(res.get(i)[0] + " " + res.get(i)[1]);
-                System.out.println();
-            }
-            return res;
-        }
-        int mid = (left+right)/2;
-        List<int[]> l1 = findSkyline(buildings, left, mid);
-        List<int[]> l2 = findSkyline(buildings, mid+1, right);
-        List<int[]> res = merge(l1, l2);
-        return res;
-    }
-    
-    private List<int[]> merge(List<int[]> l1, List<int[]> l2) {
-        List<int[]> res = new ArrayList<int[]>();
-        int i = 0, j = 0, h1 = 0, h2 = 0;
-        while(i<l1.size() && j<l2.size()) {
-            if(l1.get(i)[0]<l2.get(j)[0]) {
-                int left = l1.get(i)[0];
-                h1 = l1.get(i)[1];
-                res.add(new int[]{left, Math.max(h1, h2)});
-                i++;
-            }
-            else if(l1.get(i)[0]>l2.get(j)[0]){
-                int left = l2.get(j)[0];
-                h2 = l2.get(j)[1];
-                res.add(new int[]{left, Math.max(h1, h2)});
-                j++;
-            }
-            else {
-                h1 = l1.get(i)[1];
-                h2 = l2.get(j)[1];
-                res.add(new int[]{l1.get(i)[0], Math.max(h1, h2)});
-                i++;
-                j++;
-            }
-        }
-        while(i<l1.size()) {
-            res.add(new int[]{l1.get(i)[0], l1.get(i)[1]});
-            i++;
-        }
-        while(j<l2.size()) {
-            res.add(new int[]{l2.get(j)[0], l2.get(j)[1]});
-            j++;
-        }
-        System.out.println("merge");
-        for(int k=0; k<res.size(); k++)
-            System.out.print(res.get(k)[0] + " " + res.get(k)[1] + " ");
-        System.out.println("done merge");
-        return res;
+        return maxLen*maxLen;
     }
 }
