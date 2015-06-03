@@ -82,6 +82,66 @@ O(nklogk) O(k)
 
 Kth Largest Element in an Array
 两种解法 quickselect heapsort
+1 quickselect
+return helper(nums, 0, nums.length-1, k);
+
+private int helper(int[] nums, int left, int right, int k) {
+	if(left==right)
+		return nums[left];
+	while(true) {
+		int pivotIndex = right;
+		pivotIndex = partition(nums, left, right, pivotIndex);
+		int rank = right-pivotIndex+1;
+		if(rank==k)
+			return nums[pivotIndex];
+		else if(k>rank)
+           return helper(nums, left, pivotIndex-1, k-rank);
+       else
+           return helper(nums, pivotIndex+1, right, k);
+	}
+}
+
+private int partition(int[] nums, int left, int right, int pivotIndex) {
+	int index = left;
+	for(int i=left; i<right; i++) {
+		if(nums[i]<nums[pivotIndex]) {
+			int tmp = nums[i];
+			nums[i] = nums[index];
+			nums[index] = tmp;
+			index++;
+		}
+	}
+	int tmp = nums[index];
+	nums[index] = nums[pivotIndex];
+	nums[pivotIndex] = tmp;
+	return index;
+}
+
+average O(n) worst O(n^2) O(1)
+
+2 heap 很好的想法 只要是找第几大的数这种不需要严格顺序的题都可以联想到heap
+PriorityQueue<Integer> heap = new PriorityQueue<Integer>();
+int i=0;
+while(i<k) {
+	heap.add(nums[i]);
+	i++;
+}
+while(i<nums.length) {
+	if(nums[i]>heap.peak()) {
+		heap.poll();
+		heap.add(nums[i])
+	}
+	i++;
+}
+return heap.peak();
+
+O(k+(n-k)logk) O(k)
+
+
+
+
+
+
 
 
 

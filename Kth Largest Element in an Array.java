@@ -9,8 +9,8 @@ public class Solution {
         while(true) {
             int pivotIndex = right;             //这里pivotIndex我取最右边的值
             pivotIndex = partition(nums, left, right, pivotIndex);  
-            int rank = right-pivotIndex+1;      //跟原文不一样
-            if(rank==k)
+            int rank = right-pivotIndex+1;      //跟原文不一样 每次按pivot分组 分成小于pivot和大于pivot
+            if(rank==k)                         //如果k落在pivotIndex上则返回结果 否则如果k大就递归去pivotIndex右边找 k小去pivotIndex左边找
                 return nums[pivotIndex];
             else if(k>rank)
                 return helper(nums, left, pivotIndex-1, k-rank);
@@ -21,16 +21,16 @@ public class Solution {
     
     private int partition(int[] nums, int left, int right, int pivotIndex) {
         int index = left;
-        int pivot = nums[pivotIndex];
+        int pivot = nums[pivotIndex];   //pivot是数组最右边元素的值
         for(int i=left; i<right; i++) {
-            if(nums[i]<pivot) {
+            if(nums[i]<pivot) {     //从左扫到右 如果nums[i]小于pivot就跟index指的元素交换 且index右移一位
                 int tmp = nums[i];
                 nums[i] = nums[index];
                 nums[index] = tmp;
                 index++;
             }
         }
-        int tmp = nums[right];
+        int tmp = nums[right];      //最后将最右边的pivot交换到对应位置index 返回index
         nums[right] = nums[index];
         nums[index] = tmp;
         return index;

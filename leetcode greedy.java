@@ -1,4 +1,28 @@
 Wildcard Matching
+if(p.length()==0)
+    return s.length()==0;
+boolean[] res = new boolean[s.length()+1];
+res[0] = 0;
+for(int j=0; j<p.length(); j++) {
+    if(p.charAt(j)!='*') {
+        for(int i=s.length()-1; i>=0; i--) {
+            res[i+1] = res[i] && (p.charAt(j)=='?' || p.charAt(j)==s.charAt(i));
+        }
+    }
+    else {
+        int i=0;
+        while(i<=s.length() && !res[i])
+            i++;
+        for(; i<=s.length(); i++) {
+            res[i] = true;
+        }
+    }
+    res[0] = res[0]&&p.charAt(j)=='*';
+}
+return res[s.length()];
+
+O(m*n) O(n)
+
 
 
 

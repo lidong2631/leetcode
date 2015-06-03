@@ -24,5 +24,8 @@ public class Solution {
         return res[s.length()];
     }
 }
+这题注意三个点 for循环倒叙 i<=s.length() res[0]更新
 
-code ganker 还是二维dp思路 然后二维转一维因为只需要上一行信息 看评论 O(m*n) O(n) 假设s长度是n p长度是m
+code ganker 还是二维dp思路 然后二维转一维因为只需要上一行信息 看评论 
+
+O(m*n) O(n) 假设s长度是n p长度是m
