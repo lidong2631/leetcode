@@ -107,43 +107,37 @@ public class Solution {
     public void reorderList(ListNode head) {
         if(head==null || head.next==null)
             return;
-        ListNode slow = head; ListNode fast = head;
-        while(fast.next!=null && fast.next.next!=null) {    //分半
+        ListNode slow = head, fast = head;
+        while(fast.next!=null && fast.next.next!=null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-        ListNode h2 = slow.next;
+        ListNode prev = slow.next;
         slow.next = null;
         
-        ListNode dummy = new ListNode(0);   //reverse
-        dummy.next = h2;
-        ListNode p = h2.next;
-        h2.next = null;
-        while(p!=null) {    //这地方跟下面微有不同
-            ListNode tmp = p.next;
-            p.next = dummy.next;
-            dummy.next = p;
-            p = tmp;
+        ListNode curr = prev.next;
+        prev.next = null;
+        while(curr!=null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
         }
-
-        h2 = dummy.next;    //merge
+        
         ListNode h1 = head;
-        while(h1!=null && h2!=null) {
-            ListNode next1 = h1.next;
-            ListNode next2 = h2.next;
+        ListNode h2 = prev;
+        while(h2!=null) {
+            ListNode tmp1 = h1.next;
+            ListNode tmp2 = h2.next;
             h1.next = h2;
-            h2.next = next1;
-            h1 = next1;
-            h2 = next2;
+            h2.next = tmp1;
+            h1 = tmp1;
+            h2 = tmp2;
         }
     }
 }
 
-
-
-
-
-
+O(n) O(1)
 
 
 

@@ -22,7 +22,7 @@ public class Solution {
             count++;
             ListNode next = curr.next;
             if(count==k) {              //计数 每到k就将这个group reverse
-                pre = reverse(pre, next);
+                pre = reverse(pre, next);   //pre next是区间的前一个 后一个节点
                 count = 0;
             }
             curr = next;
@@ -46,9 +46,9 @@ public class Solution {
     }
 }
 
+这题跟reverse list ii区别是不能边走边reverse 因为最后不足k的部分不reverse 所以不能用类似reverse list ii的套路
 
-
-
+reverse list ii的套路即边走边reverse更好 只需要扫一遍 而且代码简洁
 
 
 
