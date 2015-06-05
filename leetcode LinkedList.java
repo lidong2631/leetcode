@@ -568,19 +568,109 @@ while(p.next!=null) {
 
 
 Copy List with Random Pointer
+可以用hashmap 但是空间多 更优解为 1 每个节点后面copy一份 2 copy random指针 3 if
+拆开两个链表(head==null)
+	return head;
+RandomListNode curr = head;
+while(curr!=null) {
+	RandomListNode copy = new RandomListNode(curr.val);
+	copy.next = curr.next;
+	curr.next = copy;
+	curr = curr.next.next;
+}
+
+curr = head;
+while(curr!=null) {
+	if(curr.random!=null)
+		curr.next.random = curr.random.next;
+	curr = curr.next.next;
+}
+
+curr = head;
+RandomListNode newHead = curr.next;
+while(curr!=null) {
+    RandomListNode copy = curr.next;
+	curr.next = copy.next;
+	if(copy.next!=null)
+		copy.next = copy.next.next;
+	curr = curr.next;
+}
+return newHead;
+
+O(3*n) O(1)
+
+
 
 
 
 Convert Sorted List to Binary Search Tree
-先扫一遍得到节点数量 之后递归建立左子树 然后建立root 将ListNode设为下一个节点 递归右子树 return root 时间O(logn) 空间O(logn)+O(n)
+先扫一遍得到节点数量 之后递归建立左子树 root 将ListNode设为下一个节点 递归右子树 return root 
+if(head==null)
+	return head;
+ListNode curr = head;
+int len = 0;
+while(curr!=null) {
+	len++;
+	curr = curr.next;
+}
+List<ListNode> res = new ArrayList<ListNode>();
+res.add(head);
+return helper(res, 0, len-1);
+
+private ListNode helper(List<ListNode> res, int left, int right) {
+	if(left>right)
+		return null;
+	int mid = (left+right)/2;
+	ListNode leftNode = helper(res, left, mid-1);
+	ListNode root = new ListNode(res.get(0).val);
+	res.set(0, res.get(0).next);
+	root.left = leftNode;
+	root.right = helper(res, mid+1, right);
+	return root;
+}
+
+时间O(logn) 空间O(logn)+O(n)
+
+
 
 
 
 Add Two Numbers
 每次新建一个节点 将l1.val l2.val carry加起来存在节点里 然后如果l1 l2还有剩余值将他们都加起来 最后如果carry还有一位要再新建节点
-
-
-
+if(l1==null)
+	return l2;
+if(l2==null)
+	return l1;
+ListNode dummy = new ListNode(0);
+ListNode p = dummy;
+int val = 0, carry = 0;
+while(l1!=null && l2!=null) {
+	val = (l1.val+l2.val+carry)%10;
+	carry = (l1.val+l2.val+carry)/10;
+	ListNode node = new ListNode(val);
+	p.next = node;
+	p = p.next;
+}
+while(l1!=null) {
+	val = (l1.val+carry)%10;
+	carry = (l1.val+carry)/10;
+	ListNode node = new ListNode(val);
+	p.next = node;
+	p = p.next;
+}
+while(l2!=null) {
+	val = (l2.val+carry)%10;
+	carry = (l2.val+carry)/10;
+	ListNode node = new ListNode(val);
+	p.next = node;
+	p = p.next;
+}
+if(carry!=0) {
+	ListNode node = new ListNode(carry);
+	p.next = node;
+	p = p.next;
+}
+return dummy.next;
 
 
 
