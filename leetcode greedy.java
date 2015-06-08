@@ -47,16 +47,12 @@ O(n) O(1)
 
 Jump Game ii
 贪心 只要当前lastReach还能满足条件 就不更新 但每次要更新能走到的最远距离reach
-if(A==null || A.length<2)
-    return 0;
-int step = 1, reach = A[0], lastReach = A[0];
-for(int i=1; i<A.length&&i<=reach; i++) {
-    reach = Math.max(reach, i+A[i]);
-    if(lastReach<i) {
+int step = 0, reach = 0, lastReach = 0;
+for i=0; i<A.length&&i<=reach; i++
+    if(i>lastReach)
         step++;
         lastReach = reach;
-    }
-}
+    reach = Math.max(reach, i+A[i]);
 if(reach<A.length-1)
     return -1;
 return step;
