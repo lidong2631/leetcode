@@ -384,19 +384,22 @@ private void helper(int[] num, int k, int start, int target, List<Integer> item,
 
 Subsets
 递归
-Arrays.sort(num);
+if(S==null)
+    return null;
+Arrays.sort(S);
+return helper(S, S.length-1);
 
-private helper(int[] num, int index) {
+private helper(int[] S, int index) {
     if(index==-1) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         List<Integer> tmp = new ArrayList<Integer>();
         res.add(tmp);
         return res;
     }
-    List<List<Integer> res = helper(num, index-1);
+    List<List<Integer> res = helper(S, index-1);
     int size = res.size();
     for(int i=0; i<size; i++) {
-        List<Integer> item = new ArrayLisT<Integer>(res.get(i));
+        List<Integer> item = new ArrayList<Integer>(res.get(i));
         item.add(num[index]);
         res.add(item);
     }
@@ -404,10 +407,13 @@ private helper(int[] num, int index) {
 }
 
 非递归
-Arrays.sort(num);
 List<list<Integer>> res = new ArrayList<List<Integer>>(new ArrayList<Integer>());
+res.add(new ArrayList<Integer>());
+Arrays.sort(num);
+if(num==null)
+    return res;
 for(int i=0; i<num.length; i++) {
-    int size - res.size();
+    int size = res.size();
     for(int j=0; j<size; j++) {
         List<Integer> item = new ArrayList<Integer>(res.get(j));
         item.add(num[i]);
@@ -424,7 +430,12 @@ return res;
 
 Subsets ii
 递归
+if(num==null || num.length==0)
+    return null;
 Arrays.sort(num);
+List<Integer> lastSize = new ArrayList<Integer>();
+lastSize.add(0)
+return helper(num, num.length-1, lastSize);
 
 private helper(int[] num, int index, List<Integer> lastSize) {
     if(index==-1) {
@@ -491,22 +502,115 @@ O(n) O(n)
 
 
 Construct Binary Tree from Inorder and Postorder Traversal
+同上思路
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+for(int i=0; i<inorder.length; i++) {
+    map.put(inorder[i], i);
+}
+return helper(postorder, 0, postorder.length01, inorder, 0, inorder.length-1, map);
 
+private TreeNode helper(int[] postorder, int postL, int postR, int[] inorder, int inL, int inR, map) {
+    if(inL>inR || postL>postR)
+        return null;
+    TreeNode root = new TreeNode(postorder[postR]);
+    int index = map.get(postorder[postR]);
+    root.left = helper(postorder, postL, postL+index-inL-1, inorder, inL, index-1, map);
+    root.right = helper(postorder, postR-(inL-index), postR-1, inorder, index+1, inR, map);
+    return root;
+}
+
+O(n) O(n)
+
+
+
+
+
+Contains Duplicate
+用hashset
+if(nums==null || nums.length==0)
+    return false;
+Set<Integer> set = new HashSet<Integer>();
+for(int i=0; i<nums.length; i++) {
+    if(set.contains(nums[i]))
+        return true;
+    set.add(nums[i]);
+}
+return false;
+
+O(n) O(n)
+
+
+
+
+
+Contains Duplicate ii
+找序列中是否有相差不大于k的相等元素 维护一个区间k 用hashset扫一遍
+Set<Integer> set = new HashSet<Integer>();
+int i=0, j=0;
+while(j<nums.length && j-i<=k) {
+    if(set.contains(nums[j]))
+        return true;
+    else
+        set.add(nums[i]);
+    j++;
+}
+while(j<nums.length) {
+    set.remove(nums[i++]);
+    if(set.contains(nums[j]))
+        return true;
+    else
+        set.add(nums[j]);
+    j++;
+}
+return false;
+
+O(n) O(n)
+
+
+
+
+
+Contains Duplicate iii
+找两个元素 值相差最大为t 距离最大为k
+if(nums==null || nums.length==0)
+    return false;
+TreeSet<Integer> tree = new TreeSet<Integer>();
+for(int i=0; i<nums.length; i++) {
+    Integer rightSub = tree.floor(nums[i]+t);
+    Integer leftSub = tree.ceiling(nums[i]-t);
+    if((rightSub!=null && rightSub>=nums[i]) || (leftSub!=null && leftSub<=nums[i]))
+        return true;
+    tree.add(nums[i]);
+    if(i-k>0)
+        tree.remove(nums[i-k]);
+}
+return false;
+
+O(nlogk) O(k)
 
 
 
 
 
 Container With Most Water
-求两条垂直x轴的线和x轴围成的container里能乘的最大水量
-while left<right
-    int diff
-    if diff>0
+求两条垂直x轴的线和x轴围成的container里能乘的最大水量 夹逼＋贪心
+if(height==null || height.length==0)
+    return 0;
+int left = 0, right = height.length-1, maxWater = 0;
+while(left<right) {
+    int diff = height[left]-height[right];
+    if(diff<0) {
         int localWater = (right-left)*height[left];
-        maxWater = maxWater<localWater ? localWater:maxWater;
+        maxWater = Math.max(maxWater, localWater);
         left++;
-    else
-        同上 right
+    }
+    else {
+        int localWater = (right-left)*height[right];
+        maxWater = Math.max(maxWater, localWater);
+        right--;
+    }
+} 
+return maxWater;
 
 时间O(n) 空间O(1)
 
@@ -531,6 +635,9 @@ for(int i=A.length-2; i>0; i--) {
 时间O(2*n)=O(n) 空间O(n)
 
 第二种解法只需要扫一次数组 比较左右指针 取小的那边开始走 如果下一个元素更小就把差值加到结果中 否则重新比较左右指针大小 
+if(A==null || A.length<2)
+    return 0;
+int left = 0, right = A.length-1, water = 0;
 while(left<right) {
     int minHeight = Math.min(A[left], A[right]);
     if(A[left]==minHeight) {
@@ -541,8 +648,14 @@ while(left<right) {
         }
     }
     else {
-        right 同上
+        right--;
+        while(left<right && A[right]<=minHeight) {
+            water+=minHeight-A[right];
+            right--;
+        }
     }
+}
+return water;
 
 时间O(n) 空间O(1)
 
@@ -551,12 +664,14 @@ while(left<right) {
 
 
 Find Minimum in Rotated Array i (i假定没有重复元素 二有)
-while left<right &&　num[left]>num[right]
-    int mid = (left_right)/2;
+int left = 0, right = num.length-1;
+while(left<right &&　num[left]>num[right]) {
+    int mid = (left+right)/2;
     if(num[mid]>num[right])
         left = mid + 1;
     else
         right = mid;
+}
 return num[left];
 
 时间O(logn) 空间O(1)
@@ -566,7 +681,8 @@ return num[left];
 
 
 Find Minimum in Rotated Array ii
-while left<right
+int left = 0, right = num.length-1;
+while(left<right && num[left]>=num[right]) {
     int mid = (left+right)/2;
     if(num[mid]>num[right])
         left = mid + 1;
@@ -574,6 +690,7 @@ while left<right
         right = mid;
     else
         right--;
+}
 return num[left];
 
 时间O(logn) 空间O(1)
