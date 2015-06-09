@@ -9,12 +9,12 @@ public class Solution {
     }
     
     private void helper(int[] num, int k, int start, int target, List<Integer> item, List<List<Integer>> res) {
-        if(target<0 || item.size()>k)
-            return;
         if(target==0 && item.size()==k) {
             res.add(new ArrayList<Integer>(item));
             return;
         }
+        if(target<0 || item.size()>k)
+            return;
         for(int i=start; i<num.length; i++) {
             item.add(num[i]);
             helper(num, k, i+1, target-num[i], item, res);

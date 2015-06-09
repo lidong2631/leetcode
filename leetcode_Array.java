@@ -2,12 +2,17 @@ Array
 
 Two Sum (注意:题目假设只有一个解)
 两种方法 第一种用HashMap 
-HashMap<Integer, Integer> map 保存数字和其对应索引
-for i=0; i<numbers.length; i++
-    if(map.containsKey(target-numbers[i]))
-        保存结果 返回
-    map中存入记录
-return res
+int[] res = new int[2];
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+for(int i=0; i<numbers.length; i++) {
+    if(map.containsKey(target-numbers[i])) {
+        res[0] = map.get(target-numbers[i]) + 1;
+        res[1] = i+1;
+        return res;
+    }
+    map.put(numbers[i], i);
+}
+return null;
 
 时间O(n) 空间O(n)
 
@@ -21,14 +26,20 @@ return res
 
 Two Sum ii - input array is sorted
 这题假设数组已排好序 可以直接用两边夹逼的方法做出 
-while(left<right)
-    if(numbers[left]+numbers[right]==target)
-        保持结果 返回
-    else if >target
+int left = 0, right = numbers.length-1;
+int[] res = new int[2];
+while(left<right) {
+    if(numbers[left]+numbers[right]==target) {
+        res[0] = left+1;
+        res[1] = right+1;
+        return res;
+    }
+    else if(numbers[left]+numbers[right]>target)
         right--;
     else
         left++;
-return res;
+}
+return null;
 
 时间O(n) 空间O(1)
 
@@ -41,6 +52,35 @@ Two Sum iii - Data Structure Design
 Store all possible sum pairs in a hashtable. We also need a list of all added numbers. Each add go through the list and form
 new sum pairs that put into the hashtable. For find, it is just a look up in the hashtable. This is useful if the find operation
 is far exceed the add operation
+
+public class TwoSum {
+
+    private Set<Integer> set = new HashSet<Integer>();
+    private List<Integer> list = new ArrayList<Integer>();
+    
+    public void add(int number) { 
+        for(Integer num : list) {
+            if(set.contains(num+number))
+                return;
+            else
+                set.add(num+number);
+        }
+        list.add(number);
+        if(list.size()==1)
+            set.add(number);
+    }
+
+    public boolean find(int value) {
+        if(set.contains(value) && list.size()!=1)
+            return true;
+        else
+            return false;
+    }
+}
+
+
+
+
 
 2 add O(n)  find O(n)   Space: O(n)
 Maintain a sorted array. For add, use method in Search Insert Position to find the place to insert in O(logn). Also we need to
@@ -85,27 +125,47 @@ public class TowSum {
 
 
 3Sum (数组中可能有重复值)
+List<List<Integer>> res = new ArrayList<List<Integer>>();
+if(num==null || num.length==0)
+    return res;
 Arrays.sort(num);
-for(int i=num.length-1; i>=2; i--)
-    判断重复 continue
-    List<List<Integer>>　item = twoSum(num, i-1; -num[i]);
-    for(int i=0; i<item.size(); i++)
-        item.add(num[i]);
-    res.addAll(item);
-
-List<list<Integer>>　twoSum(int[] num, int end, int target) {
-    while(left<right)
-        if ==target
-            加入结果
-            left++; right--;
-            while left<right && num[left]==num[left-1]
-                left++;
-            while left<right && num[right]==num[right+1]
-                right--;
-        else if >target
-            right--;
-        else left++
+for(int i=num.length-1; i>=2; i--) {
+    if(i<num.length-1 && num[i]==num[i+1])
+        continue;
+    List<List<Integer>> tmp = twoSum(num, i-1, -num[i]);
+    for(int j=0; j<tmp.size(); j++)
+        tmp.get(j).add(num[i]);
+    res.addAll(tmp);
 }
+return res;
+
+private List<List<Integer>> twoSum(int[] num, int end, int target) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    if(num==null || num.length<=1)
+        return res;
+    int left = 0, right = end;
+    while(left<right) {
+        int sum = num[left]+num[right];
+        if(sum==target) {
+            List<Integer> tmp = new ArrayList<Integer>();
+            tmp.add(num[left]);
+            tmp.add(num[right]);
+            res.add(tmp);
+            left++;
+            right--;
+            while(left<right && num[left]==num[left-1])
+                left++;
+            while(left<right && num[right]==num[right+1])
+                right--;
+        }
+        else if(sum<target)
+            left++;
+        else
+            right--;
+    }
+    return res;
+}
+
 时间O(n^2)    空间O(n)
 
 
@@ -113,24 +173,33 @@ List<list<Integer>>　twoSum(int[] num, int end, int target) {
 
 
 3Sum Closest (find three integers that sum is closest to a given number. Return the sum. Only one solution)
-3Sum变体
-初始化global_minDiff = num[0]+num[1]+num[2]-target
-Arrays.sort(num);
-for i=0; i<num.length-2; i++
-    int diff = twoSum(num, i+1, -num[i]);
-    if global_minDiff大 更新
-return target+global_minDiff;
 
-int twoSum(int[] num, int start, int target)
-初始化minDiff
-while(left<right)
-    if ==target
-        return;
-    int localDiff = num[left]+num[right]-target;
-    if minDiff大 更新
-    if >target
-        right--;
-    else left++;
+int global_minDiff = num[0]+num[1]+num[2]-target
+Arrays.sort(num);
+for(int i=0; i<num.length-2; i++) {
+    int localMinDiff = twoSumDiff(num, i+1, target-num[i]);
+    global_minDiff = Math.min(Math.abs(global_minDiff), Math.abs(localMinDiff));
+}
+return global_minDiff+target;
+
+private int twoSum(int[] num, int start, int target) {
+    int minDiff = num[start]+num[start+1]-target;
+    int left = start, int right = num.length-1;
+    while(left<right) {
+        if(num[left]+num[right]==target)
+            return 0;
+        int localDiff = num[left]+num[right]-target;
+        if(Math.abs(minDiff)<Math.abs(localDiff))
+            minDiff = localDiff;
+        if(num[left]+num[right]>target)
+            right--;
+        else
+            left++;
+    }
+    return minDiff;
+}
+
+O(n^2) O(1)
 
 
 
@@ -147,9 +216,12 @@ while(left<right)
 
 Best Time to Buy and Sell Stock (一次交易的最大利润)
 动态规划 局部解全局解
-for i=1; i<prices.length; i++
-    local = Math.max(local[i]+prices[i]-prices[i-1], 0);
+int local = 0, global = 0;
+for(int i=1; i<prices.length; i++) {
+    local = Math.max(local+prices[i]-prices[i-1], 0);
     global = Math.max(global, local);
+}
+return global;
 
 时间O(n) 空间O(1)
 
@@ -159,9 +231,14 @@ for i=1; i<prices.length; i++
 
 Best Time to Buy and Sell Stock ii (无限次交易的最大利润)
 这题更简单 不限定交易次数那么只要差价大于0就可以一直累加 
-for i=1; i<prices.length; i++
-    if(prices[i]-prices[i-1]>0)
-        maxProfit+=prices[i]-prices[i-1];
+int profit = 0;
+for(int i=1; i<prices.length; i++) {
+    int diff = prices[i]-prices[i-1];
+    if(diff>0)
+        profit+=diff;
+}
+return profit;
+
 时间O(n) 空间O(1)
 
 
@@ -171,11 +248,19 @@ for i=1; i<prices.length; i++
 Best Time to Buy and Sell Stock iii (限定2次交易 扩展到k次)
 local[i][j]=max(local[i-1][j]+diff, global[i-1][j-1]+max(diff,0)) 
 global[i][j]=max(local[i][j],global[i-1][j])
-for i=1; i<prices.length; i++
+
+int global[] = new int[3];
+int local[] = new int[3];
+for(int i=1; i<prices.length; i++) {
     int diff = prices[i]-prices[i-1];
-    for(j=2; j>=1; j--)
+    for(int j=2; j>=1; j--) {
         local[j] = Math.max(local[j]+diff, global[j-1]+Math.max(diff,0));
         global[j] = Math.max(local[j], global[j]);
+    }
+}
+return global[2];
+
+O(n) O(1)
 
 
 
@@ -184,42 +269,116 @@ for i=1; i<prices.length; i++
 Best Time to Buy and Sell Stock iv
 ii iii结合
 
+if(k>prices.length)
+    return maxProfit(prices)
+int local = new int[k+1];
+int global = new int[k+1];
+for(int i=1; i<prices.length; i++) {
+    int diff = prices[i]-prices[i-1];
+    for(int j=k; j>=1; j--) {
+        local[j] = Math.max(local[j]+diff, global[j-1]+Math.max(diff, 0));
+        global[j] = Math.max(global[j], local[j]);
+    }
+}
+return global[k];
+
+private int maxProfit(prices) {
+    int profit = 0;
+    for(int i=1; i<prices.length; i++) {
+        int diff = prices[i]-prices[i-1];
+        if(diff>0)
+            profit+=diff;
+    }
+    return profit;
+}
+
+O(n), O(k)
+
 
 
 
 
 Combination Sum (找和为指定target的集合 每个元素可以用无限次)
 NP问题
+List<List<Integer>> res = new ArrayList<List<Integer>>();
+if(candidates==null || candidates.length==0)
+    return res;
 Arrays.sort(candidates);
-helper(candidates, 0, new ArrayList<Integer>(), target, res);
+helper(candidates, 0, target, new ArrayList<Integer>(), res);
+return res;
 
-if target==0
-if target<0
-for i=start; i<candidates.length; i++
-    if(i>0 && candidates[i]==candidates[i-1])
-        continue;
-    item.add();
-    helper(candidates, i, item, target-candidates[i], res);
-    item.remove();
+private void helper(int[] candidates, int start, int target, List<Integer> item, List<List<Integer>> res) {
+    if(target==0) {
+        res.add(new ArrayList<Integer>(item));
+        return;
+    }
+    if(target<0)
+        return;
+    for(int i=start; i<candidates.length; i++) {
+        if(i>0 && candidates[i]==candidates[i-1])
+            continue;
+        item.add(candidates[i]);
+        helper(candidates, i, target-candidates[i], item, res);
+        item.remove(item.size()-1);
+    }
+}
 
 
 
 
 
 Combination Sum ii (每个元素只能用一次)
-Arrays.sort(candidates);
-helper(candidates, 0, new ArrayList<Integer>(), target, res);
+List<list<Integer>> res = new ArrayList<List<Integer>>();
+if(num==null || num.length==0)
+    return res;
+Arrays.sort(num);
+helper(num, 0, target, new ArrayList<Integer>(), res);
+return res;
 
-if target==0
-if target<0 || start==candidates.length;
-for i=start; i<candidates.length; i++
-    if i>start && candidates[i]==candidates[i-1]
-        continue;
-    item.add();
-    helper(candidates, i+1, item, target-candidates[i], res);
-    item.remove();
+private void helper(int[] num, int start, int target, List<Integer> item, List<List<Integer>> res) {
+    if(target==0) {
+        res.add(new ArrayList<Integer>(item));
+        return;
+    }
+    if(target<0 || start>=num.length)
+        return;
+    for(int i=start; i<num.length; i++) {
+        if(i>start && num[i]==num[i-1])
+            continue;
+        item.add(num[i]);
+        helper(num, i+1, target-num[i], item, res);
+        item.remove(item.size()-1);
+    }
+}
 
-    
+
+
+
+
+Combination Sum iii
+给定取数个数k 和target n 找combination sum 取值范围只取1到9
+List<List<Integer>> res = new ArrayList<List<Integer>>();
+if(n<=0)
+    return res;
+int[] num = {1,2,3,4,5,6,7,8,9};
+helper(num, k, 0, n, new ArrayList<Integer>(), res);
+return res;
+
+private void helper(int[] num, int k, int start, int target, List<Integer> item, List<List<Integer>> res) {
+    if(target==0 && item.size()==k) {
+        res.add(new ArrayList<Integer>(item));
+        return;
+    }
+    if(target<0 || item.size()>k)
+        return;
+    for(int i=start; i<num.length; i++) {
+        item.add(num[i]);
+        helper(num, k, i+1, target-num[i], item, res);
+        item.remove(item.size()-1);
+    }
+}
+
+
 
 
 
@@ -309,12 +468,14 @@ return res;
 
 
 Construct Binary Tree from Preorder and Inorder Traversal
-树题 递归
-HashMap<Integer, Integer> map 保存中序值和索引的对应关系
-helper(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1, map);
+树题 先用map保存中序值和索引的对应关系 然后递归 利用preorder第一个元素是root
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+for(int i=0; i<inorder.length; i++)
+    map.put(inorder[i], i);
+return helper(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1, map);
 
-TreeNode helepr() {
-    if inL>inR || preL>preR
+private TreeNode helper(int[] preorder, int preL, int preR, int[] inorder, int inL, int inR, Map<Integer, Integer> map) {
+    if(inL>inR || preL>preR)
         return null;
     TreeNode root = new TreeNode(preorder[preL]);
     int index = map.get(preorder[preL]);
@@ -323,12 +484,14 @@ TreeNode helepr() {
     return root;
 }
 
+O(n) O(n)
+
 
 
 
 
 Construct Binary Tree from Inorder and Postorder Traversal
-同上
+
 
 
 

@@ -41,12 +41,12 @@ public class Solution {
     }
     
     private void helper(int[] num, int start, int target, List<Integer> item, List<List<Integer>> res) {
-        if(target==0)                   //这里要注意！！一定要先写target==0的判断 再写target<0||start>=num.length 例如num = [1],如果先判断start>=length就会直接返回 res不会加上这个结果就错了
-        {
+        if(target==0)                   //这里要注意！！一定要先写target==0的判断 再写target<0||start>=num.length 例如num = [1],
+        {                               //如果先判断start>=length就会直接返回 res不会加上这个结果就错了
             res.add(new ArrayList<Integer>(item));
             return;
         }
-        if(target<0 || start>=num.length)
+        if(target<0 || start>=num.length)   //不同于i 要加上start>=num.length的条件 因为i里元素随便取
             return;
         for(int i=start; i<num.length; i++)     //这里i从start开始
         {

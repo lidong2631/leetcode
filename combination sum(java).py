@@ -41,13 +41,13 @@ public class Solution {
     }
     
     private void helper(int[] candidates, int start, int target, List<Integer> item, List<List<Integer>> res) {
-        if(target<0)
-            return;
         if(target==0)
         {
             res.add(new ArrayList(item));       //这里是要new一个相当于copy一个item 如果直接用item它后面还会循环递归下去 每次会更改item里的内容 进而影响到这个res里的结果
             return;
         }
+        if(target<0)
+            return;
         for(int i=start; i<candidates.length; i++)
         {
             if(i>0 && candidates[i]==candidates[i-1])   //对于重复数字要跳过 因为这里每个数字可以重复用无限次 后面的递归一样会重复用这个数字
