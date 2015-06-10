@@ -837,15 +837,23 @@ for(int i=1; i<intervals.size(); i++) {
 
 Insert Intervals
 这题是上一题的进阶版 
+if(intervals==null || intervals.size()==0) {
+    List<Interval> res = new LinkedList<Interval>();
+    res.add(newInterval);
+    return res;
+}
+int i=0;
 while(i<intervals.size() && intervals.get(i).end<newInterval.start)
     i++;
 if(i<intervals.size());
     newInterval.start = Math.min(newInterval, intervals.get(i).start);
 intervals.add(i, newInterval);
 i++;
-while(i<intervals.size() &&　newInterval.end>=intervals.get(i).start)
+while(i<intervals.size() &&　newInterval.end>=intervals.get(i).start) {
     newInterval.end = Math.max(newInterval.end, intervals.get(i).end);
     intervals.remove(i);
+}
+return intervals;
 
 时间O(n) 空间O(1)
 
@@ -854,9 +862,9 @@ while(i<intervals.size() &&　newInterval.end>=intervals.get(i).start)
 
 
 Jump Game
-动态规划题
-reach = 0
-for i=0; i<A.length&&i<=reach; i++
+一维dp
+int reach = 0;
+for(int i=0; i<A.length&&i<=reach; i++)
     reach = Math.max(reach, i+A[i]);
 if(reach<A.length-1)
     return false;
@@ -869,12 +877,14 @@ return true;
 
 
 Jump Game ii
+上一题扩展 一维dp + 贪心
 int step = 0, reach = 0, lastReach = 0;
-for i=0; i<A.length&&i<=reach; i++
+for(int i=0; i<A.length&&i<=reach; i++) {
     if(i>lastReach)
         step++;
         lastReach = reach;
     reach = Math.max(reach, i+A[i]);
+}
 if(reach<A.length-1)
     return -1;
 return step;
@@ -889,7 +899,11 @@ Largest Rectangle in Histogram
 第一种做法对于每一个高度 分别往左右走找到它的最大面积 最后取所有最大面积中最大的 时间O(n^2) 空间O(1)
 
 第二种做法 利用栈维护一个递增序列
-for i=0; i<height.length; i++;
+if(height==null || height.length==0)
+    return 0;
+LinkedList<Integer> stack = new LinkedList<Integer>();
+int i=0, maxArea = 0;
+for(; i<height.length; i++)
     if(stack.isEmpty() || height[i]>height[stack.peek()])
         stack.push(i);
     else {
@@ -903,6 +917,7 @@ while(!stack.isEmpty()) {
     int width = stack.isEmpty()? i:i-stack.peek()-1;
     maxArea = Math.max(maxArea, width*height[i]);
 }
+return maxArea;
 
 时间O(n) 空间O(n)
 
@@ -912,10 +927,34 @@ while(!stack.isEmpty()) {
 
 Maximal Rectangle
 这题是上一题的扩展 
-for int i=0; i<matrix.length; i++
-    for int j=0; j<matrix[0].length; j++
+if(matrix==null || matrix.length==0 || matrix[0].length==0)
+    return 0;
+int maxArea = 0;
+int height = new int[matrix[0].length];
+for(int i=0; i<matrix.length; i++) {
+    for(int j=0; j<matrix[0].length; j++) {
         height[j] = matrix[i][j]=='0'? 0:height[j]+1;
+    }
     maxArea = Math.max(maxArea, largestRect(height));
+}
+return maxArea;
+
+private int largestRect(int[] height) {
+    if(height==null || height.length==0)
+        return 0;
+    Stack<Integer> stack = new Stack<Integer>();
+    int maxArea = 0, i = 0;
+    for(; i<height.length; i++) {
+        if(stack.empty() || height[i]>stack.peek())
+            i++;
+        else {
+            int index = stack.pop();
+            int width = stack.empty()?i:i-stack.peek()-1;
+            maxArea = Math.max(maxArea, width*height[index]);
+        }
+    }
+    return maxArea;
+}
 
 时间上Largest Rectangle in Histogram的复杂度为O(n) 而计算一行高度的复杂度也为O(n) 所以每一行的复杂度是O(n+n)=O(n) 
 
@@ -928,22 +967,32 @@ for int i=0; i<matrix.length; i++
 Longest Consecutive Sequence
 1 先排序在统计最长连续子序列 时间O(nlogn)
 
-2
-HashSet<Integer> set 记录所有数
-
+2 HashSet<Integer> set 记录所有数
+if(num==null || num.length==0)
+    return 0;
+Set<Integer> set = new HashSet<Integer>();
+int maxLen = 0;
+for(int i=0; i<num.length; i++)
+    set.add(num[i]);
 while(!set.isEmpty()) {
     Iterator i = set.iterator();
     int n = (int)i.next();
     set.remove(n);
-    int left = n-1; l = 0;
+    int left = n-1; lenL = 0;
     while(set.contains(left)) {
-        l++;
+        lenL++;
         set.remove(left);
         left--;
     }
-    right同left
-    maxLen = Math.max(maxLen, l+1+r);
+    int right = n+1; lenR = 0;
+    while(set.contains(right)) {
+        lenR++;
+        set.remove(right);
+        right++;
+    }
+    maxLen = Math.max(maxLen, lenL+1+lenR);
 }
+return maxLen;
 
 时间O(n) 空间O(n)
 
@@ -953,13 +1002,25 @@ while(!set.isEmpty()) {
 
 Majority Element
 Moore voting algorithm
-for i=0; i<num.length; i++
-    if(count==0)
+
+int counter = 0, curr = 0;
+for(int i=0; i<num.length; i++) {
+    if(counter==0) {
         major = num[i];
-        count++;
+        counter++;
+    }
     else if(major==num[i])
-        count++;
-    else count--;
+        counter++;
+    else counter--;
+}
+int counter = 0;
+for(int i=0; i<num.length; i++) {
+    if(num[i]==curr)
+        counter++;
+}
+if(counter<=num.length/2)
+    return -1;
+return curr;
 
 时间O(n) 空间O(1)
 
@@ -974,6 +1035,7 @@ for(int i=1; i<A.length; i++) {
     local = Math.max(local+A[i], A[i]);
     global = Math.max(global, local);
 }
+return global;
 
 时间O(n) 空间O(1)
 
@@ -982,6 +1044,7 @@ for(int i=1; i<A.length; i++) {
 
 
 Maximum Product Subarray
+上一题的扩展 还需要维护一个最小 因为乘法性质可能负负得正
 int maxLocal = A[0], minLocal = A[0], maxCopy = A[0];
 for(int i=1; i<A.length; i++) {
     int maxCopy = maxLocal;
