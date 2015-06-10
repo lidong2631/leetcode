@@ -700,8 +700,8 @@ return num[left];
 
 
 Search in Rotated Sorted Array
-while(left<=right)
-    if target==A[mid]
+while(left<=right) {
+    if(target==A[mid])
         return mid;
     if(A[mid]>A[right]) {
         if(A[left]<=target && target<A[mid])
@@ -715,6 +715,7 @@ while(left<=right)
         else
             right = mid - 1;
     }
+}
 时间O(logn) 空间O(1)
 
 
@@ -722,8 +723,8 @@ while(left<=right)
 
 
 Search in Rotated Sorted Array ii
-while left<=right
-    if target==A[mid]
+while(left<=right) {
+    if(target==A[mid])
         return mid;
     if(A[mid]>A[right]) {
         if(A[left]<=target && target<A[mid])
@@ -739,6 +740,7 @@ while left<=right
     }
     else
         right--;
+}
 时间最坏是O(n) 空间O(1)
 
 
@@ -790,15 +792,19 @@ return left;
 
 
 First Missing Positive integer
-for i=0; i<A.length; i++
-    if(A[i]>0 && A[i]<A.length+1 && A[A[i]-1]=A[i])
+利用数组的index来作为数字本身的索引，把正数按照递增顺序依次放到数组中
+for(int i=0; i<A.length; i++) {
+    if(A[i]>0 && A[i]<A.length+1 && A[A[i]-1]!=A[i]) {
         int tmp = A[A[i]-1];
         A[A[i]-1] = A[i];
         A[i] = tmp;
         i--;
-for i=0; i<A.length; i++
+    }
+}
+for(int i=0; i<A.length; i++) {
     if A[i]!=i+1;
         return i+1;
+}
 return A.length+1;
 
 时间O(n) 空间O(1)
@@ -816,12 +822,13 @@ Comparator<Interval> cmp = new Comparator<Interval>(){
     }
 };
 Collections.sort(intervals, cmp);
-for(int i=1; i<intervals.size(); i++)
-    if(intervals.get(i).start<=intervals.get(i-1).end)
+for(int i=1; i<intervals.size(); i++) {
+    if(intervals.get(i).start<=intervals.get(i-1).end) {
         intervals.get(i-1).end = Math.max(intervals.get(i-1).end, intervals.get(i).end);
         intervals.remove(i);
         i--;
-
+    }
+}
 时间O(n) 空间O(1)
 
 
@@ -1405,8 +1412,6 @@ while l<=r && up<=down
 
 
 
-<<<<<<< HEAD:leetcode_Array.java
-
 Triangle
 动态规划题 建立一个数组sum[triangle.size()] sum[0]=triangle.get(0).get(0) 从第二行开始每次从后往前扫 单独处理第一个和最后一个元素 对于一般的元素
 
@@ -1421,8 +1426,6 @@ sum[0] += triangle.get(i).get(0);
 
 
 
-=======
->>>>>>> 1e155d3a014dcb754239fee1930340b843421578:leetcode_Array
 Word Search
 boolean[][] used = new boolean[board.length][board[0].length];
 for i=0; i<board.length; i++
@@ -1445,51 +1448,4 @@ helper(char[][] board, int index, int i, int j, String word, boolean[][] used) {
     return res;
 }
 时间复杂度 空间O(m*n)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> f577b1f2d86f7991c70d64a63aead74e3fa827a4
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
