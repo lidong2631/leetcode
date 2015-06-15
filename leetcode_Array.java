@@ -1061,7 +1061,10 @@ for(int i=1; i<A.length; i++) {
 
 Median of Two Sorted Arrays
 if((A.length+B.length)%2==1)
+    return helper(A, 0, A.length-1, B, 0, B.length-1, (A.length + B.length)/2+1);
 else
+    return (helper(A, 0, A.length-1, B, 0, B.length-1, (A.length+B.length)/2) + 
+            helepr(A, 0, A.length-1, B, 0, B.length-1, (A.length+B.length)/2+1))/2.0;
 
 private int helper(A, startA, endA, B, startB, endB, k) {
     lenA = endA-startA+1;
@@ -1108,9 +1111,12 @@ while(indexB>=0)
 Unique Paths
 动态规划 递推式为res[i][j] = res[i][j-1]+res[i-1][j]
 res[0] = 1
-for int i=0; i<m; i++
-    for int j=1; j<n; j++
+for(int i=0; i<m; i++) {
+    for(int j=1; j<n; j++) {
         res+=res[j-1]
+    }
+}
+return res[n-1];
 
 时间O(m*n) 空间O(n)
 
@@ -1121,13 +1127,17 @@ for int i=0; i<m; i++
 Unique Paths ii
 思路同上一题 只是这里有不能走的格子 递推式是若当前格子不为1则同上一题res[i][j]=res[i][j-1]+res[i-1][j] 否则res[i][j]=0 
 res[0] = 1;
-for i=0; i<obstacleGrid.length; i++
-    for j=0; j<obstacleGrid[0].length; j++
+for(int i=0; i<obstacleGrid.length; i++) {
+    for(int j=0; j<obstacleGrid[0].length; j++) {
         if(obstacleGrid[i][j]==1)
             res[j] = 0;
-        else
+        else {
             if(j>0)
                 res[j]+=res[j-1];
+        }
+    }
+}
+return res[obstacleGrid[0].length-1]l
 
 时间O(m*n) 空间O(n)
 
@@ -1140,12 +1150,14 @@ Minimum Path Sum
 res[0] = grid[0][0];
 for(int i=1; i<grid[0].length; i++)
     res[j] = res[j-1] + grid[0][i];
-for i=1; i<grid.length; i++
-    for j=0; j<grid[0].length; j++
+for(int i=1; i<grid.length; i++) {
+    for(int j=0; j<grid[0].length; j++) {
         if(j==0)
             res[j]+=grid[i][0];
         else
             res[j] = grid[i][j]+Math.min(res[j], res[j-1]);
+    }
+}
 
 时间O(m*n) 空间O(n)
 
@@ -1155,14 +1167,15 @@ for i=1; i<grid.length; i++
 
 Missing Range
 人为加两个元素在lower-1 upper+1可以避免所有pesky case
-if A==null ||　A.length==0
+if(A==null ||　A.length==0)
     res.add(getRange(lower, upper));
 int prev = lower-1;
-for i=0; i<=A.length; i++
+for(int i=0; i<=A.length; i++) {
     int curr = (i==A.length)? upper+1:A[i];
-    if curr-prev>=2
+    if(curr-prev>=2)
         res.add(getRange(prev+1, curr-1));
     prev = curr;
+}
 
 private String getRange(int from, int to)
     return (from==to)? String.valueOf(from):String.valueOf(from) + "->" + String.valueOf(to);
