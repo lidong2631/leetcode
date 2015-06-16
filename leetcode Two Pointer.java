@@ -21,16 +21,17 @@ return true;
 
 Two Sum ii - input array is sorted
 夹逼比较
-while l<r
-	if(numbers[l]+numbers[r]==target)
+while(l<r) {
+	if(numbers[l]+numbers[r]==target) {
 		res[0] = l+1;
 		res[0] = r+1;
 		return res;
-	else if ...
+    }
+	else if(numbers[l]+numbers[r]>target)
 		r--;
 	else
 		l++;
-
+}
 时间O(n) 空间O(1)
 
 
@@ -109,14 +110,20 @@ private helper(int[] nums, int start, int target) {
 Container With Most Water
 夹逼
 求两条垂直x轴的线和x轴围成的container里能乘的最大水量
-while left<right
-    int diff
-    if diff>0
+while(left<right) {
+    int diff = height[right]-height[left];
+    if(diff>0) {
         int localWater = (right-left)*height[left];
         maxWater = maxWater<localWater ? localWater:maxWater;
         left++;
-    else
-        同上 right
+    }
+    else {
+        int localWater = (right-left)*height[right];
+        maxWater = maxWater<localWater ? localWater:maxWater;
+        right--;
+    }
+}
+return maxWater;
 
 时间O(n) 空间O(1)
 
@@ -152,8 +159,14 @@ while(left<right) {
         }
     }
     else {
-        right 同上
+        right--;
+        while(left<right && A[right]<=minHeight) {
+            water+=minHeight-A[right];
+            right--;
+        }
     }
+}
+return water;
 
 时间O(n) 空间O(1) 优于上一解法
 
@@ -166,14 +179,15 @@ Sort Colors
 1 计数排序
 int[] c = new int[3];
 int[] res = new int[A.length];
-for int i=0; i<A.length; i++
+for(int i=0; i<A.length; i++)
     c[A[i]]+=1;
-for int i=1; i<3; i++
+for(int i=1; i<3; i++)
     c[i]+=c[i-1];
-for int i=A.length-1; i>=0; i--
+for(int i=A.length-1; i>=0; i--) {
     res[c[A[i]]-1] = A[i];
     c[A[i]]--;
-for int i=0; i<A.length; i++
+}
+for(int i=0; i<A.length; i++)
     A[i] = res[i];
 
 2 
@@ -195,20 +209,22 @@ for(int i=0; i<A.length; i++)
 
 Rotate List
 先计算长度 再走到length－n的位置
-ListNode dummy = new ListNode(0);
-ListNode p = dummy;
-while(p.next!=null)
-	p = p.next;
-	len++;
+if(head==null)
+    return null;
+ListNode p = new ListNode(0);
+p.next = head;
+int len = 0;
+while(p.next!=null) {
+    p = p.next;
+    len++;
+}
 n%=len;
-p.next = head //////
+p.next = head;
 for(int i=0; i<len-n; i++)
-	dummy = dummy.next;
-ListNode newHead = dummy.next;
-dummy.next = null;
-return newHead;
-
-corner case n大于链表长度
+    p = p.next;
+head = p.next;
+p.next = null;
+return head;
 时间O(n) 空间O(1)
 
 
