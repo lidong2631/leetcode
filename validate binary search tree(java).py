@@ -136,17 +136,17 @@ In-order traversal
 private TreeNode prev;
 public boolean isValidBST(TreeNode root) {
     prev = null;
-    return isMonotonicIncreasing(root);
+    return helper(root);
 }
 
-private boolean isMonotonicIncreasing(TreeNode p) {
+private boolean helper(TreeNode p) {
     if(p==null)
         return true;
-    if(isMonotonicIncreasing(p.left)) {
+    if(helper(p.left)) {
         if(prev!=null && p.val<=prev.val)
             return false;
         prev = p;
-        return isMonotonicIncreasing(p.right);
+        return helper(p.right);
     }
     return false;
 }
