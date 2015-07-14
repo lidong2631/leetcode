@@ -279,3 +279,75 @@ public class WordDictionary {
 
 
 
+Implement stack using queue
+push直接push pop时将队列元素重新一个个排到队尾 剩原来最后一个元素在队首
+class MyStack {
+    Queue<Integer> queue = new LinkedList<Integer>();
+    
+    // Push element x onto stack.
+    public void push(int x) {
+        queue.add(x);    
+    }
+
+    // Removes the element on top of the stack.
+    public void pop() {
+        int size = queue.size();
+        for(int i=1; i<size; i++) {
+            queue.add(queue.remove());
+        }
+        queue.remove();
+    }
+
+    // Get the top element.
+    public int top() {
+        int size = queue.size();
+        for(int i=1; i<size; i++) {
+            queue.add(queue.remove());
+        }
+        int tmp = queue.remove();
+        queue.add(tmp);
+        return tmp;
+    }
+
+    // Return whether the stack is empty.
+    public boolean empty() {
+        return queue.isEmpty();
+    }
+}
+
+push O(1) pop O(n)
+
+
+
+
+Implement Queue using Stacks
+cc150原题3.5 两个stack 一个管push 一个管pop 当output stack里没东西时把input stack里的东西导入output statck
+class MyQueue {
+    Stack<Integer> input = new Stack<Integer>();
+    Stack<Integer> output = new Stack<Integer>();
+    
+    // Push element x to the back of queue.
+    public void push(int x) {
+        input.push(x);
+    }
+
+    // Removes the element from in front of queue.
+    public void pop() {
+        peek();
+        output.pop();
+    }
+
+    // Get the front element.
+    public int peek() {
+        if(output.isEmpty()) {
+            while(!input.isEmpty())
+                output.push(input.pop());
+        }
+        return output.peek();
+    }
+
+    // Return whether the queue is empty.
+    public boolean empty() {
+        return input.isEmpty() && output.isEmpty();
+    }
+}

@@ -173,6 +173,16 @@ O(n) O(n)
 
 
 
+Power of Two
+if(n==0 || n==Integer.MIN_VALUE)
+	return false;
+return (n&(n-1))==0;
+
+O(1) O(1)
+
+
+
+
 Number of 1 Bits
 1 直观的解法 判断每一位是否为1 并累加
 int count = 0;

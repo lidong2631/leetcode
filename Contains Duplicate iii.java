@@ -4,8 +4,8 @@ public class Solution {
             return false;
         TreeSet<Integer> tree = new TreeSet<Integer>();
         for(int i=0; i<nums.length; i++) {
-            Integer rightSub = tree.floor(nums[i]+t);
-            Integer leftSub = tree.ceiling(nums[i]-t);
+            Integer rightSub = tree.floor(nums[i]+t); //Returns the greatest element in this set less than or equal to the given element
+            Integer leftSub = tree.ceiling(nums[i]-t); //Returns the least element in this set greater than or equal to the given element
             if((rightSub!=null && rightSub>=nums[i]) || (leftSub!=null && leftSub<=nums[i]))
                 return true;
             tree.add(nums[i]);

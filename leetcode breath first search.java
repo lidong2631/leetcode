@@ -212,6 +212,65 @@ O(m*n)
 
 
 
+Minimum Depth of Binary Tree
+1 recursion
+public class Solution {
+    public int minDepth(TreeNode root) {
+        if(root==null)
+            return 0;
+        if(root.left==null)
+            return minDepth(root.right)+1;
+        if(root.right==null)
+            return minDepth(root.left)+1;
+        return Math.min(minDepth(root.left), minDepth(root.right))+1;
+    }
+}
+
+O(n) O(logn)
+
+2 iterative
+public class Solution {
+    public int minDepth(TreeNode root) {
+        if(root==null)
+            return 0;
+        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+        int currNum = 1;
+        int nextNum = 0;
+        int level = 1;              //这里level初始值要是1 因为111行如果判断成立 会立刻返回level 没有机会再让它加一次1
+        queue.offer(root);
+        while(!queue.isEmpty())
+        {
+            TreeNode curr = queue.poll();
+            currNum--;
+            if(curr.left==null && curr.right==null)     //这里是终止条件 只要遍历到一个叶子节点 立刻返回 因为是找最小二叉树深度
+            {
+                return level;
+            }
+            if(curr.left!=null)
+            {
+                queue.offer(curr.left);
+                nextNum++;
+            }
+            if(curr.right!=null)
+            {
+                queue.offer(curr.right);
+                nextNum++;
+            }
+            if(currNum==0)
+            {
+                currNum = nextNum;
+                nextNum = 0;
+                level++;
+            }
+        }
+        return 0;
+    }
+}
+
+O(n) O(n)
+
+
+
 Course Schedule
 DFS for a connected graph produces a tree
 There is a cycle in a graph only if there is a back edge(from a node to itself or one of its ancestors in the tree)

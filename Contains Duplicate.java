@@ -21,5 +21,12 @@ O(n) O(n)
 2 先排序 再检查相邻元素是否有重复 O(nlogn) O(1)
 
 这个题的扩展可以看一下
+
 http://www.geeksforgeeks.org/find-the-two-repeating-elements-in-a-given-array/
+You are given an array of n+2 elements. All elements of the array are in range 1 to n. And all elements occur 
+once except two numbers which occur twice. Find the two repeating numbers.
+
+
 http://www.geeksforgeeks.org/find-duplicates-in-on-time-and-constant-extra-space/
+Given an array of n elements which contains elements from 0 to n-1, with any of these numbers appearing 
+any number of times. Find these repeating numbers in O(n) and using only constant memory space.

@@ -129,6 +129,8 @@ return (i==s.length()) && isNumeric;
 
 String to Integer
 atoi 注意溢出问题
+int maxDiv10 = Integer.MAX_VALUE/10;
+int i=0, n=str.length();
 while(i<n && Character.isWhitespace(str.charAt(i))) //这里每个while if都写i<n主要为了处理""情况 也可以在开始if(str==null || str.length()==0)类似code ganker写法
     i++;
 int sign = 1;

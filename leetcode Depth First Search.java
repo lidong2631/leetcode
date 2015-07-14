@@ -47,17 +47,52 @@ if(root==null)
 return helper(root.left, root.right);
 
 private boolean helper(TreeNode left, TreeNode right) {
-	if(left==null && right==null)
-		return true;
-	else if(left.val==right.val)
-		return helper(left.left, right.right) && helper(left.right, right.left);
-	else
-		return false;
+    if(left==null && right==null)
+        return true;
+    else if(left==null || right==null)
+        return false;
+    else if(left.val!=right.val)
+        return false;
+    return helper(left.left, right.right) &&
+            helper(left.right, right.left);
 }
 
 O(n) O(logn)
 
 2 非递归
+if(root==null)
+    return true;
+if(root.left==null && root.right==null)
+    return true;
+if(root.left==null || root.right==null)
+    return false;
+Queue<TreeNode> q1 = new LinkedList<TreeNode>();
+Queue<TreeNode> q2 = new LinkedList<TreeNode>();
+q1.add(root.left);
+q2.add(root.right);
+while(!q1.isEmpty() && !q2.isEmpty()) {
+    TreeNode left = q1.poll();
+    TreeNode right= q2.poll();
+    if(left.val!=right.val)
+        return false;
+    if((left.left!=null && right.right==null)
+        || (left.right!=null && right.left==null))
+        return false;
+    if((left.left==null && right.right!=null)
+        || (left.right==null && right.left!=null))
+        return false;
+    if(left.left!=null && right.right!=null) {
+        q1.add(left.left);
+        q2.add(right.right);
+    }
+    if(left.right!=null && right.left!=null) {
+        q1.add(left.right);
+        q2.add(right.left);
+    }
+}
+return true;
+
+O(n) O(n)
 
 
 
@@ -291,7 +326,7 @@ return Math.max(maxDepth(root.left), maxDepth(root.right))+1;
 
 O(n) O(logn)
 
-2 非递归
+2 非递归 层序遍历
 if(root==null)
 	return 0;
 Queue<TreeNode> queue = new LinkedList<TreeNode>();

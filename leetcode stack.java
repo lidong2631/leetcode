@@ -205,6 +205,64 @@ O(m*n) O(n)
 
 
 
+Implement Queue using Stacks
+Stack<Integer> input = new Stack<Integer>();
+Stack<Integer> output = new Stack<Integer>();
+
+public void push(int x) {
+    input.push(x);
+}
+
+public int pop() {
+    peek();
+    output.pop();
+}
+
+public int peek() {
+    if(output.empty()) {
+        while(!input.empty()) {
+            output.push(input.pop());
+        }
+    }
+    return output.peek();
+}
+
+public boolean empty() {
+    return input.empty() && output.empty();
+}
+
+
+
+
+Implement Stack using Queues
+Queue<Integer> queue = new LinkedList<Integer>();
+
+public void push(int x) {
+    queue.add(x);
+}
+
+public int pop() {
+    int size = queue.size();
+    for(int i=1; i<size; i++) {
+        queue.add(queue.remove());
+    }
+    return queue.remove();
+}
+
+public int peek() {
+    int size = queue.size();
+    for(int i=1; i<size; i++) {
+        queue.add(queue.remove());
+    }
+    queue.peek();
+}
+
+public boolean empty() {
+    return queue.isEmpty();
+}
+
+
+
 
 Evaluate Reverse Polish Notation
 从左往右扫 碰到数压栈 碰到运算符出栈计算并将结果压栈 对于波兰式思路类似 只是从右往左扫

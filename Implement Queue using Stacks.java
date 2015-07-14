@@ -31,3 +31,5 @@ class MyQueue {
 简单题 跟两个queue实现一个stack思路差不多 O(1)操作
 
 https://leetcode.com/discuss/44106/short-o-1-amortized
+
+Note stack has both isEmpty(), empty() methods
