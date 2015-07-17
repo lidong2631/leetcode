@@ -372,6 +372,40 @@ O(n) O(1)
 
 
 
+Palindrome Linked List
+先将链表前半reverse 再逐个比较
+if(head==null || head.next==null)
+    return true;
+int len = 0;
+ListNode curr = head;
+while(curr!=null) {
+    curr = curr.next;
+    len++;
+}
+curr = head.next;
+ListNode prev = head;
+head.next = null;
+for(int i=0; i<len/2-1; i++) {
+    ListNode tmp = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = tmp;
+}
+if(len%2==1)
+    curr = curr.next;
+while(curr!=null) {
+    if(prev.val!=curr.val)
+        return false;
+    prev = prev.next;
+    curr = curr.next;
+}
+return true;
+
+O(n) O(1)
+
+
+
+
 
 Merge Two Sorted Lists
 if(l1 == null) return l2;
@@ -466,7 +500,7 @@ Linked List Cycle
 if(head==null || head.next==null)
 	return false;
 ListNode slow = head, fast = head;
-while(fast.next!=null && fast.next.next!=null) {
+while(fast!=null && fast.next!=null) {
 	slow = slow.next;
 	fast = fast.next.next;
 	if(fast==slow)
@@ -484,7 +518,7 @@ Linked List Cycle ii
 if(head==null || head.next==null)
 	return null;
 ListNode slow = head, fast = head;
-while(fast.next!=null && fast.next.next!=null) {
+while(fast!=null && fast.next!=null) {
 	slow = slow.next;
 	fast = fast.next.next;
 	if(slow==fast)

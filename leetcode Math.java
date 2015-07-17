@@ -150,6 +150,33 @@ while x!=0
 
 
 
+Rectangle Area
+如果两矩形没有重叠 直接加 否则加完减去重叠部分 判断重叠依据如下
+1) One rectangle is above top edge of other rectangle.
+2) One rectangle is on left side of left edge of other rectangle.
+int Area1 = (C-A)*(D-B);
+int Area2 = (G-E)*(H-F);
+if(A>G || E>C || B>H || F>D)
+    return Area1+Area2;
+int length = Math.min(C, G) - Math.max(A, E);
+int height = Math.min(D, H) - Math.max(B, F);
+return Area1+Area2-length*height;
+
+
+
+
+Power of Two
+if(n==0 || n==Integer.MIN_VALUE)
+    return false;
+return (n&(n-1))==0;
+
+
+
+
+Pow(x,n)
+
+
+
 
 Plus One
 for i=digits.length-1; i>=0; i--
@@ -250,6 +277,27 @@ return globalMax
 
 
 
+Happy Number
+Set<Integer> set = new HashSet<Integer>();
+int res = 0;
+
+while(!set.contains(n) && n!=1) {
+    set.add(n);
+    int k = 1;
+    while(n/k>=10)
+        k*=10;
+    while(n!=0) {
+        res+=Math.pow(n/k, 2);
+        n%=k;
+        k/=10;
+    }
+    n = res;
+    res = 0;
+}
+return n==1 ? true:false;
+
+
+
 
 Fraction to Recurring Decimal
 位运算
@@ -285,10 +333,12 @@ return res.toString();
 
 Factorial Trailing Zeros
 if(n<0)
-	return 0;
-while n>0
-	count+=n/5;
-	n/=5;
+    return 0;
+int count = 0;
+while(n>0) {
+    count+=n/5;
+    n/=5;
+}
 return count;
 
 
@@ -296,8 +346,12 @@ return count;
 
 
 Excel Sheet Column Number
-for i=s.length()-1; i>=0; i--
-	res+=(int)(s.charAt(i)-'A'+1)*Math.pow(26, count++);
+int count = 0;
+int res = 0;
+for(int i=s.length()-1; i>=0; i--) {
+    res+=(s.charAt(i)-'A'+1)*Math.pow(26, count++);
+}
+return res;
 时间O(n) 空间O(1)
 
 
@@ -305,10 +359,14 @@ for i=s.length()-1; i>=0; i--
 
 
 Excel Sheet Column Titla
-while(n>0)
-	int diff = (n-1)%26;
-	res.append((char)('A'+diff));
-	n = (n-1)/26;
+if(n<1)
+    return "";
+StringBuilder res = new StringBuilder();
+while(n>0) {
+    int diff = (n-1)%26;
+    res.append((char)('A'+diff));
+    n = (n-1)/26;
+}
 return res.reverse().toString();
 时间O(n) 空间O(1)
 
@@ -372,6 +430,34 @@ while n>0
 return sign?-res:res;
 
 时间O(logn) 空间O(1)
+
+
+
+
+Count Primes
+boolean[] isPrime = new boolean[n];
+for(int i=2; i<n; i++)
+	isPrime[i] = true;
+for(int i=2; i<n; i++) {
+	if(!isPrime[i])
+		continue;
+	for(int j=i*i; j<n; j+=i) {
+		isPrime[j] = false;
+	}
+}
+int count = 0;
+for(int i=2; i<n; i++) {
+	if(isPrime[i])
+		count++;
+}
+return count;
+
+O(nlog(logn)) O(n)
+
+
+
+
+Basic Calculator
 
 
 

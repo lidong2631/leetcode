@@ -239,7 +239,7 @@ while(p1!=null &&　i<n) {
 	i++;
 }
 if(i<n)
-	n%=i;
+	return head;
 if(p1==null)
 	return head.next;
 ListNode p2 = head;
@@ -279,7 +279,7 @@ for(int i=n; i<A.length; i++) {
     if(A[i]!=A[index-n])
         A[index++] = A[i];
 }
-return index+1;
+return index;
 
 时间O(n) 空间O(1)
 
@@ -308,6 +308,39 @@ return head1.next;
 
 时间O(n) 空间O(1)
 
+
+
+
+Palindrome Linked List
+先将链表前半reverse 再逐个比较
+if(head==null || head.next==null)
+    return true;
+int len = 0;
+ListNode curr = head;
+while(curr!=null) {
+    curr = curr.next;
+    len++;
+}
+curr = head.next;
+ListNode prev = head;
+head.next = null;
+for(int i=0; i<len/2-1; i++) {
+    ListNode tmp = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = tmp;
+}
+if(len%2==1)
+    curr = curr.next;
+while(curr!=null) {
+    if(prev.val!=curr.val)
+        return false;
+    prev = prev.next;
+    curr = curr.next;
+}
+return true;
+
+O(n) O(1)
 
 
 

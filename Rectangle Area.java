@@ -10,5 +10,9 @@ public class Solution {
     }
 }
 
+Following is a simpler approach. Two rectangles do not overlap if one of the following conditions is true.
+1) One rectangle is above top edge of other rectangle.
+2) One rectangle is on left side of left edge of other rectangle.
+
 http://articles.leetcode.com/2011/05/determine-if-two-rectangles-overlap.html
 http://www.geeksforgeeks.org/find-two-rectangles-overlap/

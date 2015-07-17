@@ -596,6 +596,7 @@ O(k^n) O(k^n)
 
 
 Length of Last Word
+int j = s.length(), count = 0;
 for(int i=s.length（）-1； i>=0; i--) {
     if(s.charAt(i)==' ')
         j = i;
@@ -721,7 +722,10 @@ O(n) O(1)
 
 
 Anagrams
-
+List<String> res = new ArrayList<String>();
+if(strs==null || strs.length==0)
+    return res;
+HashMap<String, List<String>> map = new HashMap<String, List<String>>();
 for(int i=0; i<strs.length; i++) {
     char[] arr = strs[i].toCharArray();
     Arrays.sort(arr);

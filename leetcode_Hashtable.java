@@ -50,6 +50,29 @@ return maxLen;
 
 
 
+Isomorphic Strings
+Map<Character, Character> mapS = new HashMap<Character, Character>();
+Map<Character, Character> mapT = new HashMap<Character, Character>();
+for(int i=0; i<s.length(); i++) {
+    char c1 = s.charAt(i);
+    char c2 = t.charAt(i);
+    if(mapS.containsKey(c1)) {
+        if(mapS.get(c1)!=c2)
+            return false;
+    }
+    if(mapT.containsKey(c2)) {
+        if(mapT.get(c2)!=c1)
+            return false;
+    }
+    mapS.put(c1, c2);
+    mapT.put(c2, c1);
+}
+return true;
+
+O(n) O(n)
+
+
+
 
 Minimum Window Substring
 窗口思路
@@ -377,12 +400,40 @@ while(p1!=null)
 
 
 
+Anagrams
+List<String> res = new ArrayList<String>();
+if(strs==null || strs.length==0)
+    return res;
+HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+for(int i=0; i<strs.length; i++)
+{
+    char[] charStr = strs[i].toCharArray();
+    Arrays.sort(charStr);
+    String str = new String(charStr);
+    if(map.containsKey(str))
+    {
+        map.get(str).add(strs[i]);
+    }
+    else
+    {
+        List<String> item = new ArrayList<String>();
+        item.add(strs[i]);
+        map.put(str, item);
+    }
+}
+Iterator iter = map.values().iterator();
+while(iter.hasNext())
+{
+    List<String> anagrams = (List<String>)iter.next();
+    if(anagrams.size()>1)
+        res.addAll(anagrams);
+}
+return res;
 
 
 
 
-
-
+4Sum
 
 
 
