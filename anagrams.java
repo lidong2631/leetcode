@@ -62,7 +62,7 @@ public boolean isAnagram(String s, String t) {
         letters[c]++;
     for(int i=0; i<t.length(); i++) {
         int c = (int)t.charAt(i);
-        if(--letters[c]<=)
+        if(--letters[c]<0)
             return false;
     }
     return true;

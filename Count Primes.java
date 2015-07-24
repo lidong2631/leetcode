@@ -57,6 +57,15 @@ http://apps.topcoder.com/forums/;jsessionid=4883B3FC83082B2741A6033D265FAD1E?mod
 
 
 这题的easy版 check if a given number is prime
+//checks whether an int is prime or not.
+boolean isPrime(int n) {
+    for(int i=2;i<n;i++) {
+        if(n%i==0)
+            return false;
+    }
+    return true;
+}
+
 
 boolean isPrime(int n) {
     if(n%2==0)      //check if n is a multiple of 2
