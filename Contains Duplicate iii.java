@@ -1,6 +1,6 @@
 public class Solution {
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
-        if(nums==null || nums.length==0)
+        if(nums==null || nums.length==0 || k<=0)    //判断k是不是合法
             return false;
         TreeSet<Integer> tree = new TreeSet<Integer>();
         for(int i=0; i<nums.length; i++) {
@@ -9,7 +9,7 @@ public class Solution {
             if((rightSub!=null && rightSub>=nums[i]) || (leftSub!=null && leftSub<=nums[i]))
                 return true;
             tree.add(nums[i]);
-            if(i-k>0)
+            if(i-k>=0)          //注意这里是等于
                 tree.remove(nums[i-k]);
         }
         return false;

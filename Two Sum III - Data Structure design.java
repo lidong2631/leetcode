@@ -47,9 +47,7 @@ public class TwoSum {
     
 	public void add(int number) { 
 	    for(Integer num : list) {
-	        if(set.contains(num+number))
-	            return;
-	        else
+	        if(!set.contains(num+number))
 	            set.add(num+number);
 	    }
 	    list.add(number);
@@ -58,7 +56,7 @@ public class TwoSum {
 	}
 
 	public boolean find(int value) {
-	    if(set.contains(value) && list.size()!=1)
+	    if(set.contains(value) && list.size()>1)
 	        return true;
 	    else
 	        return false;

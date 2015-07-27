@@ -21,7 +21,7 @@ class MyStack {
         for(int i=1; i<size; i++) {
             queue.add(queue.remove());
         }
-        int tmp = queue.remove();
+        int tmp = queue.remove();   //不能用peek() 用peek会改变原始的顺序
         queue.add(tmp);
         return tmp;
     }
