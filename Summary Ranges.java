@@ -16,3 +16,5 @@ public class Solution {
         return (from==to)?String.valueOf(from):String.valueOf(from)+"->"+String.valueOf(to);
     }
 }
+
+O(n) O(1)

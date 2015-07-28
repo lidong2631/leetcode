@@ -551,7 +551,7 @@ while(j<nums.length && j-i<=k) {
     if(set.contains(nums[j]))
         return true;
     else
-        set.add(nums[i]);
+        set.add(nums[j]);
     j++;
 }
 while(j<nums.length) {
@@ -1006,10 +1006,10 @@ Moore voting algorithm
 int counter = 0, curr = 0;
 for(int i=0; i<num.length; i++) {
     if(counter==0) {
-        major = num[i];
+        curr = num[i];
         counter++;
     }
-    else if(major==num[i])
+    else if(curr==num[i])
         counter++;
     else counter--;
 }
@@ -1110,12 +1110,11 @@ while(indexB>=0)
 
 Unique Paths
 动态规划 递推式为res[i][j] = res[i][j-1]+res[i-1][j]
-res[0] = 1
-for(int i=0; i<m; i++) {
-    for(int j=1; j<n; j++) {
-        res+=res[j-1]
-    }
-}
+int[] res = new int[n];
+res[0] = 1;
+for(int i=0; i<m; i++)
+    for(int j=1; j<n; j++)
+        res[j] += res[j-1];
 return res[n-1];
 
 时间O(m*n) 空间O(n)
@@ -1126,21 +1125,50 @@ return res[n-1];
 
 Unique Paths ii
 思路同上一题 只是这里有不能走的格子 递推式是若当前格子不为1则同上一题res[i][j]=res[i][j-1]+res[i-1][j] 否则res[i][j]=0 
+if(obstacleGrid==null | obstacleGrid.length==0 || obstacleGrid[0].length==0)
+    return 0;
+int[] res = new int[obstacleGrid[0].length];
 res[0] = 1;
-for(int i=0; i<obstacleGrid.length; i++) {
-    for(int j=0; j<obstacleGrid[0].length; j++) {
-        if(obstacleGrid[i][j]==1)
+for(int i=0; i<obstacleGrid.length; i++)
+{
+    for(int j=0; j<obstacleGrid[0].length; j++)     //j从0开始 因为每次要判断当前行第一个元素是不是障碍
+    {
+        if(obstacleGrid[i][j]==1)               //check
             res[j] = 0;
-        else {
-            if(j>0)
-                res[j]+=res[j-1];
+        else
+        {
+            if(j>0)                             //记得j>)才可以用res[j]+=res[j-1]
+                res[j] += res[j-1];
         }
     }
 }
-return res[obstacleGrid[0].length-1]l
+return res[obstacleGrid[0].length-1];
 
 时间O(m*n) 空间O(n)
 
+
+
+
+Minimum Size Subarray Sum
+if(nums==null || nums.length==0)
+    return 0;
+int left = 0, right = 0;
+int minLen = nums.length+1;
+int res = 0;
+boolean sign = false;
+while(right<nums.length) {
+    res+=nums[right];
+    while(res>=s) {
+        sign = true;
+        res-=nums[left];
+        minLen = Math.min(minLen, right-left+1);
+        left++;
+    }
+    right++;
+}
+return sign?minLen:0;
+
+O(n) O(1)
 
 
 
@@ -1181,6 +1209,29 @@ private String getRange(int from, int to)
     return (from==to)? String.valueOf(from):String.valueOf(from) + "->" + String.valueOf(to);
 
 时间O(A.length) 空间O(1)
+
+
+
+
+Summary Ranges
+public List<String> summaryRanges(int[] nums) {
+    List<String> res = new ArrayList<String>();
+    int from = 0, to = 0;
+    while(to<nums.length) {
+        to++;
+        while(to<nums.length && nums[to]-nums[to-1]==1)
+            to++;
+        res.add(getRange(nums[from], nums[to-1]));
+        from = to;
+    }
+    return res;
+}
+
+private String getRange(int from , int to) {
+    return (from==to)?String.valueOf(from):String.valueOf(from)+"->"+String.valueOf(to);
+}
+
+O(n) O(1)
 
 
 
@@ -1254,6 +1305,26 @@ for i=1; i<triangle.size(); i++
     sum[0] += triangle.get(i).get(0);
 
 时间O(n^2) 空间O(n)
+
+
+
+
+Product of Array Except Self
+public int[] productExceptSelf(int[] nums) {
+    int[] res = new int[nums.length];
+    res[0] = 1;
+    for(int i=1; i<nums.length; i++) {
+        res[i] = res[i-1]*nums[i-1];
+    }
+    int right = 1;
+    for(int i=nums.length-1; i>=0; i--) {
+        res[i]*=right;
+        right*=nums[i];
+    }
+    return res;
+}
+
+O(n) O(1)
 
 
 
@@ -1380,25 +1451,53 @@ return false;
 
 
 Search for a Range
-while(l<=r)
-    if(A[mid]==target)
-        break;
-    else if
-    else
-if A[mid]!=target
+public int[] searchRange(int[] A, int target) {
+    int[] res = new int[2];
+    res[0] = -1;
+    res[1] = -1;
+    if(A==null || A.length==0)
+        return res;
+    int left = 0;
+    int right = A.length-1;
+    int mid = 0;
+    
+    while(left<=right)
+    {
+        mid = (left+right)/2;
+        if(A[mid]==target)
+            break;
+        else if(A[mid]<target)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    if(A[mid]!=target)
+        return res;
+        
+    int newL = 0;
+    int newR = mid;
+    while(newL<=newR)
+    {
+        int m = (newL+newR)/2;
+        if(A[m]==target)        //区别
+            newR = m - 1;
+        else
+            newL = m + 1;
+    }
+    res[0] = newL;
+    
+    newL = mid;
+    newR = A.length-1;
+    while(newL<=newR)
+    {
+        int m = (newL+newR)/2;
+        if(A[m]==target)            //区别
+            newL = m + 1;
+        else
+            newR = m - 1;
+    }
+    res[1] = newR;
     return res;
-l = 0, r = mid
-while l<=r
-    if(A[mid]==target)
-        r = mid -1;
-    else l = mid + 1;
-res[0] = l;
-l = mid, r = A.length-1;
-while l<=r
-    if A[mid]==target
-        l = mid　+ 1;
-    else r = mid - 1;
-res[1] = r;
 时间O(logn) 空间O(1)
 
 
@@ -1408,18 +1507,45 @@ res[1] = r;
 
 
 Set Matrix Zeroes
-set rowMark
-set colMark
-for i=1; i<matrix.length; i++
-    for j=1; j<matrix[0].length; j++
+int firstRowMark = 1; int firstColMark = 1;
+for(int i=0; i<matrix.length; i++)
+{
+    if(matrix[i][0]==0)
+    {
+        firstRowMark = 0;
+        break;
+    }
+}
+for(int i=0; i<matrix[0].length; i++)
+{
+    if(matrix[0][i]==0)
+    {
+        firstColMark = 0;
+        break;
+    }
+}
+for(int i=1; i<matrix.length; i++)
+{
+    for(int j=1; j<matrix[0].length; j++)
+    {
         if(matrix[i][j]==0)
-            matrix[0][j]=0;
-            matrix[i][0]=0;
-for i=1; i<matrix.length; i++
-    for j=1; j<matrix[0].length; j++
+        {
+            matrix[0][j] = 0;
+            matrix[i][0] = 0;
+        }
+    }
+}
+for(int i=1; i<matrix.length; i++)
+    for(int j=1; j<matrix[0].length; j++)
         if(matrix[0][j]==0 || matrix[i][0]==0)
-            matrix[i][j]=0;
-set first row col
+            matrix[i][j] = 0;
+if(firstRowMark==0)
+for(int i=0; i<matrix.length; i++)
+    matrix[i][0] = 0;
+if(firstColMark==0)
+for(int i=0; i<matrix[0].length; i++)
+    matrix[0][i] = 0;
+}
 
 时间O(m*n) 空间O(1)
 
@@ -1458,30 +1584,102 @@ for(int i=0; i<A.length; i++)
 
 
 Spiral Matrix
-while l<=r && up<=down
-    if direction 0
-        for i=l; i<=r; i++
-            res.add(matrix[up][i])
+List<Integer> res = new ArrayList<Integer>();
+if(matrix==null || matrix.length==0 || matrix[0].length==0)
+    return res;
+int left = 0; int right = matrix[0].length-1; int up = 0; int down = matrix.length-1;
+int direction = 0;
+while(true)
+{
+    if(direction==0)
+    {
+        for(int i=left; i<right+1; i++)
+        {
+            res.add(matrix[up][i]);
+        }
         up++;
-    if
-    if
-    if
+    }
+    if(direction == 1)
+    {
+        for(int i=up; i<down+1; i++)
+        {
+            res.add(matrix[i][right]);
+        }
+        right--;
+    }
+    if(direction == 2)
+    {
+        for(int i=right; i>=left; i--)
+        {
+            res.add(matrix[down][i]);
+        }
+        down--;
+    }
+    if(direction == 3)
+    {
+        for(int i=down; i>=up; i--)
+        {
+            res.add(matrix[i][left]);
+        }
+        left++;
+    }
+    if(left>right || up>down)
+        return res;
     direction = (direction+1)%4;
+}
 时间O(m*n) 空间O(1)
 
 
 
 Spiral Matrix ii
-while l<=r && up<=down
-    if direction 0
-        for i=l; i<=r; i++
-            res[up][i]=num;
-            num++;
+if(n<0)
+    return null;
+int[][] res = new int[n][n];
+int direction = 0;
+int left=0; int right = n-1; int up = 0; int down = n-1;
+int num = 1;
+while(true)
+{
+    if(direction==0)
+    {
+        for(int i=left; i<right+1; i++)
+        {
+            res[up][i] = num;
+            num+=1;
+        }
         up++;
-    if
-    if
-    if
+    }
+    if(direction==1)
+    {
+        for(int i=up; i<down+1; i++)
+        {
+            res[i][right] = num;
+            num+=1;
+        }
+        right--;
+    }
+    if(direction==2)
+    {
+        for(int i=right; i>=left; i--)
+        {
+            res[down][i] = num;
+            num+=1;
+        }
+        down--;
+    }
+    if(direction==3)
+    {
+        for(int i=down; i>=up; i--)
+        {
+            res[i][left] = num;
+            num+=1;
+        }
+        left++;
+    }
+    if(up>down || left>right)
+        return res;
     direction = (direction+1)%4;
+}
 时间O(n*n) 空间O(1)
 
 
@@ -1503,23 +1701,31 @@ sum[0] += triangle.get(i).get(0);
 
 
 Word Search
-boolean[][] used = new boolean[board.length][board[0].length];
-for i=0; i<board.length; i++
-    for j=0; j<board[0].length; j++
-        if(helper(board, 0, i, j, word, used))
-            return true;
-return false;
+public boolean exist(char[][] board, String word) {
+    if(word==null || word.length()==0)
+        return true;
+    if(board==null || board.length==0 || board[0].length==0)
+        return false;
+    boolean[][] used = new boolean[board.length][board[0].length];
+    for(int i=0; i<board.length; i++) {
+        for(int j=0; j<board[0].length; j++) {
+            if(search(board, 0, i, j, used, word))
+                return true;
+        }
+    }
+    return false;
+}
 
-helper(char[][] board, int index, int i, int j, String word, boolean[][] used) {
+private boolean search(char[][] board, int index, int i, int j, boolean[][] used, String word) {
     if(index==word.length())
         return true;
-    if(i<0 || j<0 ||　i>=board.length || j>=board[0].length || word.charAt(index)!=board[i][j] || used[i][j])
+    if(i<0 || j<0 || i>=board.length || j>=board[0].length || used[i][j] || word.charAt(index)!=board[i][j])
         return false;
     used[i][j] = true;
-    boolean res = (helepr(board, index+1, i+1, j, word, used) ||
-        helper(board, index+1, i, j+1, word, used) ||
-        helper(board, index+1, i-1, j, word, used) ||
-        helper(board, index+1, i, j-1, word, used))
+    boolean res = (search(board, index+1, i+1, j, used, word)
+                    || search(board, index+1, i-1, j, used, word)
+                    || search(board, index+1, i, j+1, used, word)
+                    || search(board, index+1, i, j-1, used, word));
     used[i][j] = false;
     return res;
 }
