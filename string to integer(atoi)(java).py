@@ -72,6 +72,19 @@ class Solution:
 
 from cleanCode
 
+Requirement for atoi:
+1 first discards as many whitespace characters until first non-whitespace character is found.
+
+2 Then start from this character, take an optional plus or minus sign followed by as many numerical digits as possible
+
+3 The string can contain additional characters after which are ignored
+
+4 If the first sequence of non-whitespace characters is not a valid integral number, or str is empty or contains only whitespace,
+no conversion is performed
+
+5 if no valid conversion return 0. if correct value is out of range INT_MAX or INT_MIN is returned
+
+
 public class Solution {
     public int atoi(String str) {
         int maxDiv10 = Integer.MAX_VALUE/10;
@@ -97,7 +110,8 @@ public class Solution {
     }
 }
 
-
+ 2147483647
+-2147483648
 
 
 public class Solution {
