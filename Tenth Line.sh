@@ -19,6 +19,8 @@ sed -n 10p file.txt
 # Solution 4
 tail -n+10 file.txt|head -1
 
+#http://www.computerhope.com/unix/utail.htm
+
 https://leetcode.com/discuss/31240/share-four-different-solutions
 
 https://leetcode.com/discuss/29526/super-simple-solution
