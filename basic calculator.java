@@ -14,9 +14,9 @@ public class Solution {
             else if(s[pos] == ')'){
                 return result;
             }
-            else if(s[pos] == '('){
+            else if(s[pos] == '('){ //碰到括号 截取2个括号中间的东西 注意start包含左括号 pos最终指向对应右括号的后一个字符
                 start = ++pos;
-                int count = 0;
+                int count = 0;      //count记录两个括号中有几个子括号
                 while(s[pos] != ')' || count != 0){
                     if(s[pos] == '(')
                         count++;
@@ -24,12 +24,12 @@ public class Solution {
                         count--;
                     pos++;
                 }
-                result += sign * helper(s, start, pos);
+                result += sign * helper(s, start, pos); //递归括号中的内容
             }
-            else if(s[pos] >= '0' && s[pos] <= '9'){
+            else if(s[pos] >= '0' && s[pos] <= '9'){    //处理数字
                 current = current * 10 + s[pos] - '0';
             }
-            else if(s[pos] != ' '){
+            else if(s[pos] != ' '){     //处理加减符号
                 result += current * sign;
                 current = 0;
                 sign = s[pos] == '-'? -1 : 1;
