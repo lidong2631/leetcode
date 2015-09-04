@@ -97,6 +97,12 @@ Note: 这题有两种解法 一是利用哈希表 只要一个数字出现3次�
 
 
 
+https://leetcode.com/discuss/31595/detailed-explanation-generalization-bitwise-operation-numbers
+https://leetcode.com/discuss/44345/java-bit-manipulation-solution
+https://leetcode.com/discuss/43377/the-simplest-solution-ever-with-clear-explanation
+
+
+
 from code ganker:
 
 这个题比较直接的想法是用一个HashMap对于出现的元素进行统计，key是元素，value是出现个数，如果元素出现三次，则从HashMap中移除，

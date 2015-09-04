@@ -1,3 +1,6 @@
+Note: 这道题不可能有 多个h-index 也就是只可能存在唯一的h-index
+https://leetcode.com/discuss/56001/is-it-possible-to-have-two-this-problem-please-give-an-example
+
 public class Solution {
     public int hIndex(int[] citations) {
         int len = citations.length;
