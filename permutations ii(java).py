@@ -78,7 +78,7 @@ public class Solution {
         }
         for(int i=0; i<num.length; i++)
         {
-            if(i>0 && !used[i-1] && num[i]==num[i-1])        //这里加判断 如果重复元素 就continue
+            if(i>0 && !used[i-1] && num[i]==num[i-1])        //这里加判断 如果相邻元素相同 且前一个元素没有被用过 说明是重复结果 不再继续递归
                 continue;
             if(!used[i])
             {

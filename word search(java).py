@@ -86,6 +86,8 @@ O（m^2*n^2)
 每个方向最多可能递归len(word)次 看code ganker评论
 
 
+https://leetcode.com/discuss/23165/accepted-very-short-java-solution-no-additional-space
+
 
 
 

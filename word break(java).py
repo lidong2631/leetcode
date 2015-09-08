@@ -75,6 +75,12 @@ public class Solution {
 
 O(n^2) O(n)
 
+Time complexity for substring in java
+http://stackoverflow.com/questions/4679746/time-complexity-of-javas-substring
+
+
+BFS solution
+https://leetcode.com/discuss/8479/a-solution-using-bfs
 
 
 public class Solution {

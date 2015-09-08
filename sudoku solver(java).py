@@ -41,6 +41,64 @@ Note: 以上解法time limit exceed 下面java的解法可以ac 但两种解法�
 
 public class Solution {
     public void solveSudoku(char[][] board) {
+        if(board==null || board.length!=9 || board[0].length!=9)
+            return;
+        helper(board, 0, 0);
+    }
+    
+    private boolean helper(char[][] board, int i, int j) {
+        if(j>=9)
+            return helper(board, i+1, 0);
+        if(i==9)
+            return true;
+        if(board[i][j]=='.') {
+            for(int k=1; k<=9; k++) {
+                board[i][j] = (char)('0'+k);
+                if(isValid(board, i, j)) {
+                    if(helper(board, i, j+1))
+                        return true;
+                }
+            }
+            board[i][j] = '.';
+        }
+        else {
+            return helper(board, i, j+1);
+        }
+        return false;
+    }
+    
+    private boolean isValid(char[][] board, int row, int col) {
+        char tmp = board[row][col];
+        board[row][col] = '#';
+        for(int i=0; i<9; i++) {
+            if(board[row][i]==tmp)
+                return false;
+        }
+        
+        for(int i=0; i<9; i++) {
+            if(board[i][col]==tmp)
+                return false;
+        }
+        
+        for(int i=0; i<3; i++) {
+            for(int j=0; j<3; j++) {
+                if(board[row/3*3+i][col/3*3+j]==tmp)
+                    return false;
+            }
+        }
+        board[row][col] = tmp;
+        return true;
+    }
+}
+
+
+
+
+
+
+
+public class Solution {
+    public void solveSudoku(char[][] board) {
         if(board==null || board.length==0 || board[0].length==0)
             return;
         helper(board, 0, 0);
