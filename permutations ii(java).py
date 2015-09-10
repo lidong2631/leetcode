@@ -70,7 +70,7 @@ public class Solution {
         return res;
     }
     
-    private void helper(int[] num, boolean[] used, List<Integer> item, List<List<Integer>> res) {
+    private void helper(int[] num, boolean[] used, List<Integer> item, List<List<Integer>> returns) {
         if(item.size()==num.length)
         {
             res.add(new ArrayList<Integer>(item));
