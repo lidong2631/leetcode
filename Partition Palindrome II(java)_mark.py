@@ -64,7 +64,7 @@ public class Solution {
         res[0] = 0;
         for(int i=0; i<s.length(); i++)
         {
-            res[i+1] = i+1;     //这里res[i+1]=i+1 而不是i因为字符串起始位置也要切一刀 相当于"abc"在a左边也切一刀 左边是空串 加上ab之间bc之间一共3刀
+            res[i+1] = i+1;     //这里res[i+1]=i+1 是因为动态规划这里我们取的是分成几份 如果两个字母ab 中间切一刀就变为两个字符
             for(int j=0; j<=i; j++)
             {
                 if(isPalin[j][i])

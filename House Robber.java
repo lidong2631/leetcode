@@ -13,9 +13,9 @@ public class Solution {
     }
 }
 
-动态规划 知道某一点i的最大利润maxRob[i] 求下一点i+1 
+动态规划 知道某一点的最大利润maxRob[1] 求下一点 
 
-递推式为maxRob[i+1] = Math.max(maxRob[i], maxRob[i-1]+num[i]) 即取上一次
+递推式为maxRob[1] = Math.max(maxRob[1], maxRob[0]+num[i]) 即取上一次
 
 rob的最大利润和上上次rob的最大利润+当前的钱数的最大值
 

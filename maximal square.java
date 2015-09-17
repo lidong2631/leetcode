@@ -26,7 +26,7 @@ O(m*n) O(m*n)
 dp
 递推式是res[i][j] = matrix[i][j]=='1'?Math.min(Math.min(res[i-1][j], res[i][j-1]), res[i-1][j-1]) + 1:0;
 res[i][j]表示以i,j为右下角点的全1子正方形矩阵的边长
-可以参考http://www.geeksforgeeks.org/max ... in-a-binary-matrix/
+可以参考http://www.geeksforgeeks.org/maximum-size-sub-matrix-with-all-1s-in-a-binary-matrix/
 
 
 滚动数组省掉空间一维
