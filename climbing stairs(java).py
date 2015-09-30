@@ -79,6 +79,28 @@ O(logn)解法
 Fibonacci数列通项公式 http://baike.baidu.com/view/816.htm
 
 
+Fibonacci
+0 1 1 2 3 5 ...
+public int Fibonacci(int n) {
+    if(n==0 || n==1)
+        return n;
+    return Fibonacci(n-1) + Fibonacci(n-2);
+}
+exponential
+
+
+public int Fibonacci(int n) {
+    if(n==0)
+        return 0;
+    int a = 0, b = 1, c = 0;
+    for(int i=2; i<=n; i++) {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+    return b;
+}
+
 
 
 from code ganker:
