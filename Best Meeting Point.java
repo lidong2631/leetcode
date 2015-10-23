@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class Solution {
     public int minTotalDistance(int[][] grid) {
         List<Integer> l1 = new ArrayList<Integer>();
@@ -16,20 +14,14 @@ public class Solution {
         Collections.sort(l2);
         int left = 0, right = l1.size()-1, res = 0;
         while(left<right) {
-            System.out.println(res);
-            System.out.println(l1.get(right)-l1.get(left));
-            System.out.println(l2.get(right)-l2.get(left));
-            res=(l2.get(right)-l1.get(left));
-            System.out.println("res= " +res);
+            res+=l1.get(right)-l1.get(left)+l2.get(right)-l2.get(left);
             right--;
             left++;
         }
         return res;
     }
-
-    public static void main(String[] args) {
-        Solution s = new Solution();
-        int[][] grid = {{0,0,0,1,0,1,0,0,0,1,1,0}};
-        System.out.println(s.minTotalDistance(grid));
-    }
 }
+
+将x y轴坐标排序 两两一对将差值相加
+
+https://leetcode.com/discuss/65336/14ms-java-solution
