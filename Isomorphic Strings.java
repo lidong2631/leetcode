@@ -25,3 +25,29 @@ public class Solution {
 2 必须两个hashmap 是为了检查s中字符map到t中的字符之前出现过在s中 如果不用两个hashmap 程序会认为有重复map test case: "ab" "ca"
 
 O(n) O(n)
+
+
+
+
+public boolean isIsomorphic(String s1, String s2) {
+    Map<Character, Integer> m1 = new HashMap<>();
+    Map<Character, Integer> m2 = new HashMap<>();
+
+    for(Integer i = 0; i < s1.length(); i++) {
+
+        if(m1.put(s1.charAt(i), i) != m2.put(s2.charAt(i), i)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+from java 8 map
+Returns:
+the previous value associated with key, or null if there was no mapping for key. (A null return can also indicate that the map 
+previously associated null with key, if the implementation supports null values.)
+
+
+
+
