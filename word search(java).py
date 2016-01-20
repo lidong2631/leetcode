@@ -54,32 +54,34 @@ public class Solution {
             return true;
         if(board==null || board.length==0 || board[0].length==0)
             return false;
-        boolean[][] used = new boolean[board.length][board[0].length];
+
         for(int i=0; i<board.length; i++) {
             for(int j=0; j<board[0].length; j++) {
-                if(search(board, 0, i, j, used, word))
+                if(search(board, 0, i, j, word))
                     return true;
             }
         }
         return false;
     }
     
-    private boolean search(char[][] board, int index, int i, int j, boolean[][] used, String word) {
+    private boolean search(char[][] board, int index, int i, int j, String word) {
         if(index==word.length())
             return true;
-        if(i<0 || j<0 || i>=board.length || j>=board[0].length || used[i][j] || word.charAt(index)!=board[i][j])
+        if(i<0 || j<0 || i>=board.length || j>=board[0].length || board[i][j]!=word.charAt(index))
             return false;
-        used[i][j] = true;
-        boolean res = (search(board, index+1, i+1, j, used, word)
-                        || search(board, index+1, i-1, j, used, word)
-                        || search(board, index+1, i, j+1, used, word)
-                        || search(board, index+1, i, j-1, used, word));
-        used[i][j] = false;
-        return res;
+        char tmp = board[i][j];
+        board[i][j] = '#';
+        if(search(board, index+1, i+1, j, word) ||
+                      search(board, index+1, i-1, j, word) ||
+                      search(board, index+1, i, j+1, word) ||
+                      search(board, index+1, i, j-1, word))
+            return true;
+        board[i][j] = tmp;
+        return false;
     }
 }
 
-O（m^2*n^2)
+O（m^2*n^2) O(m*n*4^(len(word))) 空间O(1)
 
 递归题 类似于dfs 但复杂度比dfs高 因为访问过的节点还会再被访问 最坏复杂度为O(m*n*4^(len(word))) 意思是一共m*n个点 每个点要走4个方向
 
