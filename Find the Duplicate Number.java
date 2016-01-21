@@ -2,18 +2,18 @@ public class Solution {
     public int findDuplicate(int[] nums) {
         int left = 1, right = nums.length-1;        //left=0 也可以ac
         while(left<right) {
-            int mid = left + (right-left)/2;
+            int mid = left + (right-left)/2;    //取这组数中的平均数
             int count = 0;
-            for(Integer i : nums) {
+            for(Integer i : nums) {     //记录小于等于平均数的数的个数
                 if(i<=mid)
                     count++;
             }
-            if(count<=mid)
+            if(count<=mid)          //如果count小于等于mid 说明小于等于平均数的数多 重复在此
                 left = mid + 1;
             else
                 right = mid;
         }
-        return left;
+        return left;        //写right也可以
     }
 }
 
