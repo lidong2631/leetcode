@@ -4,28 +4,25 @@ public class Solution {
             return;
         int left = 0;
         int right = s.length-1;
-        while(left<right) {
-            char tmp = s[left];
-            s[left] = s[right];
-            s[right] = tmp;
-            left++;
-            right--;
-        }
+        reverse(s, left, right);
         left = 0; right = 0;
-        while(right<s.length) {    
-            while(right<s.length && s[right]!=' ') {
+        while(right<s.length) {
+            while(right<s.length && s[right]!=' ')
                 right++;
-            }
             int next = right+1;
             right--;
-            while(left<right) {
-                char tmp = s[left];
-                s[left] = s[right];
-                s[right] = tmp;
-                left++;
-                right--;
-            }
+            reverse(s, left, right);
             left = next; right = next;
+        }
+    }
+    
+    private void reverse(char[] charArr, int left, int right) {
+        while(left<right) {
+            char tmp = charArr[left];
+            charArr[left] = charArr[right];
+            charArr[right] = tmp;
+            left++;
+            right--;
         }
     }
 }
