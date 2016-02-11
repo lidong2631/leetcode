@@ -70,6 +70,45 @@ class Solution:
 
 
 
+/**
+ * Definition for binary tree with next pointer.
+ * public class TreeLinkNode {
+ *     int val;
+ *     TreeLinkNode left, right, next;
+ *     TreeLinkNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        if(root==null) return;
+        Queue<TreeLinkNode> queue = new LinkedList<TreeLinkNode>();
+        queue.add(root);
+        int next = 0, curr = 1;
+        TreeLinkNode prev = null;
+        while(!queue.isEmpty()) {
+            TreeLinkNode p = queue.poll();
+            curr--;
+            if(p.left!=null) {
+                if(prev!=null)
+                    prev.next = p.left;
+                p.left.next = p.right;
+                queue.add(p.left);
+                queue.add(p.right);
+                next+=2;
+                prev = p.right;
+            }
+            if(curr==0) {
+                p.next = null;
+                curr = next;
+                next = 0;
+                prev = null;
+            }
+        }
+    }
+}
+
+很简单 层序遍历
+
 
 
 
