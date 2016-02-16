@@ -78,6 +78,39 @@ class Solution:
 
 
 
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head==null || head.next==null)
+            return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+        for(int i=0; i<m-1; i++)
+            prev = prev.next;
+        ListNode p = prev.next;
+        ListNode curr = prev.next.next;
+        for(int i=0; i<n-m; i++) {
+            ListNode next = curr.next;
+            curr.next = prev.next;
+            prev.next = curr;
+            curr = next;
+        }
+        p.next = curr;
+        return dummy.next;
+    }
+}
+
+跟reverse linked list ii 一样的套路
+
+
 
 
 
