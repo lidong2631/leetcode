@@ -46,7 +46,7 @@ public class Solution {
             res.add(new ArrayList<Integer>(item));
             return;
         }
-        if(target<0 || start>=num.length)   //不同于i 要加上start>=num.length的条件 因为i里元素随便取
+        if(target<0)   //不同于i 要加上start>=num.length的条件 因为i里元素随便取
             return;
         for(int i=start; i<num.length; i++)     //这里i从start开始
         {
