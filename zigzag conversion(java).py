@@ -138,7 +138,7 @@ public String convert(String s, int nRows) {
         for(int j=i;j<s.length();j+=size)
         {
             res.append(s.charAt(j));
-            if(i!=0 && i!=nRows-1 && j+size-2*i<s.length())
+            if(i!=0 && i!=nRows-1 && j+size-2*i<s.length())     // j+size-2*i为zigzag中间的字符
                 res.append(s.charAt(j+size-2*i));
         }                
     }

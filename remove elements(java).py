@@ -44,6 +44,22 @@ class Solution:
 
 
 
+public class Solution {
+    public int removeElement(int[] A, int elem) {
+        int p1 = 0, p2 = 0;
+        while(p2<A.length) {
+            if(A[p2]!=elem)
+                A[p1++] = A[p2];
+            p2++;
+        }
+        return p1;
+    }
+}
+
+跟Move Zeros 一模一样的解法 two pointers
+
+
+
 
 public class Solution {
     public int removeElement(int[] A, int elem) {

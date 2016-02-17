@@ -50,7 +50,7 @@ public class Solution {
             return;
         for(int i=start; i<candidates.length; i++)
         {
-            if(i>0 && candidates[i]==candidates[i-1])   //对于重复数字要跳过 因为这里每个数字可以重复用无限次 后面的递归一样会重复用这个数字
+            if(i>start && candidates[i]==candidates[i-1])   //对于重复数字要跳过 因为这里每个数字可以重复用无限次 后面的递归一样会重复用这个数字
                 continue;
             item.add(candidates[i]);
             helper(candidates, i, target-candidates[i], item, res);

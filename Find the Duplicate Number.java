@@ -1,5 +1,27 @@
 public class Solution {
     public int findDuplicate(int[] nums) {
+        for(int i=0; i<nums.length; i++) {
+            if(nums[nums[i]-1]!=nums[i]) {
+                int tmp = nums[nums[i]-1];
+                nums[nums[i]-1] = nums[i];
+                nums[i] = tmp;
+                i--;
+            }
+        }
+        for(int i=0; i<nums.length; i++) {
+            if(nums[i]!=i+1)
+                return nums[i];
+        }
+        return nums[nums.length-1];
+    }
+}
+
+same as first missing number
+
+
+
+public class Solution {
+    public int findDuplicate(int[] nums) {
         int left = 1, right = nums.length-1;        //left=0 也可以ac
         while(left<right) {
             int mid = left + (right-left)/2;    //取这组数中的平均数

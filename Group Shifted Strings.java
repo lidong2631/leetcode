@@ -3,12 +3,12 @@ public class Solution {
         List<List<String>> res = new ArrayList<List<String>>();
         Map<String, List<String>> map = new HashMap<String, List<String>>();
         for(String str : strings) {
-            int offset = str.charAt(0)-'a';
+            int offset = str.charAt(0)-'a';         // set up standard
             String tmp = "";
             for(int i=0; i<str.length(); i++) {
-                char c = (char)(str.charAt(i)-offset);
-                if(c<'a')
-                    c+=26;
+                char c = (char)(str.charAt(i)-offset);  // every character minus offset
+                if(c<'a')                           // ex "ba"
+                    c+=26;                          // add by 26
                 tmp+=c;
             }
             if(!map.containsKey(tmp)) {
