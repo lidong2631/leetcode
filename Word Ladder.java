@@ -9,7 +9,7 @@ public class Solution {
         int currNum = 0;    //记录当前循环队列中新增加元素个数？
         queue.offer(start);
         visited.add(start);
-        while(!queue.isEmpty()) {   //dfs
+        while(!queue.isEmpty()) {   //bfs
             String curr = queue.poll(); //弹出一个元素开始
             lastNum--;
             for(int i=0; i<curr.length(); i++) {

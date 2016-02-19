@@ -54,9 +54,7 @@ public class Solution {
     }
     
     private boolean isValid(String s) {
-        if(s.length()==0 || s.length()>3)
-            return false;
-        else if(s.charAt(0)=='0' && s.length()>1)
+        if(s.charAt(0)=='0' && s.length()>1)
             return false;
         else if(Integer.parseInt(s)>=0 && Integer.parseInt(s)<=255)
             return true;
