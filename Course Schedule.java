@@ -14,7 +14,7 @@ public class Solution {
         }
         
         for(int i=0; i<numCourses; i++) {       //dfs
-            if(helper(i, visited, recStack, res))   //helper用来detect cycle
+            if(helper(i, visited, recStack, res))   //helper用来detect cycle return true if there is a cycle
                 return false;
         }
         return true;

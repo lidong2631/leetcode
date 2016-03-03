@@ -15,7 +15,7 @@ public class Solution {
         for(int i=1; i<matrix.length; i++) {
             for(int j=1; j<matrix[0].length; j++) {
                 res[i][j] = matrix[i][j]=='1'?Math.min(Math.min(res[i-1][j], res[i][j-1]), res[i-1][j-1]) + 1:0;
-                maxLen = Math.max(maxLen, res[i]][j]);
+                maxLen = Math.max(maxLen, res[i][j]);
             }
         }
         return maxLen*maxLen;
