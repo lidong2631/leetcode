@@ -1,3 +1,11 @@
+https://leetcode.com/discuss/51223/my-7-lines-recursive-java-solution
+
+
+KMP
+https://leetcode.com/discuss/52564/a-kmp-based-java-solution-with-explanation
+https://leetcode.com/discuss/64309/clean-kmp-solution-with-super-detailed-explanation
+
+
 public class Solution {
     public String shortestPalindrome(String s) {
         if(s==null || s.length()==0)

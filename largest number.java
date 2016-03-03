@@ -15,7 +15,7 @@ public class Solution {
         StringBuilder sb = new StringBuilder();
         for(int i=0; i<list.size(); i++)
             sb.append(list.get(i));
-        if(sb.charAt(0)=='0')   //处理特殊情况
+        if(sb.charAt(0)=='0')   //处理特殊情况 [0,0] output should be "0" instead of "00"
             return "0";
         return sb.toString();
     }

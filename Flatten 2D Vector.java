@@ -1,29 +1,36 @@
 http://segmentfault.com/a/1190000003791233
  
 public class Vector2D {
- 
-    private List<Iterator<Integer>> l;
+
+    private List<Iterator<Integer>> list;
     private int curr;
- 
+
     public Vector2D(List<List<Integer>> vec2d) {
-        this.l = new ArrayList<Iterator<Integer>>();
-        for(List<Integer> tmpList : vec2d) {
-            if(tmpList.size()>0)
-                this.l.add(tmpList.iterator());
+        list = new ArrayList<Iterator<Integer>>();
+        curr = 0;
+        for(List<Integer> l : vec2d) {
+            if(l.size()>0)
+                list.add(l.iterator());
         }
     }
- 
+
     public int next() {
-        Integer i = l.get(curr).next();
-        if(!l.get(curr).hasNext())
+        Integer i = list.get(curr).next();
+        if(!list.get(curr).hasNext())
             curr++;
         return i;
     }
- 
+
     public boolean hasNext() {
-        return curr<l.size() && l.get(curr).hasNext();
+        return curr<list.size();
     }
 }
+
+/**
+ * Your Vector2D object will be instantiated and called as such:
+ * Vector2D i = new Vector2D(vec2d);
+ * while (i.hasNext()) v[f()] = i.next();
+ */
  
 O(n) O(1)
 

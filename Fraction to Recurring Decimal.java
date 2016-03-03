@@ -9,14 +9,14 @@ public class Solution {
         if((numerator<0)^(denominator<0))
             res += "-";
         
-        long num = Math.abs((long)numerator);
+        long num = Math.abs((long)numerator);   // prevent overflow like Integer.MIN_VALUE. Math.abs(Integer.MIN_VALUE)==Integer.MIN_VALUE
         long den = Math.abs((long)denominator);
         
         long integer_part = num/den;
         res += String.valueOf(integer_part);
         
         long remainder = (num%den)*10;
-        if(remainder==0)
+        if(remainder==0)                        // if no decimal return
             return res;
         
         res+=".";
