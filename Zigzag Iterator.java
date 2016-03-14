@@ -1,5 +1,43 @@
 public class ZigzagIterator {
 
+    LinkedList<Iterator> list;
+
+    public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
+        list = new LinkedList<Iterator>();
+        if(!v1.isEmpty()) list.add(v1.iterator());
+        if(!v2.isEmpty()) list.add(v2.iterator());
+    }
+
+    public int next() {
+        Iterator i = list.remove();
+        int res = (Integer)i.next();
+        if(i.hasNext())
+            list.add(i);
+        return res;
+    }
+
+    public boolean hasNext() {
+        return !list.isEmpty();
+    }
+}
+
+/**
+ * Your ZigzagIterator object will be instantiated and called as such:
+ * ZigzagIterator i = new ZigzagIterator(v1, v2);
+ * while (i.hasNext()) v[f()] = i.next();
+ */
+
+
+https://leetcode.com/discuss/63037/simple-java-solution-for-k-vector
+
+
+
+
+
+
+
+public class ZigzagIterator {
+
     private List<Integer> list;
     private int p;
 

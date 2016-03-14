@@ -81,6 +81,27 @@ public class Solution {
 
 
 
+public class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int max = 0;
+        
+        for(int i=0; i<heights.length; i++) {
+            int left=i-1, right = i+1;
+            while(left>=0 && heights[left]>=heights[i]) {
+                max = Math.max(max, heights[i]*(i-left+1));
+                left--;
+            }
+            while(right<=heights.length-1 && heights[right]>=heights[i]) {
+                max = Math.max(max, heights[i]*(right-i+1));
+                right++;
+            }
+        }
+        return max;
+    }
+}
+
+
+
 
 public class Solution {
     public int largestRectangleArea(int[] height) {
