@@ -35,7 +35,27 @@ class Solution:
 
 
 
+不同的是要求输出最终的buy price，sell price和profit。写完之后要求你给出一些特殊的test cases
+public class Solution {
+    
+    public static void main(String[] args) {
+        int[] A = {10, 8, 15, 12, 24};
 
+        int local = 0, global = 0;
+        int buy = A[0], sell = A[0];
+        for(int i=1; i<A.length; i++) {
+            local = Math.max(0, local+A[i]-A[i-1]);
+            
+            if(local>global) {
+                sell = A[i];
+                buy = Math.min(buy, A[i-1]);
+            }
+
+            global = Math.max(global, local);
+        }
+        System.out.println("buy = " + buy + " sell = " + sell + " profit = " + global);
+    }
+}
 
 
 
