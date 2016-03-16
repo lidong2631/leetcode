@@ -19,16 +19,18 @@ public class Codec {
         res.append(root.val);
         while (!queue.isEmpty()) {
             TreeNode cur = queue.poll();
-            if (cur.left != null)   queue.offer(cur.left); //add children to the queue
-            if (cur.right != null)  queue.offer(cur.right);
             res.append(",");
-            if (cur.left != null) {
+
+            if (cur.left != null) {                     // left child
                 res.append(cur.left.val);
+                queue.offer(cur.left);
             }
             else res.append("#");
             res.append(",");
-            if (cur.right != null) {
+            
+            if (cur.right != null) {                    // right child
                 res.append(cur.right.val);
+                queue.offer(cur.right);
             }
             else res.append("#");
         }
@@ -45,12 +47,13 @@ public class Codec {
         LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
         queue.offer(root);
         int count = 1;
+
         while (!queue.isEmpty()) {
             TreeNode cur = queue.poll();
             String left="", right="";
-            if (count < len) {
+            if (count < len) {                              // if we reach the bottom
                 left = arr[count++];
-                if (!left.equals("#")) {
+                if (!left.equals("#")) {                    // if curr node's left child is null
                     cur.left = new TreeNode(Integer.parseInt(left));
                     queue.offer(cur.left);
                 }

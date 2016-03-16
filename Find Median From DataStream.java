@@ -32,4 +32,10 @@ class MedianFinder {
 // mf.findMedian();
 
 
+1 max-heap contains the smallest half of the numbers and min-heap contains the largest half
+2 the number of elements in max-heap is either equal to or 1 more than the number of elements in the min-heap
+
+once we’re asked for the median, if the total number of received elements is odd, the median is the root of the max-heap. 
+If it’s even, then the median is the average of the roots of the max-heap and min-heap
+
 http://www.ardendertat.com/2011/11/03/programming-interview-questions-13-median-of-integer-stream/
