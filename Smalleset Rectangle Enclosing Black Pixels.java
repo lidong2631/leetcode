@@ -12,7 +12,7 @@ public class Solution {
         if(x<0 || y<0 || x>=image.length || y>=image[0].length || image[x][y]!='1')
             return;
         image[x][y] = '0';
-        maxX = Math.max(maxX, x);
+        maxX = Math.max(maxX, x);                   // 对于每一个黑格子做dfs 维护maxX, maxY, minX, minY 最终计算面积
         minX = Math.min(minX, x);
         maxY = Math.max(maxY, y);
         minY = Math.min(minY, y);
@@ -22,6 +22,16 @@ public class Solution {
         dfs(image, x, y-1);
     }
 }
+
+
+[
+  "0010",
+  "0110",
+  "0100"
+]
+and x = 0, y = 2
+return 6
+
 
 DFS complexity is O(m * n) and if binary search it would be O(n * lgm + m * lgn)
 
