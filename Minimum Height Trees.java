@@ -37,4 +37,30 @@ public class Solution {
 
 O(n)
 
+
+n = 6, edges = [[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]
+
+0   1   2
+ \  |  /
+    3
+    |
+    4
+    |
+    5
+
+0: HashSet
+1: HashSet
+2: HashSet
+3: HashSet
+4: HashSet
+5: HashSet
+
+0: 3 leave
+1: 3 leave
+2: 3 leave
+3: 0 1 2 4
+4: 3 5
+5: 4 leave
+
+
 https://leetcode.com/discuss/71763/share-some-thoughts

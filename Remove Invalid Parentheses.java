@@ -17,13 +17,13 @@ public class Solution {
                 found = true;
             }
             
-            if(found) continue;
+            if(found) continue;                                 // if found is true then pop all the string in queue and we are done
             
-            for(int i=0; i<tmp.length(); i++) {
+            for(int i=0; i<tmp.length(); i++) {                 // every time remove one '(' or ')'
                 if(tmp.charAt(i)!='(' && tmp.charAt(i)!=')')
                     continue;
                 String item = tmp.substring(0,i) + tmp.substring(i+1);
-                if(!set.contains(item)) {
+                if(!set.contains(item)) {                       // add it to the set and queue
                     set.add(item);
                     queue.offer(item);
                 }
@@ -32,7 +32,7 @@ public class Solution {
         return res;
     }
     
-    private boolean isValid(String s) {
+    private boolean isValid(String s) {                         // we do not need stack to check valid parentheses because we only have '(' and ')'
         int count = 0;
         
         for(int i=0; i<s.length(); i++) {
