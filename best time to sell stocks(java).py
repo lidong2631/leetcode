@@ -58,6 +58,8 @@ public class Solution {
 }
 
 
+we can also use this as Solution
+http://www.geeksforgeeks.org/maximum-difference-between-two-elements/
 
 public class Solution {
     public int maxProfit(int[] prices) {
