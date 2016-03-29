@@ -41,7 +41,7 @@ public class Solution {
     }
 }
 
-O((m+n)^3)
+worst cases O((m+n)^3)
 
 First, we divide the k digits required into two parts, i and k-i. We then find the maximum number of length i in one array and the maximum number of length k-i in the 
 
