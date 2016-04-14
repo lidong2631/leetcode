@@ -32,4 +32,26 @@ https://leetcode.com/discuss/67553/share-java-dp-solution
 
 
 longest increasing subsequence has O(nlogn) solution
+https://leetcode.com/discuss/67643/java-python-binary-search-o-nlogn-time-with-explanation
+
+public int lengthOfLIS(int[] nums) {
+    int[] tails = new int[nums.length];
+    int size = 0;
+    for (int n : nums) {
+        int i = 0, j = size;
+        while (i < j) {
+            int mid = (i+j)/2;
+            if (nums[mid] < n)
+                i = mid + 1;
+            else
+                j = mid;
+        }
+        tails[i] = n;
+        if (i == size) size++;
+    }
+    return size;
+}
+
+
+
 http://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/
