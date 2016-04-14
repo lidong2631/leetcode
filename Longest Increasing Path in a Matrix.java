@@ -15,7 +15,7 @@ public class Solution {
     }
     
     private int dfs(int i, int j, int[][] matrix, int[][] dp) {
-        if(dp[i][j]>0) return dp[i][j];
+        if(dp[i][j]>0) return dp[i][j];                         // cache. If we already has dp[i][j] then return directly
         int max = 0;
         for(int k=0; k<4; k++) {
             if(i+dis[k][0]>=0 && i+dis[k][0]<matrix.length && j+dis[k][1]>=0 && j+dis[k][1]<matrix[0].length 

@@ -2,38 +2,42 @@ public class Solution {
     public int findKthLargest(int[] nums, int k) {
         return helper(nums, 0, nums.length-1, k);
     }
-    
+
     private int helper(int[] nums, int left, int right, int k) {
-        if(left==right)
-            return nums[left];
-        while(true) {
-            int pivotIndex = right;             //这里pivotIndex我取最右边的值
-            pivotIndex = partition(nums, left, right, pivotIndex);  
-            int rank = right-pivotIndex+1;      //跟原文不一样 每次按pivot分组 分成小于pivot和大于pivot
-            if(rank==k)                         //如果k落在pivotIndex上则返回结果 否则如果k大就递归去pivotIndex右边找 k小去pivotIndex左边找
-                return nums[pivotIndex];
-            else if(k>rank)
-                return helper(nums, left, pivotIndex-1, k-rank);
+        if (left == right) return nums[left];
+        
+        while (true) {
+            int n = partition(nums, left, right);
+            int rank = right - n + 1;                               // notice here !
+            if (rank == k)
+                return nums[n];
+            else if (rank < k)
+                return helper(nums, left, n-1, k-rank);
             else
-                return helper(nums, pivotIndex+1, right, k);
+                return helper(nums, n+1, right, k);
         }
     }
     
-    private int partition(int[] nums, int left, int right, int pivotIndex) {
-        int index = left;
-        int pivot = nums[pivotIndex];   //pivot是数组最右边元素的值
-        for(int i=left; i<right; i++) {
-            if(nums[i]<pivot) {     //从左扫到右 如果nums[i]小于pivot就跟index指的元素交换 且index右移一位
-                int tmp = nums[i];
-                nums[i] = nums[index];
-                nums[index] = tmp;
-                index++;
-            }
+    private int partition(int[] nums, int left, int right) {        // quick sort partition
+        int pivot = nums[right];
+        int l = left - 1, r = right;
+        while (true) {
+            while (nums[++l] < pivot)
+                ;
+            while (r > 0 && nums[--r] > pivot)                      //
+                ;
+            if (l >= r)
+                break;
+            swap(nums, l, r);
         }
-        int tmp = nums[right];      //最后将最右边的pivot交换到对应位置index 返回index
-        nums[right] = nums[index];
-        nums[index] = tmp;
-        return index;
+        swap(nums, l, right);
+        return l;
+    }
+    
+    private void swap(int[] nums, int left, int right) {
+        int tmp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = tmp;
     }
 }
 
