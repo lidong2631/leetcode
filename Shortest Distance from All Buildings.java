@@ -10,7 +10,7 @@ public class Solution {
         for(int i=0; i<m; i++) {
             for(int j=0; j<n; j++) {
                 if(grid[i][j]==1)
-                    buildings.add(new Tuple(i, j, 0));                          // add to buildings list
+                    buildings.add(new Tuple(i, j, 0));                          // add building to buildings list with initial dis 0
                 grid[i][j] = -grid[i][j];                                       // change building and block to negative value
             }
         }
@@ -61,27 +61,40 @@ input:
 0 0 0 0 0
 0 0 1 0 0
 
-1st
+1st (0,0) -> 2nd (0,4) -> 3rd (2,2)
+
+1st (0,0)
 grid                    dis
 -1 1 -2 1 -1            0 1 0 5 0
  1 1  1 1  1            1 2 3 4 5
  1 1 -1 1  1            2 3 0 5 6
 
 
-2nd
+2nd (0,4)
 grid                    dis
 -1 2 -2 2 -1            0 6 0 6 0
  2 2  2 2  2            6 6 6 6 6
  2 2 -1 2  2            8 8 0 8 8
 
 
-3rd
+3rd (2,2)
 grid                    dis
 -1 3 -2 3 -1            0 9 0 9 0
  3 3  3 3  3            9 8 7 8 9
  3 3 -1 3  3           10 9 0 9 10
 
 res = 7
+
+
+The shortest distance from any empty land to a building can be calculated by BFS starting from the building in O(mn) time. 
+
+Therefore the we can calculate distance from all buildings to empty lands by t rounds of BFS starting from each building. t is the total number of buildings.
+
+In each round, we need maintain two values for every empty land: the distance and the accessibility.
+
+dist[i][j] is the empty land (i, j) to all the buildings.
+grid[i][j] is reused as the accessibility.
+What is accessibility? It is the number of buildings that are accessible from the empty land.
 
 
 https://leetcode.com/discuss/76018/share-a-java-implement

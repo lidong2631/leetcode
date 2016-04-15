@@ -17,6 +17,15 @@ public class Solution {
     }
 }
 
+res[i]     ugly1  ugly2  ugly3
+1           2       3       5
+2           4       3       5
+3           4       6       5
+4           6       6       5
+5           6       6       10
+6           8       9       10
+
+
 O(n) O(n)
 
 https://leetcode.com/discuss/52716/o-n-java-solution

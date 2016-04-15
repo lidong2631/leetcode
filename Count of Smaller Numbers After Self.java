@@ -51,6 +51,15 @@ public class Solution {
     }
 }
 
+            1(1)        0
+             \
+              6(3)      1
+             /
+            2(1)        1
+             \
+              5(2)      2
+
+
 average O(nlogn) worse O(n^2) due to unbalanced tree
 
 每次val和root做比较 如果val大于root 则加上当前root的count值 同时去root的右节点 否则当前root的count值加1 去root左节点

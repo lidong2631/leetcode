@@ -30,6 +30,13 @@ public class Solution {
     }
 }
 
+1  0  0  0  1
+
+0  0  0  0  0
+
+0  0  1  0  0
+
+
 O(m*n) O(m+n)
 
 Moreover, the solution is still O(mn) with the follow up:
