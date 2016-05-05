@@ -78,3 +78,11 @@ public class Codec {
 // Your Codec object will be instantiated and called as such:
 // Codec codec = new Codec();
 // codec.deserialize(codec.serialize(root));
+
+        1
+       / \
+      2   3
+         / \
+        4   5
+
+1,2,3,#,#,4,5

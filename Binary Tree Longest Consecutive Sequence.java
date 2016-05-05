@@ -24,7 +24,7 @@ public class Solution {
         int right = helper(root.right);
         
         if(root.left!=null && (root.left.val-1)==root.val)
-            len = Math.max(len, left+1);
+            len = left + 1; // len = Math.max(len, left+1);
         if(root.right!=null && (root.right.val-1)==root.val)
             len = Math.max(len, right+1);
         

@@ -14,7 +14,8 @@ public class ValidWordAbbr {
 
     public boolean isUnique(String word) {
         String tmp = abbr(word);
-        return (!map.containsKey(tmp)) || (map.get(tmp).contains(word) && map.get(tmp).size()==1);
+        return (!map.containsKey(tmp)) 
+                || (map.get(tmp).contains(word) && map.get(tmp).size()==1);     // check原字典中相同的词
     }
     
     private String abbr(String str) {

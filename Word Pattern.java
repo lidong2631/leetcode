@@ -47,7 +47,8 @@ https://leetcode.com/discuss/62876/very-fast-3ms-java-solution-using-hashmap
 
 
 
-
+pattern: abba
+str: dog cat cat dog
 
 
 public class Solution {

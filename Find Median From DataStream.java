@@ -31,6 +31,7 @@ class MedianFinder {
 // mf.addNum(1);
 // mf.findMedian();
 
+insertiont O(logn) find O(1)
 
 1 max-heap contains the smallest half of the numbers and min-heap contains the largest half
 2 the number of elements in max-heap is either equal to or 1 more than the number of elements in the min-heap

@@ -18,6 +18,15 @@ public String getHint(String secret, String guess) {
 
 O(n) O(1)
 
+secret: "1807"
+guess:  "7810"
+
+numbers[1] = 1, numbers[7] = -1
+bulls = 1
+cows = 1, numbers[0] = 1, numbers[1] = 0
+cows = 2, cows = 3, numbers[7] = 0, numbers[0] = 0
+
+
 https://leetcode.com/discuss/67031/one-pass-java-solution
 
 

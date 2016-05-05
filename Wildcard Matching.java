@@ -1,5 +1,32 @@
 public class Solution {
     public boolean isMatch(String s, String p) {
+        boolean[][] res = new boolean[s.length()+1][p.length()+1];
+        res[0][0] = true;
+        for (int i = 0; i < p.length(); i++) {
+            if (p.charAt(i) != '*') {
+                for (int j = 0; j < s.length(); j++) {
+                    res[j+1][i+1] = res[j][i] && (p.charAt(i) == '?' || p.charAt(i) == s.charAt(j));
+                }
+            }
+            else {
+                int k = 0;
+                while (k <= s.length() && !res[k][i])
+                    k++;
+                while (k <= s.length())
+                    res[k++][i+1] = true;
+            }
+        }
+        return res[s.length()][p.length()];
+    }
+}
+
+O(mn) O(mn)
+
+
+
+
+public class Solution {
+    public boolean isMatch(String s, String p) {
         if(s.length()>300 && p.charAt(0)=='*' && p.charAt(p.length()-1)=='*')   //这一行主要为了跳过一个极端test case
             return false;
         if(p.length()==0)

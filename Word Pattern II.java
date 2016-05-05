@@ -30,5 +30,10 @@ public class Solution {
     }
 }
 
+pattern = "abab", str = "redblueredblue" should return true.
+pattern = "aaaa", str = "asdasdasdasd" should return true.
+pattern = "aabb", str = "xyzabcxzyabc" should return false
+
+
 very clear
 https://leetcode.com/discuss/63252/share-my-java-backtracking-solution
