@@ -11,7 +11,7 @@ public class Solution {
                 return false;
             parent[x] = y;
         }
-        return edges.length==n-1;
+        return edges.length==n-1;       // this is to ensure it is a connected graph
     }
     
     private int find(int[] parent, int i) { //find will recursively find the representative for the current element

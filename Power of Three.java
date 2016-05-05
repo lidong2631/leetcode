@@ -16,3 +16,14 @@ public boolean isPowerOfThree(int n) {
 How to check if a integer is a power of some integer?
 
 https://leetcode.com/discuss/78532/a-summary-of-all-solutions
+
+
+
+public boolean isPowerOfThree(int n) {
+    return Integer.toString(n, 3).matches("10*");
+}
+
+Integer.toString(2, 3) = 2
+Integer.toString(5, 3) = 12
+
+https://leetcode.com/discuss/78708/ternary-number-solution

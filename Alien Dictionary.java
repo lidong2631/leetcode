@@ -67,6 +67,20 @@ rftt
 
 w->e->r->t->f
 
+BuildGraph():
+adj[t][f] = true
+adj[w][e] = true
+adj[r][t] = true
+adj[e][r] = true
+
+dfs():
+initially e f r t w
+e -> r -> t -> f
+visited[e] = 2, visited[r] = 2, visited[t] = 2, visited[f] = 2
+res: ftre
+visited[w] = 2
+res: ftrew
+
 
 
 invalid input:

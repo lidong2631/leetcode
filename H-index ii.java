@@ -16,5 +16,11 @@ public class Solution {
     }
 }
 
+0 1 3 5 6
+0 1 2 5 6
+0 1 4 5 6
+
+need to understand why return citations.length - left
+
 follow up for H-index. The citations array is pre-ordered in ascending order. here we use Binary Search
 O(logn) O(1)
