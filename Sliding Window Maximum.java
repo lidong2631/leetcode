@@ -27,5 +27,6 @@ public class Solution {
     }
 }
 
+O(nlogk)
 
 https://leetcode.com/discuss/46739/java-solution-with-priorityqueue

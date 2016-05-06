@@ -11,7 +11,7 @@ public class Solution {
         List<String> item = helper(n-2, m);
         List<String> res = new ArrayList<String>();
         for(int i=0; i<item.size(); i++) {
-            if(n!=m)                            //nice!
+            if(n!=m)                            // eliminate invalid case like "0xx0"
                 res.add("0"+item.get(i)+"0");
             res.add("1"+item.get(i)+"1");
             res.add("6"+item.get(i)+"9");

@@ -19,7 +19,7 @@ public class WordDistance {
         List<Integer> l1 = map.get(word1);
         List<Integer> l2 = map.get(word2);
         int shortest = Integer.MAX_VALUE;
-        for(int i=0, j=0; i<l1.size() && j<l2.size(); ) {
+        for(int i=0, j=0; i<l1.size() && j<l2.size(); ) {   // find minimum distance between two sorted array. related topic: closest value in sorted array (binary search)
             int index1 = l1.get(i);
             int index2 = l2.get(j);
             if(index1<index2) {
