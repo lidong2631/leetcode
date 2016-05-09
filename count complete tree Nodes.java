@@ -16,15 +16,15 @@ public class Solution {
             int llh = leftDepth(root.left);
             int lrh = rightDepth(root.left);
             int rrh = rightDepth(root.right);
-            if(llh==rrh) {
+            if(llh==rrh) {                      // complete tree
                 total += (1<<(llh+1))-1;
                 break;
             }
-            else if(llh>lrh) {
+            else if(llh>lrh) {                  // count right subtree and go to left subtree
                 total += 1<<rrh;
                 root = root.left;
             }
-            else {
+            else {                              // left subtree is complete. count them and go to right subtree
                 total += 1<<llh;
                 root = root.right;
             }
