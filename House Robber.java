@@ -13,6 +13,8 @@ public class Solution {
     }
 }
 
+2 - 10 - 5 - 3 - 8
+
 动态规划 知道某一点的最大利润maxRob[1] 求下一点 
 
 递推式为maxRob[1] = Math.max(maxRob[1], maxRob[0]+num[i]) 即取上一次

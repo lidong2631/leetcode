@@ -18,6 +18,8 @@ public int countPrimes(int n) {
    return count;
 }
 
+see example https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+
 leetcode hint讲得很好
 上面的解法跟下面一样
 

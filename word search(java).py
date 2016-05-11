@@ -71,13 +71,14 @@ public class Solution {
             return false;
         char tmp = board[i][j];
         board[i][j] = '#';
-        if(search(board, index+1, i+1, j, word) ||
+
+        // 这种写法好一些 不管是否为true都会重置board
+        boolean res = (search(board, index+1, i+1, j, word) ||
                       search(board, index+1, i-1, j, word) ||
                       search(board, index+1, i, j+1, word) ||
-                      search(board, index+1, i, j-1, word))
-            return true;
+                      search(board, index+1, i, j-1, word));
         board[i][j] = tmp;
-        return false;
+        return res;
     }
 }
 
