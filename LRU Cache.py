@@ -75,7 +75,7 @@ public class LRUCache {
 }
 
 
-
+see also LFU cache http://stackoverflow.com/questions/21117636/how-to-implement-a-least-frequently-used-lfu-cache
 
 
 

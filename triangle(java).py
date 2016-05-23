@@ -49,6 +49,15 @@ public class Solution {
 O(n^2) O(n)
 
 
+[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]
+
+2 + 3 + 5 + 1 = 11
+
 
 
 public class Solution {

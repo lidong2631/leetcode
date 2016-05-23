@@ -91,6 +91,24 @@ O(n)
 
 https://leetcode.com/discuss/30719/my-short-post-order-traversal-java-solution-for-share
 
+         1
+        / \
+       2   5
+      / \   \
+     3   4   6
+
+   1
+    \
+     2
+      \
+       3
+        \
+         4
+          \
+           5
+            \
+             6
+
 
 
 

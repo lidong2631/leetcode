@@ -109,7 +109,7 @@ public class Solution {
 
 Note：  python版版改编 空间复杂度比code ganker的解法多一点 用了二维数组
 
-
+S = "rabbbit", T = "rabbit"
 
 
 

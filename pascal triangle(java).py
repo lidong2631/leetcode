@@ -87,6 +87,17 @@ public class Solution {
 
 Note: 这题用python解法改貌似不行 不过code ganker的解法蛮简单 
 
+n = 5
+
+[
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+
+
 
 
 from code ganker:

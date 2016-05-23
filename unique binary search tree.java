@@ -17,6 +17,13 @@ public class Solution {
 时间O(n^2) 空间O(n)
 
 
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
+
+
 public class Solution {
     public int numTrees(int n) {
         if(n<=0)
