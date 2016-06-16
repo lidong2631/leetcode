@@ -16,6 +16,10 @@ public class Solution {
     }
 }
 
+Given [10, 9, 2, 5, 3, 7, 101, 18],
+
+The longest increasing subsequence is [2, 3, 7, 101], therefore the length is 4
+
 dp[i] represents the the length of the LIS till nums[i].
 
 For each nums[i], we need to compare all the nums[j] where 0 <= j < i, if nums[i] > nums[j], then dp[i] = dp[j] + 1, 
@@ -38,20 +42,25 @@ public int lengthOfLIS(int[] nums) {
     int[] tails = new int[nums.length];
     int size = 0;
     for (int n : nums) {
-        int i = 0, j = size;
-        while (i < j) {
-            int mid = (i+j)/2;
+        int left = 0, right = size;
+        while (left < right) {
+            int mid = (left + right) / 2;
             if (nums[mid] < n)
-                i = mid + 1;
+                left = mid + 1;
             else
-                j = mid;
+                right = mid;
         }
-        tails[i] = n;
-        if (i == size) size++;
+        tails[left] = n;
+        if (left == size) size++;
     }
     return size;
 }
 
+nums = [4,5,6,3]
+
+len = 1   :      [4], [5], [6], [3]   => tails[0] = 3
+len = 2   :      [4, 5], [5, 6]       => tails[1] = 5
+len = 3   :      [4, 5, 6]            => tails[2] = 6
 
 
 http://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/
