@@ -27,6 +27,30 @@ public class Solution {
     }
 }
 
+Given an integer matrix, find the length of the longest increasing path.
+
+From each cell, you can either move to four directions: left, right, up or down. You may NOT move diagonally or move outside of the boundary (i.e. wrap-around is not 
+
+Example 1:
+
+nums = [
+  [9,9,4],
+  [6,6,8],
+  [2,1,1]
+]
+Return 4
+The longest increasing path is [1, 2, 6, 9].
+
+Example 2:
+
+nums = [
+  [3,4,5],
+  [3,2,6],
+  [2,2,1]
+]
+Return 4
+The longest increasing path is [3, 4, 5, 6]. Moving diagonally is not allowed.
+
 O(m*n) O(m*n)
 
 https://leetcode.com/discuss/81235/java-dfs-dp-solution
