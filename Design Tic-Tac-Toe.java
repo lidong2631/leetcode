@@ -49,6 +49,10 @@ public class TicTacToe {
  * int param_1 = obj.move(row,col,player);
  */
 
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
 
 O(1) O(n)
 

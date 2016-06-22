@@ -1,5 +1,27 @@
 public class Solution {
     public boolean increasingTriplet(int[] nums) {
+        int first = Integer.MAX_VALUE, second = Integer.MAX_VALUE;
+        for (int n : nums) {
+            if (n <= first)
+                first = n;
+            else if (n <= second)
+                second = n;
+            else return true;
+        }
+        return false;
+    }
+}
+
+https://leetcode.com/discuss/88907/clean-java-solution-with-clear-explanation
+
+O(n)
+
+
+
+
+
+public class Solution {
+    public boolean increasingTriplet(int[] nums) {
         if(nums==null || nums.length==0)
             return false;
         int[] dp = new int[nums.length];
