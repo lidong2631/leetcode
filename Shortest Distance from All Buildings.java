@@ -88,7 +88,8 @@ res = 7
 
 The shortest distance from any empty land to a building can be calculated by BFS starting from the building in O(mn) time. 
 
-Therefore the we can calculate distance from all buildings to empty lands by t rounds of BFS starting from each building. t is the total number of buildings.
+Therefore the we can calculate distance from all buildings to empty lands by t rounds of BFS starting from each building. 
+t is the total number of buildings.
 
 In each round, we need maintain two values for every empty land: the distance and the accessibility.
 

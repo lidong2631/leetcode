@@ -46,6 +46,23 @@ public class Solution {
     }
 }
 
+Given binary tree [3,9,8,4,0,1,7],
+     3
+    /\
+   /  \
+   9   8
+  /\  /\
+ /  \/  \
+ 4  01   7
+return its vertical order traversal as:
+[
+  [4],
+  [9],
+  [3,0,1],
+  [8],
+  [7]
+]
+
 level order套路
 
 O(n) O(n)

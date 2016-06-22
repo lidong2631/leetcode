@@ -62,5 +62,6 @@ n = 6, edges = [[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]
 4: 3 5
 5: 4 leave
 
+return [3, 4]
 
 https://leetcode.com/discuss/71763/share-some-thoughts

@@ -43,6 +43,15 @@ public class Solution {
     }
 }
 
+Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
+
+Note: The input string may contain letters other than the parentheses ( and ).
+
+Examples:
+"()())()" -> ["()()()", "(())()"]
+"(a)())()" -> ["(a)()()", "(a())()"]
+")(" -> [""]
+
 
 The idea is straightforward, with the input string s, we generate all possible states by removing one ( or ), 
 check if they are valid, if found valid ones on the current level, put them to the final result list and we are done, 

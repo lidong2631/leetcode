@@ -14,9 +14,22 @@ public class Solution {
     }
 }
 
+Given a string which contains only lowercase letters, remove duplicate letters so that every letter appear once and only once. 
+You must make sure your result is the smallest in lexicographical order among all possible results.
+
+Example:
+Given "bcabc"
+Return "abc"
+
+Given "cbacdcbc"
+Return "acdb"
+
+Credits:
+
+
 Given the string s, the greedy choice (i.e., the leftmost letter in the answer) is the smallest s[i], s.t. 
 
-the suffix s[i .. ] contains all the unique letters. (Note that, when there are more than one smallest s[i]'s, 
+the suffix s[i .. ] contains all the unique letters. (Note that, when there are more than one smallest s[i], 
 
 we choose the leftmost one. Why? Simply consider the example: "abcacb".)
 
