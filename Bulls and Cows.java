@@ -7,8 +7,8 @@ public String getHint(String secret, String guess) {
         int g = Character.getNumericValue(guess.charAt(i));
         if (s == g) bulls++;
         else {
-            if (numbers[s] < 0) cows++;
-            if (numbers[g] > 0) cows++;
+            if (numbers[s] < 0) cows++;     // if numbers[s] is negative then previous guess has chosen this number cows++
+            if (numbers[g] > 0) cows++;     // if numbers[g] is positive then previous secret has this number cows++
             numbers[s] ++;
             numbers[g] --;
         }
