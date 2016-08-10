@@ -71,6 +71,8 @@ We can easily prove that tails is a increasing array. Therefore it is possible t
 (1) if x is larger than all tails, append it, increase the size by 1
 (2) if tails[i-1] < x <= tails[i], update tails[i]
 
+Doing so will maintain the tails invariant. The the final answer is just the size.
+
 http://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/
 
 

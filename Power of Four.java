@@ -5,6 +5,15 @@ public class Solution {
     }
 }
 
+
+Given an integer (signed 32 bits), write a function to check whether it is a power of 4.
+
+Example:
+Given num = 16, return true. Given num = 5, return false.
+
+Follow up: Could you solve it without loops/recursion?
+
+
 same as Power of Two but also use mask to eliminate those power of two but not four
 
 

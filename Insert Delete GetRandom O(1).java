@@ -8,7 +8,7 @@ public class RandomizedSet {
 
     /** Initialize your data structure here. */
     public RandomizedSet() {
-        list = new ArrayList<Integer>();
+        list = new LinkedList<Integer>();
         map = new HashMap<Integer, Integer>();
     }
     

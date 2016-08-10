@@ -13,6 +13,17 @@ public class Solution {
     }
 }
 
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, 
+
+the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and 
+
+it will automatically contact the police if two adjacent houses were broken into on the same night.
+
+Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money 
+
+you can rob tonight without alerting the police.
+
+
 2 - 10 - 5 - 3 - 8
 
 动态规划 知道某一点的最大利润maxRob[1] 求下一点 

@@ -1,14 +1,14 @@
 public class MovingAverage {
 
+    private double sum;                     // careful need to be double
     private LinkedList<Integer> list;
-    int capacity;
-    double sum;
-    
+    private int capacity;
+
     /** Initialize your data structure here. */
     public MovingAverage(int size) {
-        list = new LinkedList<Integer>();
         this.capacity = size;
-        this.sum = 0;
+        sum = 0;
+        list = new LinkedList<Integer>();
     }
     
     public double next(int val) {
@@ -18,7 +18,9 @@ public class MovingAverage {
             return sum / list.size();
         }
         else {
-            sum = sum + val - list.removeFirst();
+            int tmp = list.removeFirst();
+            sum = sum + val - tmp;
+            list.add(val);
             return sum / list.size();
         }
     }
@@ -42,3 +44,6 @@ m.next(5) = (10 + 3 + 5) / 3
 
 
 O(1) O(n)
+
+
+https://discuss.leetcode.com/topic/44113/java-o-1-using-deque
