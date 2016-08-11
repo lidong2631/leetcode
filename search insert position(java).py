@@ -73,11 +73,8 @@ public int searchInsert(int[] A, int target) {
 }
 
 
+
 这题用code ganker的解法 比较好 简单明了
-
-
-
-
 
 public class Solution {
     public int searchInsert(int[] A, int target) {

@@ -64,7 +64,7 @@ public class LRUCache {
             if(curr==first)
                 first = first.next;
             else
-                curr.pre.next = curr.next;
+                curr.pre.next = curr.next; // use doubly linkedlist because we can access to previous node in O(1)
             curr.next.pre = curr.pre;
             last.next = curr;
             curr.pre = last;

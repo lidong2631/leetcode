@@ -80,7 +80,7 @@ public class Solution {
             int diff = num[left]+num[right]-target;
             if(Math.abs(diff)<Math.abs(minDiff))        //否则如果当前diff小于全局minDiff 更新minDiff
                 minDiff = diff;
-            else if(num[left]+num[right]<target)
+            if(num[left]+num[right]<target)
                 left++;
             else
                 right--;

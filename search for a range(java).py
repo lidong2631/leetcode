@@ -78,7 +78,7 @@ public class Solution {
         int right = A.length-1;
         int mid = 0;
         
-        while(left<=right)
+        while(left<=right)          // first while check if target exists in array
         {
             mid = (left+right)/2;
             if(A[mid]==target)
@@ -93,7 +93,7 @@ public class Solution {
             
         int newL = 0;
         int newR = mid;
-        while(newL<=newR)
+        while(newL<=newR)           // second while check left side
         {
             int m = (newL+newR)/2;
             if(A[m]==target)        //区别
@@ -105,7 +105,7 @@ public class Solution {
         
         newL = mid;
         newR = A.length-1;
-        while(newL<=newR)
+        while(newL<=newR)           // third while check right side
         {
             int m = (newL+newR)/2;
             if(A[m]==target)            //区别
@@ -119,6 +119,17 @@ public class Solution {
 }
 
 Note: 根据code ganker程序写的 三遍二分发 第一遍找值是否存在 第二遍在(0,mid)找range开始索引 第三遍在(mid,A.length-1）找range结束索引
+
+
+Given a sorted array of integers, find the starting and ending position of a given target value.
+
+Your algorithm runtime complexity must be in the order of O(log n).
+
+If the target is not found in the array, return [-1, -1].
+
+For example,
+Given [5, 7, 7, 8, 8, 10] and target value 8,
+return [3, 4].
 
 
 

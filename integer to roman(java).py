@@ -74,7 +74,13 @@ public class Solution {
 From code ganker 思路很清晰 注意一下switch case的用法 时间O(整数位数)
 
 
-
+I:1
+V:5
+X:10
+L:50
+C:100
+D:500
+M:1000
 
 
 public class Solution {
