@@ -65,36 +65,9 @@ public class Solution {
             else if(x/(mid+1)>=mid+1)
                 left = mid + 1;
         }
-        return right;   //think about 0
+        return 0;
     }
 }
-
-
-
-
-
-
-
-public class Solution {
-    public int sqrt(int x) {
-        int left = 1; int right = x/2 + 1;
-        while(left<=right)
-        {
-            int mid = (left+right)/2;
-            if(mid<=x/mid && x/(mid+1)<mid+1)
-                return mid;
-            else if(x/mid<mid)
-                right = mid - 1;
-            else
-                left = mid + 1;
-        }
-        return right;
-    }
-}
-
-Note: 注意用x/mid==mid来判断 如果用mid＊mid＝＝x来判断 当mid值很大时乘方可能会越整数界要注意一下 
-
-另外就是扩展成实数怎么写 还有牛顿法有时间看下
 
 
 

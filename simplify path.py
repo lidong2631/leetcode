@@ -161,60 +161,6 @@ public class Solution {
 
 
 
-
-
-public class Solution {
-    public String simplifyPath(String path) {
-        if(path==null || path.length()==0)
-            return "";
-        StringBuilder res = new StringBuilder();
-        LinkedList<String> stack = new LinkedList<String>();
-        int i=0;
-        
-        while(i<path.length())  //扫一遍字符串
-        {
-            int index = i;
-            StringBuilder tmp = new StringBuilder();
-            
-            while(i<path.length()&&path.charAt(i)!='/')     //这里要注意要先写i<path.length() 不然会报indexoutofbound exception
-            {    
-                tmp.append(path.charAt(i));
-                i++;
-            }
-            if(index!=i)    //如果index不等于i 说明两个/ /间有东西 将它push到stack中
-            {
-                String tmpStr = tmp.toString();
-                if(tmpStr.equals(".."))
-                {
-                    if(!stack.isEmpty())
-                        stack.pop();
-                }
-                else if(!tmpStr.equals("."))
-                    stack.push(tmpStr);
-            }
-            i++;
-        }
-        if(!stack.isEmpty())    //最后出栈输出获得结果
-        {
-            String[] str = stack.toArray(new String[stack.size()]); //这里是按stack的顺序 后进的元素在前面 所有要从后往前遍历
-            for(int j=str.length-1; j>=0; j--)
-            {
-                res.append("/"+str[j]);
-            }
-        }
-        if(res.length()==0)
-            return "/";
-        return res.toString();
-    }
-}
-
-Note: 根据code ganker版改编 这题有好几个细节要注意 见注释 注意LinkedList toArray()方法
-
-
-
-
-
-
 from code ganker:
 
 这道题目是Linux内核中比较常见的一个操作，就是对一个输入的文件路径进行简化。思路比较明确，就是维护一个栈，对于每一个块（以‘/’作为分界）进行分析，

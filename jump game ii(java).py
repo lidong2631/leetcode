@@ -44,31 +44,19 @@ Input:  [1,2,3]
 Output:     1
 Expected:   2
 
+Given an array of non-negative integers, you are initially positioned at the first index of the array.
 
+Each element in the array represents your maximum jump length at that position.
 
-public class Solution {
-    public int jump(int[] A) {
-        if(A==null || A.length==0)
-            return 0;
-        int last = 0; 
-        int reach = 0;
-        int step = 0;
-        for(int i=0; i<=reach&&i<A.length; i++)
-        {
-            if(i>last)      //这里如果i大于last 说明last不能走到i的位置 需要再多走一步到reach的位置
-            {
-                step++;
-                last = reach;
-            }
-            reach = Math.max(reach, i+A[i]);
-        }
-        if(reach>=A.length-1)
-            return step;
-        return 0;
-    }
-}
+Your goal is to reach the last index in the minimum number of jumps.
 
-Note: 根据code ganker写的 同i差不多 也是动态规划 局部全局最优 只是这里要维护两个step-1和step步的最远距离
+For example:
+Given array A = [2,3,1,1,4]
+
+The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
+
+Note:
+You can assume that you can always reach the last index.
 
 
 
