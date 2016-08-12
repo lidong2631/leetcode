@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class Solution:
     # @param A a list of integers
     # @param target an integer
@@ -28,28 +27,23 @@ Note：二分法变体很多 要深刻理解
 
 
 
-根据cleanCode改编
-
 public class Solution {
-    public boolean search(int[] A, int target) {
-        if(A==null || A.length==0)
-            return false;
-        int left = 0, right = A.length-1;
-        while(left<=right) {
-            int mid = (left+right)/2;
-            if(A[mid]==target)
-                return true;
-            if(A[mid]>A[right]) {
-                if(A[left]<=target && target<A[mid])
-                    right = mid - 1;
-                else
+    public boolean search(int[] nums, int target) {
+        int left = 0, right = nums.length-1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] == target) return true;
+            else if (nums[mid] < nums[right]) {
+                if (target > nums[mid] && target <= nums[right])
                     left = mid + 1;
+                else
+                    right = mid - 1;
             }
-            else if(A[mid]<A[right]) {
-                if(A[mid]<target && target<=A[right])
-                    left = mid + 1;
-                else
+            else if (nums[mid] > nums[right]) {
+                if (target >= nums[left] && target < nums[mid])
                     right = mid - 1;
+                else
+                    left = mid + 1;
             }
             else
                 right--;
@@ -57,101 +51,6 @@ public class Solution {
         return false;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-public class Solution {
-    public boolean search(int[] A, int target) {
-        if(A==null || A.length==0)
-            return false;
-        int left = 0; int right = A.length-1;
-        while(left<=right) {
-            int mid = (left+right)/2;
-            if(A[mid]==target)
-                return true;
-            if(A[mid]>A[left]) {
-                if(A[mid]>target && A[left]<=target)
-                    right = mid - 1;
-                else
-                    left = mid + 1;
-            }
-            else if(A[mid]<A[right]) {
-                if(A[mid]<target && A[right]>=target)
-                    left = mid + 1;
-                else
-                    right = mid - 1;
-            }
-            else {                  //如果前两个if判断不出来 就看左右指针哪个和A[mid]相等 当然可能两个都相等 那就先移动左指针
-                if(A[mid]==A[left])
-                    left++;
-                if(A[mid]==A[right])
-                    right--;
-            }
-        }
-        return false;
-    }
-}
-
-我的解法根据code ganker改编 还是类似上一题的套路 判断左右两边哪边是有序的 如果都判断不出来就去else里面看A[mid]是跟A[left]相等还是A[right]
-
-然后相应的移动左右指针 比code ganker的解法稍微清晰一点
-
-
-
-
-
-
-
-
-
-
-public class Solution {
-    public boolean search(int[] A, int target) {
-        if(A==null || A.length==0)
-            return false;
-        int left = 0;
-        int right = A.length-1;
-        while(left<=right)
-        {
-            int mid = (left+right)/2;
-            if(A[mid]==target)
-                return true;
-            if(A[mid]>A[left])
-            {
-                if(target>=A[left] && target<A[mid])
-                    right = mid - 1;
-                else
-                    left = mid + 1;
-            }
-            else if(A[mid]<A[left])
-            {
-                if(target>A[mid] && target<=A[right])
-                    left = mid + 1;
-                else
-                    right = mid - 1;
-            }
-            else            //区别 但会影响复杂度
-            {
-                left++;
-            }
-        }
-        return false;
-    }
-}
-
-Note: 这题有意思 虽然只加了个有重复数据的条件 但正因此影响了时间复杂度 变成O(n) 如果A[mid]和边缘值A[left]相等 无法判断是左移还是右移
-
-就得移动一位left 从新判断直到A[mid]和A[left]不等为止 最坏可以是O(n)
-
 
 
 

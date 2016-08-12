@@ -1,56 +1,25 @@
 public class Solution {
-    public int removeDuplicates(int[] A) {
-        if(A.length<3)
-            return A.length;
-        int index = 2;
-        for(int i=2; i<A.length; i++) {
-            if(A[i]!=A[index-2]) {
-                A[index]=A[i];
-                index++;
-            }
-        }
-        return index;
-    }
-}
-
-非常好的解法 from code ganker评论 通过比较A[i]和A[index-2] 来移动index 代码很简洁
-
-if(A.length<n)
-    return A.length;
-int index = n;
-for(int i=n; i<A.length; i++) {
-    if(A[i]!=A[index-n])
-        A[index++] = A[i];
-}
-return index;
-扩展成重复n次
-
-
-
-public class Solution {
-    public int removeDuplicates(int[] A) {
-        if(A==null || A.length==0)
-            return 0;
-        int res = 0;
-        int count = 0;
-        for(int i=0; i<A.length; i++)
-        {
-            if(i>0 && A[i-1]==A[i])
-            {
+    public int removeDuplicates(int[] nums) {
+        int j = 0, count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i-1]) {
                 count++;
-                if(count>2)
-                    continue;
+                if (count > 2) continue;
             }
-            else
-                count = 1;
-            A[res++] = A[i];
+            else count = 1;
+            nums[j++] = nums[i];
         }
-        return res;
+        return j;
     }
 }
 
-Note: 此解法是按照code ganker改写的 他的比python版感觉更清楚易懂 这种题只要会一种就可 属于简单题 要做到熟练bug free 2分钟搞定
 
-这道题跟Remove Duplicates from Sorted Array比较类似，区别只是这里元素可以重复出现至多两次，而不是一次。其实也比较简单，只需要维护一个counter，
+Follow up for "Remove Duplicates":
+What if duplicates are allowed at most twice?
 
-当counter是2时，就直接跳过即可，否则说明元素出现次数没有超，继续放入结果数组，若遇到新元素则重置counter。总体算法只需要扫描一次数组，所以时间上是O(n)，
+For example,
+Given sorted array nums = [1,1,1,2,2,3],
+
+Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. 
+
+It doesn't matter what you leave beyond the new length.

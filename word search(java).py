@@ -47,17 +47,11 @@ class Solution:
 Note: 典型的递归题 像这种棋盘式题目 大都用两层循环遍历所有棋格 里面用递归
 
 
-
 public class Solution {
     public boolean exist(char[][] board, String word) {
-        if(word==null || word.length()==0)
-            return true;
-        if(board==null || board.length==0 || board[0].length==0)
-            return false;
-
-        for(int i=0; i<board.length; i++) {
-            for(int j=0; j<board[0].length; j++) {
-                if(search(board, 0, i, j, word))
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (search(board, 0, i, j, word))
                     return true;
             }
         }
@@ -65,22 +59,21 @@ public class Solution {
     }
     
     private boolean search(char[][] board, int index, int i, int j, String word) {
-        if(index==word.length())
-            return true;
-        if(i<0 || j<0 || i>=board.length || j>=board[0].length || board[i][j]!=word.charAt(index))
-            return false;
+        if (index == word.length()) return true;
+        
+        if (i < 0 || j < 0 || i >= board.length || j >= board[0].length || board[i][j] != word.charAt(index)) return false;
+        
         char tmp = board[i][j];
         board[i][j] = '#';
-
-        // 这种写法好一些 不管是否为true都会重置board
-        boolean res = (search(board, index+1, i+1, j, word) ||
-                      search(board, index+1, i-1, j, word) ||
-                      search(board, index+1, i, j+1, word) ||
-                      search(board, index+1, i, j-1, word));
+        boolean res = search(board, index+1, i+1, j, word)
+                    || search(board, index+1, i-1, j, word)
+                    || search(board, index+1, i, j+1, word)
+                    || search(board, index+1, i, j-1, word);
         board[i][j] = tmp;
         return res;
     }
 }
+
 
 O（m^2*n^2) O(m*n*4^(len(word))) 空间O(1)
 

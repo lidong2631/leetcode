@@ -49,72 +49,18 @@ public class Solution {
         if(S==null)
             return null;
         Arrays.sort(S);
-        return helper(S, S.length);
-    }
-    
-    private List<List<Integer>> helper(int[] S, int index) {
-        if(index==0) {
-            List<List<Integer>> res = new ArrayList<List<Integer>>();
-            List<Integer> item = new ArrayList<Integer>();
-            res.add(item);
-            return res;
-        }
-        List<List<Integer>> res = helper(S, index-1);
-        int size = res.size();
-        for(int i=0; i<size; i++) {
-            List<Integer> newItem = new ArrayList<Integer>(res.get(i));
-            newItem.add(S[index-1]);
-            res.add(newItem);
-        }
-        return res;
-    }
-}
-
-第二遍的写法
-
-
-
-
-public class Solution {
-    public List<List<Integer>> subsets(int[] S) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        res.add(new ArrayList<Integer>());
-        if(S==null || S.length==0)
-            return res;
-        Arrays.sort(S);
-        for(int i=0; i<S.length; i++) {
-            int size = res.size();
-            for(int j=0; j<size; j++) {
-                List<Integer> item = new ArrayList<Integer>(res.get(j));
-                item.add(S[i]);
-                res.add(item);
-            }
-        }
-        return res;
-    }
-}
-
-非递归
-
-
-
-public class Solution {
-    public List<List<Integer>> subsets(int[] S) {
-        if(S==null)
-            return null;
-        Arrays.sort(S);
         return helper(S, S.length-1);
     }
     
     private List<List<Integer>> helper(int[] S, int index) {
         if(index==-1) {
-            List<Integer> item = new ArrayList<Integer>();
             List<List<Integer>> res = new ArrayList<List<Integer>>();
+            List<Integer> item = new ArrayList<Integer>();
             res.add(item);
             return res;
         }
         List<List<Integer>> res = helper(S, index-1);
-        int size = res.size();
+        int size = res.size();                          // careful
         for(int i=0; i<size; i++) {
             List<Integer> newItem = new ArrayList<Integer>(res.get(i));
             newItem.add(S[index]);
@@ -125,7 +71,23 @@ public class Solution {
 }
 
 
+Given a set of distinct integers, nums, return all possible subsets.
 
+Note: The solution set must not contain duplicate subsets.
+
+For example,
+If nums = [1,2,3], a solution is:
+
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
 
 
 

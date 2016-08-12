@@ -1,33 +1,3 @@
-<<<<<<< HEAD
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
-class Solution:
-    # @param head, a ListNode
-    # @return a ListNode
-    def deleteDuplicates(self, head):
-        if head == None or head.next == None:
-            return head
-        newNode = ListNode(0)
-        newNode.next = head
-        p = newNode; tmp = head
-        while p.next:                   #只要p.next存在就一直进行循环
-            while tmp.next and tmp.next.val == p.next.val:      #如果是重复的值 tmp keep going直到最后一个重复值
-                tmp = tmp.next
-            if p.next == tmp:           #如果tmp是p的下一节点 说明是非重复数值 将p和tmp都往前移动一个节点
-                p = p.next
-                tmp = p.next
-            else:                  #否则将p下一节点指向tmp.next 即下一个非重复的数值
-                p.next = tmp.next
-        return newNode.next
-
-Note: 类似这种链表操作的题目 应熟练记住操作套路
-
-
-
 题意：
 
 Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
@@ -68,46 +38,32 @@ class Solution:
 
 
 
-
-
-
-
 /**
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
  *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
+ *     ListNode(int x) { val = x; }
  * }
  */
 public class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        if(head==null || head.next == null)
-            return head;
-        ListNode newNode = new ListNode(0);
-        newNode.next = head;
-        ListNode p = newNode;
-        ListNode tmp = head;
-        while(p.next!=null)
-        {
-            while(tmp.next!=null && (tmp.next.val==p.next.val)) //如果重复值 就一直走直到最后一个重复值
-                tmp = tmp.next;
-            if(p.next==tmp) //如果p和tmp相邻说明tmp和p不同 将p和tmp一起移动一格
-            {
-                p = p.next;
-                tmp = tmp.next;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy, curr = head;
+        while (prev.next != null) {
+            while (curr.next != null && curr.next.val == prev.next.val)
+                curr = curr.next;
+            if (prev.next == curr) {
+                prev = prev.next;
+                curr = curr.next;
             }
-            else    //否则是重复值 将tmp值都删掉
-                p.next = tmp.next;
+            else
+                prev.next = curr.next;
         }
-        return newNode.next;
+        return dummy.next;
     }
 }
-
-Note: 直接用python改编版 这种题不需要想很多 直到一种解法就可以了
 
 
 
