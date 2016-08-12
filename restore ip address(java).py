@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class Solution:
     def dfs(self, currIP, restStr, currIndex):
         if currIndex == 3:      #如果当前数字已经有3位

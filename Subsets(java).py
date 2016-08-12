@@ -48,8 +48,7 @@ public class Solution {
     public List<List<Integer>> subsets(int[] S) {
         if(S==null)
             return null;
-        Arrays.sort(S);
-        return helper(S, S.length-1);
+        return helper(S, S.length-1);           // this one we do need to sort the array because all elements are distinct
     }
     
     private List<List<Integer>> helper(int[] S, int index) {

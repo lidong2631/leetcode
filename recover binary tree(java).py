@@ -1,32 +1,3 @@
-<<<<<<< HEAD
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    def inorder(self, root, listVal, listNode):     #中序遍历
-        if root:
-            self.inorder(root.left, listVal, listNode)
-            listVal.append(root.val); listNode.append(root)
-            self.inorder(root.right, listVal, listNode)
-        
-    # @param root, a tree node
-    # @return a tree node
-    def recoverTree(self, root):
-        listVal = []; listNode = []             #listVal用来存储各个节点的value listNode用来存储各个节点
-        self.inorder(root, listVal, listNode)   #中序遍历将节点值和节点append给listVal和listNode
-        listVal.sort()                          #排序 排序后错位的节点值即归正
-        for i in range(len(listVal)):
-            listNode[i].val = listVal[i]        #循环将排序后的值重新赋给节点
-        return root
-
-
-
-
-
 题意：
 
 Two elements of a binary search tree (BST) are swapped by mistake.
@@ -120,15 +91,8 @@ class Solution:
 Note: python交换数值
 
 
-
-
-
-
-
-
-
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -138,45 +102,32 @@ Note: python交换数值
  */
 public class Solution {
     public void recoverTree(TreeNode root) {
-        if(root==null)
-            return;
-        ArrayList<TreeNode> res = new ArrayList<TreeNode>();
-        ArrayList<TreeNode> pre = new ArrayList<TreeNode>();
-        pre.add(null);              //pre先放个null 这样167行才好用set
+        List<TreeNode> pre = new ArrayList<TreeNode>();
+        List<TreeNode> res = new ArrayList<TreeNode>();
+        
+        pre.add(null);
         helper(root, pre, res);
-        int tmp = res.get(0).val;       //最后交换错位的值
+        
+        int tmp = res.get(0).val;
         res.get(0).val = res.get(1).val;
         res.get(1).val = tmp;
     }
-    
-    private void helper(TreeNode root, ArrayList<TreeNode> pre, ArrayList<TreeNode> res) {
-        if(root==null)
-            return;
-        helper(root.left, pre, res);                //中序遍历递归
-        if(pre.get(0)!=null && pre.get(0).val>root.val)     //如果违反递增 这里写>或>=都可以
-        {
-            if(res.size()==0)           //第一次违反 记下两个节点
-            {
-                res.add(pre.get(0));
-                res.add(root);
+    private void helper(TreeNode root, List<TreeNode> pre, List<TreeNode> res) {
+        if (root != null) {
+            helper(root.left, pre, res);
+            if (pre.get(0) != null && pre.get(0).val > root.val) {
+                if (res.size() == 0) {
+                    res.add(pre.get(0));
+                    res.add(root);
+                }
+                else
+                    res.set(1, root);
             }
-            else                //如果有第二次说明两个点不相邻 将第二次违反的第二个点放到res第二个位置 等着交换
-            {
-                res.set(1, root);
-            }
+            pre.set(0, root);
+            helper(root.right, pre, res);
         }
-        pre.set(0, root);       //每递归一层更新pre
-        helper(root.right, pre, res);
     }
 }
-
-Note: 这题蛮有意思 用中序遍历 检查错位的点 注意两种情况 节点相邻和不相邻 pre用来操纵全局 不然java是值传递 无法真的改变节点
-
-看code ganker解释的不错
-
-python版不符合要求 题目要求常熟空间 感觉python版省了很多实现细节
-
-
 
 
 from code ganker:

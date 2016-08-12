@@ -1,30 +1,3 @@
-<<<<<<< HEAD
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    def validBST(self, root, min, max):
-        if root == None:                #如果root为空 则全部检验完符合条件 返回true
-            return True
-        if root.val <= min or root.val >= max:          #如果value超出界限 返回false
-            return False
-        return self.validBST(root.left, min, root.val) and\
-                self.validBST(root.right, root.val, max)        #递归左右子节点继续检查
-    
-    # @param root, a tree node
-    # @return a boolean
-    def isValidBST(self, root):
-        return self.validBST(root, -2147483648, 2147483648)     #min max为最大小整数
-
-
-
-
-
-
 题意：检测一颗二叉树是否是二叉查找树。
 
 解题思路：看到二叉树我们首先想到需要进行递归来解决问题。这道题递归的比较巧妙。让我们来看下面一棵树：
@@ -65,6 +38,33 @@ class Solution:
     
     def isValidBST(self, root):
         return self.ValidBST(root, -2147483648, 2147483647)
+
+
+
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return helper(root, null, null);
+    }
+
+    private boolean helper(TreeNode root, Integer left, Integer right) {
+        if (root == null) return true;
+        if ((left == null || root.val > left) && (right == null || root.val < right))
+            return helper(root.left, left, root.val) && helper(root.right, root.val, right);
+        return false;
+    }
+}
+
+
+
 
 
 

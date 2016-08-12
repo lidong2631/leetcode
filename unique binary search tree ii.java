@@ -1,36 +1,55 @@
-
-public ArrayList<TreeNode> generateTrees(int n) {
-    return helper(1,n);
-}
-private ArrayList<TreeNode> helper(int left, int right)
-{
-    ArrayList<TreeNode> res = new ArrayList<TreeNode>();
-    if(left>right)
-    {
-        res.add(null);
-        return res;
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<TreeNode> generateTrees(int n) {
+        if (n <=0 ) return new ArrayList<TreeNode>();
+        return helper(1, n);
     }
-    for(int i=left;i<=right;i++)            //遍历 分别以1...n为根节点
-    {
-        ArrayList<TreeNode> leftList = helper(left,i-1);    //递归建立根节点的左右子树 helper返回的是以i为根 所有可能的子树根节点
-        ArrayList<TreeNode> rightList = helper(i+1,right);
-        for(int j=0;j<leftList.size();j++)          //遍历leftList rightList里的节点 每一个节点代表当前根(root)左或右子树的根节点 子树下面的结构在之前的递归中已经建立好
-        {
-            for(int k=0;k<rightList.size();k++)
-            {
-                TreeNode root = new TreeNode(i);       //这里 建立树根 直接将leftList rightList里的节点连接在root上即可 节点下面的子树结构已在之前的递归中建立好了 
-                root.left = leftList.get(j);
-                root.right = rightList.get(k);
-                res.add(root);                  //最后将这个root（一个root具有一种特定子树结构 同一个root可以有多种子树结构）加到res中
+    
+    private List<TreeNode> helper(int left, int right) {
+        List<TreeNode> res = new ArrayList<>();
+        
+        if (left > right) {
+            res.add(null);
+            return res;
+        }
+        
+        for (int i = left; i <= right; i++) {
+            List<TreeNode> leftTree = helper(left, i-1);
+            List<TreeNode> rightTree = helper(i+1, right);
+            
+            for (int j = 0; j < leftTree.size(); j++) {
+                for (int k = 0; k < rightTree.size(); k++) {
+                    TreeNode root = new TreeNode(i);
+                    root.left = leftTree.get(j);
+                    root.right = rightTree.get(k);
+                    res.add(root);
+                }
             }
         }
+        return res;
     }
-    return res;
 }
 
-Note: 看generateTree.java generateTreeTest.java程序理解 里面有打印信息
 
-这题想了半天才明白 着重看下注释 还可以跑下相关的generateTreeTest.java程序 看输出理解
+
+Given an integer n, generate all structurally unique BST's (binary search trees) that store values 1...n.
+
+For example,
+Given n = 3, your program should return all 5 unique BST's shown below.
+
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
 
 
 

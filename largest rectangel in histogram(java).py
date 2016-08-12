@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class Solution:
     # @param height, a list of integer
     # @return an integer
@@ -48,98 +47,30 @@ class Solution:
 
 
 
-
 public class Solution {
     public int largestRectangleArea(int[] height) {
-        if(height==null || height.length==0)
-            return 0;
         int maxArea = 0;
-        LinkedList<Integer> stack = new LinkedList<Integer>();
+        Stack<Integer> stack = new Stack<>();
         int i = 0;
-        for(; i<height.length; i++) {
-            if(stack.isEmpty() || height[i]>height[stack.peek()])   //这里写>或>=都可以
+        for (; i < height.length; i++) {
+            if (stack.isEmpty() || height[stack.peek()] < height[i])
                 stack.push(i);
             else {
-                int peekIndex = stack.pop();
-                int width = stack.isEmpty() ? i : i-stack.peek()-1;
-                maxArea = Math.max(maxArea, width*height[peekIndex]);
+                int index = stack.pop();
+                int width = stack.isEmpty() ? i : i - stack.peek() - 1;     // cannot write i-index think about case [1,2,2]
+                maxArea = Math.max(maxArea, height[index] * width);
                 i--;
             }
         }
-        while(!stack.isEmpty()) {
-            int peekIndex = stack.pop();
-            int width = stack.isEmpty() ? i : i-stack.peek()-1;
-            maxArea = Math.max(maxArea, width*height[peekIndex]);
+        while (!stack.isEmpty()) {
+            int index = stack.pop();
+            int width = stack.isEmpty() ? i : i - stack.peek() - 1;
+            maxArea = Math.max(maxArea, height[index] * width);
         }
         return maxArea;
     }
 }
 
-第二遍自己写的 主要理解栈内元素始终是递增的顺序 在出栈时计算width是i-stack.peek()-1因为弹栈时出了一个元素
-
-
-
-
-
-public class Solution {
-    public int largestRectangleArea(int[] heights) {
-        int max = 0;
-        
-        for(int i=0; i<heights.length; i++) {
-            int left=i-1, right = i+1;
-            while(left>=0 && heights[left]>=heights[i]) {
-                max = Math.max(max, heights[i]*(i-left+1));
-                left--;
-            }
-            while(right<=heights.length-1 && heights[right]>=heights[i]) {
-                max = Math.max(max, heights[i]*(right-i+1));
-                right++;
-            }
-        }
-        return max;
-    }
-}
-
-
-
-
-public class Solution {
-    public int largestRectangleArea(int[] height) {
-        if(height==null || height.length==0)
-            return 0;
-        LinkedList<Integer> stack = new LinkedList<Integer>();
-        int i=0;
-        int maxArea = 0; int width = 0; int curr = 0;
-        while(i<height.length)
-        {
-            if(stack.isEmpty() || height[i]>height[stack.peek()])
-                stack.push(i);
-            else
-            {
-                curr = stack.pop();
-                if(stack.isEmpty()) width = i;
-                else width = i-stack.peek()-1;
-                maxArea = Math.max(maxArea, width*height[curr]);
-                i--;
-            }
-            i++;
-        }
-        while(!stack.isEmpty())
-        {
-            curr = stack.pop();
-            if(stack.isEmpty()) width = i;
-            else width = i-stack.peek()-1;
-            maxArea = Math.max(maxArea, width*height[curr]);
-        }
-        return maxArea;
-    }
-}
-
-Note: 看图理解比较容易 这个解法跟code ganker的一样都一个思路 主要是要明白stack存的是递增的索引 但违反递增时就逐一弹出stack元素直到再次为递增
-
-算宽度width时是i-stack.peek()-1中间跨过多少个矩形都要算进去因为它们一定都比当前矩形要高 如果stack为空那么宽度就是i
-
-这题是很值得思考的 还有两种解法brute force和遍历每个矩形两边扫的 复杂度分别是O(n^3) O(n^2)
 
 
 

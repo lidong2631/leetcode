@@ -1,42 +1,3 @@
-<<<<<<< HEAD
-class Solution:
-    def largestRectangleArea(self, height):
-        stack = []; i = 0; maxArea = 0
-        while i < len(height):
-            if stack == [] or height[i] > height[stack[len(stack)-1]]:
-                stack.append(i)
-            else:
-                curr = stack.pop()
-                width = i if stack == [] else i - stack[len(stack) - 1] - 1
-                maxArea = max(maxArea, width * height[curr])
-                i-=1
-            i+=1
-        while stack!=[]:
-            curr = stack.pop()
-            width = i if stack == [] else i - stack[len(stack) - 1] - 1
-            maxArea = max(maxArea, width * height[curr])
-        return maxArea
-        
-    # @param matrix, a list of lists of 1 length string
-    # @return an integer
-    def maximalRectangle(self, matrix):
-        if matrix == []:
-            return 0
-        row = [0 for i in range(len(matrix[0]))]        #row用来矩阵存放每一行的元素
-        maxArea = 0
-        for i in range(len(matrix)):
-            for j in range(len(matrix[i])):
-                row[j] = row[j] + 1 if matrix[i][j] == '1' else 0   #遍历矩阵每一行 如果是1就累加 否则为0
-            maxArea = max(maxArea, self.largestRectangleArea(row))  #运用上一题结果 对每一行求最大矩形面积 所有行中最大的矩形面积即是能围成的最大矩形
-        return maxArea
-
-Note：利用上一题largest rectangle in histogram 的结果
-
-
-
-
-
-
 题意：Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing all ones and return its area.
 
 解题思路：找出矩阵中最大的矩形，矩形中只包含1。这道题需要利用上一道题（Largest Rectangle in Histogram）的结论。比如对于以下矩阵。
@@ -91,13 +52,12 @@ class Solution:
 
 public class Solution {
     public int maximalRectangle(char[][] matrix) {
-        if(matrix==null || matrix.length==0 || matrix[0].length==0)
-            return 0;
-        int maxArea = 0;
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return 0;
         int[] height = new int[matrix[0].length];
-        for(int i=0; i<matrix.length; i++) {
-            for(int j=0; j<matrix[0].length; j++) {
-                height[j] = matrix[i][j]=='0' ? 0 : height[j]+1;
+        int maxArea = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                height[j] = matrix[i][j] == '0' ? 0 : height[j] + 1;
             }
             maxArea = Math.max(maxArea, largestRect(height));
         }
@@ -105,95 +65,26 @@ public class Solution {
     }
     
     private int largestRect(int[] height) {
-        if(height==null || height.length==0)
-            return 0;
-        int maxArea = 0;
-        LinkedList<Integer> stack = new LinkedList<Integer>();
-        int i = 0;
-        for(; i<height.length; i++) {
-            if(stack.isEmpty() || height[i]>height[stack.peek()])
+        Stack<Integer> stack = new Stack<>();
+        int i = 0, maxArea = 0;
+        for (; i < height.length; i++) {
+            if (stack.isEmpty() || height[stack.peek()] < height[i])
                 stack.push(i);
             else {
-                int curr = stack.pop();
-                int width = stack.isEmpty() ? i : i-stack.peek()-1;
-                maxArea = Math.max(maxArea, width*height[curr]);
+                int index = stack.pop();
+                int width = stack.isEmpty() ? i : i - stack.peek() - 1;
+                maxArea = Math.max(maxArea, height[index] * width);
                 i--;
             }
         }
-        while(!stack.isEmpty()) {
-            int curr = stack.pop();
-            int width = stack.isEmpty() ? i : i-stack.peek()-1;
-            maxArea = Math.max(maxArea, width*height[curr]);
+        while (!stack.isEmpty()) {
+            int index = stack.pop();
+            int width = stack.isEmpty() ? i : i - stack.peek() - 1;
+            maxArea = Math.max(maxArea, height[index] * width);
         }
         return maxArea;
     }
 }
-
-第二遍自己写的 注意下code ganker的评论里提到
-
-如果在第七行声明height数组的时候多一位 也就是在结尾加一个0 int[] height = new int[matrix[0].length+1];
-largestRectangleArea就不需要有两个while了，因为这样保证了height[0]永远能被pop出来，走完了一遍之后，stack总会是空的了。
-所以不需要在for之后第二个while了
-
-这样可以节省代码 同样适用于上一题largest rectangle in histogram
-
-
-
-
-
-
-public class Solution {
-    public int maximalRectangle(char[][] matrix) {
-        if(matrix==null || matrix.length==0 || matrix[0].length==0)
-            return 0;
-        int maxArea = 0;
-        int[] height = new int[matrix[0].length];
-        for(int i=0; i<matrix.length; i++)
-        {
-            for(int j=0; j<matrix[0].length; j++)
-            {
-                height[j] = matrix[i][j]=='0'? 0 : height[j]+1;
-            }
-            maxArea = Math.max(largestRectangleArea(height), maxArea);
-        }
-        return maxArea;
-    }
-    
-    private int largestRectangleArea(int[] height) {
-        if(height==null || height.length==0)
-            return 0;
-        LinkedList<Integer> stack = new LinkedList<Integer>();
-        int i=0;
-        int maxArea = 0; int width = 0; int curr = 0;
-        while(i<height.length)
-        {
-            if(stack.isEmpty() || height[i]>height[stack.peek()])
-                stack.push(i);
-            else
-            {
-                curr = stack.pop();
-                if(stack.isEmpty()) width = i;
-                else width = i-stack.peek()-1;
-                maxArea = Math.max(maxArea, width*height[curr]);
-                i--;
-            }
-            i++;
-        }
-        while(!stack.isEmpty())
-        {
-            curr = stack.pop();
-            if(stack.isEmpty()) width = i;
-            else width = i-stack.peek()-1;
-            maxArea = Math.max(maxArea, width*height[curr]);
-        }
-        return maxArea;
-    }
-}
-
-Note: 这题主要要借助larest rectangle in histogram 如果那个题明白了 这题很简单
-
-
-
 
 
 

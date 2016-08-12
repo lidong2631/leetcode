@@ -1,38 +1,3 @@
-<<<<<<< HEAD
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
-class Solution:
-    # @param head, a ListNode
-    # @param x, an integer
-    # @return a ListNode
-def partition(self, head, x):
-        head1 = ListNode(0)     #
-        head2 = ListNode(0)
-        tmp = head              #
-        p1 = head1              #
-        p2 = head2
-        while tmp:              #
-            if tmp.val < x:         #
-                p1.next = tmp
-                tmp = tmp.next
-                p1 = p1.next
-                p1.next = None
-            else:                   #
-                p2.next = tmp
-                tmp = tmp.next
-                p2 = p2.next
-                p2.next = None
-        p1.next = head2.next        #
-        return head1.next
-
-Note: 这题也不难 要熟记套路
-
-
-
 题意：
 
 Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
@@ -99,44 +64,31 @@ class Solution:
  */
 public class Solution {
     public ListNode partition(ListNode head, int x) {
-        ListNode head1 = new ListNode(0);
-        ListNode head2 = new ListNode(0);
-        ListNode tmp = head;
-        ListNode p1 = head1;
-        ListNode p2 = head2;
-        while(tmp!=null)
-        {
-            if(tmp.val<x)
-            {
-                p1.next = tmp;
-                tmp = tmp.next;
+        if (head == null) return null;
+        ListNode p = head;
+        ListNode p1 = new ListNode(0);
+        ListNode p2 = new ListNode(0);
+        ListNode dummy1 = p1;
+        ListNode dummy2 = p2;
+        
+        while (p != null) {
+            if (p.val < x) {
+                p1.next = p;
                 p1 = p1.next;
-                p1.next = null;     //注意这里一定要将next置为null 否则最后会形成cycle list
+                p = p.next;
+                p1.next = null;         // careful here
             }
-            else
-            {
-                p2.next = tmp;
-                tmp = tmp.next;
+            else {
+                p2.next = p;
                 p2 = p2.next;
-                p2.next = null;
+                p = p.next;
+                p2.next = null;         // careful here
             }
         }
-        p1.next = head2.next;
-        return head1.next;
+        p1.next = dummy2.next;
+        return dummy1.next;
     }
 }
-
-
-Note: 这题我用的python版改编 没有看code ganker的解法 时间空间复杂度都差不多 python版比较好理解 主要就是建立两个list 一个val都小于x
-
-一个都大于等于x 最后连接起来 用python版就够了
-
-注意这题111行到114行不可以写成
-p1.next = tmp;
-p1 = p1.next;
-p1.next = null;
-tmp = tmp.next;
-也就是先写113行是不行的 因为p1.next = null会将原始链表截断 所以要将让原节点tmp先跳到下一个节点再执行p1 = p1.next和p1.next = null
 
 
 

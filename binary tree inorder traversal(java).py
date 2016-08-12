@@ -1,34 +1,3 @@
-<<<<<<< HEAD
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    def iterativeInorder(self, root, list):
-        stack = []
-        while root or stack:            #只要栈里还有元素或root不为空 就可以继续循环下去
-            if root:                    #如果root存在 就push root进栈 去其左节点
-                stack.append(root)
-                root = root.left
-            else:                       #如果root为空 说明已经到底没有左节点了 这时我们pop栈顶的元素出来把它的值加进list里
-                root = stack.pop()      #并去它的右子节点 如果它没有右节点继续pop元素 否则重复if root部分
-                list.append(root.val)
-                root = root.right
-    
-    # @param root, a tree node
-    # @return a list of integers
-    def inorderTraversal(self, root):
-        list = []
-        self.iterativeInorder(root, list)
-        return list
-
-
-
-
-
 题意：二叉树的中序遍历。这道题用递归比较简单，考察的是非递归实现二叉树中序遍历。中序遍历顺序为：左子树，根，右子树。如此递归下去。
 
 解题思路：假设树为：

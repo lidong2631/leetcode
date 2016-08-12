@@ -1,24 +1,3 @@
-<<<<<<< HEAD
-class Solution:
-    # @param num, a list of integer
-    # @return a list of lists of integer
-    def subsetsWithDup(self, S):
-        def dfs(level, start, list):
-            if list not in res:         #同上一题一样 只不过多加这一句剪枝条件
-                res.append(list)
-            if level == len(S):
-                return
-            for i in range(start, len(S)):
-                dfs(level+1, i+1, list+[S[i]])
-        S.sort()
-        res = []
-        dfs(0, 0, [])
-        return res
-
-
-
-
-
 题意：
 
 Given a collection of integers that might contain duplicates, S, return all possible subsets.
@@ -61,124 +40,37 @@ class Solution:
 
 
 
-
-
 public class Solution {
     public List<List<Integer>> subsetsWithDup(int[] num) {
-        if(num==null)
-            return null;
         Arrays.sort(num);
-        List<Integer> lastSize = new ArrayList<Integer>();
-        lastSize.add(0);
-        return helper(num, num.length-1, lastSize);
+        return helper(num, num.length-1, new ArrayList<Integer>());
     }
     
-    private List<List<Integer>> helper(int[] num, int index, List<Integer> lastSize) {
-        if(index==-1) {
+    private List<List<Integer>> helper(int[] num, int index, List<Integer> prev) {
+        if (index == -1) {
             List<List<Integer>> res = new ArrayList<List<Integer>>();
-            List<Integer> item = new ArrayList<Integer>();
-            res.add(item);
-            lastSize.set(0, 1); //这一句加不加都行 第一个元素肯定没有重复的可能 这样执行到最后lastSize就会被set为1
+            List<Integer> empty = new ArrayList<>();
+            res.add(empty);
+            prev.add(1);
             return res;
         }
-        List<List<Integer>> res = helper(num, index-1, lastSize);
-        int size = res.size();
-        int start = 0;
-        if(index>0 && num[index]==num[index-1])
-            start = lastSize.get(0);
-        for(int i=start; i<size; i++) {
-            List<Integer> newItem = new ArrayList<Integer>(res.get(i));
-            newItem.add(num[index]);
-            res.add(newItem);
-        }
-        lastSize.set(0, size);
-        return res;
-    }
-}
-
-第二遍写的
-
-
-1, 2, 2, 2
-
-[], [1]
-        [2], [1,2]
-                    [2,2], [1,2,2]
-                                    [2,2,2], [1,2,2,2]
-
-
-
-
-public class Solution {
-    public List<List<Integer>> subsetsWithDup(int[] num) {
-        if(num==null)
-            return null;
-        Arrays.sort(num);
-        ArrayList<Integer> lastSize = new ArrayList<Integer>();
-        lastSize.add(0);
-        return helper(num, num.length-1, lastSize);
-    }
-    
-    private List<List<Integer>> helper(int[] num, int index, ArrayList<Integer> lastSize) {
-        if(index==-1)           //这一步是递归到底 加空集
-        {
-            List<List<Integer>> res = new ArrayList<List<Integer>>();
-            List<Integer> tmp = new ArrayList<Integer>();
-            res.add(tmp);
-            return res;
-        }
-        List<List<Integer>> res = helper(num, index-1, lastSize);   //从这里开始回溯
-        int start = 0;
-        if(index>0 && num[index]==num[index-1])     //判断下一个元素是否是重复元素 如果是更新start从上一元素处开始
-        {
-            start = lastSize.get(0);
-        }
-        int size = res.size();
-        for(int i=start; i<size; i++)               //循环将新元素加到res中
-        {
-            List<Integer> tmp = new ArrayList<Integer>(res.get(i));
+        List<List<Integer>> res = helper(num, index-1, prev);
+        int start = 0, size = res.size();
+        if (index > 0 && num[index] == num[index-1])
+            start = prev.get(0);
+        for (int i = start; i < size; i++) {
+            List<Integer> tmp = new ArrayList<>(res.get(i));
             tmp.add(num[index]);
             res.add(tmp);
         }
-        lastSize.set(0, size);                      //最后更新lastSize
+        prev.set(0, size);
         return res;
     }
 }
 
-Note: 递归解法 跟subsets基本一样 除了加了个判断在88到91
 
+[1,2,2] => [], [1], [2], [1,2], [2,2], [1,2,2]
 
-
-
-public class Solution {
-    public List<List<Integer>> subsetsWithDup(int[] num) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        res.add(new ArrayList<Integer>());
-        if(num==null)
-            return res;
-        Arrays.sort(num);
-        int start = 0;
-        for(int i=0; i<num.length; i++)
-        {
-            int size = res.size();
-            for(int j=start; j<size; j++)
-            {
-                List<Integer> tmp = new ArrayList<Integer>(res.get(j));
-                tmp.add(num[i]);
-                res.add(tmp);
-            }
-            if(i<num.length-1 && num[i]==num[i+1])  //这里不可以写i>0 && nums[i]==nums[i-1]想一下就知道了要跟后面的比较 不能跟前面的比较
-            {
-                start = size;
-            }
-            else
-                start = 0;
-        }
-        return res;
-    }
-}
-
-Note: 非递归解法 跟subsets差不多 除了126加了个判断
 
 
 
