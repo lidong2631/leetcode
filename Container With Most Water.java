@@ -1,23 +1,13 @@
 public class Solution {
     public int maxArea(int[] height) {
-        if(height==null || height.length<2)
-            return 0;
-        int left = 0, right = height.length-1;
-        int maxWater = 0;
-        while(left<right) {
-            int diff = height[right]-height[left];
-            if(diff>0) {
-                int localWater = (right-left)*height[left];
-                maxWater = maxWater<localWater ? localWater:maxWater;
-                left++;
-            }
-            else {
-                int localWater = (right-left)*height[right];
-                maxWater = maxWater<localWater ? localWater:maxWater;
-                right--;
-            }
+        int left = 0, right = height.length-1, maxArea = 0;
+        while (left < right) {
+            if (height[left] > height[right])
+                maxArea = Math.max(maxArea, (right-left)*height[right--]);
+            else
+                maxArea = Math.max(maxArea, (right-left)*height[left++]);
         }
-        return maxWater;
+        return maxArea;
     }
 }
 

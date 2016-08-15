@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-class Solution:
-    def dfs(self, left, right, currItem, res):
-        if left > right:            #如果left大于right 说明我们已经用得右括号数要大于左括号数 产生的括号对一定不符合要求 ex: )() 直接return
-            return
-        if left == 0 and right == 0:    #如果left right都等于0 则找到一组合法的括号对
-            res.append(currItem)
-        if left > 0:                                    #如果left还有剩余 总可以继续递归调用下去
-            self.dfs(left-1, right, currItem + '(', res)
-        if right > 0:                                   #如果左括号为0了 则开始添加右括号 或者递归回调处理
-            self.dfs(left, right-1, currItem + ')', res)
-    # @param an integer
-    # @return a list of string
-    def generateParenthesis(self, n):
-        res = []
-        self.dfs(n, n, '', res)
-        return res
-
-Note: 理解dfs如何运作 主要还是递归 看照片 看看n=2, n=3程序如何运行
-
-
-
-
 题意：
 
 Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
@@ -57,49 +34,25 @@ class Solution:
 
 
 
-
 public class Solution {
     public List<String> generateParenthesis(int n) {
-        List<String> res = new ArrayList<String>();
-        if(n<=0)
-            return res;
-        helper(n, n, new String(), res);
+        List<String> res = new ArrayList<>();
+        helper(n, n, "", res);
         return res;
     }
     
     private void helper(int left, int right, String item, List<String> res) {
-        if(right<left)
+        if (left == 0 && right == 0) {
+            res.add(item);
             return;
-        if(left==0 && right ==0)
-            res.add(item);          
-        if(left>0)
-            helper(left-1, right, item+"(", res);
-        if(right>0)
-            helper(left, right-1, item+")", res);
+        }
+        if (left > right) return;
+        if (left > 0)
+            helper(left - 1, right, item + "(", res);
+        if (right > 0)
+            helper(left, right - 1, item + ")", res);
     }
 }
-
-Note: 根据code ganker改编 递归题 cc150也有 
-
-看code ganker评论
-
-顺便看下卡特兰数 如果是求输出结果有多少直接用卡特兰递推公式就可以了 见下面code ganker讲解和wikipedia 
-
-http://zh.wikipedia.org/wiki/%E5%8D%A1%E5%A1%94%E5%85%B0%E6%95%B0
-
-EX: 2
-
-2, 2, "", res
-    1, 2, "(", res
-        0, 2, "((", res
-            0, 1, "(()", res
-                0, 0, "(())", res   (get one solution!)
-        1, 1, "()", res
-            0, 1, "()(", res
-                0, 0, "()()", res   (get another solution!)
-            1, 0, "())", res    (return)
-    2, 1, ")", res  (return)
-
 
 
 

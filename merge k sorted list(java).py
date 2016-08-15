@@ -26,74 +26,55 @@ class Solution:
 
 
 
-from code ganker:
-
 /**
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
  *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
+ *     ListNode(int x) { val = x; }
  * }
  */
 public class Solution {
-    public ListNode mergeKLists(List<ListNode> lists) {
-        if(lists == null || lists.size() == 0)      //注意
-            return null;
-        return helper(lists, 0, lists.size()-1);        //调用helper
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) return null;
+        return helper(lists, 0, lists.length-1);
     }
     
-    private ListNode helper(List<ListNode> lists, int left, int right) {        //每次分半 递归调用helper 直到就剩两个list 用merge将它们归并
-        if(left<right)
-        {
-            int middle = (left+right)/2;
-            return Merge(helper(lists, left, middle), helper(lists, middle+1, right));
-        }
-        return lists.get(left);
+    private ListNode helper(ListNode[] lists, int left, int right) {
+        if (left>=right) return lists[left];
+        int mid = (left + right) / 2;
+        ListNode l = helper(lists, left, mid);
+        ListNode r = helper(lists, mid+1, right);
+        return merge(l, r);
     }
     
-    private ListNode Merge(ListNode l1, ListNode l2) {      //跟merge two sorted list完全一样
-        if(l1 == null) return l2;
-        if(l2 == null) return l1;
-        ListNode newHead = new ListNode(0);
-        ListNode tmp = newHead;
-        while(l1!=null && l2!=null)
-        {
-            if(l1.val<l2.val)
-            {
-                tmp.next = l1;
-                l1 = l1.next;
-                tmp = tmp.next;
+    private ListNode merge(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        
+        ListNode l = new ListNode(0);
+        ListNode head = l;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                l.next = l1;
+                l1 = l1.next; l = l.next;
             }
-            else
-            {
-                tmp.next = l2;
-                l2 = l2.next;
-                tmp = tmp.next;
+            else {
+                l.next = l2;
+                l2 = l2.next; l = l.next;
             }
         }
-        while(l1!=null)
-        {
-            tmp.next = l1;
-            l1 = l1.next;
-            tmp = tmp.next;
+        while (l1 != null) {
+            l.next = l1;
+            l1 = l1.next; l = l.next;
         }
-        while(l2!=null)
-        {
-            tmp.next = l2;
-            l2 = l2.next;
-            tmp = tmp.next;
+        while (l2 != null) {
+            l.next = l2;
+            l2 = l2.next; l = l.next;
         }
-        return newHead.next;
+        return head.next;
     }
 }
-
-Note：时间复杂度为 O(nklogk) 可以联想merge sort这个要mergesort k个list 所以复杂度是O(klogk)同时每个list还有n个元素 所以merge时时O(n) 总时间复杂度是O(nklogk)
-
-空间复杂度递归栈大小O(logk) 因为每次都在二分
 
 
 

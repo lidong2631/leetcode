@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 题意：
 
 Given an integer, convert it to a roman numeral.
@@ -27,88 +26,18 @@ class Solution:
 
 public class Solution {
     public String intToRoman(int num) {
-        if(num<1 || num>3999)
-            return "";
-        int digit = 1000;
-        List<Integer> tmp = new ArrayList<Integer>();
-        while(digit>0) {        //分别判断对应4位数字
-            tmp.add(num/digit);
-            num%=digit;
-            digit/=10;
-        }
-        StringBuilder res = new StringBuilder();
-        res.append(convert(tmp.get(0), ' ', ' ', 'M')); //每一位转换 代入1 5 10
-        res.append(convert(tmp.get(1), 'M', 'D', 'C'));
-        res.append(convert(tmp.get(2), 'C', 'L', 'X'));
-        res.append(convert(tmp.get(3), 'X', 'V', 'I'));
-        return res.toString();
-    }
-    
-    private String convert(int digit, char ten, char five, char one) {
-        StringBuilder sb = new StringBuilder();
-        switch(digit) {
-            case 9:
-                sb.append(one);     //这里要一个一个append 不然one和ten会相加成数字 就不对了
-                sb.append(ten);
-                break;
-            case 8:case 7:case 6: case 5:   //java中多个case同时处理
-                sb.append(five);
-                for(int i=5; i<digit; i++)
-                    sb.append(one);
-                break;
-            case 4:
-                sb.append(one);
-                sb.append(five);
-                break;
-            case 3:case 2: case 1:
-                for(int i=0; i<digit; i++)
-                    sb.append(one);
-                break;
-            case 0:
-                break;
-        }
-        return sb.toString();
-    }
-}
-
-From code ganker 思路很清晰 注意一下switch case的用法 时间O(整数位数)
-
-
-I:1
-V:5
-X:10
-L:50
-C:100
-D:500
-M:1000
-
-
-public class Solution {
-    public String intToRoman(int num) {
-        int[] values = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-        String[] charset = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
-        StringBuilder sb = new StringBuilder();
-        for(int i=0; i<values.length; i++)
-        {
-            while(num>=values[i])
-            {
-                num-=values[i];
-                sb.append(charset[i]);
+        String[] roman = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        int[] n = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        StringBuffer res = new StringBuffer();
+        for (int i = 0; i < n.length; i++) {
+            while (num >= n[i]) {
+                num -= n[i];
+                res.append(roman[i]);
             }
         }
-        return sb.toString();
+        return res.toString();
     }
 }
-
-Note: 上面python版改编 主要思路是出了维护7个罗马数字还要有900， 90， 9， 400， 40， 4这些大数减一位小数的数
-
-这样在写程序时就很简单 每次判断如果数字大于values[i] 就减去它再将它代表的字符append到sb里就好了
-
-注意下初始化数组 要这么写 intp[] values = new int[]{.......}
-
-
-
-
 
 
 from code ganker:

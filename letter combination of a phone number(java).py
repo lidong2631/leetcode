@@ -40,168 +40,36 @@ Note: 这题思路跟combination一样 只是多一个dict映射数字和字母�
 
 
 
-
-解题思路：穷举所有可能的字符串使用dfs来解决。
-
-代码：
-
-复制代码
-class Solution:
-    # @return a list of strings, [s1, s2]
-    def letterCombinations(self, digits):
-        def dfs(num, string, res):
-            if num == length:
-                res.append(string)
-                return
-            for letter in dict[digits[num]]:
-                    dfs(num+1, string+letter, res)
-        
-        dict = {'2':['a','b','c'],
-                '3':['d','e','f'],
-                '4':['g','h','i'],
-                '5':['j','k','l'],
-                '6':['m','n','o'],
-                '7':['p','q','r','s'],
-                '8':['t','u','v'],
-                '9':['w','x','y','z']
-                }
-        res = []
-        length = len(digits)
-        dfs(0, '', res)
-        return res
-
-
-
 public class Solution {
-    private Map<Character, String> map = new HashMap<Character, String>(){{
-        put('2', "abc");
-        put('3', "def");
-        put('4', "ghi");
-        put('5', "jkl");
-        put('6', "mno");
-        put('7', "pqrs");
-        put('8', "tuv");
-        put('9', "wxyz");
-        put('0', " ");
-    }};
-        
-    
     public List<String> letterCombinations(String digits) {
-        List<String> res = new ArrayList<String>();
-        if(digits==null || digits.length()==0)
-            return res;
-        res.add("");            //要先加一个空元素才能循环
-        for(int i=0; i<digits.length(); i++) {
-            String curr = map.get(digits.charAt(i));
-            List<String> tmp = new ArrayList<String>();
-            for(int j=0; j<res.size(); j++) {
-                for(int k=0; k<curr.length(); k++) {
-                    tmp.add(res.get(j) + Character.toString(curr.charAt(k)));
-                }
-            }
-            res = tmp;
-        }
-        return res;
-    }
-}
-
-迭代
-
-
-
-public class Solution {
-    private Map<Character, String> map = new HashMap<Character, String>(){{
-        put('2', "abc");
-        put('3', "def");
-        put('4', "ghi");
-        put('5', "jkl");
-        put('6', "mno");
-        put('7', "pqrs");
-        put('8', "tuv");
-        put('9', "wxyz");
-        put('0', " ");
-    }};
+        Map<Character, String> map = new HashMap<>();
+        map.put('2', "abc");
+        map.put('3', "def");
+        map.put('4', "ghi");
+        map.put('5', "jkl");
+        map.put('6', "mno");
+        map.put('7', "pqrs");
+        map.put('8', "tuv");
+        map.put('9', "wxyz");
+        map.put('0', " ");
         
-    
-    public List<String> letterCombinations(String digits) {
-        List<String> res = new ArrayList<String>();
-        if(digits==null || digits.length()==0)
-            return res;
-        helper(digits, 0, "", res);
+        List<String> res = new ArrayList<>();
+        if (digits == null || digits.length() == 0) return res;
+        helper(digits, map, 0, "", res);
         return res;
     }
     
-    private void helper(String digits, int index, String item, List<String> res) {
-        if(index==digits.length()) {
+    private void helper(String digits, Map<Character, String> map, int index, String item, List<String> res) {
+        if (index == digits.length()) {
             res.add(item);
             return;
         }
-        
-        String curr = map.get(digits.charAt(index));
-        for(int j=0; j<curr.length(); j++) {
-            helper(digits, index+1, item+Character.toString(curr.charAt(j)), res);
+        String str = map.get(digits.charAt(index));
+        for (int i = 0; i < str.length(); i++) {
+            helper(digits, map, index+1, item + String.valueOf(str.charAt(i)), res);
         }
     }
 }
-
-递归
-
-时间空间复杂度都是O(k^n) 递归 非递归都是 
-
-
-
-
-
-
-
-public class Solution {
-    public List<String> letterCombinations(String digits) {
-        List<String> res = new ArrayList<String>();
-        res.add("");
-        if(digits==null || digits.length()==0)
-            return res;
-        for(int i=0; i<digits.length(); i++)
-        {
-            String letters = getLetter(digits.charAt(i));
-            List<String> tmpRes = new ArrayList<String>();
-            for(int j=0; j<res.size(); j++)
-            {
-                for(int k=0; k<letters.length(); k++)
-                    tmpRes.add(res.get(j) + Character.toString(letters.charAt(k)));
-            }
-            res = tmpRes;
-        }
-        return res;
-    }
-    
-    private String getLetter(char digit) {
-        switch(digit)
-        {
-            case '2':
-                return "abc";
-            case '3':
-                return "def";
-            case '4':
-                return "ghi";
-            case '5':
-                return "jkl";
-            case '6':
-                return "mno";
-            case '7':
-                return "pqrs";
-            case '8':
-                return "tuv";
-            case '9':
-                return "wxyz";
-            case '0':
-                return " ";
-            default:
-                return "";
-        }
-    }
-}
-
-Note: 根据code ganker写的 迭代版本 想想时间空间复杂度 再根据python版写个递归版本
 
 
 

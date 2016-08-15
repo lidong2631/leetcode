@@ -1,26 +1,3 @@
-class Solution:
-    # @return an integer
-    def lengthOfLongestSubstring(self, s):
-        start = 0
-        maxLen = 0
-        dict = {}                   #维护一个哈希表
-        for i in range(len(s)):         #遍历一遍字符串 将对应字符在哈希表中的值設为－1
-            dict[s[i]] = -1
-        for i in range(len(s)):         #遍历一遍字符串
-            if dict[s[i]]!=-1:              #如果是重复字符
-                while start <= dict[s[i]]:      #从start位置开始到重复字符第一次出现的位置结束将中间所有字符在哈希表的值设回为－1
-                    dict[s[start]] = -1
-                    start+=1
-            dict[s[i]] = i                  #如果该字符第一次出现 将其在哈希表的值设为它的位置i
-            maxLen = i - start + 1 if i - start + 1 > maxLen else maxLen        #维护一个变量maxLen 如果当前长度大于maxLen就更新它
-        return maxLen
-
-Note: 这题的思想在字符串题中很重要 要记住 上面的解跟下面code ganker讲的一样 扩展可以为返回最长的字母相同的substring
-
-
-
-
-
 题意：Given a string, find the length of the longest substring without repeating characters. 
 
 For example, the longest substring without repeating letters for "abcabcbb" is "abc", which the length is 3. 
@@ -144,41 +121,6 @@ public class Solution {
 
 用Hashset代替256位array 可以处理非ASCII情况 这题用上述3种解法就可以了 code ganker版没有这个简洁
 
-
-
-
-public class Solution {
-    public int lengthOfLongestSubstring(String s) {
-        if(s==null || s.length()==0)
-            return 0;
-        int left = 0; int right = 0; int maxLen = 0;
-        HashSet<Character> set = new HashSet<Character>();
-        while(right<s.length())
-        {
-            if(set.contains(s.charAt(right)))   //如果是重复字符 移动right不会得到更好结果 要移动left
-            {
-                if(maxLen<right-left)           //先更新一下maxLen
-                    maxLen = right - left;
-                while(s.charAt(left)!=s.charAt(right))  //只要left和right指向的字符不是同一个字符 说明跟right重复的字符在left后面
-                {                                       //可以将left字符从set中remove 同时left跳到下一位 因为里面不会有更好的结果
-                    set.remove(s.charAt(left));
-                    left++;
-                }
-                left++;                             //如果left和right指向同一个字符(98行) left和right各跳一位
-            }
-            else
-                set.add(s.charAt(right));     //如果不是重复字符 将这个字符加到set里
-            right++;                        //正常情况right移动
-        }
-        if(maxLen<right-left)           //最后再更新一次maxLen
-            maxLen = right - left;
-        return maxLen;
-    }
-}
-
-Note: code ganker解法 这种解法在字符串中很常见 左右窗口移动  类似的还有minimum window, Substring with Concatenation of All Words
-
-记得看下code ganker的评论 在cleancode book 有这个题的更简洁解法
 
 
 

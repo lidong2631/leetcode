@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-class Solution:
-    # @param    A       a list of integers
-    # @param    elem    an integer, value need to be removed
-    # @return an integer
-    def removeElement(self, A, elem):
-        j = len(A) - 1                      #尾指针从最后一个元素开始
-        for i in range(len(A)-1, -1, -1):       #另一个指针i往前遍历
-            if A[i] == elem:                #如果A[i]和elem相等 就将它和尾指针j指向的元素交换 这样所有elem元素全在后面 j-=1往前move一个
-                A[i], A[j] = A[j], A[i]
-                j-=1
-        return j+1          #最后返回长度j+1
-
-
-
-
-
 题意：
 
 Given an array and a value, remove all instances of that value in place and return the new length.
@@ -43,36 +26,18 @@ class Solution:
 
 
 
-
 public class Solution {
-    public int removeElement(int[] A, int elem) {
-        int p1 = 0, p2 = 0;
-        while(p2<A.length) {
-            if(A[p2]!=elem)
-                A[p1++] = A[p2];
-            p2++;
+    public int removeElement(int[] nums, int val) {
+        int j = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != val)
+                nums[j++] = nums[i];
         }
-        return p1;
+        return j;
     }
 }
 
-跟Move Zeros 一模一样的解法 two pointers
 
-
-
-
-public class Solution {
-    public int removeElement(int[] A, int elem) {
-        if(A==null || A.length==0)
-            return 0;
-        int len = A.length-1;
-        for(int i=0; i<=len; i++) {
-            if(A[i]==elem)
-                A[i--] = A[len--];  //如果是elem 就跟后面的换 记得下一轮还得判断这个新换的数是不是elem 所以i先－－再＋＋ 但是len一直减 len以后的都是elem
-        }
-        return len+1;
-    }
-}
 
 code ganker的写法 代码更简洁 从前往后
 

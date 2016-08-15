@@ -32,81 +32,36 @@ Note: python reverse()没有返回值 不可以用这种形式 return num.revers
 
 
 
-
 public class Solution {
-    public void nextPermutation(int[] num) {
-        if(num==null || num.length<2)   //注意length<2就不用做了
-            return;
-        int i = num.length-2;
-        while(i>=0 && num[i]>=num[i+1]) {   //这里注意等于也要往前走 因为要找的是小于后面的数然后交换 等于交换没意义 5 2 4 2 2 2 1
+    public void nextPermutation(int[] nums) {
+        int i = nums.length - 1;
+        while (i > 0 && nums[i-1] >= nums[i])   //from end find first non-increasing element
             i--;
+        if (i == 0) {                           // if non reverse whole array
+            reverse(nums, 0);
+            return;
         }
-        if(i<0) {
-            reverse(num, 0);
-            return;     //这里reverse完直接返回就可以了 不用再继续
-        }
-        int index = i;  //否则记录这个位置 i++跳到下一个位置开始
-        i++;
-        while(i<num.length && num[i]>num[index])    //这里不可以有等于因为一旦等于就可以交换它前面的数了 5 2 4 2 2 2 1
+        int j = i - 1;                          // remember first non-increasing position
+        while (i < nums.length && nums[i] > nums[j])    // find smallest item that larger than it
             i++;
-        i--;        //找到下一个就比num[index]小的数
-        int tmp = num[index];   //交换这两个数并reverse index后面所有的数
-        num[index] = num[i];
-        num[i] = tmp;
-        reverse(num, index+1);
+        swap(nums, i-1, j);                     // swap the two and reverse the rest
+        reverse(nums, j+1);
     }
     
-    private void reverse(int[] num, int start) {
-        int end = num.length-1;
-        while(start<end) {
-            int tmp = num[start];
-            num[start] = num[end];
-            num[end] = tmp;
-            start++;
-            end--;
+    private void swap(int[] nums, int l, int r) {
+        int tmp = nums[l];
+        nums[l] = nums[r];
+        nums[r] = tmp;
+    }
+    
+    private void reverse(int[] nums, int start) {
+        int l = start, r = nums.length - 1;
+        while (l < r) {
+            swap(nums, l, r);
+            l++; r--;
         }
     }
 }
-
-这题要注意实现细节 38 41 46 50
-
-
-
-public class Solution {
-    public void nextPermutation(int[] num) {
-        if(num==null || num.length==0)
-            return;
-        int i = num.length-2;
-        while(i>=0 && num[i]>=num[i+1])     //这里可以有等于号
-            i--;
-        if(i>=0)            //如果i小于0 说明这就是最大的排列 直接reverse就好了
-        {
-            int j = i+1;
-            while(j<num.length && num[j]>num[i])        //这里要注意不可以有等于号 参考例子[1,5,1] 如果等于会得到[1,1,5] 正确答案是[5,1,1]
-                j++;
-            j--;
-            int tmp = num[j];
-            num[j] = num[i];
-            num[i] = tmp;
-        }
-        reverse(num, i+1);
-    }
-    
-    private void reverse(int[] num, int index) {
-        int left = index;
-        int right = num.length-1;
-        while(left<right)
-        {
-            int tmp = num[left];
-            num[left] = num[right];
-            num[right] = tmp;
-            left++;
-            right--;
-        }
-    }
-}
-
-Note: reverse函数的实现要牢记 其他根据那4不就好了 具体看图片
 
 
 

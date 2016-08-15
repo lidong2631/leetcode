@@ -1,74 +1,21 @@
-
 public class Solution {
-    public List<String> anagrams(String[] strs) {
-        List<String> res = new ArrayList<String>();
-        if(strs==null || strs.length==0)
-            return res;
-        HashMap<String, List<String>> map = new HashMap<String, List<String>>();
-        for(int i=0; i<strs.length; i++)
-        {
-            char[] charStr = strs[i].toCharArray();
-            Arrays.sort(charStr);
-            String str = new String(charStr);
-            if(map.containsKey(str))
-            {
-                map.get(str).add(strs[i]);
-            }
-            else
-            {
-                List<String> item = new ArrayList<String>();
-                item.add(strs[i]);
-                map.put(str, item);
-            }
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        for (int i = 0; i < strs.length; i++) {
+            char[] charArr = strs[i].toCharArray();
+            Arrays.sort(charArr);
+            String str = new String(charArr);
+            if (!map.containsKey(str))
+                map.put(str, new ArrayList<String>());
+            map.get(str).add(strs[i]);
         }
-        Iterator iter = map.values().iterator();
-        while(iter.hasNext())
-        {
-            List<String> anagrams = (List<String>)iter.next();
-            if(anagrams.size()>1)
-                res.addAll(anagrams);
+        List<List<String>> res = new ArrayList<List<String>>();
+        for (List<String> l : map.values()) {
+            res.add(l);
         }
         return res;
     }
 }
-
-O(nklogk) O(nk)
-
-
-这题简单版本check if two strings are anagrams 见cc150 1.3
-we should confirm if anagram comparison is case sensitive and whitespace is significant
-
-1 sort strings
-public boolean iaAnagram(String s, String t) {
-    if(s.length()!=t.length())
-        return false;
-    return sort(s).equals(sort(t));
-}
-
-public String sort(String s) {
-    char[] charArr = s.toCharArray();
-    Arrays.sort(charArr);
-    return new String(charArr);
-}
-
-
-2 check if two strings have identical character counts
-public boolean isAnagram(String s, String t) {
-    if(s.length()!=t.length())
-        return false;
-    int[] letters = new int[256];
-    char[] charArr = s.toCharArray();
-    for(char c : charArr)
-        letters[c]++;
-    for(int i=0; i<t.length(); i++) {
-        int c = (int)t.charAt(i);
-        if(--letters[c]<0)
-            return false;
-    }
-    return true;
-}
-
-O(n) O(n)
 
 
 

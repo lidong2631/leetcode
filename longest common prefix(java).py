@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class Solution:
     # @return a string
     def longestCommonPrefix(self, strs):
@@ -18,34 +17,25 @@ class Solution:
 
 
 
-
 public class Solution {
     public String longestCommonPrefix(String[] strs) {
-        StringBuilder res = new StringBuilder();
-        if(strs==null || strs.length==0)
-            return res.toString();
-        int index = 0;
-        while(index<strs[0].length()) {
-            for(int i=0; i<strs.length; i++) {
-                if(index>=strs[i].length() || strs[i].charAt(index)!=strs[0].charAt(index)) //如果不等就返回结果
-                    return res.toString();
+        if (strs == null || strs.length == 0) return "";
+        StringBuffer res = new StringBuffer();
+        for (int i = 0; i < strs[0].length(); i++) {        // set strs[0] as standard outer loop traverse each char in strs[0]
+            boolean flag = true;
+            char tmp = strs[0].charAt(i);
+            for (int j = 0; j < strs.length; j++) {         // inner loop go through each string
+                if (i >= strs[j].length() || strs[j].charAt(i) != tmp) {
+                    flag = false;
+                    break;
+                }
             }
-            res.append(strs[0].charAt(index));  //否则每次将相等的字符加入结果
-            index++;
+            if (!flag) return res.toString();
+            res.append(tmp);
         }
         return res.toString();
     }
 }
-
-时间O(m*n) 空间O(m)
-
-Note: from code ganker评论 brute force 思路简单 只是要注意内循环i从0开始是为了应对leetcode的空集测试 看code ganker解释
-
-Runtime Error Message:  Line 14: java.lang.ArrayIndexOutOfBoundsException: 0
-Last executed input:    []
-
-Runtime Error Message:  Line 16: java.lang.StringIndexOutOfBoundsException: String index out of range: 0
-Last executed input:    [""]
 
 
 

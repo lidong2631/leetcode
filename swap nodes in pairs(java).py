@@ -1,30 +1,3 @@
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
-class Solution:
-    # @param a ListNode
-    # @return a ListNode
-    def swapPairs(self, head):
-        if head == None or head.next == None:
-            return head
-        newNode = ListNode(0)
-        newNode.next = head
-        p = newNode
-        while p.next and p.next.next:
-            tmp = p.next.next           #每一对中的第二个值保存为tmp
-            p.next.next = tmp.next      #将当前对中第一个值指向下一对第一个值
-            tmp.next = p.next           #当前对第二个值指向第一个值
-            p.next = tmp                #p指向当前对第二个值
-            p = p.next.next             #p跳到当前对第一个值准备翻转下一对
-        return newNode.next
-
-Note: 同其他链表操作一样 看照片理解较快
-
-
-
 题意：将链表中的节点两两交换。Given 1->2->3->4, you should return the list as 2->1->4->3.
 
 解题思路：这题主要涉及到链表的操作，没什么特别的技巧，注意不要出错就好。最好加一个头结点，操作起来会很方便。
@@ -56,38 +29,32 @@ class Solution:
         
 
 
-
-
-
 /**
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
  *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
+ *     ListNode(int x) { val = x; }
  * }
  */
 public class Solution {
     public ListNode swapPairs(ListNode head) {
-        if(head==null || head.next==null)
-            return head;
-        ListNode newNode = new ListNode(0);
-        newNode.next = head;
-        ListNode p = newNode;
-        while(p.next!=null && p.next.next!=null)
-        {
-            ListNode tmp = p.next.next; //得到当前组第二个元素
-            p.next.next = tmp.next; //当前组第一个元素next指向下一组第一个元素
-            tmp.next = p.next;  //当前组第二个元素next指向第一个元素
-            p.next = tmp;   //前一组第二个元素指向当前组第一个元素
-            p = p.next.next;    //移动指针到下一组
+        if (head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode p = dummy;
+        while (p.next != null && p.next.next != null) {
+            ListNode tmp = p.next.next;
+            p.next.next = tmp.next;
+            tmp.next = p.next;
+            p.next = tmp;
+            p = p.next.next;
         }
-        return newNode.next;
+        return dummy.next;
     }
 }
+
+
 
 
 from code ganker:

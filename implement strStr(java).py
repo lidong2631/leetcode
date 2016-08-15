@@ -1,32 +1,3 @@
-<<<<<<< HEAD
-class Solution:
-    # @param haystack, a string
-    # @param needle, a string
-    # @return a string or None
-    def strStr(self, haystack, needle):
-        if haystack == None or needle == None or len(needle) > len(haystack):
-            return None
-        i = 0
-        while i < len(haystack) - len(needle) + 1:  #一共要判断len(haystack) - len(needle) + 1次数
-            j = 0; k = i
-            while j < len(needle):              #里层判断每一个以i开始的haystack字符串和needle字符串是否每一个字符都相同
-                if needle[j] == haystack[k]:    #如果相同 就都往后一位继续判断
-                    j+=1; k+=1
-                else:           #否则break里层循环 判断下一个
-                    break
-            if j == len(needle):        #如果j和len(needle)相同 说明我们得到了结果 break外层循环
-                break
-            i+=1                    #否则i+1 判断下一个
-        if i == len(haystack) - len(needle) + 1:    #如果最终i和len(haystack) - len(needle) + 1相同说明我们遍历了所有可能的字符串仍然找不到 返回None
-            return None
-        return haystack[i:]     #否则说明找到解 返回解
-
-Note: 这题brute force可以通过 上面解法即是暴力法 第二遍过可以看下code ganker的rolling hash方法 有时间可以再研究下kmp解法
-
-这题还是比较经典的 要会至少两种解法
-
-
-
 题意：实现字符串匹配函数，并返回一个指针，这个指针指向原字符串中第一次出现待匹配字符串的位置。如：haystack='aabbaa'; needle='bb'。如果使用python实现，则最后返回的应该是一个字符串，即：'bbaa'。
 
 解题思路：这道题我是使用KMP算法写的，到现在KMP算法都不是很懂，只是按照《算法导论》上的伪代码机械的实现了一遍。
@@ -70,33 +41,24 @@ class Solution:
 
 
 
+public class Solution {
+    public int strStr(String haystack, String needle) {
+        if (haystack.length() == needle.length() && haystack.equals(needle)) return 0;
+        for (int i = 0; i <= haystack.length() - needle.length(); i++) {
+            boolean flag = true;
+            for (int j = 0; j < needle.length(); j++) {
+                if (needle.charAt(j) != haystack.charAt(i+j)) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) return i;
+        }
+        return -1;
+    }
+}
 
-暴力匹配的算法，可以ac：
-
-
-class Solution:
-    # @param haystack, a string
-    # @param needle, a string
-    # @return a string or None
-    def strStr(self, haystack, needle):
-        if len(haystack) < len(needle): return None
-        i = 0
-        while i < len(haystack)-len(needle)+1:
-            j = 0; k = i
-            while j < len(needle):
-                if haystack[k] == needle[j]:
-                    j+=1; k+=1
-                else:
-                    break
-            if j == len(needle):
-                break
-            else:
-                i+=1
-        if i == len(haystack)-len(needle)+1:
-            return None
-        else:
-            return haystack[i:]
-
+O(mn) O(1)
 
 
 
@@ -126,39 +88,6 @@ public class Solution {
 }
 
 这个题有时间要再看看Rabin-Karp algorithm, KMP algorithm, Boyer-Moore algorithm
-
-
-
-
-public class Solution {
-    public String strStr(String haystack, String needle) {
-        if(haystack==null || needle==null || needle.length()==0)
-            return haystack;
-        if(needle.length()>haystack.length())
-            return null;
-        for(int i=0; i<=haystack.length()-needle.length(); i++)
-        {
-            boolean flag = true;
-            for(int j=0; j<needle.length(); j++)
-            {
-                if(haystack.charAt(i+j)!=needle.charAt(j))      //这里注意下charAt(i+j)
-                {
-                    flag = false;
-                    break;
-                }
-            }
-            if(flag)
-                return haystack.substring(i);
-        }
-        return null;
-    }
-}
-
-Note: brute force解法 不说了 非常简单
-
-code ganker还有个rolling hash的解法 要看看 顺便复习hash function
-
-
 
 
 

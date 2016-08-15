@@ -1,152 +1,26 @@
-<<<<<<< HEAD
-class Solution:
-    # @return an integer
-    def atoi(self, str):
-        INT_MAX = 2147483647; INT_MIN = -2147483648
-        str = str.strip()           #去掉字符串两边多余的空格
-        res = []
-        for i in range(len(str)):               #循环每一个字符 如果首字符是'+'/'-'或首字符石'+'/'-'或从首字开始一直是数字 append到res
-            if (i==0 and str[i] in ('+', '-')) or '0' <= str[i] <='9':
-                res.append(str[i])
-            else:       #一旦碰到其他字符 跳出循环
-                break
-        if not res or res in (['+'], ['-']):    #判断'0', '+', '-'情况
-            return 0
-        elif int(''.join(res)) > INT_MAX:       #超出范围的整数
-            return INT_MAX
-        elif int(''.join(res)) < INT_MIN:
-            return INT_MIN
-        else:                           #输出正常结果
-            return int(''.join(res))
-
-Note: 1 python strip()相当于java 的trim()  
-
-    2 另外python里list转换成字符床可以用 ''.join(list)这种方式
-
-
-
-
-
-
-
-
-解题思路：atoi的实现，有很多细节需要注意。两个判断条件很关键。INT_MAX/10 >= sum和INT_MAX - digit >= sum这两个判断条件确保了不会溢出。
-
-代码：
-
-
-class Solution:
-    # @return an integer
-    def atoi(self, str):
-        INT_MAX = 2147483647; INT_MIN = -2147483648
-        sum = 0
-        sign = 1
-        i = 0
-        if str == '':
-            return 0
-        while i < len(str) and str[i].isspace():
-            i += 1
-        if i < len(str) and str[i] == '-':
-            sign = -1
-        if i < len(str) and (str[i] == '-' or str[i] == '+'):
-            i += 1
-        while i < len(str) and str[i].isdigit():
-            digit = int(str[i])
-            if INT_MAX/10 >= sum:
-                sum *= 10
-            else:
-                if sign == 1:
-                    return INT_MAX
-                else:
-                    return INT_MIN
-            if INT_MAX - digit >= sum:
-                sum += digit
-            else:
-                if sign == 1:
-                    return INT_MAX
-                else:
-                    return INT_MIN
-            i += 1
-        return sign*sum
-
-
-from cleanCode
-
-Requirement for atoi:
-1 first discards as many whitespace characters until first non-whitespace character is found.
-
-2 Then start from this character, take an optional plus or minus sign followed by as many numerical digits as possible
-
-3 The string can contain additional characters after which are ignored
-
-4 If the first sequence of non-whitespace characters is not a valid integral number, or str is empty or contains only whitespace,
-no conversion is performed
-
-5 if no valid conversion return 0. if correct value is out of range INT_MAX or INT_MIN is returned
-
-
 public class Solution {
-    public int atoi(String str) {
-        int maxDiv10 = Integer.MAX_VALUE/10;
-        int i=0, n=str.length();
-        while(i<n && Character.isWhitespace(str.charAt(i))) //这里每个while if都写i<n主要为了处理""情况 也可以在开始if(str==null || str.length()==0)类似code ganker写法
+    public int myAtoi(String str) {
+        int i = 0, maxDiv10 = Integer.MAX_VALUE/10;
+        while (i < str.length() && Character.isWhitespace(str.charAt(i)))
             i++;
         int sign = 1;
-        if(i<n && str.charAt(i)=='+')
+        if (i < str.length() && str.charAt(i) == '+')
             i++;
-        else if(i<n && str.charAt(i)=='-') {
-            i++;
+        else if (i < str.length() && str.charAt(i) == '-') {
             sign = -1;
+            i++;
         }
         int num = 0;
-        while(i<n && Character.isDigit(str.charAt(i))) {
-            int digit = Character.getNumericValue(str.charAt(i));   //注意这里不能用(int)str.charAt(i);
-            if(num>maxDiv10 || (num==maxDiv10 && digit>=8))
-                return sign==1? Integer.MAX_VALUE:Integer.MIN_VALUE;
-            num = num*10 + digit;
+        while (i < str.length() && Character.isDigit(str.charAt(i))) {
+            int digit = Character.getNumericValue(str.charAt(i));
+            if (num > maxDiv10 || (num == maxDiv10 && digit >= 8))
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            num = 10 * num + digit;
             i++;
         }
-        return sign*num;
+        return sign * num;
     }
 }
-
- 2147483647
--2147483648
-
-
-public class Solution {
-    public int atoi(String str) {
-        if(str==null || str.length()==0)
-            return 0;
-        str = str.trim();
-        boolean negative = false;
-        int i = 0;
-        if(str.charAt(0)=='+' || str.charAt(0)=='-')    //判断符号
-        {
-            i++;
-            if(str.charAt(0)=='-')
-                negative = true;
-        }
-        int res = 0;
-        int digit = 0;
-        while(i<str.length())
-        {
-            if(str.charAt(i)<'0' || str.charAt(i)>'9')  //判断数字
-                break;
-            digit = (int)(str.charAt(i)-'0');
-            if(!negative && res>(Integer.MAX_VALUE-digit)/10)   //判断越界
-                return Integer.MAX_VALUE;
-            else if(negative && res>-((Integer.MIN_VALUE+digit)/10))    //Integer.MIN_VALUE+digit 是'+'
-                return Integer.MIN_VALUE;
-            res = res*10 + digit;
-            i++;
-        }
-        return negative? -res : res;
-    }
-}
-
-Note: 根据code ganker版改编 注意越界问题和符号位
-
 
 
 

@@ -1,36 +1,3 @@
-class Solution:
-    # @return a tuple, (index1, index2)
-    def twoSum(self, num, target):
-        numCopy = num[:]            #深拷贝num 对copy的数组排序
-        numCopy.sort()
-        i = 0; j = len(numCopy)-1       #i j取首尾的索引 因为数组已经排好序 所以可以采用两头夹逼
-        index = []                  #index里存放结果
-        while i < j:                #循环扫一遍数组
-            if numCopy[i] + numCopy[j] == target:   #如果两边的值正好等于target 循环一遍原始的数组找到对应的索引
-                for k in range(len(num)):
-                    if num[k] == numCopy[i]:
-                        index.append(k)
-                        break
-                for k in range(len(num)-1, -1, -1):     #注意找第二个索引时要倒序查找 因为若两个值相同 正序找两遍两次都会找到同样的索引
-                    if num[k] == numCopy[j]:
-                        index.append(k)
-                        break
-                index.sort()        #将index排序 因为只有一个解 所以可以break
-                break
-            elif numCopy[i] + numCopy[j] > target:  #如果大于target 移动右边指针
-                j-=1
-            else:           #否则小于 就移动左边指针
-                i+=1
-        return (index[0]+1, index[1]+1)     #因为题意要求以1为底 所以最后索引还要加1
-
-Note: 经典题目要熟记
-
-
-
-
-
-
-
 题意：找出数组numbers中的两个数，它们的和为给定的一个数target，并返回这两个数的索引，注意这里的索引不是数组下标，而是数组下标加1。
 
 比如numbers={2,7,11,17}; target=9。那么返回一个元组(1,2)。这道题不需要去重，对于每一个target输入，只有一组解，索引要按照大小顺序排列。
@@ -77,8 +44,6 @@ class Solution:
 
 
 
-
-
 public class Solution {
     public int[] twoSum(int[] numbers, int target) {
         if(numbers==null || numbers.length<2)
@@ -102,59 +67,6 @@ public class Solution {
 Note: 根据code ganker第一种解法改编 用哈希表记录 时间空间都是O(n) code ganker第二种解法是先排序 再用两边夹逼的方法 跟python版解法一样
 
 但是需要一个额外的空间记录原数据的索引 所以空间上仍是O(n) 并且时间上也没有更好是O(nlogn) 综上第一种方法更好
-
-
-
-
-
-
-
-
-public class Solution {
-    public int[] twoSum(int[] numbers, int target) {
-        if(numbers==null || numbers.length<2)
-            return null;
-        int[] res = new int[2];
-        int[] numbersCopy = Arrays.copyOf(numbers, numbers.length);
-        Arrays.sort(numbers);
-        int left = 0; int right = numbers.length-1;
-        while(left<right)
-        {
-            if(numbers[left]+numbers[right]==target)
-            {
-                for(int i=0; i<numbersCopy.length; i++)
-                {    
-                    if(numbersCopy[i]==numbers[left])
-                    {
-                        res[0] = i+1;
-                        break;
-                    }
-                }
-                for(int j=numbersCopy.length-1; j>=0; j--)
-                {
-                    if(numbersCopy[j]==numbers[right])
-                    {
-                        res[1] = j+1;
-                        break;
-                    }
-                }
-                Arrays.sort(res);
-                break;
-            }
-            else if(numbers[left]+numbers[right]<target)
-                left++;
-            else
-                right--;
-        }
-        return res;
-    }
-}
-
-Note：这是python版解法 也是code ganker第二种解法 要注意这个解法不如第一种好
-
-顺便注意下java 深拷贝数组用Arrays.copyOf(int[] arr, int length)
-
-
 
 
 

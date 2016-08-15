@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 from cleanCode
 
 public class Solution {
@@ -14,33 +12,6 @@ public class Solution {
         return ret;
     }
 }
-
-
-
-
-
-public class Solution {
-    public int reverse(int x) {
-        if(x==Integer.MIN_VALUE)        //因为最小整数绝对值比最大整数大1 所以无法去绝对值 单独处理 直接返回Integer.MIN_VALUE
-            return Integer.MIN_VALUE;
-        int num = Math.abs(x);
-        int res = 0;
-        while(num!=0)
-        {
-            if(res>(Integer.MAX_VALUE-num%10)/10)           //这里直接写res>Integer.MAX_VALUE/10也可以ac!!!!! 这里是处理reverse后会越界的整数 它们的位数一定跟最大整数位数相同 但是翻转后大于最大整数
-                return x>0? Integer.MAX_VALUE:Integer.MIN_VALUE;    //如果判断条件成立 根据x符号取最大整数或最小整数
-            res = num%10 + res*10;
-            num/=10;
-        }
-        return x>0? res:-res;
-    }
-}
-
-Note: 根据code ganker版改编 容易题 但是corner case要特别注意 熟记套路9，10行 以及11，12行
-
-记住java MAX_INT, MIN_INT 2^31-1(2147483647), -2^31(-2147483648)
-
-
 
 
 

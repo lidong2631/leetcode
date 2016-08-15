@@ -1,68 +1,3 @@
-<<<<<<< HEAD
-class Solution:
-    # @param s, a string
-    # @return an integer
-    def longestValidParentheses(self, s):
-        maxLen = 0				#初始化最大长度maxLen, 有效开始位置validStart 一个栈stack
-        validStart = -1
-        stack = []
-        for i in range(len(s)):			#循环扫一遍string s
-            if s[i] == '(':			#如果是左括号 就一直push入栈 注意入栈的是左括号在string s中的索引值
-                stack.append(i)
-            else:					#如果是右括号 要判断
-                if stack == []:			#如果当前栈为空 则加入的右括号肯定无法凑出括号对 将validStart设为i
-                    validStart = i
-                else:					#如果栈不为空
-                    stack.pop()		#首先pop一个左括号出栈
-                    if stack == []:			#如果pop完后stack变为空 说明当前可以得到合法括号对 长度为i-validStart 更新maxLen 注意要和maxLen自身比较去两者大值 如"(()))())("
-                        maxLen = max(maxLen, i - validStart)
-                    else:			#如果pop完stack不为空 当前合法序列的长度为当前栈顶元素的位置下一位到当前元素的距离 同样要和maxLen自身比较取较大值更新maxLen
-                        maxLen = max(maxLen, i - stack[len(stack)-1])
-        return maxLen
-
-Note: 这题的这种用剩余栈的栈顶元素位置信息作为当前合法数据的判断依据是比较重要的技巧，在Largest Rectangle in Histogram这道题里面也用到了
-
-要好好记住
-
-
-
-
-public class Solution {
-    public int longestValidParentheses(String s) {
-        if(s==null || s.length()==0)
-            return 0;
-        LinkedList<Integer> stack = new LinkedList<Integer>();
-        int start = 0;
-        int max = 0;
-        for(int i=0; i<s.length(); i++)
-        {
-            if(s.charAt(i)=='(')
-                stack.push(i);
-            else
-            {
-                if(stack.isEmpty())
-                    start = i+1;
-                else
-                {
-                    stack.pop();
-                    if(stack.isEmpty())
-                        max = Math.max(max, i-start+1); 
-                    else max = Math.max(max, i-stack.peek());
-                }
-            }
-        }
-        return max;
-    }
-}
-
-Note: python版和code ganker版一样 不难理解
-
-
-
-
-
-
-
 题意：
 
 Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed) parentheses substring.
@@ -99,6 +34,27 @@ class Solution:
 
 
 
+public class Solution {
+    public int longestValidParentheses(String s) {
+        Stack<Integer> stack = new Stack<>();
+        int maxLen = 0, i = 0, j = 0;
+        while (i < s.length()) {
+            if (stack.isEmpty() && s.charAt(i) == ')')
+                j = i + 1;
+            else if (s.charAt(i) == '(') 
+                stack.push(i);
+            else {
+                stack.pop();
+                if (stack.isEmpty()) maxLen = Math.max(maxLen, i-j+1);
+                else maxLen = Math.max(maxLen, i-stack.peek());
+            }
+            i++;
+        }
+        return maxLen;
+    }
+}
+
+O(n) O(n)
 
 
 

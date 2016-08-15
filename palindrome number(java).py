@@ -1,28 +1,3 @@
-<<<<<<< HEAD
-class Solution:
-    # @return a boolean
-    def isPalindrome(self, x):
-        if x < 0:               #对负数的处理 负数不算palindrome number
-            return False
-        div = 1
-        while x/div >= 10:      #ex x=121 最终div=100
-            div*=10
-        while x:                #当x==0 表示所有数都判断完毕 跳出循环
-            left = x / div      #求最左右的数字
-            right = x % 10
-            if left!=right:     #比较 如果不相等 则返回false
-                return False
-            x = (x % div)/10   #去掉两头的数字 准备判断下一个最左右的数
-            div/=100            #div减少两位
-        return True
-
-Note: 要熟记其中一些套路 1 求最右位的数字为 x % 10   2 去掉两头数字 (x % div) / 10
-
-这道题要注意几点： 1 负数情况如何处理 2 如果用翻转整个数字来判断 翻转后的数字有可能overflow 如何处理 3 不允许用额外空间 不然可以将数字转成字符串 再用reverse函数处理
-
-
-
-
 题意：
 
 Determine whether an integer is a palindrome. Do this without extra space.
@@ -69,48 +44,18 @@ from cleanCode
 
 public class Solution {
     public boolean isPalindrome(int x) {
-        if(x<0)
-            return false;
-        int div = 1;
-        while(x/div>=10)
-            div*=10;
-        
-        while(x!=0) {
-            if(x/div!=x%10)
-                return false;
-            x = (x%div)/10;
-            div/=100;
+        if (x < 0) return false;
+        int radix = 1;
+        while (x / 10 >= radix)
+            radix *= 10;
+        while (x != 0) {                            // careful cannot write x >= 10  1000021
+            if (x / radix != x % 10) return false;
+            x = (x % radix) / 10;
+            radix /= 100;
         }
         return true;
     }
 }
-
-
-
-
-
-public class Solution {
-    public boolean isPalindrome(int x) {
-        if(x<0)
-            return false;
-        int div = 1;
-        while(x/div>=10)
-            div*=10;
-        while(x>0)
-        {
-            int left = x/div;
-            int right = x%10;
-            if(left!=right)
-                return false;
-            x = (x%div)/10;     //这里重点
-            div/=100;
-        }
-        return true;
-    }
-}
-
-Note：根据python版改编 python版和code ganker版差不多一样 简单题熟练
-
 
 
 

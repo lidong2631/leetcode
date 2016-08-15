@@ -1,37 +1,3 @@
-<<<<<<< HEAD
-class Solution:
-    # @return a list of lists of length 3, [[val1,val2,val3]]
-    def threeSum(self, num):
-        num.sort()          #将num先排好序 res用来保存结果
-        res = []
-        for i in range(len(num)-2):         #循环从0到len(num)-3 因为一共要3个数相加等于target 到倒数第三个数即可结束 后面数已经凑不出3个数
-            if i == 0 or num[i] > num[i-1]:         #num[i]>num[i-1]是为了保证这个元素不是重复元素
-                left = i + 1; right = len(num) - 1      #设左右指针 找num[i]后面两个数和是-num[i]
-                while left < right:                         #如果两指针没有相遇
-                    if num[left] + num[right] == -num[i]:           #如果相等 将结果append进res 注意append顺序是从小到大 将左右指针各移一位
-                        res.append([num[i], num[left], num[right]])
-                        left+=1; right-=1
-                        while left < right and num[left] == num[left-1]:    #如果移动完后一个元素是重复元素 继续移动直到非重复元素或两指针相遇
-                            left+=1
-                        while left < right and num[right] == num[right+1]:  #同理
-                            right-=1
-                    elif num[left] + num[right] < -num[i]:              #如果两个数和小于-num[i] 移动做指针 同样要注意是重复元素就一直移动
-                        left+=1
-                        while left < right and num[left] == num[left-1]:
-                            left+=1
-                    else:                           #大于同理
-                        right-=1
-                        while left < right and num[right] == num[right+1]:
-                            right-=1
-        return res
-
-Note: 这题有好几个地方要去重复元素要多注意 循环遍历到倒数第三个元素即可 还有append时按递增排序这个小细节要注意 其他思路跟two sum大致
-
-
-
-
-
-
 题意：从一个数组中找到三个数，使这三个数的和为0。有可能存在多组解，也有可能存在重复的解，所以需要去重。比如：num=[-1,0,1,2,-1,-4];
 
 那么存在两组解：[[-1,0,1],[-1,-1,2]]，解中的数需要是从小到大排序状态。
@@ -76,61 +42,42 @@ class Solution:
 
 
 
-
-
-
 public class Solution {
-    public List<List<Integer>> threeSum(int[] num) {
+    public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if(num==null || num.length<=2)
-            return res;
-        Arrays.sort(num);
-        for(int i=num.length-1; i>=2; i--)      //这里从后往前遍历是因为two sum那个函数的实现是从0到end的，所以选取元素作为第三个是从后面选起
-        {
-            if(i<num.length-1 && num[i]==num[i+1])      //去重 注意这里不能就写num[i]==num[i+1] 那样碰上[0,0,0]case会返回空集 这样写当前值不管是否有重都会先执行一次
-                continue;
-            List<List<Integer>> twosumRes = TwoSum(num, i-1, -num[i]);  //拿到two sum为-num[i]的集合
-            
-            for(int j=0; j<twosumRes.size(); j++)   
-                twosumRes.get(j).add(num[i]);       //得到最终结果 加到res
-            res.addAll(twosumRes);                   //这里将twosumRes加到res 必须用addAll()函数
+        Arrays.sort(nums);
+        for (int i = nums.length - 1; i >= 2; i--) {
+            if (i < nums.length - 1 && nums[i] == nums[i+1]) continue;
+            List<List<Integer>> twoSum = getTwoSum(nums, i-1, -nums[i]);
+            for (int j = 0; j < twoSum.size(); j++) {
+                twoSum.get(j).add(nums[i]);
+            }
+            res.addAll(twoSum);
         }
         return res;
     }
     
-    private List<List<Integer>> TwoSum(int[] num, int end, int target) {    //求two sum
+    private List<List<Integer>> getTwoSum(int[] nums, int end, int target) {
+        int left = 0, right = end;
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if(num==null || num.length<=1)
-            return res;
-        int left = 0;
-        int right = end;
-        while(left<right)
-        {
-            if(num[left]+num[right]==target)
-            {
-                List<Integer> tmp = new ArrayList<Integer>();   //不一样
-                tmp.add(num[left]);                             //
-                tmp.add(num[right]);                            // 
-                res.add(tmp);                                   //
-                left++;     //这里单独写left++ right--不然相等后就不会继续找下一个解而是停住 之前我省略这里以为就写while就够不对
-                right--;
-                while(left<right && num[left]==num[left-1]) //不一样
-                    left++;
-                while(left<right && num[right]==num[right+1])   //
-                    right--;
+        while (left < right) {
+            if (nums[left] + nums[right] == target) {
+                List<Integer> list = new ArrayList<Integer>();
+                list.add(nums[left]);
+                list.add(nums[right]);
+                res.add(list);
+                left++; right--;
+                while (left < right && nums[left] == nums[left-1]) left++;
+                while (left < right && nums[right] == nums[right+1]) right--;
             }
-            else if(num[left]+num[right]<target)
-                left++;
-            else
+            else if (nums[left] + nums[right] > target)
                 right--;
+            else
+                left++;
         }
         return res;
     }
 }
-
-Note: 根据code ganker改编 TwoSum函数由上一题得来 稍作修改返回的是一个list里面包含所有的解而不是index 另外需要判断下重复元素
-
-最终res.addAll(twosumRes) addAll里也可以加二位List
 
 
 

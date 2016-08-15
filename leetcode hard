@@ -1,9 +1,10 @@
 median of two sorted arrays
 zigzag conversion
 regular expression matching
+3Sum Closest
+4Sum
 divide two integers
 substring with concatenation of all words
-combination sum ii
 multiply strings
 wildcard matching
 rotate image
@@ -13,3 +14,33 @@ edit distance
 minimum window substring
 scramble string
 interleaving string
+
+
+1 - 100
+LinkedList:
+Swap Nodes in Pairs
+Reverse Nodes in k-Group
+Rotate List
+Partition List
+Reverse Linked List II
+Remove Nth Nodes From End of List
+
+Remove Duplicate
+Remove Duplicates from Sorted Array
+Remove Duplicates from Sorted Array II
+Remove Duplicates from Sorted List
+Remove Duplicates from Sorted List II
+Remove Element
+
+NP:
+Letter Combinations of a Phone Number
+Sudoku Solver
+Combination Sum
+Combination Sum II
+Permutations
+Permutations II
+N-QUeens
+N-Queens II
+Combinations
+Subsets
+Subsets II

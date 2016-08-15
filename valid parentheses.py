@@ -1,26 +1,18 @@
-From cleanCode
-question need to be asked: is empty string valid? Yes
-
 public class Solution {
     public boolean isValid(String s) {
-        Map<Character, Character> map = new HashMap<Character, Character>();
+        Stack<Character> stack = new Stack<>();
+        Map<Character, Character> map = new HashMap<>();
         map.put('(', ')');
         map.put('[', ']');
         map.put('{', '}');
-        Stack<Character> stack = new Stack<Character>();
-        for(char c : s.toCharArray()) {
-            if(map.containsKey(c))
-                stack.push(c);
-            else if(stack.empty() || map.get(stack.pop())!=c)
-                return false;
+        
+        for (char c : s.toCharArray()) {
+            if (map.containsKey(c)) stack.push(c);
+            else if (stack.isEmpty() || map.get(stack.pop()) != c) return false;
         }
-        return stack.empty();
+        return stack.isEmpty();
     }
 }
-
-cleanCode解法很好地利用map封装了parenthese 避免了大量的if语句
-
-看code ganker评论
 
 
 
