@@ -1,27 +1,3 @@
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    # @param root, a tree node
-    # @return an integer
-    def minDepth(self, root):
-        if root == None:                            #这一题分3种情况 1是root为空则返回0 2是如果树只有左子树或右子树则递归到叶子节点为止 3是若树同时有左右子树则递归取两者较小值
-            return 0
-        if root.left and root.right == None:        #只有左子树 递归左子树 每次加1计算深度
-            return self.minDepth(root.left) + 1
-        if root.right and root.left == None:        #只有右子树 递归右子树 每次加1计算深度
-            return self.minDepth(root.right) + 1
-        else:                                       #递归左右子树 取两者较小值 还有加1算上root节点
-            return min(self.minDepth(root.left), self.minDepth(root.right)) + 1
-
-
-
-
-
 题意：
 
 Given a binary tree, find its minimum depth.
@@ -57,11 +33,8 @@ class Solution:
 
 
 
-
-
-
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -71,18 +44,12 @@ class Solution:
  */
 public class Solution {
     public int minDepth(TreeNode root) {
-    if(root == null)
-        return 0;
-    if(root.left == null)               //这里要加上判断 不然会因为树没有左子树或右子树导致判断为0 而题目要求只有到叶子节点才能判断深度
-        return minDepth(root.right)+1;
-    if(root.right == null)
-        return minDepth(root.left)+1;
-    return Math.min(minDepth(root.left),minDepth(root.right))+1;
+        if (root == null) return 0;
+        if (root.left == null) return minDepth(root.right) + 1;
+        if (root.right == null) return minDepth(root.left) + 1;
+        return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
     }
 }
-
-
-Note: 上面是递归解 下面非递归解 要注意跟maximum那题地区别
 
 
 

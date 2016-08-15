@@ -11,15 +11,15 @@ public class Solution {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
         ListNode prev = dummy, curr = head;
-        int i = 0;
+        int i = 1;
         while (curr != null) {
-            i++;
             ListNode next = curr.next;
             if (i == k) {                   // every k nodes do a reverse
-                prev = reverse(prev, next);
+                prev = reverse(prev, next); // call reverse linked list ii subroutine
                 i = 0;
             }
             curr = next;                    // careful here
+            i++;
         }
         return dummy.next;
     }
@@ -28,8 +28,8 @@ public class Solution {
         ListNode head = prev.next, curr = prev.next.next;
         while (curr != end) {
             ListNode next = curr.next;
-            curr.next = prev.next;      // not exactly same as reverse linkedlist
-            prev.next = curr;           // and here
+            curr.next = prev.next;      // same as reverse linkedlist ii
+            prev.next = curr;
             curr = next;
         }
         head.next = end;

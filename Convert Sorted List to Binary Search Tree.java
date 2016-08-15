@@ -1,44 +1,3 @@
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-#
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
-class Solution:
-    def sortedArrayToBST(self, array):          #思路跟sorted array一样 只不过要先将list转成array
-        length = len(array)                     #时间空间复杂度高一些
-        if length == 0:
-            return None
-        if length == 1:
-            return TreeNode(array[0])
-        root = TreeNode(array[length/2])
-        root.left = self.sortedArrayToBST(array[:length/2])
-        root.right = self.sortedArrayToBST(array[length/2+1:])
-        return root
-    
-    # @param head, a list node
-    # @return a tree node
-    def sortedListToBST(self, head):
-        array = []
-        p = head
-        while p:
-            array.append(p.val)
-            p = p.next
-        return self.sortedArrayToBST(array)
-
-
-Note: 对函数的调用要记得加self.
-
-
-
-
 题意：将一条排序好的链表转换为二叉查找树，二叉查找树需要平衡。
 
 解题思路：两个思路：一，可以使用快慢指针来找到中间的那个节点，然后将这个节点作为树根，并分别递归这个节点左右两边的链表产生左右子树，
@@ -85,19 +44,16 @@ class Solution:
 
 
 
-
-
-
 /**
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
  *     ListNode next;
- *     ListNode(int x) { val = x; next = null; }
+ *     ListNode(int x) { val = x; }
  * }
  */
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -107,48 +63,28 @@ class Solution:
  */
 public class Solution {
     public TreeNode sortedListToBST(ListNode head) {
-        if(head==null)
-            return null;
-        ArrayList<ListNode> list = new ArrayList<ListNode>();
-        int count = 0;
-        list.add(head);
-        while(head!=null)
-        {
-            head = head.next;
-            count++;
+        if (head == null) return null;
+        List<ListNode> l = new LinkedList<ListNode>(); l.add(head);
+        int len = 1;
+        ListNode p = head;
+        while (p.next != null) {
+            p = p.next;
+            len++;
         }
-        return helper(list, 0, count-1);
+        
+        return helper(l, 0, len-1);
     }
     
-    private TreeNode helper(ArrayList<ListNode> list, int left, int right) {
-        if(left>right)
-            return null;
-        int mid = (left+right)/2;
-        TreeNode leftNode = helper(list, left, mid-1);      //中序遍历构建树 左树 根 右树
-        TreeNode root = new TreeNode(list.get(0).val);
-        list.set(0, list.get(0).next);                  //一旦根构建了 要及时更新list里的值为链表下一个节点值
-        root.left = leftNode;                       //连接左树 并创建右子树
-        root.right = helper(list, mid+1, right);
+    private TreeNode helper(List<ListNode> l, int left, int right) {
+        if (left > right) return null;
+        int mid = (left + right) / 2;
+        TreeNode leftChild = helper(l, left, mid - 1);
+        TreeNode root = new TreeNode(l.get(0).val);
+        l.set(0, l.get(0).next);
+        root.left = leftChild; root.right = helper(l, mid + 1, right);
         return root;
     }
 }
-
-Note: 这题的解法很妙 相当于用中序遍历的方式构造出一棵树 值得记住 其中用ArrayList的原因是要借助于它的get set函数及时更新第0个位置的值
-
-实际上我们只需要它的第一个位置来保存链表的一个值就可以了 其他的值用next指针依次得到并更新list
-
-思考例子 1->2->3, 1->2->3->4, 1->2->4->3(题目要求递增链表 这个不成立)
-
-注意 因为是递增链表 所有左子树只可能有左子树 右子树也只可能有右子树 不然就违反了BST和递增链表的前提！！！！
-
-这个题python版的两个解法和code ganker的不一样 不同思路可以都看看
-
-
-
-
-
-
-
 
 
 

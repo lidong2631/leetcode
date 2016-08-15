@@ -1,35 +1,3 @@
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    def levelOrderBottomTraversal(self, root, level, res):
-        if root:
-            if len(res) < level + 1:
-                res.append([])
-            res[level].append(root.val)
-            self.levelOrderBottomTraversal(root.left, level+1, res)
-            self.levelOrderBottomTraversal(root.right, level+1, res)
-    
-    
-    # @param root, a tree node
-    # @return a list of lists of integers
-    def levelOrderBottom(self, root):
-        res = []
-        self.levelOrderBottomTraversal(root, 0, res)
-        res.reverse()                   #only one line difference
-        return res
-
-Note: 这题只需要在i的基础上加一句res.reverse()倒序就好了
-
-
-
-
-
-
 /**
  * Definition for binary tree
  * public class TreeNode {
@@ -61,11 +29,6 @@ public class Solution {
         }
     }
 }
-
-Note： 这题只是在上一题的基础上加了个Collections.reverse(res);
-
-
-
 
 
 

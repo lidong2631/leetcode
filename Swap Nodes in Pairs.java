@@ -34,6 +34,53 @@ class Solution:
  * public class ListNode {
  *     int val;
  *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(0); dummy.next = head;
+        ListNode p = dummy, curr = p.next;
+        int i = 1;
+        while (curr != null) {
+            ListNode next = curr.next;
+            if (i == 2) {
+                p = reverse(p, next);
+                i = 0;
+            }
+            curr = next;
+            i++;
+        }
+        return dummy.next;
+    }
+    
+    private ListNode reverse(ListNode p, ListNode end) {
+        ListNode curr = p.next.next, head = p.next;
+        while (curr != end) {
+            ListNode next = curr.next;
+            curr.next = p.next;
+            p.next = curr;
+            curr = next;
+        }
+        head.next = curr;
+        return head;
+    }
+}
+
+same as Reverse Nodes in k-Group except for i == 2
+
+
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
  *     ListNode(int x) { val = x; }
  * }
  */

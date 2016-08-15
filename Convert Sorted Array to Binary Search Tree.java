@@ -1,27 +1,3 @@
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    # @param num, a list of integers
-    # @return a tree node
-    def sortedArrayToBST(self, num):
-        length = len(num)
-        if length == 0:         #if [] return None
-            return None
-        if length == 1:         #if only one element return that element
-            return TreeNode(num[0])
-        root = TreeNode(num[length/2])                      #每次取中值
-        root.left = self.sortedArrayToBST(num[:length/2])   #root.left and root.right分别递归取值
-        root.right = self.sortedArrayToBST(num[length/2+1:])
-        return root
-
-
-
-
 题意：将一个排序好的数组转换为一颗二叉查找树，这颗二叉查找树要求是平衡的。
 
 解题思路：由于要求二叉查找树是平衡的。所以我们可以选在数组的中间那个数当树根root，然后这个数左边的数组为左子树，右边的数组为右子树，
@@ -55,12 +31,8 @@ class Solution:
 
 
 
-
-
-
-
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -69,24 +41,19 @@ class Solution:
  * }
  */
 public class Solution {
-    public TreeNode sortedArrayToBST(int[] num) {
-        int len = num.length;
-        if(len==0 || num==null)
-            return null;
-        return helper(num, 0, len-1);
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return helper(nums, 0, nums.length-1);
     }
-    private TreeNode helper(int[] num, int left, int right) {
-        if(left>right)
-            return null;
-        int mid = (left+right)/2;               //类似于二分法构造树
-        TreeNode root = new TreeNode(num[mid]);
-        root.left = helper(num, left, mid-1);
-        root.right = helper(num, mid+1, right);
+    
+    private TreeNode helper(int[] nums, int left, int right) {
+        if (left > right) return null;
+        int mid = (left + right) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = helper(nums, left, mid - 1);
+        root.right = helper(nums, mid + 1, right);
         return root;
     }
 }
-
-Note: 这题用二分法思路做的 跟python版差不多
 
 
 

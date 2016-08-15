@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -10,30 +9,23 @@
  */
 public class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
         helper(root, 0, res);
         return res;
     }
     
     private void helper(TreeNode root, int level, List<List<Integer>> res) {
-        if(root!=null)
-        {
-            if(res.size()<level+1)
-            {
-                List<Integer> tmpList = new ArrayList<Integer>();
-                res.add(new ArrayList(tmpList));
-            }
-            if(level%2==0)
-                res.get(level).add(root.val);
-            else
-                res.get(level).add(0, root.val);		//这里要注意 如果是偶数行就要往前append 用到了add(int index, E element) 具体查看java doc
-            helper(root.left, level+1, res);
-            helper(root.right, level+1, res);
+        if (root != null) {
+            if (res.size() < level + 1) res.add(new LinkedList<Integer>());
+            if (level % 2 == 0) res.get(level).add(root.val);
+            else res.get(level).add(0, root.val);
+            helper(root.left, level + 1, res);
+            helper(root.right, level + 1, res);
         }
     }
 }
 
-Note: 以上为python版改编 下面为code ganker版本 分别为递归和非递归版
+resursion is much easier
 
 
 

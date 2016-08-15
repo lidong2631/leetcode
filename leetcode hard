@@ -18,29 +18,50 @@ interleaving string
 
 1 - 100
 LinkedList:
+create dummy node. get prev and next and perform reverse subroutine
 Swap Nodes in Pairs
 Reverse Nodes in k-Group
-Rotate List
-Partition List
 Reverse Linked List II
+
+connect two list (careful need to set next to null when connect)
+Partition List
+
+two pointers separated by a distance (careful if distance is larger than linkedlist length need to mod)
 Remove Nth Nodes From End of List
+Rotate List
+
+
 
 Remove Duplicate
+two pointers when (elements not same or find target) set left pointer and move ahead
 Remove Duplicates from Sorted Array
-Remove Duplicates from Sorted Array II
 Remove Duplicates from Sorted List
-Remove Duplicates from Sorted List II
 Remove Element
 
+Remove Duplicates from Sorted Array II
+
+Remove Duplicates from Sorted List II
+
+
+
 NP:
-Letter Combinations of a Phone Number
-Sudoku Solver
-Combination Sum
-Combination Sum II
-Permutations
-Permutations II
-N-QUeens
+Letter Combinations of a Phone Number (helper(digits, map, 0, "", res)  HashMap)
+
+|--Combinations 		(helper(res, n, k, 1, new ArrayList<Integer>()))
+|
+|--Combination Sum 	(helper(candidates, target, 0, new ArrayList<Integer>(), res))
+|--Combination Sum II 	(helper(candidates, target, 0, new ArrayList<Integer>(), res))
+|
+|--Permutations 		(helper(nums, used, new ArrayList<Integer>(), res))
+|--Permutations II 	(i > 0 && nums[i] == nums[i-1] && !used[i-1] continue)
+
+if Valid go to next row/col
+N-QUeens 			(helper(res, n, 0, colForRow), colForRow, isValid)
 N-Queens II
-Combinations
-Subsets
-Subsets II
+Sudoku Solver 		(helper(board, 0, 0))
+
+Subsets 		(List<List<Integer>> helper(S, S.length-1))
+Subsets II 		(List<List<Integer>> helper(S, S.length-1, last))
+
+Restore IP Address 	(helper(s, 0, 1, "", res))
+
