@@ -1,22 +1,18 @@
-<<<<<<< HEAD
 public class Solution {
     public int maxProfit(int[] prices) {
-        if(prices==null || prices.length==0)
-            return 0;
+        if (prices == null || prices.length == 0) return 0;
         int[][] global = new int[prices.length][3];
         int[][] local = new int[prices.length][3];
-        for(int i=1; i<prices.length; i++) {
+        for (int i = 1; i < prices.length; i++) {
             int diff = prices[i] - prices[i-1];
-            for(int j=1; j<=2; j++) {
-                local[i][j] = Math.max(global[i-1][j-1]+Math.max(diff, 0), local[i-1][j]+diff);
-                global[i][j] = Math.max(global[i-1][j], local[i][j]);
+            for (int j = 1; j <= 2; j++) {
+                local[i][j] = Math.max(global[i-1][j-1] + Math.max(diff, 0), local[i-1][j] + diff);
+                global[i][j] = Math.max(local[i][j], global[i-1][j]);
             }
         }
         return global[prices.length-1][2];
     }
 }
-
-根据code ganker思路写的 一摸一样 local, global都用的二维数组 code ganker版用的一位数组存储local, global
 
 
 
@@ -65,7 +61,7 @@ local[i][j]=max(global[i-1][j-1]+max(diff,0),local[i-1][j]+diff)，
 
 也就是看两个量，第一个是全局到i-1天进行j-1次交易，然后加上今天的交易，如果今天是赚钱的话（也就是前面只要j-1次交易，最后一次交易取当前天），
 
-第二个量则是取local第i-1天j次交易，然后加上今天的差值（这里因为local[i-1][j]比如包含第i-1天卖出的交易，所以现在变成第i天卖出，
+第二个量则是取local第i-1天j次交易，然后加上今天的差值（这里因为local[i-1][j]包含第i-1天卖出的交易，所以现在变成第i天卖出，
 
 并不会增加交易次数，而且这里无论diff是不是大于0都一定要加上，因为否则就不满足local[i][j]必须在最后一天卖出的条件了）。
 

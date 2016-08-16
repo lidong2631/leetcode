@@ -1,41 +1,3 @@
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    def maxSum(self, root):     #注意 maxsum返回的是以当前root为节点 其左边路径最大和 其右边路径最大和 和根节点值三者中的最大值 而sum则是它左右子树的最大路径和 如果sum大于全局最大值solution.max 立即更新全局最大值
-        if root == None:        #函数的返回值定义为以自己为根的一条从根到子结点的最长路径 这个返回值是为了提供给它的父结点计算自身的最长路径用，而结点自身的最长路径（也就是可以从左到右那种）则只需计算然后更新即可
-            return 0
-        sum = root.val                  #sum总是先等于当前节点的val
-        maxL = 0; maxR = 0              #初始化当前节点左右最大和路径为0
-        if root.left:                       #如果当前节点有左子树 递归调用maxSum求左子节点最大路径和
-            maxL = self.maxSum(root.left)
-            if maxL > 0:                    #如果返回值大于0 加入sum中
-                sum+=maxL
-        if root.right:                      #右子树同理
-            maxR = self.maxSum(root.right)
-            if maxR > 0:
-                sum+=maxR
-        if sum > Solution.max:              #sum是当前子树的路径和  如果sum大于Solution.max 更新Solution.max的值
-            Solution.max = sum
-        return max(root.val, max(root.val + maxL, root.val + maxR)) #返回root.val, root.val+maxL, root.val+maxR中最大值 因节点val可能为负数
-            
-    
-    # @param root, a tree node
-    # @return an integer
-    def maxPathSum(self, root):
-        if root == None:
-            return None
-        Solution.max = -10000       #初始化Solution.max = -10000
-        self.maxSum(root)
-        return Solution.max
-
-
-
-
 题意：
 
 Given a binary tree, find the maximum path sum.
@@ -128,40 +90,21 @@ class Solution:
  */
 public class Solution {
     public int maxPathSum(TreeNode root) {
-        if(root==null)
-            return 0;
-        ArrayList<Integer> res = new ArrayList<Integer>();
-        res.add(null);      //放null可以处理节点值为Integer.MIN_VALUE的情况
+        List<Integer> res = new ArrayList<>();
+        res.add(null);
         helper(root, res);
         return res.get(0);
     }
     
-    private int helper(TreeNode root, ArrayList<Integer> res) {
-        if(root==null)
-            return 0;
+    private int helper(TreeNode root, List<Integer> res) {
+        if (root == null) return 0;
         int left = helper(root.left, res);
         int right = helper(root.right, res);
-        int curr = root.val+(left>0?left:0)+(right>0?right:0);
-        if(res.get(0)==null)
-            res.set(0, curr);
-        else if(curr>res.get(0))
-            res.set(0, curr);
-        return root.val+Math.max(left, Math.max(right, 0));
+        int currPath = root.val + (left > 0 ? left : 0) + (right > 0 ? right : 0);  // careful need to check > 0
+        if (res.get(0) == null || res.get(0) < currPath) res.set(0, currPath);
+        return Math.max(Math.max(left, 0), right) + root.val;       // careful need to check > 0
     }
 }
-
-Note: 这题我用java跑程序没有问题 但oj会报错
-
-Submission Result: Wrong Answer
-
-Input:  {-3}
-Output: 1
-Expected:   -3
-
-code ganker用的是arraylist 来存放res 对于java的全局变量处理还需要再好好看看！！！
-
-这题code ganker讲解的很清楚 看看他下面的讲解
-
 
 
 

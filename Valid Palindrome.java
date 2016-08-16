@@ -1,21 +1,3 @@
-class Solution:
-    # @param s, a string
-    # @return a boolean
-    def isPalindrome(self, s):
-        if s == '':                             #empty string is palindrome according to question
-            return True
-        sTmp = ''
-        for i in range(0, len(s)):
-            if s[i]>='0' and s[i]<='9' or s[i]>='A' and s[i]<='Z' or s[i]>='a' and s[i]<='z':
-                sTmp+=s[i]                      #put all alphanumeric character into temp string
-        sTmp = sTmp.lower()                     #change into lowercase
-        for i in range(len(sTmp)/2):            #check if palindrome
-            if sTmp[i] != sTmp[len(sTmp)-1-i]:
-                return False
-        return True
-
-
-
 题意：
 
 Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
@@ -59,7 +41,7 @@ public class Solution {
     public boolean isPalindrome(String s) {
         int left = 0, right = s.length()-1;
         while(left<right) {
-            while(left<right && !Character.isLetterOrDigit(s.charAt(left))) //注意这里只判断字符和数字
+            while(left<right && !Character.isLetterOrDigit(s.charAt(left)))
                 left++;
             while(left<right && !Character.isLetterOrDigit(s.charAt(right)))
                 right--;
@@ -72,56 +54,6 @@ public class Solution {
     }
 }
 
-时间O(n) 空间O(1)
-这题注意如果不是alphanumeric letters 或数字 它认为是valid palindrome
-
-
-
-
-public class Solution {
-    public boolean isPalindrome(String s) {
-        if(s==null || s.length()==0)
-            return true;
-        int left = 0;
-        int right = s.length()-1;
-        while(left<right)           //奇数字符最终left==right 偶数字符最终left>right
-        {
-            if(!isValid(s.charAt(left)))    //不是合法字符就将对应指针+1 continue下一轮循环
-            {
-                left++;
-                continue;
-            }
-            if(!isValid(s.charAt(right)))
-            {
-                right--;
-                continue;
-            }
-            if(!isSame(s.charAt(left), s.charAt(right)))    //两边字符不想等 返回false
-                return false;
-            left++;         //否则左右指针各+1
-            right--;
-        }
-        return true;
-    }
-    
-    private boolean isValid(char c) {
-        if((c>='A'&&c<='Z') || (c>='a'&&c<='z') || (c>='0'&&c<='9'))
-            return true;
-        return false;
-    }
-    
-    private boolean isSame(char c1, char c2) {
-        if(c1>='A'&&c1<='Z')
-            c1 = (char)(c1-'A'+'a');    //注意这里要(char)将数字转成char
-        if(c2>='A'&&c2<='Z')
-            c2 = (char)(c2-'A'+'a');    //大写字符转小写字符 要记住 先减去'A' 再加'a'
-        return (c1==c2);
-    }
-}
-
-Note: 这题要注意细节 题不算难
-
-顺便记得ASCII中 排序是常用字符(space, '(', '#') < 数字 < 大写字符 < 小写字符
 
 
 

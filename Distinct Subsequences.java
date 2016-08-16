@@ -1,25 +1,3 @@
-<<<<<<< HEAD
-class Solution:
-    # @return an integer
-    def numDistinct(self, S, T):
-        lenS = len(S); lenT = len(T)
-        dp = [[0 for i in range(lenT+1)] for j in range(lenS+1)]    #先初始化dp全为0 注意i，j全都要取到lenS+1, lenT+1
-        for i in range(lenS+1):             #将每行第一个元素设为0 因为空值是所有字符串的字串
-            dp[i][0] = 1
-        for i in range(1, lenS+1):                  #从第一位开始双循环比较
-            for j in range(1, min(i+1, lenT+1)):        #注意j最多取到lenT+1 不能超过其自身长度
-                if S[i-1] == T[j-1]:                        #比较当前S和T的字符 如果它们相等 当前dp值 = 把这个字符从S，T中分别去掉，剩余T中的字符串在S[0..i-1]字符串中出现的次数(即不考虑这个字符因为它在S,T中都出现了　单纯看去掉这个字符有多少可能　即是新增加的数目) +　当前Ｔ中的字符串在S[0..i-2]中的数目(因为当前字符不相同，　所以只能看加上这个字符的Ｔ字符串在去掉这个字符的S[0..i-2]字符串中可能的次数)
-                    dp[i][j] = dp[i-1][j-1] + dp[i-1][j]
-                else:                                           #如果不相等　则只看　当前Ｔ中的字符串在S[0..i-2]中的数目
-                    dp[i][j] = dp[i-1][j]
-        return dp[lenS][lenT]           #最后返回最终值dp[lenS][lenT]
-
-Note: 看照片
-
-
-
-
-
 题意：
 
 Given a string S and a string T, count the number of distinct subsequences of T in S.
@@ -69,47 +47,20 @@ class Solution:
 
 public class Solution {
     public int numDistinct(String s, String t) {
-        if(t.length()==0)
-            return 1;
-        if(s.length()==0)
-            return 0;
-        int[] res = new int[t.length()+1];
-        res[0] = 1;
-        for(int i=0; i<s.length(); i++) {
-            for(int j=t.length()-1; j>=0; j--)
-                res[j+1] = (s.charAt(i)==t.charAt(j)?res[j]:0) + res[j+1];
+        if (s.length() == 0 && t.length() == 0) return 1;
+        if (s.length() == 0) return 0;
+        if (t.length() == 0) return 1;
+        int[][] res = new int[s.length()+1][t.length()+1];
+        for (int i = 0; i <= s.length(); i++)
+            res[i][0] = 1;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 1; j <= Math.min(t.length(), i); j++) {                // careful
+                res[i][j] = res[i-1][j] + (s.charAt(i-1) == t.charAt(j-1) ? res[i-1][j-1] : 0);
+            }
         }
-        return res[t.length()];
+        return res[s.length()][t.length()];
     }
 }
-
-code ganker改编 二维降一维的思路比interleaving strings好理解
-O(m*n) O(m)
-
-
-
-
-public class Solution {
-    public int numDistinct(String S, String T) {
-        if(S.length()==0)
-            return 0;
-        if(T.length()==0)
-            return 1;
-        int[][] dp = new int[S.length()+1][T.length()+1];
-        for(int i=0; i<S.length()+1; i++)
-            dp[i][0] = 1;
-        for(int i=1; i<S.length()+1; i++)
-        {
-            for(int j=1; j<Math.min(i+1, T.length()+1); j++)
-                dp[i][j] = dp[i-1][j] + (S.charAt(i-1)==T.charAt(j-1)?dp[i-1][j-1]:0);
-        }
-        return dp[S.length()][T.length()];
-    }
-}
-
-Note：  python版版改编 空间复杂度比code ganker的解法多一点 用了二维数组
-
-S = "rabbbit", T = "rabbit"
 
 
 

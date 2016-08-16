@@ -62,47 +62,6 @@ public class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         if (root == null) return res;
-        helper(root, sum, new ArrayList<Integer>(), res);
-        return res;
-    }
-    
-    private void helper(TreeNode root, int sum, List<Integer> list, List<List<Integer>> res) {
-        if (root.left == null && root.right == null && root.val == sum) {
-            list.add(root.val);
-            res.add(new ArrayList<Integer>(list));
-            
-            return;
-        }
-        if (root.left == null && root.right == null) return;
-        if (root.left != null) {
-            list.add(root.val);
-            helper(root.left, sum - root.val, list, res);
-            list.remove(list.size()-1);
-        }
-        if (root.right != null) {
-            list.add(root.val);
-            helper(root.right, sum - root.val, list, res);
-            list.remove(list.size()-1);
-        }
-    }
-}
-
-
-
-
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-public class Solution {
-    public List<List<Integer>> pathSum(TreeNode root, int sum) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if (root == null) return res;
         List<Integer> list = new ArrayList<>(); list.add(root.val);
         helper(root, sum-root.val, list, res);
         return res;
