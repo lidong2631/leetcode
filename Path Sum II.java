@@ -1,39 +1,6 @@
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    # @param root, a tree node
-    # @param sum, an integer
-    # @return a list of lists of integers
-    def pathSum(self, root, sum):
-        def dfs(root, tmpSum, tmpList):              #题目说是root-to-leaf path
-            if root.left == None and root.right == None:  #如果为叶子节点 则判断tmpSum是否等于sum 等于则是一种解 将这个解的list加到result list里
-                if tmpSum == sum:
-                    result.append(tmpList)
-            if root.left:                                       #否则递归左右节点
-                dfs(root.left, tmpSum + root.left.val, tmpList + [root.left.val])
-            if root.right:
-                dfs(root.right, tmpSum + root.right.val, tmpList + [root.right.val])
-                
-        if root == None:
-            return []
-        result = []
-        dfs(root, root.val, [root.val])
-        return result
-
-Note: 题目强调为root-to-leaf path所以整个路径必须遍历完 要思考如果不是root-to-leaf该如何做
-
-
-
-
-
 题意：
 
-Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+Given a binary tree and a sum, find all root-to-leaf paths where each path sum equals the given sum.
 
 For example:
 Given the below binary tree and sum = 22,
@@ -82,9 +49,8 @@ class Solution:
 
 
 
-
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -95,40 +61,71 @@ class Solution:
 public class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if(root==null)
-            return res;
-        List<Integer> item = new ArrayList<Integer>();
-        item.add(root.val);
-        helper(root, sum-root.val, item, res);
+        if (root == null) return res;
+        helper(root, sum, new ArrayList<Integer>(), res);
         return res;
     }
     
-    private void helper(TreeNode root, int sum, List<Integer> item, List<List<Integer>> res) {
-        if(root==null)
-            return;
-        if(root.left==null && root.right==null && sum==0)
-        {
-            res.add(new ArrayList<Integer>(item));  //这里要new一个新的arraylist 如果直接放item进去res 后面的程序会更改item 那么res里之前的放的item也会改变就不对了
+    private void helper(TreeNode root, int sum, List<Integer> list, List<List<Integer>> res) {
+        if (root.left == null && root.right == null && root.val == sum) {
+            list.add(root.val);
+            res.add(new ArrayList<Integer>(list));
+            
             return;
         }
-        if(root.left!=null)
-        {
-            item.add(root.left.val);
-            helper(root.left, sum-root.left.val, item, res);
-            item.remove(item.size()-1);         //记得将之前加的(116行)再去掉 保护现场
+        if (root.left == null && root.right == null) return;
+        if (root.left != null) {
+            list.add(root.val);
+            helper(root.left, sum - root.val, list, res);
+            list.remove(list.size()-1);
         }
-        if(root.right!=null)
-        {
-            item.add(root.right.val);
-            helper(root.right, sum-root.right.val, item, res);
-            item.remove(item.size()-1);     //同118
+        if (root.right != null) {
+            list.add(root.val);
+            helper(root.right, sum - root.val, list, res);
+            list.remove(list.size()-1);
         }
     }
 }
 
-Note: 注意下111 118 124的注释 这种题基本都这个套路 只是注意下注释的地方就好
 
-看code ganker问题解答
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if (root == null) return res;
+        List<Integer> list = new ArrayList<>(); list.add(root.val);
+        helper(root, sum-root.val, list, res);
+        return res;
+    }
+    
+    private void helper(TreeNode root, int sum, List<Integer> list, List<List<Integer>> res) {
+        if (root == null) return;
+        if (root.left == null && root.right == null && sum == 0) {
+            res.add(new ArrayList<Integer>(list));
+            return;
+        }
+        if (root.left != null) {
+            list.add(root.left.val);
+            helper(root.left, sum - root.left.val, list, res);
+            list.remove(list.size()-1);
+        }
+        if (root.right != null) {
+            list.add(root.right.val);
+            helper(root.right, sum - root.right.val, list, res);
+            list.remove(list.size()-1);
+        }
+    }
+}
 
 
 
