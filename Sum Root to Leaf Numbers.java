@@ -1,31 +1,3 @@
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    def sum(self, root, preSum):
-        if root == None:                    #如果其中一个孩子为None 此路数字应在另一个孩子的路径上 return 0
-            return 0
-        preSum = 10*preSum + root.val       #每一次计算数字
-        if root.left == None and root.right == None:        #如果左右孩子都没有 可以取到这条路径的数字 return preSum
-            return preSum
-        return self.sum(root.left, preSum) + self.sum(root.right, preSum)   #递归调用左右子树
-    
-    # @param root, a tree node
-    # @return an integer
-    def sumNumbers(self, root):
-        return self.sum(root, 0)
-
-
-
-
-
-[leetcode]Sum Root to Leaf Numbers @ Python
-原题地址：http://oj.leetcode.com/problems/sum-root-to-leaf-numbers/
-
 题意：
 
 Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.
@@ -86,10 +58,8 @@ class Solution:
 
 
 
-
-
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -99,21 +69,17 @@ class Solution:
  */
 public class Solution {
     public int sumNumbers(TreeNode root) {
-        if(root==null) return 0;
+        if (root == null) return 0;
         return helper(root, 0);
     }
     
-    private int helper(TreeNode root, int preSum) {
-        if(root==null)
-            return 0;
-        preSum = preSum*10 + root.val;
-        if(root.left==null && root.right==null)
-            return preSum;
-        return helper(root.left, preSum) + helper(root.right, preSum);
+    private int helper(TreeNode root, int sum) {
+        if (root == null) return 0;
+        sum = sum * 10 + root.val;
+        if (root.left == null && root.right == null) return sum;
+        return helper(root.left, sum) + helper(root.right, sum);
     }
 }
-
-Note： 简单题 唯一不明白为什么空间复杂度栈的大小是O(logn) 这题本质就是个先序遍历！！！！
 
 
 

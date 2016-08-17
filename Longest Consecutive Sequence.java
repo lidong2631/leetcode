@@ -1,24 +1,3 @@
-class Solution:
-    # @param num, a list of integer
-    # @return an integer
-    def longestConsecutive(self, num):
-        dict = {i: False for i in num}                      #字典用来判断一个数字是否已经被访问
-        maxLen = -1
-        for i in dict:                                       #对于每一个字典里的数 如果它未被访问 分别访问它左右的数看是否在字典里 在就加入序列长度
-            if dict[i] == False:
-                dict[i] = True; currentR = i+1; lengthR = 0
-                while currentR in dict:                         #右序列
-                    dict[currentR] = True; currentR+=1; lengthR+=1
-                currentL = i-1; lengthL = 0
-                while currentL in dict:                            #左序列
-                    dict[currentL] = True; currentL-=1; lengthL+=1
-                maxLen = max(maxLen, lengthL + 1 + lengthR)         #算出最长连续序列
-        return maxLen
-
-
-
-
-
 Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
 
 For example,
@@ -54,50 +33,31 @@ class Solution:
 
 
 
-
-
-
-
 public class Solution {
-    public int longestConsecutive(int[] num) {
-        if(num==null || num.length==0)
-            return 0;
-        HashSet<Integer> set = new HashSet<Integer>();
+    public int longestConsecutive(int[] nums) {
         int maxLen = 0;
-        for(int i=0; i<num.length; i++)
-        {
-            set.add(num[i]);
-        }
-        while(!set.isEmpty())
-        {
+        Set<Integer> set = new HashSet<>();
+        for (int n : nums) set.add(n);
+        while (!set.isEmpty()) {
             Iterator i = set.iterator();
-            int currNum = (Integer)i.next();
-            set.remove(currNum);
-            int currLeft = currNum-1;
-            int lenLeft = 0;
-            while(set.contains(currLeft))
-            {
-                set.remove(currLeft);
-                currLeft--;
-                lenLeft++;
+            Integer curr = (Integer)i.next();
+            set.remove(curr);
+            int left = curr - 1, right = curr + 1, maxL = 0, maxR = 0;
+            while (set.contains(left)) {
+                set.remove(left);
+                maxL++;
+                left--;
             }
-            int currRight = currNum+1;
-            int lenRight = 0;
-            while(set.contains(currRight))
-            {
-                set.remove(currRight);
-                currRight++;
-                lenRight++;
+            while (set.contains(right)) {
+                set.remove(right);
+                maxR++;
+                right++;
             }
-            maxLen = Math.max(maxLen, lenLeft + 1 + lenRight);
+            maxLen = Math.max(maxLen, maxL + 1 + maxR);
         }
         return maxLen;
     }
 }
-
-Note: 这题有两个解法 一是先排序再遍历一遍数组 统计最长连续子序列 二是用上述方法 类似于图的思想
-
-顺便复习java set iterator
 
 
 

@@ -64,73 +64,64 @@ O(m+n) O(m+n)
 http://www.geeksforgeeks.org/flood-fill-algorithm-implement-fill-paint/
 
 
-
-
 public class Solution {
     public void solve(char[][] board) {
-        if(board==null || board.length==0 || board[0].length==0)
-            return;
-        for(int i=0; i<board.length; i++) {
-            for(int j=0; j<board[0].length; j++) {
-                if(board[i][j]=='O')
-                    board[i][j] = '-';
+        if (board == null || board.length == 0 || board[0].length == 0) return;
+        int m = board.length, n = board[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 'O') board[i][j] = '-';
             }
         }
-        for(int i=0; i<board.length; i++) {
-            if(board[i][0]=='-')
-                floodFill(board, i, 0);
+        
+        for (int i = 0; i < n; i++) {
+            if (board[0][i] == '-') floodFill(board, 0, i);
         }
-        for(int i=0; i<board.length; i++) {
-            if(board[i][board[0].length-1]=='-')
-                floodFill(board, i, board[0].length-1);
+        for (int i = 0; i < n; i++) {
+            if (board[m-1][i] == '-') floodFill(board, m-1, i);
         }
-        for(int i=0; i<board[0].length; i++) {
-            if(board[0][i]=='-')
-                floodFill(board, 0, i);
+        for (int i = 0; i < m; i++) {
+            if (board[i][0] == '-') floodFill(board, i, 0);
         }
-        for(int i=0; i<board[0].length; i++) {
-            if(board[board.length-1][i]=='-')
-                floodFill(board, board.length-1, i);
+        for (int i = 0; i < m; i++) {
+            if (board[i][n-1] == '-') floodFill(board, i, n-1);
         }
         
-        for(int i=0; i<board.length; i++) {
-            for(int j=0; j<board[0].length; j++) {
-                if(board[i][j]=='-')
-                    board[i][j] = 'X';
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (board[i][j] == '-') board[i][j] = 'X';
             }
         }
     }
     
     private void floodFill(char[][] board, int i, int j) {
         board[i][j] = 'O';
-        Queue<Integer> queue = new LinkedList<Integer>();
-        int code = i*board[0].length+j;
-        queue.add(code);
-        while(!queue.isEmpty()) {
-            code = queue.poll();
-            int row = code/board[0].length;
-            int col = code%board[0].length;
-            if(row>0 && board[row-1][col]=='-') {   //up
-                queue.add((row-1)*board[0].length+col);
-                board[row-1][col] = 'O';
+        Queue<Integer> queue = new LinkedList<>();
+        int len = board[0].length;
+        int pos = i * len + j;
+        queue.add(pos);
+        while (!queue.isEmpty()) {
+            int curr = queue.poll();
+            int r = curr / len, c = curr % len;
+            if (r > 0 && board[r-1][c] == '-') {
+                queue.add((r-1) * len + c);
+                board[r-1][c] = 'O';
             }
-            if(row<board.length-1 && board[row+1][col]=='-') {  //down
-                queue.offer((row+1)*board[0].length+col);
-                board[row+1][col] = 'O';
+            if (c > 0 && board[r][c-1] == '-') {
+                queue.add(r * len + c - 1);
+                board[r][c-1] = 'O';
             }
-            if(col>0 && board[row][col-1]=='-') {   //left
-                queue.offer(row*board[0].length+col-1);
-                board[row][col-1] = 'O';
+            if (r < board.length - 1 && board[r+1][c] == '-') {
+                queue.add((r+1) * len + c);
+                board[r+1][c] = 'O';
             }
-            if(col<board[0].length-1 && board[row][col+1]=='-') {   //right
-                queue.offer(row*board[0].length+col+1);
-                board[row][col+1] = 'O';
+            if (c < board[0].length - 1 && board[r][c+1] == '-') {
+                queue.add(r * len + c + 1);
+                board[r][c+1] = 'O';
             }
         }
     }
 }
-
-这个解法仍是geeksforgeeks的套路 只是在第二步参照code ganker用的bfs遍历四条边 可以ac通过 dfs会导致栈溢出所以即使用也要用非递归方式
 
 O(m+n) O(m+n)
 

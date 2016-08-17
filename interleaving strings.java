@@ -1,53 +1,22 @@
-<<<<<<< HEAD
 public class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
-        int len1 = s1.length();
-        int len2 = s2.length();
-        if(len1+len2!=s3.length())      //不需要判断null的情况 只需要初始检查这个条件即可
-            return false;
+        if (s1.length() + s2.length() != s3.length()) return false;
+        int len1 = s1.length(), len2 = s2.length();
         boolean[][] dp = new boolean[len1+1][len2+1];
         dp[0][0] = true;
-        for(int i=0; i<len1; i++)
-            dp[i+1][0] = dp[i][0] && s3.charAt(i)==s1.charAt(i);
-        for(int j=0; j<len2; j++)
-            dp[0][j+1] = dp[0][j] && s3.charAt(j)==s2.charAt(j);
-        for(int i=0; i<len1; i++)
-            for(int j=0; j<len2; j++)
-                dp[i+1][j+1] = (dp[i][j+1] && s3.charAt(i+j+1)==s1.charAt(i)) || (dp[i+1][j] && s3.charAt(i+j+1)==s2.charAt(j));
-        return dp[len1][len2];
-    }
-}
-
-Note: 这个版本跟pyhton版一样 只是下标是按code ganker的程序取得 code ganker程序跟python版实际一样也是二位dp 
-
-只是它空间只用了一维数组 不太清楚为什么可以 以后再说 先理解思路
-
-
-
-
-public class Solution {
-    public boolean isInterleave(String s1, String s2, String s3) {
-        if(s1.length()+s2.length()!=s3.length())
-            return false;
-        String minWord = s1.length()>s2.length()? s2:s1;    //这里要注意 不能写成s1.length()<s2.length()?s1:s2 碰到s1长度跟s2相等会有问题
-        String maxWord = s1.length()>s2.length()? s1:s2;
-        boolean[] res = new boolean[minWord.length()+1];
-        res[0] = true;
-        for(int i=0; i<minWord.length(); i++) {
-            res[i+1] = res[i]&&minWord.charAt(i)==s3.charAt(i);
-        }
-        for(int i=0; i<maxWord.length(); i++) {
-            res[0] = res[0]&&maxWord.charAt(i)==s3.charAt(i);
-            for(int j=0; j<minWord.length(); j++) {
-                res[j+1] = res[j+1]&&maxWord.charAt(i)==s3.charAt(i+j+1) || res[j]&&minWord.charAt(j)==s3.charAt(i+j+1);
+        for (int i = 0; i < len1; i++)
+            dp[i+1][0] = dp[i][0] && (s1.charAt(i) == s3.charAt(i));
+        for (int i = 0; i < len2; i++)
+            dp[0][i+1] = dp[0][i] && (s2.charAt(i) == s3.charAt(i));
+        for (int i = 0; i < s1.length(); i++) {
+            for (int j = 0; j < s2.length(); j++) {
+                dp[i+1][j+1] = (dp[i][j+1] && s1.charAt(i) == s3.charAt(i+j+1)) || 
+                                (dp[i+1][j] && s2.charAt(j) == s3.charAt(i+j+1));
             }
         }
-        return res[minWord.length()];
+        return dp[s1.length()][s2.length()];
     }
 }
-
-时间O(m*n) O(min(m, n))
-
 
 
 
