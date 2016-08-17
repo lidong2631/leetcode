@@ -98,11 +98,11 @@ public class Solution {
     
     private int helper(TreeNode root, List<Integer> res) {
         if (root == null) return 0;
-        int left = helper(root.left, res);
-        int right = helper(root.right, res);
-        int currPath = root.val + (left > 0 ? left : 0) + (right > 0 ? right : 0);  // careful need to check > 0
+        int left = Math.max(helper(root.left, res), 0);         // careful need to compare with 0
+        int right = Math.max(helper(root.right, res), 0);
+        int currPath = root.val + left + right;
         if (res.get(0) == null || res.get(0) < currPath) res.set(0, currPath);
-        return Math.max(Math.max(left, 0), right) + root.val;       // careful need to check > 0
+        return Math.max(left, right) + root.val;
     }
 }
 

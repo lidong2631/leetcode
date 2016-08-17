@@ -50,4 +50,18 @@ https://www.youtube.com/watch?v=yCQN096CwWM
 Given an array of integers A and an integer k, find a subarray that contains the largest sum, subject to a constraint that the sum is less than k
 https://www.quora.com/Given-an-array-of-integers-A-and-an-integer-k-find-a-subarray-that-contains-the-largest-sum-subject-to-a-constraint-that-the-sum-is-less-than-k
 
+public int maxSumLessEqualK(int[] nums, int k) {
+    int res = 0;
+    TreeSet<Integer> set = new TreeSet<>();
+    set.add(0);
+    int currSum = 0;
+    for (int i = 0; i < nums.length; i++) {
+        currSum += nums[i];
+        Integer curr = set.ceiling(currSum - k);
+        if (curr != null) res = Math.max(res, currSum - curr);
+        set.add(currSum);
+    }
+    return res;
+}
+
 https://leetcode.com/discuss/109749/accepted-c-codes-with-explanation-and-references

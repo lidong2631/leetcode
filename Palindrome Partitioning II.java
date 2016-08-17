@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-class Solution:
-    # @param s, a string
-    # @return an integer
-    def minCut(self, s):
-        dp = [0 for i in range(len(s)+1)]
-        p = [[False for i in range(len(s))] for j in range(len(s))]
-        for i in range(len(s)+1):
-            dp[i] = len(s) - i
-        for i in range(len(s)-1, -1, -1):
-            for j in range(i, len(s)):
-                if s[i] == s[j] and ((j - i < 2) or p[i+1][j-1]):
-                    p[i][j] = True
-                    dp[i] = min(1 + dp[j+1], dp[i])
-        return dp[0] - 1
-
-Note: 这个解法有TLE kitt的解法也有TLE 貌似python有点慢 第二遍过好好看看
-
 题意：
 
 Given a string s, partition s such that every substring of the partition is a palindrome.
@@ -54,43 +36,30 @@ class Solution:
 
 
 
-
 public class Solution {
     public int minCut(String s) {
-        if(s==null || s.length()==0)
-            return 0;
-        boolean[][] isPalin = getDict(s);
+        boolean[][] dict = getDict(s);
         int[] res = new int[s.length()+1];
         res[0] = 0;
-        for(int i=0; i<s.length(); i++)
-        {
-            res[i+1] = i+1;     //这里res[i+1]=i+1 是因为动态规划这里我们取的是分成几份 如果两个字母ab 中间切一刀就变为两个字符
-            for(int j=0; j<=i; j++)
-            {
-                if(isPalin[j][i])
-                    res[i+1] = Math.min(res[i+1], res[j]+1);    //这里比较去小的数
+        for (int i = 1; i <= s.length(); i++) {
+            res[i] = i;
+            for (int j = 1; j <= i; j++) {                                      // careful
+                if (dict[j-1][i-1]) res[i] = Math.min(res[i], res[j-1] + 1);    // careful
             }
         }
-        return res[s.length()]-1;   //最后再减掉多的那一刀
+        return res[s.length()] - 1;                 // careful need to cut 1
     }
     
-    private boolean[][] getDict(String s) {
+    private boolean[][] getDict(String s) {         // same as Palindrome Partitioning
         boolean[][] dict = new boolean[s.length()][s.length()];
-        for(int i=s.length()-1;i>=0;i--)
-        {
-            for(int j=i;j<s.length();j++)
-            {
-                if(s.charAt(i)==s.charAt(j) && (j-i<2 || dict[i+1][j-1]))
-                    dict[i][j] = true;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            for (int j = i; j < s.length(); j++) {
+                dict[i][j] = (s.charAt(i) == s.charAt(j) && (j - i < 2 || dict[i+1][j-1]));
             }
         }
         return dict;
     }
 }
-
-注意return res[s.length()]-1 最后要减1
-
-Note: 三个地方注意 加注释的   这题跟word break很像 但不好理解
 
 
 

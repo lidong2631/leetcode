@@ -1,30 +1,3 @@
-# Definition for a undirected graph node
-# class UndirectedGraphNode:
-#     def __init__(self, x):
-#         self.label = x
-#         self.neighbors = []
-
-class Solution:
-    def dfs(self, originalNode, map):
-        if originalNode in map:                             #如果原始点已存在map中直接返回
-            return map[originalNode]
-        newNode = UndirectedGraphNode(originalNode.label)   #否则新建一个copy点 并映射进map中
-        map[originalNode] = newNode
-        for neighbor in originalNode.neighbors:             #循环遍历每一个原始点的邻居
-            newNode.neighbors.append(self.dfs(neighbor, map))   #为每一个新建点加入原始点的邻居
-        return newNode
-        
-    # @param node, a undirected graph node
-    # @return a undirected graph node
-    def cloneGraph(self, node):
-        if node == None:
-            return None
-        return self.dfs(node, {})
-
-Note: 要搞清python中函数声明，调用，嵌套的规则 何时写self何时不写
-
-
-
 题意：实现对一个图的深拷贝。
 
 解题思路：由于遍历一个图有两种方式：bfs和dfs。所以深拷贝一个图也可以采用这两种方法。
@@ -95,8 +68,6 @@ class Solution:
 
 
 
-From cleanCode:
-1 DFS
 /**
  * Definition for undirected graph.
  * class UndirectedGraphNode {
@@ -107,60 +78,19 @@ From cleanCode:
  */
 public class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-        if(node==null)
-            return null;
-        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
-        return DFS(node, map);
+        if (node == null) return null;
+        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        return dfs(node, map);
     }
     
-    private UndirectedGraphNode DFS(UndirectedGraphNode node, Map<UndirectedGraphNode, UndirectedGraphNode> map) {
-        if(map.containsKey(node))
-            return map.get(node);
-        UndirectedGraphNode nodeCopy = new UndirectedGraphNode(node.label);
-        map.put(node, nodeCopy);
-        for(UndirectedGraphNode neighbor : node.neighbors) {
-            nodeCopy.neighbors.add(DFS(neighbor, map));
+    private UndirectedGraphNode dfs(UndirectedGraphNode node, Map<UndirectedGraphNode, UndirectedGraphNode> map) {
+        if (map.containsKey(node)) return map.get(node);
+        UndirectedGraphNode newNode = new UndirectedGraphNode(node.label);
+        map.put(node, newNode);
+        for (UndirectedGraphNode n : node.neighbors) {
+            newNode.neighbors.add(dfs(n, map));
         }
-        return nodeCopy;
-    }
-}
-
-时间O(n) 空间O(n)
-
-
-2 BFS
-/**
- * Definition for undirected graph.
- * class UndirectedGraphNode {
- *     int label;
- *     List<UndirectedGraphNode> neighbors;
- *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
- * };
- */
-public class Solution {
-    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-        if(node==null)
-            return null;
-        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
-        UndirectedGraphNode nodeCopy = new UndirectedGraphNode(node.label);
-        Queue<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
-        map.put(node, nodeCopy);
-        queue.add(node);
-        while(!queue.isEmpty()) {
-            UndirectedGraphNode curr = queue.poll();
-            for(UndirectedGraphNode p : curr.neighbors) {    
-                if(map.containsKey(p)) {            //如果map中有这个节点记录 只要将它连入当前点的neighbor即可
-                    map.get(curr).neighbors.add(map.get(p));
-                }
-                else {                              //否则要新建点 map更新记录 连入neighbor 加入队列
-                    UndirectedGraphNode pCopy = new UndirectedGraphNode(p.label);
-                    map.put(p, pCopy);
-                    map.get(curr).neighbors.add(pCopy);
-                    queue.add(p);
-                }
-            }
-        }
-        return nodeCopy;
+        return newNode;
     }
 }
 
@@ -178,43 +108,31 @@ public class Solution {
  */
 public class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-        if(node==null) return null;
+        if (node == null) return null;
         
-        LinkedList<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
-        HashMap<UndirectedGraphNode,UndirectedGraphNode> map = new HashMap<UndirectedGraphNode,UndirectedGraphNode>();
+        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        Queue<UndirectedGraphNode> queue = new LinkedList<>();
+        UndirectedGraphNode nodeCopy = new UndirectedGraphNode(node.label);
+        queue.add(node); map.put(node, nodeCopy);
         
-        UndirectedGraphNode copyNode = new UndirectedGraphNode(node.label);     //先建立起始点node的copy点
-        
-        map.put(node, copyNode);                    //建立映射关系
-        queue.offer(node);                          //将node入队列
-        
-        while(!queue.isEmpty())
-        {
-            UndirectedGraphNode curr = queue.poll();        //每次将队首点pop出来 逐一遍历跟它相连的点
-            for(int i=0; i<curr.neighbors.size(); i++)
-            {
-                if(!map.containsKey(curr.neighbors.get(i)))         //如果map里没有映射关系 3步 1 new一个copy店 2 map建立映射关系 3 将这个点（原始点）入队列
-                {
-                    UndirectedGraphNode copyNeighbors = new UndirectedGraphNode(curr.neighbors.get(i).label);
-                    map.put(curr.neighbors.get(i), copyNeighbors);
-                    queue.offer(curr.neighbors.get(i));
+        while (!queue.isEmpty()) {
+            UndirectedGraphNode curr = queue.poll();        // all the nodes polled from queue has already been visited
+            for (UndirectedGraphNode n : curr.neighbors) {
+                if (!map.containsKey(n)) {
+                    UndirectedGraphNode nCopy = new UndirectedGraphNode(n.label);
+                    map.put(n, nCopy);
+                    queue.add(n);
+                    map.get(curr).neighbors.add(nCopy);
                 }
-                map.get(curr).neighbors.add(map.get(curr.neighbors.get(i)));        //最后不管这个点是不是没遍历过的点 将它加到copy的点的neighbor list中  
+                else map.get(curr).neighbors.add(map.get(n));
             }
         }
-        return map.get(node);
+        return nodeCopy;
     }
 }
 
-Note：   。    以这个为例子想想就明白了 BFS遍历熟记熟记熟记！！！！！！！！！！！！！！！！
-       /\
-      。  。
 
-
-
-这题dfs code ganker的写法递归能明白 非递归感觉还是bfs！！
-
-
+时间O(n) 空间O(n)
 
 
 

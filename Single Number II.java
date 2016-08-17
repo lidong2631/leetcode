@@ -1,4 +1,3 @@
-
 class Solution:
     # @param A, a list of integer
     # @return an integer
@@ -70,30 +69,21 @@ def singleNumber(self, A):
 
 
 
-
-
-
-
 public class Solution {
-    public int singleNumber(int[] A) {
-        if(A==null || A.length==0)
-            return 0;
-        int[] digits = new int[32];
-        for(int i=0; i<32; i++)         //外循环遍历所有32位整数每一位
-        {
-            for(int j=0; j<A.length; j++)   //内循环遍历A
-                digits[i] += (A[j]>>i)&1;   //这里digits数组记录对应位1的个数 A[j]每次左移对应的i位 然后跟1(0000000 *31 1)做与运算 将其他不要的位消掉
+    public int singleNumber(int[] nums) {
+        int[] count=  new int[32];
+        for (int n : nums) {
+            for (int i = 0; i < 32; i++) {
+                count[i] += (n >> i) & 1;       // careful here n needs to move right
+            }
         }
         int res = 0;
-        for(int i=0; i<32; i++)
-            res += (digits[i]%3)<<i;        //最后每一位跟3取余在左移对应位 加到最终结果
+        for (int i = 0; i < 32; i++) {
+            res += (count[i] % 3) << i;
+        }
         return res;
     }
 }
-
-Note: 这题有两种解法 一是利用哈希表 只要一个数字出现3次以上就从哈希表里删除 最后剩下的一个就是答案 但需要O(n)空间
-
-如果要O(1)空间 就用上述解法 统计每一位1的次数 然后跟3取余即得到结果 这种解法是通解 对于多少重复都可以
 
 
 
