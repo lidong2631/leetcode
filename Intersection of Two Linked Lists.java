@@ -11,28 +11,25 @@
  */
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if(headA==null || headB==null)
-            return null;
-        int lenA = 1; int lenB = 1;
-        ListNode pA = headA; ListNode pB = headB;
-        while(pA.next!=null) {
+        if(headA==null || headB==null) return null;
+        int lenA = 1, lenB = 1;
+        ListNode pA = headA, pB = headB;
+        while (pA.next != null) {
             lenA++;
             pA = pA.next;
         }
-        while(pB.next!=null) {
+        while (pB.next != null) {
             lenB++;
             pB = pB.next;
         }
         pA = headA; pB = headB;
-        if(lenA>lenB) {
-            for(int i=0; i<lenA-lenB; i++)
-                pA = pA.next;
+        if (lenA > lenB) {
+            for (int i = 0; i < lenA - lenB; i++) pA = pA.next;
         }
         else {
-            for(int i=0; i<lenB-lenA; i++)
-                pB = pB.next;
+            for (int i = 0; i < lenB - lenA; i++) pB = pB.next;
         }
-        while(pA!=pB) {     //这里有个有意思的地方 当A和B没有交点 则最终pA pB均为null 在java中null==null
+        while (pA != pB) {
             pA = pA.next;
             pB = pB.next;
         }

@@ -4,16 +4,13 @@ class MinStack {
     
     public void push(int x) {
         stack.push(x);
-        if(minStack.empty() || x<=minStack.peek())
-            minStack.push(x);
+        if (minStack.isEmpty() || x <= minStack.peek()) minStack.push(x);
     }
 
     public void pop() {
-        if(stack.empty())
-            return;
-        int elem = stack.pop();
-        if(!minStack.empty() && elem==minStack.peek())
-            minStack.pop();
+        if (stack.isEmpty()) return;
+        int tmp = stack.pop();
+        if (!minStack.isEmpty() && minStack.peek() == tmp) minStack.pop();
     }
 
     public int top() {
@@ -24,6 +21,7 @@ class MinStack {
         return minStack.peek();
     }
 }
+
 
 O(1) O(n) minStack space
 

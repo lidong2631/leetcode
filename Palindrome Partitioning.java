@@ -51,7 +51,7 @@ public class Solution {
         }
         for (int i = index; i < s.length(); i++) {
             if (dict[index][i]) {
-                list.add(s.substring(index, i + 1));
+                list.add(s.substring(index, i + 1));        // careful
                 helper(s, dict, i + 1, list, res);
                 list.remove(list.size() - 1);
             }

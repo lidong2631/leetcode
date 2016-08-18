@@ -74,60 +74,31 @@ Refactored code!
 
 
 
-
-
 public class Solution {
     public int evalRPN(String[] tokens) {
-        if(tokens == null || tokens.length == 0)
-        {
-            return 0;
-        }
-        LinkedList<Integer> stack = new LinkedList<Integer>();
-        for(int i=0; i<tokens.length; i++)
-        {
-            if(tokens[i].equals('+'))               //注意这里用'+'是不行的 因为这里用的是equals方法 不能比较字符要比较字符串 顺便看看java中字符和字符串的区别
-                stack.push(stack.pop()+stack.pop());
-            
-            else if(tokens[i].equals('-'))
-                stack.push(-stack.pop()+stack.pop());
-                
-            else if(tokens[i].equals('*'))
-                stack.push(stack.pop()*stack.pop());
-                
-            else if(tokens[i].equals('/'))
-            {
-                int op2 = stack.pop();
-                int op1 = stack.pop();
-                stack.push(op1/op2);
+        Stack<Integer> stack = new Stack<>();
+        for (String str : tokens) {
+            switch(str) {
+                case "+":
+                    stack.push(stack.pop() + stack.pop());
+                    break;
+                case "-":
+                    stack.push(-stack.pop() + stack.pop());
+                    break;
+                case "*":
+                    stack.push(stack.pop() * stack.pop());
+                    break;
+                case "/":
+                    int divisor = stack.pop();
+                    stack.push(stack.pop() / divisor);
+                    break;
+                default:
+                    stack.push(Integer.parseInt(str));
             }
-            
-            else
-                stack.push(Integer.parseInt(tokens[i]));
         }
         return stack.pop();
     }
 }
-
-以上代码中有一个没有周全的地方是没有对逆波兰式错误的情况进行出错处理，其实也不难，就是每次pop操作检查栈空情况，如果栈空，则说明出错。还有就是最后检查一下栈的size，
-
-如果不是1也说明运算数多了，返回错误
-
-对于波兰式 思路是类似的 只是从右往左扫一遍 碰到数字压栈 碰到操作符pop出两个操作数运算出结果进栈
-
-
-
-
-
-另这题碰到一个问题就是java中char跟string的区别
-
-char is one character. String is zero or more characters.
-
-char is a primitive type. String is a class.
-
-顺便看java LinkedList
-
-
-
 
 
 

@@ -1,64 +1,3 @@
-# Definition for a point
-# class Point:
-#     def __init__(self, a=0, b=0):
-#         self.x = a
-#         self.y = b
-
-class Solution:
-    # @param points, a list of Points
-    # @return an integer
-    def maxPoints(self, points):
-        length = len(points)
-        if(length < 3):                 #如果小于三个点(2点，1点，0点) 则所有点都在一条直线
-            return length
-        res = -1                        #res为最大同一直线的点数 初始为－1
-        for i in range(length):         #外循环所有的点
-            slope = {'inf':0}           #slope字典初始存一个无穷大斜率inf的索引 值为0
-            samepointNum = 1
-            for j in range(length):     #内循环
-                if i == j:              #如果是同一个点continue
-                    continue
-                elif points[i].x == points[j].x and points[i].y != points[j].y:     #斜率无穷大情况
-                    slope['inf'] += 1
-                elif points[i].x != points[j].x:
-                    k = 1.0 * (points[i].y - points[j].y) / (points[i].x - points[j].x)     #算斜率 注意乘1.0处理python负数除法情况
-                    if k not in slope:      #如果这个值不在字典里加入进去
-                        slope[k] = 1
-                    else:                   #否则对应value加1
-                        slope[k] += 1
-                else:                       #注意如果是坐标相同的两个点也要算进去
-                    samepointNum += 1                                      
-            res = max(res, samepointNum + max(slope.values()))
-        return res
-
-Note: dictionary, dict.values()
-
-
-
-
-
-思路：
-
-1 外循环遍历所有点
-
-2 内循环遍历i后所有的点
-
-3 判断 相同点还是x或y相同或算斜率
-
-4 更新map
-
-4 取本轮循环最大数＋numSame 更新max
-
-
-/**
- * Definition for a point.
- * class Point {
- *     int x;
- *     int y;
- *     Point() { x = 0; y = 0; }
- *     Point(int a, int b) { x = a; y = b; }
- * }
- */
 /**
  * Definition for a point.
  * class Point {
@@ -70,60 +9,28 @@ Note: dictionary, dict.values()
  */
 public class Solution {
     public int maxPoints(Point[] points) {
-        if(points==null || points.length==0)
-            return 0;
-        int globalMax = 1;  //初始值是1 ！！
-        for(int i=0; i<points.length; i++)
-        {
-            HashMap<Double, Integer> map = new HashMap<Double, Integer>();  //
-            int localMax = 1;   //初始值是1 !!
-            int numSame = 0;
-            double ratio = 0.0;
-            
-            for(int j=i+1; j<points.length; j++)    //j从i+1开始 ！！前面的点都计算过了
-            {
-                if(points[j].x==points[i].x && points[j].y==points[i].y)
-                {
-                    numSame++;
-                    continue;
+        int maxPoints = 0;
+        for (int i = 0; i < points.length; i++) {
+            int samePoints = 1, sameXPoints = 0, sameYPoints = 0, currMax = 0;      // careful for initialize value
+            HashMap<Double, Integer> map = new HashMap<>();
+            for (int j = i + 1; j < points.length; j++) {
+                if (points[i].x == points[j].x && points[i].y == points[j].y) samePoints++;     // careful for 4 conditions
+                else if (points[i].x == points[j].x) sameXPoints++;
+                else if (points[i].y == points[j].y) sameYPoints++;
+                else {
+                    double k = (double)(points[j].y - points[i].y) / (double)(points[j].x - points[i].x);
+                    if (map.containsKey(k)) map.put(k, map.get(k)+1);
+                    else map.put(k, 1);             // careful
                 }
-                else if(points[j].x==points[i].x)
-                    ratio = (double)(Integer.MAX_VALUE);
-                else if(points[j].y==points[i].y)
-                    ratio = 0.0;
-                else
-                    ratio = (double)(points[j].y-points[i].y)/(double)(points[j].x-points[i].x);    //要转型成double再计算 ！！
-                if(map.containsKey(ratio))
-                    map.put(ratio, map.get(ratio)+1);
-                else
-                    map.put(ratio, 2);
             }
-            for(Integer num : map.values())     //map的遍历方式 ！！ iterator方式如何做
-                localMax = Math.max(localMax, num);
-            globalMax = Math.max(globalMax, localMax+numSame);
+            for (Integer num : map.values())
+                currMax = Math.max(currMax, num);
+            currMax = Math.max(currMax, Math.max(sameXPoints, sameYPoints));
+            maxPoints = Math.max(maxPoints, samePoints + currMax);
         }
-        return globalMax;
+        return maxPoints;
     }
 }
-
-Note: 这题有很多小细节要注意！1 HashMap,maxDiff,numSame要放在for里面这样每次循环才能把上次的清空
-
-2 判断两个点重合后要记得continue
-
-3 算ratio记得转成double
-
-4 两个for循环的条件
-
-java相关 HashMap 基本操作 values() put,get, Integer.MAX_VALUE
-
-
-T:O(n^2) S:O(n)
-
-brute force方法见code ganker第一种解法 O(n^3)
-
-注意 在code ganker评论里提到
-java的编译器会判断两个double是否相等是判断了类似于fabs(a,b)<10e-10这样的语句，而c++则直接比他们的位，所以double在C++中不能作为key
-
 
 
 

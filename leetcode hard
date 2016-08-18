@@ -1,3 +1,4 @@
+1 - 100
 median of two sorted arrays
 zigzag conversion
 regular expression matching
@@ -15,7 +16,6 @@ minimum window substring
 scramble string
 
 
-1 - 100
 LinkedList:
 create dummy node. get prev and next and perform reverse subroutine
 Swap Nodes in Pairs
@@ -69,6 +69,8 @@ Restore IP Address 	(helper(s, 0, 1, "", res))
 
 
 101 - 200
+Binary Tree Upside Down
+
 
 if (root == null) ...
 if (root == null && root.right == null && ...) ...
@@ -83,10 +85,22 @@ Triangle
 Binary Tree Maximum Path Sum
 Balanced Binary Tree
 
+for (int i = 1; i < s.length(); i++) 
+	for (int j = 0; j <= i; j++)
+Palindrome Partitioning II
+Word Break
 
+Palindrome Partitioning 	(helper(s, getDict(s), 0, new ArrayList<String>(), res))
+Word Break II 				(helper(s, wordDict, 0, "", res);)
 
+(1) fast != null && fast.next != null VS (2) fast.next != null && fast.next.next != null
+if you need to separate list into two use (2) if you need to find cycle use (1)
+(1) Linked List Cycle
+(1) Linked List Cycle II
+(2) Reorder List  (use reverse linkedlist)
+(2) Sort List 	(use merge 2 sorted list)
 
-
+Reverse Words in a String (same as Length of Last Word)
 
 
 

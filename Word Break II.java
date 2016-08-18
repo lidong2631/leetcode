@@ -73,6 +73,32 @@ public class Solution {
 
 
 
+public class Solution {
+    public List<String> wordBreak(String s, Set<String> wordDict) {
+        List<String> res = new ArrayList<String>();
+        helper(s, wordDict, 0, "", res);
+        return res;
+    }
+    
+    private void helper(String s, Set<String> wordDict, int start, String item, List<String> res) {
+        if (start >= s.length()) {
+            res.add(item);
+            return;
+        }
+        // StringBuilder tmp = new StringBuilder();
+        for (int i = start; i < s.length(); i++) {
+            // tmp.append(s.charAt(i));
+            String tmp = s.substring(start, i + 1);
+            if (wordDict.contains(tmp.toString())) {
+                String newItem = item.length() > 0 ? item + " " + tmp : tmp;
+                helper(s, wordDict, i+1, newItem, res);
+            }
+        }
+    }
+}
+
+
+
 
 from code ganker:
 
