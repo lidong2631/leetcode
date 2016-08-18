@@ -1,104 +1,3 @@
-<<<<<<< HEAD
-# Definition for singly-linked list with a random pointer.
-# class RandomListNode:
-#     def __init__(self, x):
-#         self.label = x
-#         self.next = None
-#         self.random = None
-
-class Solution:
-    # @param head, a RandomListNode
-    # @return a RandomListNode
-    def copyRandomList(self, head):
-        if head == None:
-            return None
-        
-        tmp = head                                         #原链表每个节点后都copy一个新节点
-        while tmp:
-            newNode = RandomListNode(tmp.label)
-            newNode.next = tmp.next
-            tmp.next = newNode
-            tmp = tmp.next.next
-        
-        tmp = head                                         #copy每个节点的random link
-        while tmp:
-            if tmp.random:
-                tmp.next.random = tmp.random.next
-            tmp = tmp.next.next
-        
-        old = head                                         #最后将copy链表拆出来
-        newHead = head.next
-        new = newHead
-        while new.next:
-            old.next = new.next
-            old = old.next
-            new.next = old.next
-            new = new.next
-        new.next = old.next = None
-        return newHead
-
-
-Note: 三步， 需要熟记链表的各种基本操作套路 这一题包括copy每一个节点 copy每个节点的random pointer 以及如何拆分链表
-
-
-
-
-
-解题思路：这题主要是需要深拷贝。看图就明白怎么写程序了。
-
- 
-
-
-
-首先，在原链表的每个节点后面都插入一个新节点，新节点的内容和前面的节点一样。比如上图，1后面插入1，2后面插入2，依次类推。
-
-其次，原链表中的random指针如何映射呢？比如上图中，1节点的random指针指向3，4节点的random指针指向2。如果有一个tmp指针指向1（蓝色），则一条语句：tmp.next.random = tmp.random.next；就可以解决这个问题。
-
-第三步，将新的链表从上图这样的链表中拆分出来。
-
-代码：
-
-
-# Definition for singly-linked list with a random pointer.
-# class RandomListNode:
-#     def __init__(self, x):
-#         self.label = x
-#         self.next = None
-#         self.random = None
-
-class Solution:
-    # @param head, a RandomListNode
-    # @return a RandomListNode
-    def copyRandomList(self, head):
-        if head == None: return None
-        tmp = head
-        while tmp:
-            newNode = RandomListNode(tmp.label)
-            newNode.next = tmp.next
-            tmp.next = newNode
-            tmp = tmp.next.next
-        tmp = head
-        while tmp:
-            if tmp.random:
-                tmp.next.random = tmp.random.next
-            tmp = tmp.next.next
-        newhead = head.next
-        pold = head
-        pnew = newhead
-        while pnew.next:
-            pold.next = pnew.next
-            pold = pold.next
-            pnew.next = pold.next
-            pnew = pnew.next
-        pold.next = None
-        pnew.next = None
-        return newhead
-
-
-
-
-
-
 /**
  * Definition for singly-linked list with a random pointer.
  * class RandomListNode {
@@ -109,178 +8,31 @@ class Solution:
  */
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
-        if(head==null)
-            return null;
-        //HashMap<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
-        RandomListNode newHead = new RandomListNode(head.label);
-        newHead.random = head.random;
-        //map.put(head, newHead);
-        RandomListNode prev = newHead;
-        RandomListNode node = head.next;
-        while(node!=null)
-        {
-            RandomListNode newNode = node;
-            newNode.random = node.random;
-            //map.put(node, newNode);
-            prev.next = newNode;
-            prev = newNode;
-            node = node.next;
+        if (head == null) return null;
+        RandomListNode p = head;
+        while (p != null) {
+            RandomListNode node = new RandomListNode(p.label);
+            node.next = p.next;
+            p.next = node;
+            p = p.next.next;
         }
-        return newHead;
-    }
-}
-
-Note: 这个程序是做的浅拷贝 即copy的链表的random指针指向 原始链表的节点 这个地方要特别注意 oj会报如下错误
-
-Input:  {-1,-1}
-Output: Random pointer of node with label -1 points to a node from the original list.
-Expected:   {-1,-1}
-
-关于深拷贝和浅拷贝的区别：
-简单的来说就是，在有指针的情况下，浅拷贝只是增加了一个指针指向已经存在的内存，而深拷贝就是增加一个指针并且申请一个新的内存，使这个增加的指针指向这个新的内存，
-
-采用深拷贝的情况下，释放内存的时候就不会出现在浅拷贝时重复释放同一内存的错误！
-
-
-
-
-
-
-
-
-
-/**
- * Definition for singly-linked list with a random pointer.
- * class RandomListNode {
- *     int label;
- *     RandomListNode next, random;
- *     RandomListNode(int x) { this.label = x; }
- * };
- */
-public class Solution {
-    public RandomListNode copyRandomList(RandomListNode head) {
-        if(head==null)
-            return null;
-        HashMap<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
-        RandomListNode newHead = new RandomListNode(head.label);    //建立copy list的头节点
-        RandomListNode curr = newHead;
-        RandomListNode node = head.next;
-        map.put(head, newHead);     //将原始list的头节点和copy list的头节点放到map
-        while(node!=null) {
-            RandomListNode copy = new RandomListNode(node.label);   //每次copy一个节点
-            curr.next = copy;                                       //将这个节点连到上一个节点
-            map.put(node, copy);                                    //map放入两个节点
-            curr = copy;                                            //指针调到下一个节点
-            node = node.next;
+        p = head;
+        while (p != null) {
+            if (p.random != null) p.next.random = p.random.next;  // careful need to check if random is null
+            p = p.next.next;
         }
-        RandomListNode p1 = head;
-        RandomListNode p2 = newHead;
-        while(p1!=null) {                       //再扫一遍两个list 从map中找新list的random指针指向的值
-            p2.random = map.get(p1.random);
-            p1 = p1.next;
-            p2 = p2.next;
-        }
-        return newHead;
-    }
-}
-
-Note：这题是用哈希表做的深拷贝 时间O(n), 空间O(n) 有点绕要多想想
-
-
-
-
-
-
-/**
- * Definition for singly-linked list with a random pointer.
- * class RandomListNode {
- *     int label;
- *     RandomListNode next, random;
- *     RandomListNode(int x) { this.label = x; }
- * };
- */
-
-public class Solution {
-    public RandomListNode copyRandomList(RandomListNode head) {
-        if(head==null)
-            return null;
-        RandomListNode p1 = head;
-        while(p1!=null) {
-            RandomListNode newNode = new RandomListNode(p1.label);
-            newNode.next = p1.next;;
-            p1.next = newNode;
-            p1 = p1.next.next;
-        }
-        p1 = head;
-        while(p1!=null) {
-            if(p1.random!=null)
-                p1.next.random = p1.random.next;
-            p1 = p1.next.next;
-        }
-        RandomListNode newHead = head.next;
-        p1 = head;
-        RandomListNode p2 = newHead;
-        while(p1!=null) {
-            p1.next = p1.next.next;
-            if(p2.next!=null) {
-                p2.next = p2.next.next;
-                p2 = p2.next;
+        p = head; RandomListNode newHead = head.next, node = p.next;
+        while (p != null) {
+            p.next = p.next.next;       // careful whether node has next p need to reset its next pointer
+            if (node.next != null) {
+                node.next = node.next.next;
+                node = node.next;
             }
-            p1 = p1.next;
+            p = p.next;         // careful p always move because while use it for condition
         }
         return newHead;
     }
 }
-
-第二遍写的 思路有点绕 多练几遍
-
-
-
-
-
-/**
- * Definition for singly-linked list with a random pointer.
- * class RandomListNode {
- *     int label;
- *     RandomListNode next, random;
- *     RandomListNode(int x) { this.label = x; }
- * };
- */
-public class Solution {
-    public RandomListNode copyRandomList(RandomListNode head) {
-        if(head==null) return null;
-        RandomListNode tmp = head;
-        while(tmp!=null)            //复制
-        {
-            RandomListNode newNode = new RandomListNode(tmp.label);
-            newNode.next = tmp.next;    //这里如果到了队尾 newNode的next可以直接指到null
-            tmp.next = newNode;
-            tmp = tmp.next.next;
-        }
-        tmp = head;
-        while(tmp!=null)            //拷贝random指针
-        {
-            if(tmp.random!=null)    //注意要判断下random指针是否为空 否则会nullpointerexception
-                tmp.next.random = tmp.random.next;
-            tmp = tmp.next.next;
-        }
-        
-        RandomListNode newHead = head.next;
-        tmp = head;
-        while(tmp!=null)            //拆分 
-        {
-            RandomListNode newNode = tmp.next;
-            tmp.next = newNode.next;    //这里到了队尾 tmp的next就指向了null
-            if(newNode.next!=null)      //这里却需要判断newNode的next是否为null 因为有newNode.next.next
-                newNode.next = newNode.next.next;
-            tmp = tmp.next;
-        }
-        return newHead;
-    }
-}
-
-Note: 不用哈希表的解法 三步 1 在原链表每个节点后复制节点 2 拷贝random指针 3 拆分出新链表 三个while
-
 
 
 

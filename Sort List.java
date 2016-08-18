@@ -55,17 +55,12 @@ Note: mergesort(linklist/array), ;, self
 
 
 
-
-
 /**
  * Definition for singly-linked list.
- * class ListNode {
+ * public class ListNode {
  *     int val;
  *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
+ *     ListNode(int x) { val = x; }
  * }
  */
 public class Solution {
@@ -74,132 +69,49 @@ public class Solution {
     }
     
     private ListNode MergeSort(ListNode head) {
-        if(head==null || head.next==null)   //如果只有一个元素或是null值 直接返回
-            return head;
-        ListNode slow = head; ListNode fast = head; //快慢指针
-        while(fast.next!=null && fast.next.next!=null) {
+        if (head == null || head.next == null) return head;
+        ListNode slow = head, fast = head;
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
         ListNode newHead = slow.next;
-        slow.next = null;           //劈半
+        slow.next = null;
         ListNode p1 = MergeSort(head);
         ListNode p2 = MergeSort(newHead);
-        return Merge(p1, p2);
+        return merge(p1, p2);
     }
     
-    private ListNode Merge(ListNode p1, ListNode p2) {
-        if(p1==null)
-            return p2;
-        if(p2==null)
-            return p1;
-        ListNode dummy = new ListNode(0);
-        ListNode p = dummy;
-        while(p1!=null && p2!=null) {
-            if(p1.val<p2.val) {
-                p.next = p1;
-                p = p.next;
-                p1 = p1.next;
+    private ListNode merge(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        ListNode dummy = new ListNode(0), p = dummy;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                p.next = l1;
+                l1 = l1.next; p = p.next;
             }
             else {
-                p.next = p2;
-                p = p.next;
-                p2 = p2.next;
+                p.next = l2;
+                l2 = l2.next; p = p.next;
             }
         }
-        while(p1!=null) {
-            p.next = p1;
-            p1 = p1.next;
-            p = p.next;
+        while (l1 != null) {
+            p.next = l1;
+            l1 = l1.next; p = p.next;
         }
-        while(p2!=null) {
-            p.next = p2;
-            p = p.next;
-            p2 = p2.next;
+        while (l2 != null) {
+            p.next = l2;
+            l2 = l2.next; p = p.next;
         }
         return dummy.next;
     }
 }
 
+O(nlogn)
 
 
 
-
-
-
-
-
-
-
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
-public class Solution {
-    public ListNode sortList(ListNode head) {
-        return MergeSort(head);   
-    }
-    
-    private ListNode MergeSort(ListNode head) {     //快慢指针技巧
-        if(head==null || head.next==null)       //注意这里一定要先写head==null再接head.next==null ！！不然如果head指向{} 先到了head.next==null会报空指针错
-            return head;
-        ListNode slow = head;
-        ListNode fast = head;
-        while(fast.next!=null && fast.next.next!=null)  //慢指针到队中间 快指针到队尾
-        {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        ListNode p1 = head;
-        ListNode p2 = slow.next;
-        slow.next = null;       //辟半
-        p1 = MergeSort(p1);     //分别递归 最后merge
-        p2 = MergeSort(p2);
-        return Merge(p1,p2);
-    }
-    
-    private ListNode Merge(ListNode h1, ListNode h2) {      //完全套用merge two sorted list那一题
-        if(h1==null) return h2;
-        if(h2==null) return h1;
-        ListNode newHead = new ListNode(0);
-        ListNode tmp = newHead;
-        while(h1!=null & h2!=null)
-        {
-            if(h1.val<h2.val)
-            {
-                tmp.next = h1;
-                h1 = h1.next;
-                tmp = tmp.next;
-            }
-            else
-            {
-                tmp.next = h2;
-                h2 = h2.next;
-                tmp = tmp.next;
-            }
-        }
-        while(h1!=null)
-        {
-            tmp.next = h1;
-            h1 = h1.next;
-            tmp = tmp.next;
-        }
-        while(h2!=null)
-        {
-            tmp.next = h2;
-            h2 = h2.next;
-            tmp = tmp.next;
-        }
-        return newHead.next;
-    }
-}
 
 Note：mergesort 熟记！！ 其他基本sorting algorithm也要熟记quicksort, insertion sort, heapsort, bucketsort...
 

@@ -1,95 +1,3 @@
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    # @param root, a tree node
-    # @return a list of integers
-    def preorderTraversal(self, root):
-        stack = []
-        list = []
-        while root or stack:                #只要root stack不都为空 遍历就没结束
-            if root:                        #只要root还不为None 就将它压入栈 遍历 接着访问这个root左孩子
-                stack.append(root)
-                list.append(root.val)
-                root = root.left
-            else:
-                root = stack.pop()          #如果root为空 即上一节点没有左孩子 就弹出栈顶元素（上一节点） 访问其右孩子
-                root = root.right
-        return list
-
-
-
-
-
-题意：这题用递归比较简单。应该考察的是使用非递归实现二叉树的先序遍历。先序遍历的遍历顺序是：根，左子树，右子树。
-
-解题思路：如果树为下图：
-
-　　　　　　　　　　　　　　　　　　　　　　1
-
-　　　　　　　　　　　　　　　　　　　　　/     \
-
-　　　　　　　　　　　　　　　　　　　　2         3
-
-　　　　　　　　　　　　　　　　　　　/     \    /    \
-
-　　　　　　　　　　　　　　　　　　 4       5  6     7 
-
-　　　　使用一个栈。步骤为：
-
-　　　　一，先遍历节点1，并入栈，如果有左孩子，继续遍历并入栈，一直到栈为{1，2，4}。
-
-　　　　二，开始弹栈，当栈顶元素为2时，弹出2，并检测2存在右孩子5，于是遍历5并入栈，此时栈为{1，5}。
-
-　　　　三，弹出5，5没有左右孩子，继续弹栈，将1弹出后，栈为{}。
-
-　　　　四，由于1存在右孩子，则继续按照以上步骤入栈出栈。{3, 6}->{7}->{}，结束。
-
-　　　　栈的状态变化：{1}->{1,2}->{1,2,4}->{1,2}->{1}->{1,5}->{1}->{}->{3}->{3,6}->{3}->{}->{7}->{}。
-
-代码：
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    # @param root, a tree node
-    # @return a list of integers
-    def iterative_preorder(self, root, list):
-        stack = []
-        while root or stack:
-            if root:
-                list.append(root.val)
-                stack.append(root)
-                root = root.left
-            else:
-                root = stack.pop()
-                root = root.right
-        return list
-    
-    def recursive_preorder(self, root, list):
-        if root:
-            list.append(root.val)
-            self.preorder(root.left,list)
-            self.preorder(root.right,list)
-
-    def preorderTraversal(self,root):
-        list = []
-        self.iterative_preorder(root,list)
-        return list
-
-
-
-
-recursion: 时间O(n) 空间O(logn) 递归栈大小
-
 /**
  * Definition for binary tree
  * public class TreeNode {
@@ -107,19 +15,17 @@ public class Solution {
     }
     
     private void helper(TreeNode root, List<Integer> res) {
-        if(root==null)
-            return;
-        res.add(root.val);
-        helper(root.left, res);
-        helper(root.right, res);
+        if(root != null) {
+            res.add(root.val);
+            helper(root.left, res);
+            helper(root.right, res);
+        }  
     }
 }
 
 
-iteration: 时间空间跟递归一样
-
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -129,18 +35,15 @@ iteration: 时间空间跟递归一样
  */
 public class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
-        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
-        ArrayList<Integer> res = new ArrayList<Integer>();
-        while(root!=null || !stack.isEmpty())
-        {
-            if(root!=null)
-            {
-                stack.push(root);
+        List<Integer> res = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        while (root != null || !stack.isEmpty()) {
+            if (root != null) {
                 res.add(root.val);
+                stack.push(root);
                 root = root.left;
             }
-            else
-            {
+            else {
                 root = stack.pop();
                 root = root.right;
             }
@@ -148,8 +51,6 @@ public class Solution {
         return res;
     }
 }
-
-同postorderTraversal 也有Morris遍历 有时间再看吧
 
 
 

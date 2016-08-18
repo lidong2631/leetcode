@@ -1,45 +1,3 @@
-<<<<<<< HEAD
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
-class Solution:
-    # @param head, a ListNode
-    # @return nothing
-    def reorderList(self, head):
-        if head == None or head.next == None or head.next.next == None:
-            return head
-        
-        slow = fast = head              #第一步快慢指针 分割链表
-        while fast and fast.next:
-            slow = slow.next
-            fast = fast.next.next
-        head1 = head
-        head2 = slow.next
-        slow.next = None
-        
-        newNode = ListNode(0); newNode.next = head2     #第二步 reverse linked list 
-        p = head2.next; head2.next = None
-        while p:
-            tmp = p; p = p.next     #这个地方一定要先p = p.next 否则tmp.next也会改掉p.next
-            tmp.next = newNode.next     #将后面的节点一个一个插入到前面来
-            newNode.next = tmp
-        head2 = newNode.next    
-        
-        p1 = head1; p2 = head2              #第三步 merge two linked list
-        while p2:
-            tmp1 = p1.next; tmp2 = p2.next
-            p1.next = p2; p2.next = tmp1
-            p1 = tmp1; p2 = tmp2
-
-Note: use ';' to put several lines in one line. 熟记链表操作的套路： 快慢分割链表 逆序链表 merge linked list
-
-
-
-
-
 解题思路：
 
 1，先将链表截断为两个相等长度的链表，如果链表长度为奇数，则第一条链表长度多1。如原链表为L={1,2,3,4,5}，那么拆分结果为L1={1,2,3}；L2={4,5}。
@@ -91,128 +49,38 @@ class Solution:
 
 
 
-
 /**
  * Definition for singly-linked list.
- * class ListNode {
+ * public class ListNode {
  *     int val;
  *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
+ *     ListNode(int x) { val = x; }
  * }
  */
 public class Solution {
     public void reorderList(ListNode head) {
-        if(head==null || head.next==null)
-            return;
+        if (head == null || head.next == null || head.next.next == null) return;
         ListNode slow = head, fast = head;
-        while(fast.next!=null && fast.next.next!=null) {
+        while (fast.next != null && fast.next.next != null) {       // careful here
             slow = slow.next;
             fast = fast.next.next;
         }
-        ListNode prev = slow.next;
-        slow.next = null;
-        
-        ListNode curr = prev.next;
+        ListNode prev = slow.next, curr = slow.next.next;
         prev.next = null;
-        while(curr!=null) {
+        slow.next = null; slow = head;
+        while (curr != null) {          // reverse linked list
             ListNode next = curr.next;
             curr.next = prev;
             prev = curr;
             curr = next;
         }
-        
-        ListNode h1 = head;
-        ListNode h2 = prev;
-        while(h2!=null) {
-            ListNode tmp1 = h1.next;
-            ListNode tmp2 = h2.next;
-            h1.next = h2;
-            h2.next = tmp1;
-            h1 = tmp1;
-            h2 = tmp2;
+        while (slow != null && prev != null) {
+            ListNode next1 = slow.next, next2 = prev.next;
+            slow.next = prev; prev.next = next1;
+            slow = next1; prev = next2;
         }
     }
 }
-
-O(n) O(1)
-
-
-
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
-public class Solution {
-    public void reorderList(ListNode head) {
-        if(head==null || head.next==null)
-            return;
-        
-        ListNode slow = head;
-        ListNode fast = head;
-        while(fast.next!=null && fast.next.next!=null)
-        {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        ListNode h1 = head;
-        ListNode h2 = slow.next;
-        slow.next = null;
-        
-        ListNode newNode = new ListNode(0);
-        newNode.next = h2;
-        ListNode p = h2.next;
-        h2.next = null;
-        while(p!=null)
-        {
-            ListNode tmp = p;
-            p = p.next;
-            tmp.next = newNode.next;
-            newNode.next = tmp;
-        }
-        h2 = newNode.next;
-        
-        while(h2!=null)
-        {
-            ListNode tmp1 = h1.next;
-            ListNode tmp2 = h2.next;
-            h1.next = h2;
-            h2.next = tmp1;
-            h1 = tmp1;
-            h2 = tmp2;
-        }
-    }
-}
-
-Note: 三步 1 快慢指针分半 2 reverse后半段 3 按要求merge 两个linkedlist
-
-
-
-
-reverse linkedlist的递归实现 要熟记
-
-public ListNode recursive_reverse(ListNode head) {
-    if(head==null || head.next==null) return head;
-    return recursive_reverse(head, head.next);
-}
-
-private ListNode recursive_reverse(ListNode curr, ListNode currNext) {
-    if(currNext==null) return curr;
-    ListNode newHead = recursive_reverse(curr.next, currNext.next);
-    currNext.next = curr;
-    curr.next = null;
-    return newHead;
-}
-
 
 
 

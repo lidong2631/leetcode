@@ -1,36 +1,3 @@
-class Solution:
-    def check(self, s, dict):               #check函数 判断s是否可以被dict中单词表示出来 同上一题word break
-        dp = [False for i in range(len(s)+1)]
-        dp[0] = True
-        for i in range(1, len(s)+1):
-            for k in range(i):
-                if dp[k] and s[k:i] in dict:
-                    dp[i] = True
-        return dp[len(s)]
-    
-    def dfs(self, s, dict, stringList):
-        if self.check(s, dict):         #如果check可以得到结果才继续 否则直接跳过这个dfs
-            if len(s) == 0:             #如果最终s的长度为0 说明我们得到一个解 将它append到res中 注意是stringList[1:] 因为第一个字符是空格要跳过
-                Solution.res.append(stringList[1:])
-            for i in range(1, len(s)+1):        #这里递归dfs 求所有结果
-                if s[:i] in dict:
-                    self.dfs(s[i:], dict, stringList + ' ' + s[:i])     #要注意加空格
-    
-    # @param s, a string
-    # @param dict, a set of string
-    # @return a list of strings
-    def wordBreak(self, s, dict):
-        Solution.res = []
-        self.dfs(s, dict, '')
-        return Solution.res
-
-Note：此解法对应于code ganker的brute force解法
-
-
-
-
-
-
 原题地址：https://oj.leetcode.com/problems/word-break-ii/
 
 题意：
@@ -81,93 +48,28 @@ class Solution:
 
 
 
-
-
 public class Solution {
     public List<String> wordBreak(String s, Set<String> wordDict) {
-        List<String> res = new ArrayList<String>();
-        if(s==null || s.length()==0)
-            return res;
+        List<String> res = new ArrayList<>();
         helper(s, wordDict, 0, "", res);
         return res;
     }
     
-    private void helper(String s, Set<String> wordDict, int start, String item, List<String> res) {
-        if(start>=s.length()) {
-            res.add(item);
+    private void helper(String s, Set<String> wordDict, int index, String str, List<String> res) {
+        if (index == s.length()) {
+            res.add(str);
             return;
         }
-        StringBuilder tmp = new StringBuilder();
-        for(int i=start; i<s.length(); i++) {
-            tmp.append(s.charAt(i));
-            if(wordDict.contains(tmp.toString())) {
-                String newItem = item.length()>0?item+" "+tmp.toString():tmp.toString();
-                helper(s, wordDict, i+1, newItem, res);
+        StringBuffer sb = new StringBuffer();
+        for (int i = index; i < s.length(); i++) {
+            sb.append(s.charAt(i));
+            if (wordDict.contains(sb.toString())) {
+                String tmp = index == 0 ? sb.toString() : str + " " + sb.toString();
+                helper(s, wordDict, i + 1, tmp, res);
             }
         }
     }
 }
-
-用NP套路的递归解法即可 看code ganker评论里面有简练版的dp解
-
-
-
-ppublic class Solution {
-    public List<String> wordBreak(String s, Set<String> dict) {
-        if(s==null || s.length()==0) return null;
-        ArrayList<String> res = new ArrayList<String>();
-        helper(s, dict, 0, "", res);
-        return res;
-    }
-    
-    private void helper(String s, Set<String> dict, int start, String tmpRes, ArrayList<String> res) {
-        if(wordBreakI(s, dict))
-        {
-            if(start>=s.length())
-            {
-                res.add(tmpRes);
-                return;
-            }
-            StringBuilder sb = new StringBuilder();
-            for(int i=start; i<s.length(); i++)     //注意是i从start开始循环
-            {
-                sb.append(s.charAt(i));     //每次循环sb都会加上新的一个字符
-                if(dict.contains(sb.toString()))
-                {
-                    String newtmpRes = start==0 ? sb.toString() : tmpRes+ " " + sb.toString();  //判断是不是第一个加字符串
-                    helper(s, dict, i+1, newtmpRes, res);   //i+1
-                }
-            }
-        }
-    }
-    
-    public boolean wordBreakI(String s, Set<String> dict) {
-        if(s==null || s.length()==0) return false;
-        int strLen = s.length();
-        boolean[] dp = new boolean[strLen+1];
-        dp[0] = true;
-        for(int i=1; i<strLen+1; i++)
-        {
-            for(int j=0; j<=i; j++)
-            {
-                if(dp[j] && dict.contains(s.substring(j, i)))
-                {
-                    dp[i] = true;
-                    break;
-                }
-            }
-        }
-        return dp[strLen];
-    }
-}
-
-Note: 严重注意 java substring() IndexOutOfBoundsException - if beginIndex or endIndex are negative, if endIndex is greater than length(), or if beginIndex is greater than startIndex
-
-所以在110行不可以用s.substring(i)当i大于s.length()时会报exception 而递归的结束条件s.length()==0永远也不会执行到 这里跟python不一样 要注意
-
-NP问题套路
-
-
 
 
 
