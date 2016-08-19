@@ -1,17 +1,18 @@
 public class Solution {
     public int rob(int[] num) {
-        if(num==null || num.length==0)
-            return 0;
-        int[] maxRob = new int[2];
-        maxRob[1] = num[0];
-        for(int i=1; i<num.length; i++) {
-            int tmp = maxRob[1];
-            maxRob[1] = Math.max(maxRob[1], maxRob[0]+num[i]);
-            maxRob[0] = tmp;
+        if (num == null || num.length == 0) return 0;
+        if (num.length == 1) return num[0];
+        int prevRob = 0, currRob = num[0];
+        for (int i = 1; i < num.length; i++) {
+            int tmp = currRob;
+            currRob = Math.max(currRob, prevRob + num[i]);
+            prevRob = tmp;
         }
-        return maxRob[1];
+        return currRob;
     }
 }
+
+O(n) O(1)
 
 You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, 
 
@@ -25,11 +26,3 @@ you can rob tonight without alerting the police.
 
 
 2 - 10 - 5 - 3 - 8
-
-动态规划 知道某一点的最大利润maxRob[1] 求下一点 
-
-递推式为maxRob[1] = Math.max(maxRob[1], maxRob[0]+num[i]) 即取上一次
-
-rob的最大利润和上上次rob的最大利润+当前的钱数的最大值
-
-时间O(n) 空间O(1)

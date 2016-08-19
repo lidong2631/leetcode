@@ -1,5 +1,23 @@
 public class Solution {
     public int majorityElement(int[] num) {
+        int candidate = 0, count = 0;
+        for (Integer n : num) {
+            if (count == 0) {
+                candidate = n;
+                count = 1;
+            }
+            else if (n == candidate) count++;
+            else count--;
+        }
+        return candidate;
+    }
+}
+
+
+
+
+public class Solution {
+    public int majorityElement(int[] num) {
         int counter = 0, curr = 0;
         for(int i=0; i<num.length; i++) {
             if(counter==0) {
@@ -23,18 +41,7 @@ public class Solution {
     }
 }
 
-Moore voting algorithm 非常好的解法 时间O(n) 空间O(1)
-
-1. Get an element occurring most of the time in the array. This phase will make sure that if there is a majority element 
-then it will return that only.
-
-2. Check if the element obtained from above step is majority element.
-
-The algorithm for first phase that works in O(n) is known as Moore’s Voting Algorithm. Basic idea of the algorithm is if 
-
-we cancel out each occurrence of an element e with all the other elements that are different from e then e will exist till 
-
-end if it is a majority element.
+Moore voting algorithm O(n) O(1)
 
 
 

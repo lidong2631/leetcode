@@ -4,39 +4,35 @@
  *     int val;
  *     TreeNode left;
  *     TreeNode right;
- *     TreeNode(int x) { val = x; 
+ *     TreeNode(int x) { val = x; }
  * }
  */
 public class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> res = new ArrayList<Integer>();
-        if(root==null)
-            return res;
-        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.offer(root);
-        int currLevel = 1;
-        int nextLevel = 0;
-        while(!queue.isEmpty()) {
-            currLevel--;
-            TreeNode node = queue.poll();
-            if(node.left!=null) {
-                nextLevel++;
-                queue.offer(node.left);
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int last = 1, next = 0;
+        while (!queue.isEmpty()) {
+            TreeNode curr= queue.poll();
+            last--;
+            if (curr.left != null) {
+                queue.add(curr.left);
+                next++;
             }
-            if(node.right!=null) {
-                nextLevel++;
-                queue.offer(node.right);
+            if (curr.right != null) {
+                queue.add(curr.right);
+                next++;
             }
-            if(currLevel==0) {
-                currLevel = nextLevel;
-                nextLevel = 0;
-                res.add(node.val);
+            if (last == 0) {
+                last = next;
+                next = 0;
+                res.add(curr.val);
             }
         }
         return res;
     }
 }
-
-树的层序遍历 跟Binary Tree Level Order Traversal基本一样 唯一不同是当currLevel为0时要将结果加入res 即只保留最右侧的节点
 
 时间O(n) 空间O(n)

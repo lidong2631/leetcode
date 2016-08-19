@@ -1,14 +1,14 @@
 public class Solution {
     public int titleToNumber(String s) {
-        int count = 0;
-        int res = 0;
-        for(int i=s.length()-1; i>=0; i--) {
-            res+=(s.charAt(i)-'A'+1)*Math.pow(26, count++);
+        int res = 0, digits = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            res += Math.pow(26, digits) * (s.charAt(i) - 'A' + 1); 	// careful cannot use caret "^"
+            digits++;
         }
         return res;
     }
 }
 
-进制转换问题 跟Excel Sheet Column Title相反　这里特别注意 java中没有^操作符 要进行乘方运算要用Math.pow()函数
+In java the caret "^" does not represent exponential operater it is XOR. Use Math.pow to calculate power
 
 时间O(n) 空间O(1)

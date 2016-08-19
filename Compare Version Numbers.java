@@ -1,5 +1,26 @@
 public class Solution {
     public int compareVersion(String version1, String version2) {
+        for (int i = 0, j = 0; i < version1.length() || j < version2.length(); i++, j++) {
+            int ver1 = 0;
+            while (i < version1.length() && version1.charAt(i) != '.') ver1 = 10 * ver1 + version1.charAt(i++) - '0';
+            
+            int ver2 = 0;
+            while (j < version2.length() && version2.charAt(j) != '.') ver2 = 10 * ver2 + version2.charAt(j++) - '0';
+            
+            if (ver1 > ver2) return 1;
+            else if (ver1 < ver2) return -1;
+        }
+        return 0;
+    }
+}
+
+O(n)
+
+
+
+
+public class Solution {
+    public int compareVersion(String version1, String version2) {
         int[] i1 = new int[1];
         int[] i2 = new int[1];
         for(i1[0]=0, i2[0]=0; i1[0]<version1.length() || i2[0]<version2.length(); i1[0]++, i2[0]++) {
@@ -52,36 +73,6 @@ cpcs基本版 http://www.meetqun.com/thread-3331-1-1.html
 我是自己循环比较的，因为没有首0，长度长的肯定大，长度相同的话，再逐个比较。 
 
 所以时间复杂度就是最差把两个串分别扫两遍的复杂度（第一遍确定每个begin,length，第二遍是比较），所以是O(n)的
-
-
-
-
-
-
-
-public class Solution {
-    public int compareVersion(String version1, String version2) {
-        for(int i1=0, i2=0; i1<version1.length() || i2<version2.length(); i1++, i2++) {
-            int num1 = 0;
-            while(i1<version1.length() && version1.charAt(i1)!='.') {   //如果i1已经超过version1长度 则num1等于0
-                num1 = 10*num1 + (version1.charAt(i1++)-'0');   //这里很巧 可以应对起始0的情况
-            }
-            
-            int num2 = 0;
-            while(i2<version2.length() && version2.charAt(i2)!='.') {
-                num2 = 10*num2 + (version2.charAt(i2++)-'0');
-            }
-            
-            if(num1<num2)   //每次均比较ascii算出来的值
-                return -1;
-            else if(num1>num2)
-                return 1;
-        }
-        return 0;
-    }
-}
-
-利用字符的ascii值计算每节字符串的数值 思路很巧 代码简洁 时间O(m+n) 空间O(1)
 
 
 

@@ -2,7 +2,7 @@ From cleanCode
 
 public class TwoSum {
 
-    private Map<Integer, Integer> table = new HashMap<Integer, Integer>();
+    private Map<Integer, Integer> table = new HashMap<>();
     
 	public void add(int number) { 
 	    int count = table.containsKey(number)? table.get(number) : 0;
@@ -10,14 +10,14 @@ public class TwoSum {
 	}
 
 	public boolean find(int value) {
-	    for(Map.Entry<Integer, Integer> entry : table.entrySet()) {
+	    for (Map.Entry<Integer, Integer> entry : table.entrySet()) {
 	        int num = entry.getKey();
 	        int y = value - num;
-	        if(y==num) {
-	            if(entry.getValue()>=2)
+	        if (y == num) {
+	            if (entry.getValue()>=2)
 	                return true;
 	        }
-	        else if(table.containsKey(y))
+	        else if (table.containsKey(y))
 	            return true;
 	    }
 	    return false;

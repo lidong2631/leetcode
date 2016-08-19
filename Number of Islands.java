@@ -1,12 +1,13 @@
 public class Solution {
+    private int[][] move = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    
     public int numIslands(char[][] grid) {
-        if(grid==null || grid.length==0 || grid[0].length==0)
-            return 0;
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
         int count = 0;
-        for(int i=0; i<grid.length; i++) {
-            for(int j=0; j<grid[0].length; j++) {
-                if(isValid(grid, i, j, visited)) {
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (isValid(grid, i, j, visited)) {
                     dfs(grid, i, j, visited);
                     count++;
                 }
@@ -16,19 +17,16 @@ public class Solution {
     }
     
     private void dfs(char[][] grid, int i, int j, boolean[][] visited) {
-        int[] rowNum = {-1, 0, 0, 1};
-        int[] colNum = {0, 1, -1, 0};
-        
         visited[i][j] = true;
-        for(int k=0; k<4; k++) {
-            if(isValid(grid, i+rowNum[k], j+colNum[k], visited))
-                dfs(grid, i+rowNum[k], j+colNum[k], visited);
+        for (int k = 0; k < 4; k++) {
+            if (isValid(grid, i+move[k][0], j+move[k][1], visited)) {
+                dfs(grid, i+move[k][0], j+move[k][1], visited);
+            }
         }
     }
     
     private boolean isValid(char[][] grid, int i, int j, boolean[][] visited) {
-        if(i>=0 && i<grid.length && j>=0 && j<grid[0].length && grid[i][j]=='1' && !visited[i][j])
-            return true;
+        if (i >= 0 && i < grid.length && j >= 0 && j < grid[0].length && grid[i][j] == '1' && !visited[i][j]) return true;
         return false;
     }
 }

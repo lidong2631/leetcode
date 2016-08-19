@@ -1,4 +1,17 @@
 public class Solution {
+    public int reverseBits(int n) {
+        int res = 0, i = 0;
+        while (i < 32) {
+            res += ((n >> i) & 1) << (31 - i);  // careful cannot write (n & (1 << i))
+            i++;
+        }
+        return res;
+    }
+}
+
+
+
+public class Solution {
     // you need treat n as an unsigned value
     public int reverseBits(int n) {
         int i=0; int res = 0;
