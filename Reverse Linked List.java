@@ -1,12 +1,3 @@
-Iterative
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -17,11 +8,10 @@ Iterative
  */
 public class Solution {
     public ListNode reverseList(ListNode head) {
-        if(head==null || head.next==null)
-            return head;
-        ListNode prev = head, curr = head.next;
+        if (head == null || head.next == null) return head;
+        ListNode curr = head.next, prev = head;
         head.next = null;
-        while(curr!=null) {
+        while (curr != null) {
             ListNode next = curr.next;
             curr.next = prev;
             prev = curr;
