@@ -52,7 +52,7 @@ class Solution:
 
 
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -67,12 +67,13 @@ public class Solution {
         return helper(root.left, root.right);
     }
     
-    private boolean helper(TreeNode left, TreeNode right)
-    {
+    private boolean helper(TreeNode left, TreeNode right) {
         if(left==null && right==null)
             return true;
-        else if(left!=null && right!=null && left.val==right.val)
-            return helper(left.left, right.right)&&helper(left.right, right.left);
+        if (left == null || right == null) 
+            return false;
+        if(left.val==right.val)
+            return helper(left.left, right.right) && helper(left.right, right.left);
         return false;
     }
 }

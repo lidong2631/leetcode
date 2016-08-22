@@ -73,26 +73,50 @@ Binary Tree Upside Down
 Maximum Gap
 
 
+if (left == null && right == null) return true;
+if (left == null || right == null) return false;
+if (left.val == right.val && helper(...)) return true;	
+return false;
+Same Tree
+Symmetric Tree
+
+
+Binary Tree Level Order Traversal
+Binary Tree Zigzag Level Order Traversal
+Binary Tree Level Order Traversal II
+
+
+Converted Sorted Array to Binary Search Tree
+Converted Sorted List to Binary Search Tree
+
+Maximum Depth of Binary Tree
+Minimum Depth of Binary Tree
+
 if (root == null) ...
-if (root == null && root.right == null && ...) ...
+if (root.left == null && root.right == null && sum == root.val OR sum == 0) ...
 Path Sum
 Path Sum II
 Sum Root to Leaf Numbers
+
 
 one dimension Array/List to store information, second for loop from last to first
 Pascal Triangle II
 Triangle
 
+
 Binary Tree Maximum Path Sum
 Balanced Binary Tree
+
 
 for (int i = 1; i < s.length(); i++) 
 	for (int j = 0; j <= i; j++)
 Palindrome Partitioning II
 Word Break
 
+
 Palindrome Partitioning 	(helper(s, getDict(s), 0, new ArrayList<String>(), res))
 Word Break II 				(helper(s, wordDict, 0, "", res);)
+
 
 (1) fast != null && fast.next != null VS (2) fast.next != null && fast.next.next != null
 if you need to separate list into two use (2) if you need to find cycle use (1)
@@ -100,6 +124,7 @@ if you need to separate list into two use (2) if you need to find cycle use (1)
 (1) Linked List Cycle II
 (2) Reorder List  (use reverse linkedlist)
 (2) Sort List 	(use merge 2 sorted list)
+
 
 Reverse Words in a String (same as Length of Last Word)
 
