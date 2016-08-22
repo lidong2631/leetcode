@@ -42,28 +42,19 @@ O(m+n) O(1)
 
 public class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        if(matrix==null || matrix.length==0 || matrix[0].length==0)
-            return false;
-        int left = 0, right = matrix.length-1;
-        while(left<=right) {
-            int mid = (left+right)/2;
-            if(matrix[mid][0]==target)
-                return true;
-            else if(matrix[mid][0]>target)
-                right = mid - 1;
-            else
-                left = mid + 1;
+        int left = 0, right = matrix.length - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (matrix[mid][0] == target) return true;
+            else if (matrix[mid][0] < target) left = mid + 1;
+            else right = mid - 1;
         }
-        if(right<0)
-            return false;
+        if (right < 0) return false;
         int row = right, col = 1;
-        while(row>=0 && col<matrix[0].length) {
-            if(matrix[row][col]==target)
-                return true;
-            else if(matrix[row][col]>target)
-                row--;
-            else
-                col++;
+        while (row >= 0 && col < matrix[0].length) {
+            if (matrix[row][col] == target) return true;
+            else if (matrix[row][col] < target) col++;
+            else row--;
         }
         return false;
     }

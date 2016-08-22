@@ -1,21 +1,12 @@
 public class Solution {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
-        Set<Integer> set = new HashSet<Integer>();
-        int i=0, j=0;
-        while(j-i<=k && j<nums.length) {    //先前进k步
-            if(set.contains(nums[j]))
-                return true;
-            else
-                set.add(nums[j]);
-            j++;
-        }
-        while(j<nums.length) {      //然后以长度为k的区间移动
-            set.remove(nums[i++]);
-            if(set.contains(nums[j]))
-                return true;
-            else
-                set.add(nums[j]);
-            j++;
+        int i = 0, j = 0;
+        Set<Integer> set = new HashSet<>();
+        while (i < nums.length) {
+            if (set.contains(nums[i])) return true;
+            else set.add(nums[i]);
+            i++;
+            if (i - j > k) set.remove(nums[j++]);
         }
         return false;
     }

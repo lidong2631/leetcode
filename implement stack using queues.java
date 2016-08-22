@@ -1,29 +1,33 @@
 class MyStack {
-    Queue<Integer> queue = new LinkedList<Integer>();
+    private Queue<Integer> queue;
+    
+    public MyStack() {
+        queue = new LinkedList<>();
+    }
     
     // Push element x onto stack.
     public void push(int x) {
-        queue.add(x);    
+        queue.add(x);
     }
 
     // Removes the element on top of the stack.
     public void pop() {
-        int size = queue.size();
-        for(int i=1; i<size; i++) {
-            queue.add(queue.remove());
+        if (empty()) return;
+        for (int i = 0; i < queue.size() - 1; i++) {
+            queue.add(queue.poll());
         }
-        queue.remove();
+        queue.poll();
     }
 
     // Get the top element.
     public int top() {
-        int size = queue.size();
-        for(int i=1; i<size; i++) {
-            queue.add(queue.remove());
+        if (empty()) return -1;
+        for (int i = 0; i < queue.size() - 1; i++) {
+            queue.add(queue.poll());
         }
-        int tmp = queue.remove();   //不能用peek() 用peek会改变原始的顺序
-        queue.add(tmp);
-        return tmp;
+        int top = queue.poll();
+        queue.add(top);
+        return top;
     }
 
     // Return whether the stack is empty.

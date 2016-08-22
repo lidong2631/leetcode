@@ -62,18 +62,15 @@ http://www.geeksforgeeks.org/kth-smallestlargest-element-unsorted-array/
 
 public class Solution {
     public int findKthLargest(int[] nums, int k) {
-        PriorityQueue<Integer> heap = new PriorityQueue<Integer>();
+        PriorityQueue<Integer> heap = new PriorityQueue<>(k);
         int i = 0;
-        while(i<k) {
+        for (; i < k; i++)
             heap.offer(nums[i]);
-            i++;
-        }
-        while(i<nums.length) {
-            if(nums[i]>heap.peek()) {
+        for (; i < nums.length; i++) {
+            if (nums[i] > heap.peek()) {
                 heap.poll();
                 heap.offer(nums[i]);
             }
-            i++;
         }
         return heap.peek();
     }

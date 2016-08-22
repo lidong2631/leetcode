@@ -102,26 +102,22 @@ http://www.geeksforgeeks.org/kth-largest-element-in-bst-when-modification-to-bst
  */
 public class Solution {
     public int kthSmallest(TreeNode root, int k) {
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        while(root!=null) {
-            stack.push(root);
-            root = root.left;
-        }
-        while(k!=0) {
-            TreeNode curr = stack.pop();
-            k--;
-            if(k==0)
-                return curr.val;
-            curr = curr.right;
-            while(curr!=null) {
-                stack.push(curr);
-                curr = curr.left;
+        Stack<TreeNode> stack = new Stack<>();
+        while (root != null || !stack.isEmpty()) {
+            if (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            else {
+                root = stack.pop();
+                k--;
+                if (k == 0) return root.val;
+                root = root.right;
             }
         }
         return -1;
     }
 }
-利用中序遍历 树的中序遍历迭代法 利用stack
 
 O(n) O(logn)
 

@@ -1,16 +1,14 @@
 public class Solution {
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
-        if(nums==null || nums.length==0 || k<=0)    //判断k是不是合法
-            return false;
-        TreeSet<Integer> tree = new TreeSet<Integer>();
-        for(int i=0; i<nums.length; i++) {
-            Integer rightSub = tree.floor(nums[i]+t); //Returns the greatest element in this set less than or equal to the given element
-            Integer leftSub = tree.ceiling(nums[i]-t); //Returns the least element in this set greater than or equal to the given element
-            if((rightSub!=null && rightSub>=nums[i]) || (leftSub!=null && leftSub<=nums[i]))
-                return true;
-            tree.add(nums[i]);
-            if(i-k>=0)          //注意这里是等于
-                tree.remove(nums[i-k]);
+        TreeSet<Integer> treeSet = new TreeSet<>();
+        int i = 0, j = 0;
+        while (i < nums.length) {
+            Integer rightSub = treeSet.floor(nums[i] + t);
+            Integer leftSub = treeSet.ceiling(nums[i] - t);
+            if ((leftSub != null && leftSub <= nums[i]) || (rightSub != null && rightSub >= nums[i])) return true;
+            treeSet.add(nums[i]);
+            i++;
+            if (i - j > k) treeSet.remove(nums[j++]);
         }
         return false;
     }

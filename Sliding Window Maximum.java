@@ -3,25 +3,16 @@ https://leetcode.com/discuss/46578/java-o-n-solution-using-deque-with-explanatio
 
 public class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
-        if(nums==null || nums.length==0 || k==0)
-            return new int[0];
-        PriorityQueue<Integer> heap = new PriorityQueue<Integer>(k, new Comparator<Integer>() {
-            public int compare(Integer i1, Integer i2) {
-                return i2-i1;
-            }    
-        });
+        if (nums == null || nums.length == 0) return new int[0];    // careful here for special case
+        PriorityQueue<Integer> heap = new PriorityQueue<>(Collections.reverseOrder());
         int i = 0;
-        int[] res = new int[nums.length-k+1];
-        while(i<k) {
-            heap.offer(nums[i]);
-            i++;
-        }
-        int index = 0;
-        res[0] = heap.peek();
-        while(i<nums.length) {
+        while (i < k) heap.offer(nums[i++]);
+        int[] res = new int[nums.length - k + 1];   // careful it is nums.length - k + 1
+        res[0] = heap.peek();           // careful here need to set res[0] first
+        while (i < nums.length) {
             heap.remove(nums[i-k]);
             heap.offer(nums[i++]);
-            res[++index] = heap.peek();
+            res[i-k] = heap.peek();
         }
         return res;
     }

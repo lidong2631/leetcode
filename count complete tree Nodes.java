@@ -9,45 +9,44 @@
  */
 public class Solution {
     public int countNodes(TreeNode root) {
-        if(root==null)
-            return 0;
-        int total = 0;
-        while(root!=null) {
-            int llh = leftDepth(root.left);
-            int lrh = rightDepth(root.left);
-            int rrh = rightDepth(root.right);
-            if(llh==rrh) {                      // complete tree
-                total += (1<<(llh+1))-1;
-                break;
+        if (root == null) return 0;
+        int count = 0;
+        while (root != null) {
+            int llh = getLeftHeight(root.left);
+            int lrh = getRightHeight(root.left);
+            int rrh = getRightHeight(root.right);
+            if (llh == rrh) {
+                count += (1 << (llh + 1)) - 1;
+                return count;
             }
-            else if(llh>lrh) {                  // count right subtree and go to left subtree
-                total += 1<<rrh;
+            else if (llh > lrh) {
+                count += 1 << rrh;
                 root = root.left;
             }
-            else {                              // left subtree is complete. count them and go to right subtree
-                total += 1<<llh;
+            else {
+                count += 1 << lrh;
                 root = root.right;
             }
         }
-        return total;
+        return count;
     }
     
-    private int leftDepth(TreeNode root) {
-        int level = 0;
-        while(root!=null) {
-            level++;
+    private int getLeftHeight(TreeNode root) {
+        int height = 0;
+        while (root != null) {
             root = root.left;
+            height++;
         }
-        return level;
+        return height;
     }
     
-    private int rightDepth(TreeNode root) {
-        int level = 0;
-        while(root!=null) {
-            level++;
+    private int getRightHeight(TreeNode root) {
+        int height = 0;
+        while (root != null) {
             root = root.right;
+            height++;
         }
-        return level;
+        return height;
     }
 }
 

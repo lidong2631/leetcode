@@ -8,30 +8,33 @@
  */
 public class Solution {
     public boolean isPalindrome(ListNode head) {
-        if(head==null || head.next==null)
-            return true;
+        if (head == null || head.next == null) return true;
         int len = 0;
-        ListNode curr = head;
-        while(curr!=null) {
-            curr = curr.next;
+        ListNode p = head;
+        while (p != null) {
             len++;
+            p = p.next;
         }
-        curr = head.next;
-        ListNode prev = head;
-        head.next = null;
-        for(int i=0; i<len/2-1; i++) {
-            ListNode tmp = curr.next;
+        p = head;
+        for (int i = 0; i < len / 2 - 1; i++) p = p.next;
+        ListNode prev = p.next;
+        if (len % 2 == 0) p.next = null;
+        else {
+            prev = prev.next;
+            p.next.next = null;
+        }
+        ListNode curr = prev.next;
+        prev.next = null;
+        while (curr != null) {
+            ListNode next = curr.next;
             curr.next = prev;
             prev = curr;
-            curr = tmp;
+            curr = next;
         }
-        if(len%2==1)
-            curr = curr.next;
-        while(curr!=null) {
-            if(prev.val!=curr.val)
-                return false;
-            prev = prev.next;
-            curr = curr.next;
+        p = head;
+        while (prev != null && p != null) {
+            if (prev.val != p.val) return false;
+            prev = prev.next; p = p.next;
         }
         return true;
     }

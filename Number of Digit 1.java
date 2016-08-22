@@ -1,26 +1,23 @@
 public class Solution {
     public int countDigitOne(int n) {
-        if(n<=0)
-            return 0;
-        long factor = 1;    //注意这里是long类型 不然会overflow
-        long highNum = 0;
-        long lowNum = 0;
-        int currNum = 0, count = 0;
-        while(n/factor!=0) {
-            lowNum = n%factor;
-            currNum = (int)(n/factor)%10;
-            highNum = n/(factor*10);
-            switch(currNum) {
+        if (n <= 0) return 0;           // careful need to consider negative number
+        long factor = 1, high = 0, low = 0;     // careful long need to be used
+        int curr = 0, count = 0;
+        while (n / factor != 0) {
+            low = n % factor;
+            curr = (int)(n / factor % 10);  // careful need to change to int
+            high = n / (factor * 10);
+            switch (curr) {
                 case 0:
-                    count+=highNum*factor;
+                    count += high * factor;
                     break;
                 case 1:
-                    count+=highNum*factor+lowNum+1;
+                    count += high * factor + low + 1;
                     break;
                 default:
-                    count+=(highNum+1)*factor;
+                    count += (high + 1) * factor;
             }
-            factor*=10;
+            factor *= 10;
         }
         return count;
     }
@@ -45,7 +42,7 @@ public class Solution {
 
 3)、如果是32445，
 对于它的高位来说，是32。一共有00100~00199，01100~01199，02100~02199，.....，31100~31199，一共是32*100个数。
-对于它的地位来说，是45。一共有100~145，46个数。
+对于它的地位来说，是45。一共有100~199，100个数。
 个数加起来是（highNum+1）*100
 
 所以总结起来就是

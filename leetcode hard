@@ -107,6 +107,21 @@ Reverse Words in a String (same as Length of Last Word)
 
 
 
+201 - 300
+The Skyline Problem
+Basic Calculator
+Basic Calculator II
+
+while (i < nums.length) {
+		if (set.contains(nums[i])) return true;
+		else set.add(nums[i]);
+		i++;
+		if (i - j > k) set.remove(nums[j++]);
+}
+Contains Duplicate II
+Contains Duplicate III
+
+
 
 
 
