@@ -26,6 +26,12 @@ connect two list (careful need to set next to null when connect)
 Partition List
 
 two pointers separated by a distance (careful if distance is larger than linkedlist length need to mod)
+to calculate LinkedList length use
+int len = 1;
+while (p.next != null) {
+	len++;
+	p = p.next;
+}
 Remove Nth Nodes From End of List
 Rotate List
 

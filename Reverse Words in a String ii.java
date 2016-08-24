@@ -2,12 +2,12 @@ public class Solution {
     public void reverseWords(char[] s) {
         if (s == null || s.length == 0) return;
         reverse(s, 0, s.length-1);
-        int j = s.length - 1;
-        for (int i = s.length - 1; i >= 0; i--) {
-            if (i == 0 || (i > 0 && s[i-1] == ' ')) {
-                reverse(s, i, j);
-                i -= 1; j = i - 1;          // careful
-            }
+        int j = s.length - 1, i = s.length - 1;
+        while (i >= 0) {
+            while (i > 0 && s[i-1] != ' ') i--;
+            reverse(s, i, j);
+            j = i - 2;
+            i -= 2;
         }
     }
     

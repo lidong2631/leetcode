@@ -13,3 +13,9 @@ public class Solution {
         return num[left];
     }
 }
+
+be careful about left < right cannot write left <= right
+Runtime Error Message:
+Line 13: java.lang.ArrayIndexOutOfBoundsException: 1
+Last executed input:
+[1]

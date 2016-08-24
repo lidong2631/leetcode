@@ -1,30 +1,29 @@
 public class Solution {
     public String fractionToDecimal(int numerator, int denominator) {
-        if (numerator == 0) return "0";
         if (denominator == 0) return "";
+        if (numerator == 0) return "0";
         
         int sign = 1;
         if ((numerator > 0 && denominator < 0) || (numerator < 0 && denominator > 0)) sign = -1;
         
-        long num = Math.abs((long)numerator); long den = Math.abs((long)denominator);
-        String integral = (sign == 1) ? String.valueOf(num / den) : "-" + String.valueOf(num / den);
+        long num = Math.abs((long)numerator), den = Math.abs((long)denominator);
+        String integral = String.valueOf(num / den);
+        if (sign == -1) integral = "-" + integral;
         long remainder = (num % den) * 10;
-        
         if (remainder == 0) return integral;
         
-        StringBuffer res = new StringBuffer();
-        res.append(".");
+        StringBuffer sb = new StringBuffer();
+        sb.append(".");
         Map<Long, Integer> map = new HashMap<>();
         while (remainder != 0) {
             if (map.containsKey(remainder)) {
-                return integral + res.substring(0, map.get(remainder)).toString() + 
-                    "(" + res.substring(map.get(remainder), res.length()).toString() + ")";
+                return integral + sb.substring(0, map.get(remainder)) + "(" + sb.substring(map.get(remainder)) + ")";
             }
-            map.put(remainder, res.length());       // careful
-            res.append(remainder / den);
+            map.put(remainder, sb.length());
+            sb.append(remainder / den);
             remainder = (remainder % den) * 10;
         }
-        return integral + res.toString();
+        return integral + sb.toString();
     }
 }
 

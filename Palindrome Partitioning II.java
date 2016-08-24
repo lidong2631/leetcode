@@ -43,8 +43,9 @@ public class Solution {
         res[0] = 0;
         for (int i = 1; i <= s.length(); i++) {
             res[i] = i;
-            for (int j = 1; j <= i; j++) {                                      // careful
-                if (dict[j-1][i-1]) res[i] = Math.min(res[i], res[j-1] + 1);    // careful
+            for (int j = 1; j <= i; j++) {                      // careful
+                if (dict[j-1][i-1])                             // careful
+                    res[i] = Math.min(res[i], res[j-1] + 1);    // careful
             }
         }
         return res[s.length()] - 1;                 // careful need to cut 1

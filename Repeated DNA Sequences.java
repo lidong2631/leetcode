@@ -4,13 +4,31 @@ public class Solution {
         Set<String> set = new HashSet<>();
         for (int i = 0; i < s.length() - 9; i++) {
             String str = s.substring(i, i + 10);
-            if (!checkSet.add(str)) set.add(str);
+            if (!checkSet.add(str)) set.add(str);   // cool !
         }
         return new ArrayList<String>(set);
     }
 }
 
 O(n) O(n)
+
+
+public class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+        List<String> res = new ArrayList<>();
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 9; i < s.length(); i++) {
+            String tmp = s.substring(i-9, i+1);
+            if (map.containsKey(tmp)) {
+                if (map.get(tmp) == 1) res.add(tmp);
+                map.put(tmp, map.get(tmp)+1);
+            }
+            else map.put(tmp, 1);
+        }
+        return res;
+    }
+}
+
 
 
 public class Solution {

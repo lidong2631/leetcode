@@ -1,6 +1,6 @@
 public class Solution {
     public int compareVersion(String version1, String version2) {
-        for (int i = 0, j = 0; i < version1.length() || j < version2.length(); i++, j++) {
+        for (int i = 0, j = 0; i < version1.length() || j < version2.length(); i++, j++) {  // careful "||" here
             int ver1 = 0;
             while (i < version1.length() && version1.charAt(i) != '.') ver1 = 10 * ver1 + version1.charAt(i++) - '0';
             
