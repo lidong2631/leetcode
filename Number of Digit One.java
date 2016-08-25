@@ -4,9 +4,9 @@ public class Solution {
         long factor = 1, high = 0, low = 0;     // careful long need to be used
         int curr = 0, count = 0;
         while (n / factor != 0) {
-            low = n % factor;
+            low = n % factor;               // remember need to familiar with digit manipulation
             curr = (int)(n / factor % 10);  // careful need to change to int
-            high = n / (factor * 10);
+            high = n / (factor * 10);       // remember
             switch (curr) {
                 case 0:
                     count += high * factor;

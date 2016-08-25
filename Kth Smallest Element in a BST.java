@@ -32,8 +32,20 @@ the worse/average case when we need count nodes for each subtree traversal, bina
 and number of traversed subtrees could be n, then as total is O(nlog(n)).
 
 
-Follow up: If we could add a count field in the BST node class, it will take O(n) time when we calculate the count value 
-for the whole tree, but after that, it will take O(logn) time when insert/delete a node or calculate the kth smallest element
+Follow up:
+If we can modify the structure I think the answer is, we can add two int value to record how many elements are there in left child tree 
+and right child tree. Like this:
+
+struct TreeNode{
+    int val;
+    TreeNode *left{nullptr}, *right{nullptr};
+    int leftCnt{0}, rightCnt{0};
+};
+
+When we try to insert or delete, update information from bottom to top.
+When we try to query, at most we will travel log n times.
+
+https://discuss.leetcode.com/topic/17676/how-to-find-the-kth-smallest-frequently/3
 https://leetcode.com/discuss/43464/what-if-you-could-modify-the-bst-nodes-structure
 geeksforgeeks Method 2: Augmented  Tree Data Structure
 
@@ -69,19 +81,22 @@ The reverse inorder traversal traverses all nodes in decreasing order. While doi
 visited so far. When count becomes equal to k, we stop the traversal and print the key.
 public class Solution {
     public int kthLargest(TreeNode root, int k) {
+        List<Integer> res = new ArrayList<>();
         List<Integer> count = new ArrayList<Integer>();
         count.add(0);
-        helper(root, k, count);
+        helper(root, k, count, res);
         return count.get(0);
     }
 
-    private void helper(TreeNode root, int k, List<Integer> count) {
+    private void helper(TreeNode root, int k, List<Integer> count, List<Integer> res) {
         if(root==null || count.get(0)>=k)
             return;
         helper(root.right, k, count);
         count.put(0, count.get(0)+1);
-        if(count.get(0)==k)
+        if(count.get(0)==k) {
+            res.add(root.val);
             return;
+        }
         helper(root.left, k, count);
     }
 }
