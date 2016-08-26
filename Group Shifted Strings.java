@@ -1,25 +1,26 @@
 public class Solution {
     public List<List<String>> groupStrings(String[] strings) {
         List<List<String>> res = new ArrayList<List<String>>();
-        Map<String, List<String>> map = new HashMap<String, List<String>>();
-        for(String str : strings) {
-            int offset = str.charAt(0)-'a';         // set up standard
-            String tmp = "";
-            for(int i=0; i<str.length(); i++) {
-                char c = (char)(str.charAt(i)-offset);  // every character minus offset
-                if(c<'a')                           // ex "ba"
-                    c+=26;                          // add by 26
-                tmp+=c;
+        Map<String, List<String>> map = new HashMap<>();
+        for (int i = 0; i < strings.length; i++) {
+            int offset = strings[i].charAt(0) - 'a';
+            StringBuffer sb = new StringBuffer();
+            for (int j = 0; j < strings[i].length(); j++) {
+                char tmp = (char)(strings[i].charAt(j) - offset);
+                if (tmp < 'a') tmp += 26;
+                sb.append(tmp);
             }
-            if(!map.containsKey(tmp)) {
-                List<String> item = new ArrayList<String>();
-                map.put(tmp, item);
+            String str = sb.toString();
+            if (map.containsKey(str)) map.get(str).add(strings[i]);
+            else {
+                List<String> list = new ArrayList<>();
+                list.add(strings[i]);
+                map.put(str, list);
             }
-            map.get(tmp).add(str);
         }
-        for(List<String> list : map.values()) {
-            Collections.sort(list);
-            res.add(list);
+        for (List<String> l : map.values()) {
+            Collections.sort(l);
+            res.add(l);
         }
         return res;
     }

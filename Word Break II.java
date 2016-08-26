@@ -60,12 +60,11 @@ public class Solution {
             res.add(str);
             return;
         }
-        StringBuffer sb = new StringBuffer();
         for (int i = index; i < s.length(); i++) {
-            sb.append(s.charAt(i));
-            if (wordDict.contains(sb.toString())) {
-                String tmp = index == 0 ? sb.toString() : str + " " + sb.toString();
-                helper(s, wordDict, i + 1, tmp, res);
+            String tmp = s.substring(index, i+1);
+            if (wordDict.contains(tmp)) {
+                if (str.length() == 0) helper(s, wordDict, i+1, tmp, res);
+                else helper(s, wordDict, i+1, str + " " + tmp, res);
             }
         }
     }
@@ -75,23 +74,22 @@ public class Solution {
 
 public class Solution {
     public List<String> wordBreak(String s, Set<String> wordDict) {
-        List<String> res = new ArrayList<String>();
+        List<String> res = new ArrayList<>();
         helper(s, wordDict, 0, "", res);
         return res;
     }
     
-    private void helper(String s, Set<String> wordDict, int start, String item, List<String> res) {
-        if (start >= s.length()) {
-            res.add(item);
+    private void helper(String s, Set<String> wordDict, int index, String str, List<String> res) {
+        if (index == s.length()) {
+            res.add(str);
             return;
         }
-        // StringBuilder tmp = new StringBuilder();
-        for (int i = start; i < s.length(); i++) {
-            // tmp.append(s.charAt(i));
-            String tmp = s.substring(start, i + 1);
-            if (wordDict.contains(tmp.toString())) {
-                String newItem = item.length() > 0 ? item + " " + tmp : tmp;
-                helper(s, wordDict, i+1, newItem, res);
+        StringBuffer sb = new StringBuffer();
+        for (int i = index; i < s.length(); i++) {
+            sb.append(s.charAt(i));
+            if (wordDict.contains(sb.toString())) {
+                String tmp = index == 0 ? sb.toString() : str + " " + sb.toString();
+                helper(s, wordDict, i + 1, tmp, res);
             }
         }
     }
