@@ -9,42 +9,36 @@
  */
 public class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
-        List<String> res = new ArrayList<String>();
-        if(root==null)
-            return res;
-        List<Integer> item = new ArrayList<Integer>();
-        item.add(root.val);
-        helper(root, res, item);
+        List<String> res = new ArrayList<>();
+        if (root == null) return res;
+        List<Integer> list = new ArrayList<>();
+        list.add(root.val);
+        helper(root, list, res);
         return res;
     }
     
-    private void helper(TreeNode root, List<String> res, List<Integer> item) {
-        if(root==null)
-            return;
-        if(root.left==null && root.right==null) {
-            String tmp = pathStr(item);
-            res.add(tmp);
+    private void helper(TreeNode root, List<Integer> l, List<String> res) {
+        if (root.left == null && root.right == null) {
+            res.add(pathStr(l));
             return;
         }
-        if(root.left!=null) {
-            item.add(root.left.val);
-            helper(root.left, res, item);
-            item.remove(item.size()-1);
+        if (root.left != null) {
+            l.add(root.left.val);
+            helper(root.left, l, res);
+            l.remove(l.size()-1);
         }
-        if(root.right!=null) {
-            item.add(root.right.val);
-            helper(root.right, res, item);
-            item.remove(item.size()-1);
+        if (root.right != null) {
+            l.add(root.right.val);
+            helper(root.right, l, res);
+            l.remove(l.size()-1);
         }
     }
     
-    private String pathStr(List<Integer> item) {
-        StringBuilder sb = new StringBuilder();
-        for(int i=0; i<item.size(); i++) {
-            if(i!=item.size()-1)
-                sb.append(String.valueOf(item.get(i))+"->");
-            else
-                sb.append(String.valueOf(item.get(i)));
+    private String pathStr(List<Integer> l) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < l.size(); i++) {
+            if (i != l.size()-1) sb.append(l.get(i) + "->");
+            else sb.append(l.get(i));
         }
         return sb.toString();
     }

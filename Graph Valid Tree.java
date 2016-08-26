@@ -2,22 +2,20 @@ public class Solution {
     public boolean validTree(int n, int[][] edges) {
         int[] parent = new int[n];
         Arrays.fill(parent, -1);
-        
-        for(int i=0; i<edges.length; i++) {
+        for (int i = 0; i < edges.length; i++) {
             int x = find(parent, edges[i][0]);
             int y = find(parent, edges[i][1]);
             
-            if(x==y)        //there is cycle
-                return false;
+            if (x == y) return false;
+            
             parent[x] = y;
         }
-        return edges.length==n-1;       // this is to ensure it is a connected graph
+        return edges.length == n - 1;
     }
     
-    private int find(int[] parent, int i) { //find will recursively find the representative for the current element
-        if(parent[i]==-1)   //find representative
-            return i;
-        return find(parent, parent[i]); //recursively call
+    private int find(int[] parent, int i) {
+        if (parent[i] == -1) return i;
+        return find(parent, parent[i]);
     }
 }
 

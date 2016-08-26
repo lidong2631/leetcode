@@ -50,40 +50,28 @@ class Solution:
 
 
 
-
-
 public class Solution {
     public int threeSumClosest(int[] num, int target) {
-        if(num==null || num.length<=2)
-            return Integer.MIN_VALUE;
-        int minDiff = num[0]+num[1]+num[2]-target;  //初始minDiff
+        if (num == null || num.length < 3) return Integer.MAX_VALUE;
+        int minDiff = num[0] + num[1] + num[2] - target;
         Arrays.sort(num);
-        for(int i=0; i<num.length-2; i++)       //从头往后遍历
-        {
-            int currDiff = TwoSum(num, target-num[i], i+1);     //每次先找i以后跟target-num[i]相差最小的任意两个数的和
-            if(Math.abs(currDiff)<Math.abs(minDiff))            //如果它比全局minDiff小就更新minDiff
-                minDiff = currDiff;
+        for (int i = num.length - 1; i >=2; i--) {
+            if (i < num.length - 1 && num[i] == num[i+1]) continue;
+            int diff = twoSumClosest(num, i-1, target-num[i]);
+            if (Math.abs(diff) < Math.abs(minDiff)) minDiff = diff; // careful
         }
-        return target+minDiff;
+        return minDiff + target;
     }
     
-    private int TwoSum(int[] num, int target, int start) {
-        int minDiff = num[start]+num[start+1]-target;       //初始minDiff
-        int left = start;
-        int right = num.length-1;
-        while(left<right)           //两边夹逼
-        {
-            if(num[left]+num[right]==target)        //相等直接返回0
-            {
-                return 0;
-            }
-            int diff = num[left]+num[right]-target;
-            if(Math.abs(diff)<Math.abs(minDiff))        //否则如果当前diff小于全局minDiff 更新minDiff
-                minDiff = diff;
-            if(num[left]+num[right]<target)
-                left++;
-            else
-                right--;
+    private int twoSumClosest(int[] num, int index, int target) {
+        int minDiff = num[index] + num[index-1] - target;
+        int left = 0, right = index;
+        while (left < right) {
+            if (num[left] + num[right] == target) return 0;
+            int diff = num[left] + num[right] - target;
+            if (Math.abs(diff) < Math.abs(minDiff)) minDiff = diff; // careful
+            if (diff < 0) left++;
+            else right--;
         }
         return minDiff;
     }

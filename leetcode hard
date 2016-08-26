@@ -2,7 +2,6 @@
 median of two sorted arrays
 zigzag conversion
 regular expression matching
-3Sum Closest
 4Sum
 divide two integers
 substring with concatenation of all words
@@ -143,6 +142,9 @@ Shortest Palindrome
 The Skyline Problem
 Basic Calculator
 Basic Calculator II
+Verify Preorder Sequence in Binary Search Tree
+Paint House II
+
 
 while (i < nums.length) {
 		if (set.contains(nums[i])) return true;

@@ -1,29 +1,47 @@
 public class Solution {
     public int nthUglyNumber(int n) {
-        int[] res = new int[n];
-        res[0] = 1;
-        int index1=0, index2=0, index3=0;
-        int ugly1=2, ugly2=3, ugly3=5;
-        for(int i=1; i<n; i++) {
-            res[i] = Math.min(ugly1, Math.min(ugly2, ugly3));
-            if(res[i]==ugly1)
-                ugly1 = 2*res[++index1];
-            if(res[i]==ugly2)
-                ugly2 = 3*res[++index2];
-            if(res[i]==ugly3)
-                ugly3 = 5*res[++index3];
+        int[] ugly = new int[n];
+        int u1 = 2, u2 = 3, u3 = 5;
+        int i1 = 0, i2 = 0, i3 = 0;
+        ugly[0] = 1;
+        for (int i = 1; i < n; i++) {
+            ugly[i] = Math.min(u1, Math.min(u2, u3));
+            if (ugly[i] == u1) {
+                u1 = 2 * ugly[++i1];
+            }
+            if (ugly[i] == u2) {
+                u2 = 3 * ugly[++i2];
+            }
+            if (ugly[i] == u3) {
+                u3 = 5 * ugly[++i3];
+            }
         }
-        return res[n-1];
+        return ugly[n-1];
     }
 }
 
-res[i]     ugly1  ugly2  ugly3
-1           2       3       5
-2           4       3       5
-3           4       6       5
-4           6       6       5
-5           6       6       10
-6           8       9       10
+                                        2           3           5
+res[i]     ugly1  ugly2  ugly3      index1      index2      index3
+1           2       3       5           0           0           0
+2           4       3       5           1           0           0
+3           4       6       5           1           1           0-
+4           6       6       5           2           1           0
+5           6       6       10          2           1           1
+6           8       9       10          3           2           1
+8           10      9       10          4           2           1
+
+
+The ugly-number sequence is 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, …
+because every number can only be divided by 2, 3, 5, one way to look at the sequence is to split the sequence to three groups as below:
+
+(1) 1×2, 2×2, 3×2, 4×2, 5×2, …
+(2) 1×3, 2×3, 3×3, 4×3, 5×3, …
+(3) 1×5, 2×5, 3×5, 4×5, 5×5, …
+We can find that every subsequence is the ugly-sequence itself (1, 2, 3, 4, 5, …) multiply 2, 3, 5.
+
+Then we use similar merge method as merge sort, to get every ugly number from the three subsequence.
+
+Every step we choose the smallest one, and move one step after,including nums with same value.
 
 
 O(n) O(n)

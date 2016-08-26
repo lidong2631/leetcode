@@ -1,16 +1,13 @@
 public class Solution {
     public int[] singleNumber(int[] nums) {
-        int diff = 0;
-        for(int num : nums) {
-            diff^=num;
-        }
-        diff&=-diff; //diff&=~(diff-1) or diff = Integer.highestOneBit(diff);
         int[] res = new int[2];
-        for(int num : nums) {
-            if((num&diff)==0)
-                res[0]^=num;
-            else
-                res[1]^=num;
+        int diff = 0;
+        for (int n : nums)
+            diff ^= n;
+        diff &= ~(diff - 1);
+        for (int n : nums) {
+            if ((n & diff) == 0) res[0] ^= n;   // careful when deal with & need to add () (n & diff)
+            else res[1] ^= n;
         }
         return res;
     }

@@ -1,10 +1,9 @@
 public class Solution {
     public boolean isUgly(int num) {
-        for(int i=2; i<6 && num>0; i++) {
-            while(num%i==0)
-                num/=i;
+        for (int i = 2; i <= 5 & num > 0; i++) {	// careful two conditions
+            while (num % i == 0) num /= i;
         }
-        return num==1;
+        return num == 1;
     }
 }
 

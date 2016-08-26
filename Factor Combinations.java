@@ -1,21 +1,20 @@
 public class Solution {
     public List<List<Integer>> getFactors(int n) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        helper(res, new ArrayList<Integer>(), 2, n);
+        helper(n, 2, new ArrayList<Integer>(), res);
         return res;
     }
     
-    private void helper(List<List<Integer>> res, List<Integer> item, int start, int n) {
-        if(n==1) {
-            if(item.size()>1)   //判断item个数 等于1则只有自身为factor 大于1才加到res中
-                res.add(new ArrayList<Integer>(item));
+    private void helper(int n, int fac, List<Integer> list, List<List<Integer>> res) {
+        if (n == 1) {
+            if (list.size() > 1) res.add(new ArrayList<Integer>(list)); // careful need to check list.size() > 1
             return;
         }
-        for(int i=start; i<=n; i++) {   //注意这里要写i<=n
-            if(n%i==0) {
-                item.add(i);
-                helper(res, item, i, n/i);
-                item.remove(item.size()-1);
+        for (int i = fac; i <= n; i++) {
+            if (n % i == 0) {
+                list.add(i);
+                helper(n/i, i, list, res);  // careful it is i
+                list.remove(list.size()-1);
             }
         }
     }

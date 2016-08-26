@@ -1,47 +1,44 @@
 public class Solution {
     public List<String> generatePalindromes(String s) {
-        List<String> res = new ArrayList<String>();
-        if(s==null || s.length()==0)
-            return res;
-        Map<Character, Integer> map = new HashMap<Character, Integer>();
-        List<Character> item = new ArrayList<Character>();
-        String mid = "";
+        List<String> res = new ArrayList<>();
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            if (map.containsKey(c)) map.put(c, map.get(c)+1);
+            else map.put(c, 1);
+        }
         int odd = 0;
-        for(int i=0; i<s.length(); i++) {   //记录每个字符次数
-            map.put(s.charAt(i), map.containsKey(s.charAt(i))?map.get(s.charAt(i))+1:1);
-        }
-        for(Map.Entry<Character, Integer> entry:map.entrySet()) {
-            char key = entry.getKey();
-            int count = entry.getValue();
-            if(count%2!=0) {    //记录奇数个字符的数量 并设置mid值
+        String mid = "";
+        List<Character> list = new ArrayList<>();
+        for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+            char k = entry.getKey();
+            int v = entry.getValue();
+            if (v % 2 == 1) {
                 odd++;
-                mid+=key;
+                mid += k;
             }
-            for(int j=0; j<count/2; j++)    //将一半的字符加入list中
-                item.add(key);
+            for (int i = 0; i < v / 2; i++) {
+                list.add(k);
+            }
         }
-        if(odd>1)   //如果奇数字符数多于1个 无法得到palindrome
-            return res;
-        helper(item, mid, new boolean[s.length()], new StringBuilder(), res);   //完全permutation ii的套路
+        if (odd > 1) return res;
+        helper(list, mid, new StringBuffer(), new boolean[list.size()], res);
         return res;
     }
     
-    private void helper(List<Character> item, String mid, boolean[] used, StringBuilder sb, List<String> res) {
-        if(sb.length()==item.size()) {
+    private void helper(List<Character> list, String mid, StringBuffer sb, boolean[] used, List<String> res) {
+        if (sb.length() == list.size()) {
             String str = sb.toString() + mid + sb.reverse().toString();
             res.add(str);
-            sb.reverse();   //这里要再reverse sb 因为之前一句reverse了 要再reverse回来
+            sb.reverse();       // careful to reverse back
             return;
         }
-        
-        for(int i=0; i<item.size(); i++) {
-            if(i>0 && !used[i-1] && item.get(i)==item.get(i-1))
-                continue;
-            if(!used[i]) {
+        for (int i = 0; i < list.size(); i++) {
+            if (i > 0 && list.get(i) == list.get(i-1) && !used[i-1]) continue;  // careful for duplicate char
+            if (!used[i]) {
                 used[i] = true;
-                sb.append(item.get(i));
-                helper(item, mid, used, sb, res);
-                sb.deleteCharAt(sb.length()-1);
+                sb.append(list.get(i));
+                helper(list, mid, sb, used, res);
+                sb.deleteCharAt(sb.length()-1);     // careful StringBuffer does have remove() use deleteCharAt()
                 used[i] = false;
             }
         }
