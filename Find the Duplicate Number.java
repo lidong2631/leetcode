@@ -1,18 +1,14 @@
 public class Solution {
     public int findDuplicate(int[] nums) {
-        for(int i=0; i<nums.length; i++) {
-            if(nums[nums[i]-1]!=nums[i]) {
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != nums[nums[i]-1]) {
                 int tmp = nums[nums[i]-1];
                 nums[nums[i]-1] = nums[i];
                 nums[i] = tmp;
                 i--;
             }
         }
-        for(int i=0; i<nums.length; i++) {
-            if(nums[i]!=i+1)
-                return nums[i];
-        }
-        return nums[nums.length-1];
+        return nums[nums.length-1]; // after first loop the duplicate number would be at the last position of the array
     }
 }
 

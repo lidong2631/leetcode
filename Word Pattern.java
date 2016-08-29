@@ -12,6 +12,39 @@ You may assume pattern contains only lowercase letters, and str contains lowerca
 
 
 
+public class Solution {
+    public boolean wordPattern(String pattern, String str) {
+        Map<Character, String> map1 = new HashMap<>();
+        Map<String, Character> map2 = new HashMap<>();
+        int i = 0;
+        for (Character c : pattern.toCharArray()) {
+            StringBuffer sb = new StringBuffer();
+            while (i < str.length() && str.charAt(i) != ' ') {
+                sb.append(str.charAt(i++));
+            }
+            i++;
+            if (sb.length() == 0) return false;     // careful
+            String tmp = sb.toString();
+            if (map1.containsKey(c)) {
+                if (!map1.get(c).equals(tmp)) return false;
+            }
+            if (map2.containsKey(tmp)) {
+                if (map2.get(tmp) != c) return false;
+            }
+            else {
+                map1.put(c, tmp);
+                map2.put(tmp, c);
+            }
+        }
+        return i == str.length() + 1;   // careful
+    }
+}
+
+跟isomorphic strings 思路一样 但要注意字符串比较用equals 并且要判断长度是否match
+
+O(n) O(n)
+
+
 
 public class Solution {
     public boolean wordPattern(String pattern, String str) {
@@ -59,42 +92,3 @@ public class Solution {
 note map.containsValue(arr[i]) is O(n)
 
 https://leetcode.com/discuss/62876/very-fast-3ms-java-solution-using-hashmap
-
-
-
-pattern: abba
-str: dog cat cat dog
-
-
-public class Solution {
-    public boolean wordPattern(String pattern, String str) {
-        Map<Character, String> map1 = new HashMap<Character, String>();
-        Map<String, Character> map2 = new HashMap<String, Character>();
-        int index = 0;
-        for(Character c : pattern.toCharArray()) {
-            StringBuilder sb = new StringBuilder();
-            while(index<str.length() && str.charAt(index)!=' ') {
-                sb.append(str.charAt(index++));
-            }
-            index++;
-            if(sb.length()==0)
-                return false;
-            String tmp = sb.toString();
-            if(map1.containsKey(c)) {
-                if(!map1.get(c).equals(tmp))
-                    return false;
-            }
-            if(map2.containsKey(tmp)) {
-                if(map2.get(tmp)!=c)
-                    return false;
-            }
-            map1.put(c, tmp);
-            map2.put(tmp, c);
-        }
-        return (index-1)==str.length();
-    }
-}
-
-跟isomorphic strings 思路一样 但要注意字符串比较用equals 并且要判断长度是否match
-
-O(n) O(n)

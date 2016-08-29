@@ -1,18 +1,15 @@
 public class Solution {
     public int missingNumber(int[] nums) {
-        if(nums==null || nums.length==0)
-            return 0;
-        for(int i=0; i<nums.length; i++) {
-            if(nums[i]<nums.length && nums[i]!=nums[nums[i]]) {
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] < nums.length && nums[i] != nums[nums[i]]) {    // careful need to check nums[i] < nums.length
                 int tmp = nums[nums[i]];
                 nums[nums[i]] = nums[i];
                 nums[i] = tmp;
                 i--;
             }
         }
-        for(int i=0; i<nums.length; i++) {
-            if(nums[i]!=i)
-                return i;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != i) return i;
         }
         return nums.length;
     }

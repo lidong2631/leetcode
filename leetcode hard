@@ -144,6 +144,9 @@ Basic Calculator
 Basic Calculator II
 Verify Preorder Sequence in Binary Search Tree
 Paint House II
+Alien Dictionary
+Closest Binary Search Tree Value II
+Expression Add Operators
 
 
 while (i < nums.length) {
@@ -156,6 +159,23 @@ Contains Duplicate II
 Contains Duplicate III
 
 
+Isomorphic Strings
+Word Pattern
+
+
+Perfect Squares
+Longest Increasing Subsequence
+
+
+Flat 2D Vector
+Zigzag Iterator
+Peeking Iterator
+Binary Search Tree Iterator
+
+
+Find the Duplicate Number
+Missing Number
+First Missing Positive (1-100)
 
 
 

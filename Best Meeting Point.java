@@ -1,29 +1,25 @@
 public class Solution {
     public int minTotalDistance(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        int[] row = new int[m];
-        int[] col = new int[n];
-        
-        for(int i=0; i<m; i++) {                        // row = {2,0,1}
-            for(int j=0; j<n; j++) {                    // col = {1,0,1,0,1}
-                row[i]+=grid[i][j];
-                col[j]+=grid[i][j];
+        int[] row = new int[grid.length], col = new int[grid[0].length];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                row[i] += grid[i][j];
+                col[j] += grid[i][j];
             }
         }
-        return minDis1D(row) + minDis1D(col);           //  sum the columns and rows into two vectors and calculate them
+        return minDis1D(row) + minDis1D(col);
     }
     
-    private int minDis1D(int[] vector) {                // calcuate min distance for 1D vector
-        int i=-1, j=vector.length;
-        int left = 0, right = 0, d = 0;
-        while(i!=j) {
-            if(left<right) {
-                d+=left;
-                left+=vector[++i];
+    private int minDis1D(int[] dis) {
+        int i = -1, j = dis.length, left = 0, right = 0, d = 0;
+        while (i != j) {
+            if (left < right) {
+                d += left;
+                left += dis[++i];
             }
             else {
-                d+=right;
-                right+=vector[--j];
+                d += right;
+                right += dis[--j];
             }
         }
         return d;

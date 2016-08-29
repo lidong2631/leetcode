@@ -11,65 +11,53 @@ public class Codec {
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        // write your code here
-        StringBuffer res = new StringBuffer();
-        if (root == null) return res.toString();
-        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.offer(root);
-        res.append(root.val);
-        while (!queue.isEmpty()) {                      // use BFS to serialize the tree
-            TreeNode cur = queue.poll();
-            res.append(",");
-
-            if (cur.left != null) {                     // left child
-                res.append(cur.left.val);
-                queue.offer(cur.left);
+        if (root == null) return "";
+        StringBuffer sb = new StringBuffer();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        sb.append(root.val);
+        while (!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
+            sb.append(",");
+            if (curr.left != null) {
+                sb.append(curr.left.val);
+                queue.add(curr.left);
             }
-            else res.append("#");
-            res.append(",");
+            else sb.append("#");
+            sb.append(",");
             
-            if (cur.right != null) {                    // right child
-                res.append(cur.right.val);
-                queue.offer(cur.right);
+            if (curr.right != null) {
+                sb.append(curr.right.val);
+                queue.add(curr.right);
             }
-            else res.append("#");
+            else sb.append("#");
         }
-        return res.toString();
+        return sb.toString();
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        // write your code here
-        if (data==null || data.length()==0) return null;
-        String[] arr = data.split(",");
-        int len = arr.length;
-        TreeNode root = new TreeNode(Integer.parseInt(arr[0]));
-        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.offer(root);
-        int count = 1;
-
-        while (!queue.isEmpty()) {                          // again use BFS to deserialize the tree
-            TreeNode cur = queue.poll();
-            String left="", right="";
-            if (count < len) {                              // if we reach the bottom
-                left = arr[count++];
-                if (!left.equals("#")) {                    // if curr node's left child is null
-                    cur.left = new TreeNode(Integer.parseInt(left));
-                    queue.offer(cur.left);
-                }
-                else cur.left = null;
+        if (data == null || data.length() == 0) return null;
+        String[] str = data.split(",");
+        TreeNode root = new TreeNode(Integer.parseInt(str[0]));
+        int i = 1;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
+            if (!str[i].equals("#")) {
+                curr.left = new TreeNode(Integer.parseInt(str[i]));
+                queue.add(curr.left);
             }
-            else cur.left = null;
+            else curr.left = null;
+            i++;
             
-            if (count < len) {
-                right = arr[count++];
-                if (!right.equals("#")) {
-                    cur.right = new TreeNode(Integer.parseInt(right));
-                    queue.offer(cur.right);
-                }
-                else cur.right = null;
+            if (!str[i].equals("#")) {
+                curr.right = new TreeNode(Integer.parseInt(str[i]));
+                queue.add(curr.right);
             }
-            else cur.right = null;
+            else curr.right = null;
+            i++;
         }
         return root;
     }

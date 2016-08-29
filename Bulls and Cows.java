@@ -1,3 +1,25 @@
+public class Solution {
+    public String getHint(String secret, String guess) {
+        int[] digits = new int[10];
+        int bulls = 0, cows = 0;
+        for (int i = 0; i < secret.length(); i++) {
+            int d1 = secret.charAt(i) - '0', d2 = guess.charAt(i) - '0';
+            if (d1 == d2) {
+                bulls++;
+                continue;
+            }
+            if (digits[d1] < 0) cows++;
+                digits[d1]++;
+            if (digits[d2] > 0) cows++;
+                digits[d2]--;
+        }
+        return bulls + "A" + cows + "B";
+    }
+}
+
+
+
+
 public String getHint(String secret, String guess) {
     int bulls = 0;
     int cows = 0;
@@ -29,43 +51,3 @@ cows = 2, cows = 3, numbers[7] = 0, numbers[0] = 0
 
 https://leetcode.com/discuss/67031/one-pass-java-solution
 
-
-My Solution
-
-public class Solution {
-    public String getHint(String secret, String guess) {
-        Map<Character, Integer> mapS = new HashMap<Character, Integer>();
-        Map<Character, Integer> mapG = new HashMap<Character, Integer>();
-        int numA = 0, numB = 0;
-        for(int i=0; i<secret.length(); i++) {
-            char s = secret.charAt(i), g = guess.charAt(i);
-            if(s==g) {
-                numA++;
-                continue;
-            }
-            if(mapG.containsKey(s) && mapG.get(s)>0) {
-                mapG.put(s, mapG.get(s)-1);
-                numB++;
-            }
-            else {
-                if(mapS.containsKey(s))
-                    mapS.put(s, mapS.get(s)+1);
-                else 
-                    mapS.put(s, 1);
-            }
-            if(mapS.containsKey(g) && mapS.get(g)>0) {
-                mapS.put(g, mapS.get(g)-1);
-                numB++;
-            }
-            else {
-                if(mapG.containsKey(g))
-                    mapG.put(g, mapG.get(g)+1);
-                else
-                    mapG.put(g, 1);
-            }
-        }
-        return String.valueOf(numA)+"A"+String.valueOf(numB)+"B";
-    }
-}
-
-O(n) O(n)

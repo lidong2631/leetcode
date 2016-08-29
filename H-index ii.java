@@ -1,26 +1,29 @@
 public class Solution {
     public int hIndex(int[] citations) {
-        if(citations==null || citations.length==0)
-            return 0;
-        int left = 0, right = citations.length-1;
-        while(left<=right) {
-            int mid = (left+right)/2;
-            if(citations[mid]==citations.length-mid)
-                return citations.length-mid;
-            else if(citations[mid]<citations.length-mid)
-                left = mid + 1;
-            else
-                right = mid - 1;
+        int left = 0, right = citations.length - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (citations[mid] == citations.length - mid) return citations.length - mid;
+            else if (citations[mid] > citations.length - mid) right = mid - 1;
+            else left = mid + 1;
         }
-        return citations.length-left;
+        return citations.length - left;
     }
 }
 
-0 1 3 5 6
-0 1 2 5 6
-0 1 4 5 6
+The idea is to search for the first index from the sorted array so that :
 
-need to understand why return citations.length - left
+citations[index] >= length(citations) - index. 
 
-follow up for H-index. The citations array is pre-ordered in ascending order. here we use Binary Search
+And return (length - index) as the result.
+
+
+Just binary search, each time check citations[mid]
+case 1: citations[mid] == len-mid, then it means there are citations[mid] papers that have at least citations[mid] citations.
+case 2: citations[mid] > len-mid, then it means there are citations[mid] papers that have moret than citations[mid] citations, so we should continue searching in the left half
+case 3: citations[mid] < len-mid, we should continue searching in the right side
+
+https://discuss.leetcode.com/topic/23399/standard-binary-search
+https://discuss.leetcode.com/topic/23424/java-binary-search-simple-and-clean
+
 O(logn) O(1)

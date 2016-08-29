@@ -1,3 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if (p.right != null) {
+            p = p.right;
+            while (p.left != null) p = p.left;
+            return p;
+        }
+        TreeNode node = null;
+        while (root != null) {
+            if (root.val > p.val) {
+                node = root;
+                root = root.left;
+            }
+            else root = root.right;     // if root.val == p.val root will go to p.right and will be null
+        }
+        return node;
+    }
+}
+
+
+
+
 Successor
 public TreeNode successor(TreeNode root, TreeNode p) {
     if (root == null)
@@ -43,38 +74,3 @@ left sub tree will be the answer; 2. the right child has no left sub tree, the r
 then the right child (root) is our answer.
 
 https://leetcode.com/discuss/59787/share-my-java-recursive-solution
-
-
-
-
-
-
-
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-public class Solution {
-    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
-        if(p.right!=null) {
-            p = p.right;
-            while(p.left!=null)
-                p = p.left;
-            return p;
-        }
-        TreeNode ptr = null;
-        while(root!=null)
-            root = root.val>p.val?(ptr=root).left:root.right;
-        return ptr;
-    }
-}
-
-O(n) O(1)
-
-https://leetcode.com/discuss/59728/10-and-4-lines-o-h-java-c
-

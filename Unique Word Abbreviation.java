@@ -1,26 +1,27 @@
 public class ValidWordAbbr {
 
-    private Map<String, Set<String>> map;
-    
+    Map<String, Set<String>> map;
+
     public ValidWordAbbr(String[] dictionary) {
         map = new HashMap<>();
-        for(String str : dictionary) {
-            String tmp = abbr(str);
-            Set<String> set = map.containsKey(tmp)?map.get(tmp):new HashSet<String>();
-            set.add(str);
-            map.put(tmp, set);
+        for (String s : dictionary) {
+            String key = abbr(s);
+            if (map.containsKey(key)) map.get(key).add(s);
+            else {
+                Set<String> set = new HashSet<>();
+                set.add(s);
+                map.put(key, set);
+            }
         }
     }
 
     public boolean isUnique(String word) {
         String tmp = abbr(word);
-        return (!map.containsKey(tmp)) 
-                || (map.get(tmp).contains(word) && map.get(tmp).size()==1);     // check原字典中相同的词
+        return (!map.containsKey(tmp) || (map.get(tmp).contains(word) && map.get(tmp).size() == 1));
     }
     
-    private String abbr(String str) {
-        return str.length()<3?str:str.substring(0,1)+(str.length()-2) 
-                                  +str.substring(str.length()-1, str.length());
+    private String abbr(String s) {
+        return s.length() < 3 ? s : s.substring(0, 1) + (s.length()-2) + s.substring(s.length()-1);
     }
 }
 
