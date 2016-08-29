@@ -1,18 +1,35 @@
 public class Solution {
     public String removeDuplicateLetters(String s) {
-        if(s==null || s.length()==0)
-            return "";
+        if (s == null || s.length() == 0) return "";
+        Stack<Character> stack = new Stack<>();
         int[] count = new int[26];
-        int pos = 0;
-        for(int i=0; i<s.length(); i++)
-            count[s.charAt(i)-'a']++;
-        for(int i=0; i<s.length(); i++) {
-            if(s.charAt(i)<s.charAt(pos)) pos = i;
-            if(--count[s.charAt(i)-'a']==0) break;
+        boolean[] visited = new boolean[26];
+        
+        for (char c : s.toCharArray()) {
+            count[c-'a']++;
         }
-        return s.charAt(pos)+removeDuplicateLetters((s.substring(pos+1)).replaceAll(""+s.charAt(pos),""));
+        for (char c : s.toCharArray()) {
+            count[c-'a']--;
+            if (visited[c-'a']) continue;
+            
+            while (!stack.isEmpty() && stack.peek() > c && count[stack.peek()-'a'] > 0) {
+                visited[stack.peek()-'a'] = false;
+                stack.pop();
+            }
+            stack.push(c);
+            visited[c-'a'] = true;
+        }
+        StringBuffer sb = new StringBuffer();
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+        return sb.reverse().toString();
     }
 }
+
+O(n) O(n)
+
+https://discuss.leetcode.com/topic/43469/java-o-n-solution-using-stack-with-detail-explanation/2
 
 Given a string which contains only lowercase letters, remove duplicate letters so that every letter appear once and only once. 
 You must make sure your result is the smallest in lexicographical order among all possible results.
@@ -23,30 +40,3 @@ Return "abc"
 
 Given "cbacdcbc"
 Return "acdb"
-
-Credits:
-
-
-Given the string s, the greedy choice (i.e., the leftmost letter in the answer) is the smallest s[i], s.t. 
-
-the suffix s[i .. ] contains all the unique letters. (Note that, when there are more than one smallest s[i], 
-
-we choose the leftmost one. Why? Simply consider the example: "abcacb".)
-
-After determining the greedy choice s[i], we get a new string s' from s by
-
-removing all letters to the left of s[i],
-removing all s[i]'s from s.
-We then recursively solve the problem w.r.t. s'.
-
-O(26*n) = O(n)
-
-if not add replaceAll()
-Input:
-"cbacdcbc"
-Output:
-"acdbc"
-Expected:
-"acdb"
-
-https://leetcode.com/discuss/73761/a-short-o-n-recursive-greedy-solution

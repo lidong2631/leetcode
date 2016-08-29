@@ -3,18 +3,15 @@ public class Solution {
         int[] res = new int[n];
         res[0] = 1;
         int[] index = new int[primes.length];
-        
-        for(int i=1; i<n; i++) {
+        for (int i = 1; i < n; i++) {
             res[i] = Integer.MAX_VALUE;
             
-            for(int j=0; j<primes.length; j++) {
-// System.out.println("j " + j + " primes[j] " + primes[j] + " index[j] " + index[j] + " res[index[j]] " + res[index[j]]);
-                res[i] = Math.min(res[i], primes[j]*res[index[j]]);
+            for (int j = 0; j < primes.length; j++) {
+                res[i] = Math.min(res[i], primes[j] * res[index[j]]);
             }
             
-            for(int j=0; j<primes.length; j++) {
-                if(res[i]==primes[j]*res[index[j]])
-                    index[j]++;
+            for (int j = 0; j < primes.length; j++) {
+                if (res[i] == primes[j] * res[index[j]]) index[j]++;
             }
         }
         return res[n-1];

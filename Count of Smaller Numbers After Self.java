@@ -4,50 +4,47 @@ public class Solution {
         TreeNode left;
         TreeNode right;
         int val;
-        int count = 1;
+        int count;
         
         public TreeNode(int v) {
             this.val = v;
+            this.count = 1;     // careful
         }
-    } 
+    }
     
     public List<Integer> countSmaller(int[] nums) {
-        List<Integer> res = new ArrayList<Integer>();
-        if(nums==null || nums.length==0) return res;
-        res.add(0);
+        List<Integer> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) return res;
         TreeNode root = new TreeNode(nums[nums.length-1]);
-        root.count = 1;
-        
-        for(int i=nums.length-2; i>=0; i--) {
+        res.add(0);     // careful
+        for (int i = nums.length - 2; i >= 0; i--) {
             res.add(insertNode(nums[i], root));
         }
-        Collections.reverse(res);
+        Collections.reverse(res);   // careful
         return res;
     }
     
-    public int insertNode(int val, TreeNode root) {
-        int currCount = 0;
-        while(true) {
-            if(val<=root.val) {
-                root.count++;                       // if val<=root.val then one more node that is smaller than root root.count++
-                if(root.left==null) {
+    private int insertNode(int val, TreeNode root) {
+        int count = 0;
+        while (true) {
+            if (val <= root.val) {
+                root.count++;
+                if (root.left == null) {
                     root.left = new TreeNode(val);
                     break;
                 }
-                else
-                    root = root.left;
+                else root = root.left;
             }
             else {
-                currCount+=root.count;              // if val>root.val then currCount should add root.count
-                if(root.right==null) {
+                count += root.count;
+                if (root.right == null) {
                     root.right = new TreeNode(val);
                     break;
                 }
-                else
-                    root = root.right;
+                else root = root.right;
             }
         }
-        return currCount;
+        return count;
     }
 }
 

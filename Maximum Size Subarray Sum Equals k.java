@@ -1,14 +1,14 @@
 public class Solution {
     public int maxSubArrayLen(int[] nums, int k) {
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
         int maxLen = 0, sum = 0;
-        for(int i=0; i<nums.length; i++) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
-            if(sum==k)
-                maxLen = Math.max(maxLen, i+1); //sum等于k 则是潜在解
-            else if(map.containsKey(sum-k))     //或者之前sum包含sum-k的值 则之前到当前的sum等于k 是潜在解
+            if (sum == k) 
+                maxLen = Math.max(maxLen, i+1);
+            else if (map.containsKey(sum-k))
                 maxLen = Math.max(maxLen, i-map.get(sum-k));
-            if(!map.containsKey(sum))
+            if (!map.containsKey(sum))      // careful need to check if map has this sum always reserve the earliest one for maximum size
                 map.put(sum, i);
         }
         return maxLen;

@@ -17,6 +17,9 @@ public class Solution {
     }
 }
 
+https://discuss.leetcode.com/topic/41464/step-by-step-explanation-of-index-mapping-in-java
+https://discuss.leetcode.com/topic/32920/o-n-time-o-1-space-solution-with-detail-explanations
+
 Given an unsorted array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
 
 Example:

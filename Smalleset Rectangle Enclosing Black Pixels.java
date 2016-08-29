@@ -5,14 +5,14 @@ public class Solution {
         if(image==null || image.length==0 || image[0].length==0)
             return 0;
         dfs(image, x, y);
-        return (maxX-minX+1)*(maxY-minY+1);
+        return (maxX-minX+1)*(maxY-minY+1);     // careful
     }
     
     private void dfs(char[][] image, int x, int y) {
         if(x<0 || y<0 || x>=image.length || y>=image[0].length || image[x][y]!='1')
             return;
         image[x][y] = '0';
-        maxX = Math.max(maxX, x);                   // 对于每一个黑格子做dfs 维护maxX, maxY, minX, minY 最终计算面积
+        maxX = Math.max(maxX, x);                   
         minX = Math.min(minX, x);
         maxY = Math.max(maxY, y);
         minY = Math.min(minY, y);

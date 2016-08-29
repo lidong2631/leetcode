@@ -1,5 +1,45 @@
 public class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        List<Integer> res = new ArrayList<>();
+        if (n == 1) {
+            res.add(0);
+            return res;
+        }
+        List<List<Integer>> adjList = new ArrayList<List<Integer>>();
+        for (int i = 0; i < n; i++) {
+            adjList.add(new ArrayList<Integer>());
+        }
+        for (int[] edge : edges) {
+            adjList.get(edge[0]).add(edge[1]);
+            adjList.get(edge[1]).add(edge[0]);
+        }
+        List<Integer> leaves = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (adjList.get(i).size() == 1) leaves.add(i);
+        }
+        while (n > 2) {
+            List<Integer> newLeaves = new ArrayList<>();
+            n -= leaves.size();
+            for (Integer i : leaves) {          // careful need to write Integer not int
+                int j = adjList.get(i).get(0);
+                adjList.get(j).remove(i);       // careful
+                if (adjList.get(j).size() == 1) newLeaves.add(j);
+            }
+            leaves = newLeaves;
+        }
+        return leaves;
+    }
+}
+
+In Java List has 2 remove
+remove(Object o)
+remove(int index)
+here I use first one so in for loop need to write Integer otherwise it will use second method
+
+
+
+public class Solution {
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
         List<Integer> leaves = new ArrayList<Integer>();
         if(n==1) {
             leaves.add(0);

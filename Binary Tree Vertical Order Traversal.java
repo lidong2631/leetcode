@@ -10,38 +10,36 @@
 public class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if(root==null)
-            return res;
+        if (root == null) return res;
         
-        Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
-        Queue<TreeNode> q = new LinkedList<TreeNode>();
-        Queue<Integer> col = new LinkedList<Integer>();
-        
-        q.offer(root);
-        col.offer(0);
+        Queue<TreeNode > queue = new LinkedList<>();
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        Queue<Integer> indexList = new LinkedList<>();
+        queue.add(root);
+        indexList.add(0);
         
         int left = 0, right = 0;
-        while(!q.isEmpty()) {
-            TreeNode curr = q.poll();
-            int cur = col.poll();
+        while (!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
+            int pos = indexList.poll();
             
-            if(!map.containsKey(cur))
-                map.put(cur, new ArrayList<Integer>());
-            map.get(cur).add(curr.val);
+            if (!map.containsKey(pos)) map.put(pos, new ArrayList<Integer>());
+            map.get(pos).add(curr.val);
             
-            if(curr.left!=null) {
-                q.offer(curr.left);
-                col.offer(cur-1);
-                left = cur<=left?cur-1:left;
+            if (curr.left != null) {
+                queue.add(curr.left);
+                indexList.add(pos-1);
+                if (pos <= left) left = pos - 1;
             }
-            if(curr.right!=null) {
-                q.offer(curr.right); 
-                col.offer(cur+1);
-                right = cur>=right?cur+1:right;
+            if (curr.right != null) {
+                queue.add(curr.right);
+                indexList.add(pos+1);
+                if (pos >= right) right = pos + 1;
             }
         }
-        for(int i=left; i<=right; i++)
+        for (int i = left; i <= right; i++) {
             res.add(map.get(i));
+        }
         return res;
     }
 }
