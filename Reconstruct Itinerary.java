@@ -1,24 +1,21 @@
 public class Solution {
-    Map<String, PriorityQueue<String>> map;
-    LinkedList<String> res;                    // must declared as LinkedList because addFirst method only declared in LinedList
-    
     public List<String> findItinerary(String[][] tickets) {
-        map = new HashMap<String, PriorityQueue<String>>();
-        res = new LinkedList<String>();
+        LinkedList<String> res = new LinkedList<>();
+        Map<String, PriorityQueue<String>> map = new HashMap<>();
         
-        for(String[] ticket : tickets) {        // create map
-            map.putIfAbsent(ticket[0], new PriorityQueue<String>());
+        for (String[] ticket : tickets) {
+            if (!map.containsKey(ticket[0])) map.put(ticket[0], new PriorityQueue<String>());
             map.get(ticket[0]).add(ticket[1]);
         }
         
-        dfs("JFK");         //start from JFK doing DFS
+        dfs("JFK", res, map);
         return res;
     }
     
-    public void dfs(String depart) {
+    private void dfs(String depart, LinkedList<String> res, Map<String, PriorityQueue<String>> map) {
         PriorityQueue<String> arrivals = map.get(depart);
-        while(arrivals!=null && !arrivals.isEmpty()) {
-            dfs(arrivals.poll());
+        while (arrivals != null && !arrivals.isEmpty()) {
+            dfs(arrivals.poll(), res, map);
         }
         res.addFirst(depart);
     }
