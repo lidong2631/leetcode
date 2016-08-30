@@ -1,34 +1,49 @@
 public class Solution {
     public int calculate(String s) {
-        if(s==null || s.length()==0)
-            return 0;
-        Stack<Integer> stack = new Stack<Integer>();
-        int num = 0;
+        int res = 0, num = 0;
+        Stack<Integer> stack = new Stack<>();
         char sign = '+';
-        for(int i=0; i<s.length(); i++) {
-            if(Character.isDigit(s.charAt(i)))  //if the char is a number 
-                num=num*10+s.charAt(i)-'0';
-            if((!Character.isDigit(s.charAt(i)) && s.charAt(i)!=' ') || i==(s.length()-1)) {    // if current characte is operator or we reach end
-                if(sign=='+')
-                    stack.push(num);
-                if(sign=='-')
-                    stack.push(-num);
-                if(sign=='*')
-                    stack.push(stack.pop()*num);
-                if(sign=='/')
-                    stack.push(stack.pop()/num);
-                sign = s.charAt(i);             // each time set sign so next time when we reach 11 line if we can calculate result
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) num = 10*num + s.charAt(i) - '0';
+                
+            if ((!Character.isDigit(s.charAt(i)) && s.charAt(i) != ' ') || i == s.length() - 1) {   // careful cannot write else if and must
+                switch(sign) {                                                                  // state !Character.isDigit(s.charAt(i)) ex "42"
+                    case '+':
+                        stack.push(num);
+                        break;
+                    case '-':
+                        stack.push(-num);
+                        break;
+                    case '*':
+                        stack.push(stack.pop() * num);
+                        break;
+                    case '/':
+                        stack.push(stack.pop() / num);
+                }
+                sign = s.charAt(i);
                 num = 0;
             }
         }
-        int res = 0;
-        for(int i:stack)        // finally pop all elements out of stack
-            res+=i;
+        while (!stack.isEmpty())
+            res += stack.pop();
         return res;
     }
 }
+
 O(n) O(n)
 
-3+2*2
 
 https://leetcode.com/discuss/41902/share-my-java-solution
+
+
+Implement a basic calculator to evaluate a simple expression string.
+
+The expression string contains only non-negative integers, +, -, *, / operators and empty spaces . The integer division should truncate toward zero.
+
+You may assume that the given expression is always valid.
+
+Some examples:
+"3+2*2" = 7
+" 3/2 " = 1
+" 3+5 / 2 " = 5
+Note: Do not use the eval built-in library function.

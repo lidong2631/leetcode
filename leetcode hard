@@ -141,7 +141,6 @@ Reverse Words in a String (same as Length of Last Word)
 Shortest Palindrome
 The Skyline Problem
 Basic Calculator
-Basic Calculator II
 Verify Preorder Sequence in Binary Search Tree
 Paint House II
 Alien Dictionary
@@ -149,18 +148,43 @@ Closest Binary Search Tree Value II
 Expression Add Operators
 
 
+Isomorphic Strings
+Word Pattern
+
+
+Kth Largest Element in an Array (not same as k-sliding window !)
+
+
+review all the backtracking problems
+Combination Sum III (helper(num, k, n, 0, new ArrayList<Integer>(), res))
+
+
+(k-sliding-window) first insert k elements in a set then update it for the rest n-k elements
 while (i < nums.length) {
-		if (set.contains(nums[i])) return true;
-		else set.add(nums[i]);
-		i++;
-		if (i - j > k) set.remove(nums[j++]);
+	if (set.contains(nums[i])) return true;
+	else set.add(nums[i++]);
+	if (i - j > k) set.remove(nums[j++]);
 }
 Contains Duplicate II
 Contains Duplicate III
 
 
-Isomorphic Strings
-Word Pattern
+private int getLeftHeight(TreeNode root) {
+    int height = 0;
+    while (root != null) {
+        root = root.left;
+        height++;
+    }
+    return height;
+}
+calculate tree height
+Count Complete Tree Nodes
+
+
+low = n % factor;
+curr = (int)(n / factor % 10);
+high = n / (factor * 10)
+Number of Digit One
 
 
 Perfect Squares

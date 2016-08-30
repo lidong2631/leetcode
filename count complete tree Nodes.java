@@ -60,6 +60,34 @@ add all nodes in the right subtree (plus the parent node) and let the left subtr
 
 add all nodes in the left subtree (plus the parent node) and let the right subtree be the new tree
 
+1.
+                1
+               / \
+              1   1
+             / \  /\
+            1   1 1 1
+
+2.
+                1
+               / \
+              1   1
+             / \  /\
+            1   1 1 1
+           /
+          1
+
+3.
+                1
+               / \
+              1   1
+             / \  /\
+            1   1 1 1
+           / \  /\
+          1   1 1 1
+
+
+
+
 
 
 public class Solution {
