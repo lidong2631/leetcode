@@ -1,8 +1,7 @@
 public class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         int[] count = new int[256];
-        int distinct = 0;
-        int i = 0, j = 0, len = 0;
+        int i = 0, j = 0, distinct = 0, len = 0;
         while (i < s.length()) {
             if (count[s.charAt(i)] == 0) distinct++;
             count[s.charAt(i)]++;
