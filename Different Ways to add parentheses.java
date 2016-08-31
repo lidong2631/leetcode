@@ -3,29 +3,27 @@ public class Solution {
         List<Integer> res = new ArrayList<>();
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) == '+' || input.charAt(i) == '-' || input.charAt(i) == '*') {
-                String str1 = input.substring(0, i);
-                String str2 = input.substring(i+1);
-                List<Integer> l1 = diffWaysToCompute(str1);
-                List<Integer> l2 = diffWaysToCompute(str2);
-                int tmp = 0;
+                String s1 = input.substring(0, i), s2 = input.substring(i+1);
+                List<Integer> l1 = diffWaysToCompute(s1);
+                List<Integer> l2 = diffWaysToCompute(s2);
                 for (Integer i1 : l1) {
                     for (Integer i2 : l2) {
                         switch (input.charAt(i)) {
                             case '+':
-                                tmp = i1 + i2;
+                                res.add(i1+i2);
                                 break;
                             case '-':
-                                tmp = i1 - i2;
+                                res.add(i1-i2);
                                 break;
-                            default:
-                                tmp = i1 * i2;
+                            case '*':
+                                res.add(i1*i2);
+                                break;
                         }
-                        res.add(tmp);
                     }
                 }
             }
         }
-        if (res.size() == 0) res.add(Integer.valueOf(input));
+        if (res.size() == 0) res.add(Integer.parseInt(input));
         return res;
     }
 }
