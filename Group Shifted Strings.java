@@ -1,22 +1,18 @@
 public class Solution {
     public List<List<String>> groupStrings(String[] strings) {
-        List<List<String>> res = new ArrayList<List<String>>();
-        Map<String, List<String>> map = new HashMap<>();
+        List<List<String>> res = new LinkedList<List<String>>();
+        Map<String, List<String>> map = new HashMap<String, List<String>>();
         for (int i = 0; i < strings.length; i++) {
             int offset = strings[i].charAt(0) - 'a';
             StringBuffer sb = new StringBuffer();
             for (int j = 0; j < strings[i].length(); j++) {
-                char tmp = (char)(strings[i].charAt(j) - offset);
-                if (tmp < 'a') tmp += 26;
-                sb.append(tmp);
+                char curr = (char)(strings[i].charAt(j) - offset);
+                if (curr < 'a') curr += 26;
+                sb.append(curr);
             }
             String str = sb.toString();
-            if (map.containsKey(str)) map.get(str).add(strings[i]);
-            else {
-                List<String> list = new ArrayList<>();
-                list.add(strings[i]);
-                map.put(str, list);
-            }
+            if (!map.containsKey(str)) map.put(str, new LinkedList<String>());
+            map.get(str).add(strings[i]);
         }
         for (List<String> l : map.values()) {
             Collections.sort(l);

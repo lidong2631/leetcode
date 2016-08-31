@@ -149,6 +149,10 @@ Closest Binary Search Tree Value II
 Expression Add Operators
 
 
+Kth Largest Element in an Array
+Sliding Window Maximum
+
+
 while (i < nums.length) {
 		if (set.contains(nums[i])) return true;
 		else set.add(nums[i]);
@@ -163,6 +167,13 @@ Isomorphic Strings
 Word Pattern
 
 
+Shortest Word Distance
+Shortest Word Distance III
+
+
+Count Univalue Subtrees (Binary Tree Max Sum)
+
+
 Perfect Squares
 Longest Increasing Subsequence
 
@@ -171,6 +182,18 @@ Flat 2D Vector
 Zigzag Iterator
 Peeking Iterator
 Binary Search Tree Iterator
+
+
+Factor Combination
+Combination Sum III
+
+
+Binary Tree Paths
+Path Sum II
+
+
+Add Digits
+Happy Number
 
 
 Find the Duplicate Number
