@@ -240,6 +240,8 @@ Create Maximum Number
 Wiggle Sort II
 Verify Preorder Serialization of a Binary Tree
 Self Crossing
+Rearrange Strin k Distance Apart
+Max Sum of Rectangle No Larger Than K
 
 
 bottom up
@@ -253,3 +255,11 @@ Flatten Nested List Iterator (Flat 2D Vector/Zigzag Iterator/Peeking Iterator/Bi
 
 
 Top K Frequent Elements (Kth Largest Element in Array)
+
+
+Nested List Weight Sum
+Nested List Weight Sum II
+
+
+bottom up
+Find Leaves of Binary Tree (Binary Tree Level Order Traversal)

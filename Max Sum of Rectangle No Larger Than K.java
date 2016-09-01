@@ -42,11 +42,20 @@ The rectangle inside the matrix must have an area > 0.
 What if the number of rows is much larger than the number of columns?
 
 
+Maximum Sum Rectangular Submatrix in Matrix (dp/2D kadane) + Max Sum of Subarray No Larger Than K (see below)
+https://leetcode.com/discuss/109749/accepted-c-codes-with-explanation-and-references
+
+O(min(m,n)^2 * max(m,n) * log(max(m,n))) O(max(m,n))
+
+
+
 
 
 related problem Maximum Sum Rectangular Submatrix in Matrix 2D Kadane O(col*col*row) O(row)
 https://www.youtube.com/watch?v=yCQN096CwWM
 
+
+Max Sum of Subarray No Larger Than K
 Given an array of integers A and an integer k, find a subarray that contains the largest sum, subject to a constraint that the sum is less than k
 https://www.quora.com/Given-an-array-of-integers-A-and-an-integer-k-find-a-subarray-that-contains-the-largest-sum-subject-to-a-constraint-that-the-sum-is-less-than-k
 
@@ -64,4 +73,5 @@ public int maxSumLessEqualK(int[] nums, int k) {
     return res;
 }
 
-https://leetcode.com/discuss/109749/accepted-c-codes-with-explanation-and-references
+O(nlogn)
+

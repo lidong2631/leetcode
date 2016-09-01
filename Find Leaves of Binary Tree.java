@@ -8,20 +8,16 @@
  * }
  */
 public class Solution {
-    
-    private List<List<Integer>> res = new ArrayList<List<Integer>>();
-    
     public List<List<Integer>> findLeaves(TreeNode root) {
-        helper(root);
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        helper(root, res);
         return res;
     }
     
-    private int helper(TreeNode root) {
+    private int helper(TreeNode root, List<List<Integer>> res ) {
         if (root == null) return -1;
-        
-        int level = 1 + Math.max(helper(root.left), helper(root.right));
-        if (res.size() < level + 1)
-            res.add(new ArrayList<Integer>());
+        int level = 1 + Math.max(helper(root.left, res), helper(root.right, res));
+        if (res.size() < level + 1) res.add(new ArrayList<Integer>());
         res.get(level).add(root.val);
         return level;
     }

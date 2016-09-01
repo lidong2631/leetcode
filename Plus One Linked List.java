@@ -8,28 +8,24 @@
  */
 public class Solution {
     public ListNode plusOne(ListNode head) {
-        if (helper(head) == 0)
-            return head;
-        else {
-            ListNode newHead = new ListNode(1);
-            newHead.next = head;
-            return newHead;
-        }
+        if (helper(head) == 0) return head;
+        ListNode dummy = new ListNode(1);
+        dummy.next = head;
+        return dummy;
     }
     
-    private int helper(ListNode head) {
-        if (head == null) return 1;
+    private int helper(ListNode p) {
+        if (p == null) return 1;
         
-        int carry = helper(head.next);
+        int carry = helper(p.next);
         
         if (carry == 0) return 0;
         
-        int tmp = head.val + 1;
-        head.val = tmp % 10;
+        int tmp = p.val + carry;
+        p.val = tmp % 10;
         return tmp / 10;
     }
 }
-
 
 Given a non-negative number represented as a singly linked list of digits, plus one to the number.
 

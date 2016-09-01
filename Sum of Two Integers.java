@@ -1,11 +1,7 @@
 public class Solution {
     public int getSum(int a, int b) {
-        if (b == 0) return a;
-        int sum = 0, carry = 0;
-        sum = a ^ b;
-        carry += (a & b) << 1;
-        return getSum(sum, carry);
+        return b == 0 ? a : getSum(a^b, (a&b)<<1);
     }
 }
 
-https://discuss.leetcode.com/category/455/sum-of-two-integers
+https://discuss.leetcode.com/topic/49870/one-liner-with-detailed-explanation

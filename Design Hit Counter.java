@@ -11,7 +11,7 @@ public class HitCounter {
         @param timestamp - The current timestamp (in seconds granularity). */
     public void hit(int timestamp) {
         deque.addLast(timestamp);
-        if (deque.getLast() - deque.getFirst() >= 300)
+        while (deque.getLast() - deque.getFirst() >= 300)
             deque.removeFirst();
     }
     
