@@ -197,32 +197,107 @@ bottom up
 Count Univalue Subtrees (Binary Tree Max Sum)
 
 
+Factor Combination (helper(n/i, i, list, res))
+Combination Sum III (helper(k, n-i, i+1, list, res))
+
+
+if (root == null) ...
+if (root.left == null && root.right == null && sum == 0) ...
+if (root.left != null) ...
+if (root.right != null) ...
+Binary Tree Paths (only has 2 3 4, remember pathStr)
+Path Sum II
+
+
+int fac = 1;
+while (num / fac >= 10) fac *= 10;
+while (num != 0) {
+	tmp += num / fac;
+	num %= fac;
+	fac /= 10;
+}
+num = tmp; tmp = 0;
+Add Digits
+Happy Number
+
+
+Arrays.sort(nums);
+for (int i = nums.length - 1; i >= 2; i--) {
+	// while (left < right) (if nums[left] + nums[right] + nums[i] < target) count+=right-left; left++; else right--;
+	// call 2sum subroutine
+	// call 2sum Closest
+}
+3Sum Smaller
+
+
+Single Number III (diff &= ~(diff - 1))
+
+
+int x = find(parent, edges[i][0]), y = find(parent, edges[i][1]);
+if (x == y) return false;
+parent[x] = y;
+
+int find(int[] parent, int i) {
+	if (parent[i] == -1) return i;
+	return find(parent, parent[i]);
+}
+Graph Valid Tree
+
+
+create Map<Character, Integer>
+add half number of all chars into a list
+helper(list, mid, new StringBuffer(), new boolean[list.size()], res) (use Permutaion subroutine)
+Palindrome Permutation
+
+
+for (int i = 0; i < nums.length; i++) {
+	if (nums[i] < nums.length && nums[i] != nums[nums[i]]) {	// slightly difference
+		int tmp = nums[nums[i]];
+		nums[nums[i]] = nums[i];
+		nums[i] = tmp;
+		i--;
+	}
+}
+Find the Duplicate Number
+Missing Number
+First Missing Positive (1-100)
+
+
+Paint Fence (Count Numbers with Unique Digit)
+
+
 Perfect Squares
 Longest Increasing Subsequence
 
 
 Flat 2D Vector
+
+Deque<Iterator> list
+Iterator i = list.removeFirst();
+int tmp = (int)i.next();
+if (i.hasNext()) list.addLast(i);	// idea like implements Stack using Queue
 Zigzag Iterator
+
+hasPeeked / peekElement
+peek() {
+	if (!hasPeeked) set peekElement / hasPeeked
+	return peekElement
+}
+next() {
+	if (hasPeeked) set tmp / peekElement / hasPeeked return tmp
+	return i.next()
+}
 Peeking Iterator
+
 Binary Search Tree Iterator
 
 
-Factor Combination
-Combination Sum III
-
-
-Binary Tree Paths
-Path Sum II
-
-
-Add Digits
-Happy Number
-
-
-Find the Duplicate Number
-Missing Number
-First Missing Positive (1-100)
-
+// when node has no right subtree
+while (root != null) {
+	if (root.val > p.val) successor = root; root = root.left;
+	else root = root.right;
+}
+Inorder Successor in BST
 
 
 
@@ -263,3 +338,10 @@ Nested List Weight Sum II
 
 bottom up
 Find Leaves of Binary Tree (Binary Tree Level Order Traversal)
+
+
+Combination Sum IV(Longest Increasing Subsequence review I II III)
+
+
+Kth Smallest Element in a Sorted Matrix
+Find K Pairs with Smallest Sums

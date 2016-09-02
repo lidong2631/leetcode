@@ -1,10 +1,10 @@
 public class Solution {
     public void wiggleSort(int[] nums) {
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 1; i < nums.length; i++) {
             if (i % 2 == 1) {   // careful cannot write i % 2 == 1 && nums[i-1] > nums[i] otherwise it will goto else if
                 if (nums[i-1] > nums[i]) swap(nums, i-1, i);
             }
-            else if (i != 0 && nums[i-1] < nums[i]) swap(nums, i-1, i);
+            else if (nums[i-1] < nums[i]) swap(nums, i-1, i);
         }
     }
     

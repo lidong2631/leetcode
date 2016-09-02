@@ -1,13 +1,13 @@
 public class Solution {
     public int hIndex(int[] citations) {
         int left = 0, right = citations.length - 1;
-        while (left <= right) {
+        while (left <= right) {     // careful
             int mid = (left + right) / 2;
             if (citations[mid] == citations.length - mid) return citations.length - mid;
             else if (citations[mid] > citations.length - mid) right = mid - 1;
             else left = mid + 1;
         }
-        return citations.length - left;
+        return citations.length - left;     // careful
     }
 }
 
@@ -22,6 +22,14 @@ Just binary search, each time check citations[mid]
 case 1: citations[mid] == len-mid, then it means there are citations[mid] papers that have at least citations[mid] citations.
 case 2: citations[mid] > len-mid, then it means there are citations[mid] papers that have moret than citations[mid] citations, so we should continue searching in the left half
 case 3: citations[mid] < len-mid, we should continue searching in the right side
+
+
+0 1 3 5 6
+
+0 1 4 5 6
+
+0 1 1 5 6
+
 
 https://discuss.leetcode.com/topic/23399/standard-binary-search
 https://discuss.leetcode.com/topic/23424/java-binary-search-simple-and-clean

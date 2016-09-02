@@ -1,39 +1,35 @@
 public class Solution {
     public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
-        List<int[]> res = new ArrayList<int[]>();
-        if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0 || k == 0)
-            return res;
-            
-        PriorityQueue<Tuple> queue = new PriorityQueue<Tuple>(nums1.length, new Comparator<Tuple>() {
-            public int compare(Tuple t1, Tuple t2) {
-                return t1.val - t2.val;
+        List<int[]> res = new ArrayList<>();
+        if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0 || k == 0) return res;
+        
+        PriorityQueue<int[]> heap = new PriorityQueue<>(nums1.length, new Comparator<int[]>() {
+            public int compare(int[] arr1, int[] arr2) {
+                return arr1[0] - arr2[0];
             }
         });
-        for (int i = 0; i < nums1.length; i++) {                // add first column (every element in nums1 only first element in nums2)
-            queue.offer(new Tuple(i, 0, nums1[i]+nums2[0]));
+        
+        for (int i = 0; i < nums1.length; i++) {    // add first column (every element in nums1 only first element in nums2)
+            heap.offer(new int[]{nums1[i]+nums2[0], i, 0});
         }
-        while (k-->0 && !queue.isEmpty()) {
-            Tuple curr = queue.poll();
-            res.add(new int[]{nums1[curr.index1], nums2[curr.index2]});
-            if (curr.index2 + 1 < nums2.length)                 // every time only all element right and ignore below to avoid duplicate
-                queue.offer(new Tuple(curr.index1, curr.index2+1, nums1[curr.index1]+nums2[curr.index2+1]));
+        
+        while (k-- > 0 && !heap.isEmpty()) {
+            int[] curr = heap.poll();
+            res.add(new int[]{nums1[curr[1]], nums2[curr[2]]});
+            if (curr[2] + 1 < nums2.length)     // every time only all element right and ignore below to avoid duplicate
+                heap.offer(new int[]{nums1[curr[1]]+nums2[curr[2]+1], curr[1], curr[2]+1});
         }
         return res;
     }
 }
 
-class Tuple {
-    int index1;
-    int index2;
-    int val;
-    
-    public Tuple(int id1, int id2, int val) {
-        this.index1 = id1;
-        this.index2 = id2;
-        this.val = val;
-    }
-}
+same as Kth Smallest Element in a Sorted Matrix
 
+        nums2
+nums1   2  4  6
+    1   3  5  7
+    7   9  11 13
+    11  13 15 17
 
 You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k.
 

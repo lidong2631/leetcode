@@ -14,7 +14,7 @@ public class Codec {
         int i = 0;
         List<String> res = new ArrayList<>();
         while (i < s.length()) {
-            int slash = s.indexOf("/", i);
+            int slash = s.indexOf("/", i);  // careful s.indexOf("/", i)
             int len = Integer.parseInt(s.substring(i, slash));
             String str = s.substring(slash+1, slash+1+len);
             i = slash + 1 + len;

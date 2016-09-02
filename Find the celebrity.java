@@ -8,8 +8,9 @@ public class Solution extends Relation {
             if (!knows(i, celebrity)) celebrity = i;
         }
         for (int i = 0; i < n; i++) {
-            if (i == celebrity) continue;
-            if (!knows(i, celebrity) || knows(celebrity, i)) return -1;
+            if (celebrity != i) {
+                if (!knows(i, celebrity) || knows(celebrity, i)) return -1;
+            }
         }
         return celebrity;
     }
