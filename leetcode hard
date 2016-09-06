@@ -1,6 +1,4 @@
 1 - 100
-median of two sorted arrays
-zigzag conversion
 regular expression matching
 4Sum
 divide two integers
@@ -13,6 +11,62 @@ text justification
 edit distance
 minimum window substring
 scramble string
+
+
+
+Add Two Number (left to right)
+Plus One (left to right)
+Plus One Linked List (right to left)
+
+
+left = i - (len-1)/2; right = i + len/2
+int getPalindromeLength(String str, int left, int right)
+    while (left >=0 && right <= str.length()-1 && str.charAt(left) == str.charAt(right))
+        left++; right--;
+    return right - left - 1;
+Longest Palindromic Substring
+
+
+while num != 0
+    num = 10*res + num%10;
+    num/=10;
+Reverse Integer     (to get last digit of number use num % 10)
+if x / radix != x % 10 return false
+x = (x % radix) / 10;
+Palindrom Number (to get first digit of number use num / radix, to cut first digit use num % radix, to cut last digit num / 10)
+
+
+String to Integer(atoi) (Valid Number)
+
+
+boolean[][] dp = new boolean[p.length()+1][s.length()+1]; dp[0][0] = true;
+for (int i = 0; i < p.length(); i++) if (p.charAt(i) == '*' && dp[0][i-1]) dp[0][i] = true;
+for i - s.length()
+    for j - p.length()
+        if p.charAt(j) == s.charAt(i) || p.charAt(j) == '.'
+        if p.charAt(j) == '*'
+            if p.charAt(j-1) != s.charAt(i) && p.charAt(j-1) != '.' dp[i+1][j+1] = dp[i+1][j-1]
+            else dp[i+1][j+1] = dp[i+1][j-1] || dp[i+1][j] || dp[i][j+1]
+Regular Expression Matching
+dp[0][0] = true;
+for (int i = 0; i < p.length(); i++)
+    if (p.charAt(i) != '*')
+        for (int j = 0; j < s.length(); j++) dp[i+1][j+1] = dp[i][j] && (p.charAt(i) == s.charAt(j) || p.charAt(i) == '?')
+    else k = 0; while (k <= s.length() && !dp[i][k++])
+        while (k <= s.length()) dp[i+1][k++] = true;
+Wildcard Matching
+
+
+String[] roman = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+int[] n = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+for i - n
+    while num >= n[i]
+        num -= n[i]; sb.append(roman[i])
+Integer to Roman
+map.put(IVXLCDM 1 5 10 50 100 500 1000)
+for c : s.toCharArray()
+    int curr = map.get(c); res += (curr>prev)?curr-2*prev:curr; prev = curr;
+Roman to Integer
 
 
 LinkedList:

@@ -45,33 +45,38 @@ class Solution:
 
 
 public class Solution {
-    public double findMedianSortedArrays(int A[], int B[]) {
-        if((A.length+B.length)%2==1)
-            return helper(A, B, 0, A.length-1, 0, B.length-1, (A.length+B.length)/2+1);
-        else
-            return (helper(A, B, 0, A.length-1, 0, B.length-1, (A.length+B.length)/2+1) + 
-                    helper(A, B, 0, A.length-1, 0, B.length-1, (A.length+B.length)/2))/2.0; //注意除以2.0
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if ((nums1.length + nums2.length) % 2 == 1)
+            return (double)helper(nums1, 0, nums1.length-1, nums2, 0, nums2.length-1, (nums1.length+nums2.length)/2+1);
+        else 
+            return (helper(nums1, 0, nums1.length-1, nums2, 0, nums2.length-1, (nums1.length+nums2.length)/2) +
+                    helper(nums1, 0, nums1.length-1, nums2, 0, nums2.length-1, (nums1.length+nums2.length)/2+1))/2.0;
     }
     
-    private int helper(int A[], int B[], int startA, int endA, int startB, int endB, int k) {
-        int lenA = endA-startA+1;   //先算两数组长度
-        int lenB = endB-startB+1;
-        if(lenA>lenB)               //总是把长度长的数组放后面
-            return helper(B, A, startB, endB, startA, endA, k);
-        if(lenA==0)                 //如果A长度为0 则说明中位数在B数组中 将当前B的起始位置＋当前还剩的k位置－1
+    private int helper(int[] A, int startA, int endA, int[] B, int startB, int endB, int k) {
+        int lenA = endA - startA + 1, lenB = endB - startB + 1;
+        if (lenA > lenB) 
+            return helper(B, startB, endB, A, startA, endA, k);
+        if (lenA == 0) 
             return B[startB+k-1];
-        if(k==1)                    //如果k为1 则中位数为A和B数组中的最小值 返回A[startA],B[startB]中的较小值
+        if (k == 1) 
             return Math.min(A[startA], B[startB]);
-        int posA = Math.min(k/2, lenA); //正常情况每次两数组各取k/2 当lenA比k/2小时取lenA lenB长度永远大于等于lenA
-        int posB = k-posA;              //lenB取相应的值
-        if(A[startA+posA-1]==B[startB+posB-1])  //判断三种情况 如果相等就返回 不等就踢掉小的那个数组的start到pos的值继续递归
+            
+        int posA = Math.min(k/2, lenA), posB = k - posA;
+        if (A[startA+posA-1] == B[startB+posB-1]) 
             return A[startA+posA-1];
-        else if(A[startA+posA-1]<B[startB+posB-1])
-            return helper(A, B, startA+posA, endA, startB, startB+posB-1, k-posA);  //这里startB+posB-1可以换成endB或startB+posB都可以
+        else if (A[startA+posA-1] < B[startB+posB-1])
+            return helper(A, startA+posA, endA, B, startB, startB+posB-1, k-posA);  // careful startA+posA
         else
-            return helper(A, B, startA, startA+posA-1, startB+posB, endB, k-posB); //这里同理startA+posA-1可以替换
+            return helper(A, startA, startA+posA-1, B, startB+posB, endB, k-posB);
     }
 }
+
+A = {1，3，5，7}；B = {2，4，6，8，9，10}；如果要求第7个小的数
+
+k/2 = 7/2 = 3，而A中的第3个数A[2]=5；B中的第3个数B[2]=6；而A[2]<B[2]
+
+A = {7}, B = {2, 4, 6}
 
 这题要好好理解 主要是k/2那里 每次通过比较值踢掉小的那个数组start到pos的值 另外扩展看topK问题还有算法导论10.3 order statistics
 
