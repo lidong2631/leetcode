@@ -37,7 +37,7 @@ res[0](node) = res[1](node.left) + res[1](node.right) and
 res[1](node) = max( res[0](node.left)+res[0](node.right)+node.value, res[1](node) )
 
 
-                3
+                3 (3+1+3, 3+3)
                / \
      (3,3)    2   3     (1,3)
                \   \

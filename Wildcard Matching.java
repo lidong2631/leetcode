@@ -1,26 +1,56 @@
 public class Solution {
     public boolean isMatch(String s, String p) {
-        boolean[][] res = new boolean[s.length()+1][p.length()+1];
-        res[0][0] = true;
+        boolean[][] dp = new boolean[p.length()+1][s.length()+1];
+        dp[0][0] = true;
         for (int i = 0; i < p.length(); i++) {
             if (p.charAt(i) != '*') {
                 for (int j = 0; j < s.length(); j++) {
-                    res[j+1][i+1] = res[j][i] && (p.charAt(i) == '?' || p.charAt(i) == s.charAt(j));
+                    dp[i+1][j+1] = dp[i][j] && (p.charAt(i) == '?' || p.charAt(i) == s.charAt(j));
                 }
             }
             else {
                 int k = 0;
-                while (k <= s.length() && !res[k][i])
+                while (k <= s.length() && !dp[i][k])    // careful dp[i][k]
                     k++;
                 while (k <= s.length())
-                    res[k++][i+1] = true;
+                    dp[i+1][k++] = true;            // careful dp[i+1][k++]
             }
         }
-        return res[s.length()][p.length()];
+        return dp[p.length()][s.length()];
     }
 }
 
 O(mn) O(mn)
+ 
+
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        int indexP = 0, indexS = 0, match = 0, starIndex = -1;
+        while (indexS < s.length()) {
+            if (indexP < p.length() && (p.charAt(indexP) == '?' || p.charAt(indexP) == s.charAt(indexS))) {
+                indexP++;
+                indexS++;
+            }
+            else if (indexP < p.length() && p.charAt(indexP) == '*') {
+                starIndex = indexP;
+                match = indexS;
+                indexP++;
+            }
+            else if (starIndex != -1) {
+                indexP = starIndex + 1;
+                match++;
+                indexS = match;
+            }
+            else return false;
+        }
+        while (indexP < p.length() && p.charAt(indexP) == '*')
+            indexP++;
+        return indexP == p.length();
+    }
+}
+brute force
+
+https://discuss.leetcode.com/topic/3040/linear-runtime-and-constant-space-solution/17
 
 
 

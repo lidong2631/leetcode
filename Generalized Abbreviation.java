@@ -7,7 +7,7 @@ public class Solution {
     
     private void helper(String word, List<String> res, int index, String curr, int count) {
         if (index == word.length()) {
-            if (count != 0) curr += count;
+            if (count != 0) curr += count;  // careful
             res.add(curr);
             return;
         }

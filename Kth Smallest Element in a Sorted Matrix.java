@@ -1,22 +1,23 @@
 public class Solution {
     public int kthSmallest(int[][] matrix, int k) {
-        PriorityQueue<int[]> queue = new PriorityQueue<>(k, new Comparator<int[]>() {
-            public int compare(int[] a, int[] b) {
-                return a[0] - b[0];
-            } 
+        PriorityQueue<int[]> heap = new PriorityQueue<int[]>(matrix.length, new Comparator<int[]>() {
+            public int compare(int[] a1, int[] a2) {
+                return a1[0] - a2[0];
+            }
         });
-        queue.offer(new int[]{matrix[0][0], 0, 0});
         int[] res = new int[3];
+        for (int i = 0; i < matrix.length; i++) {
+            heap.offer(new int[]{matrix[i][0], i, 0});
+        }
         while (k-- > 0) {
-            res = queue.poll();
-            if (res[1] == 0 && res[2] + 1 < matrix[0].length)               // when in row 1 push right element
-                queue.offer(new int[]{matrix[0][res[2]+1], 0, res[2]+1});
-            if (res[1] + 1 < matrix.length)                                 // always push below element
-                queue.offer(new int[]{matrix[res[1]+1][res[2]], res[1]+1, res[2]});
+            res = heap.poll();
+            if (res[2] + 1 < matrix[0].length) heap.offer(new int[]{matrix[res[1]][res[2]+1], res[1], res[2]+1});
         }
         return res[0];
     }
 }
+
+same as Find Kth Pairs with Smallest Sums
 
 Given a n x n matrix where each of the rows and columns are sorted in ascending order, find the kth smallest element in the matrix.
 

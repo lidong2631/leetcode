@@ -11,30 +11,29 @@ public class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         if (root == null) return res;
-        
-        Queue<TreeNode > queue = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         Map<Integer, List<Integer>> map = new HashMap<>();
-        Queue<Integer> indexList = new LinkedList<>();
+        Queue<Integer> index = new LinkedList<>();
         queue.add(root);
-        indexList.add(0);
+        index.add(0);
         
         int left = 0, right = 0;
         while (!queue.isEmpty()) {
             TreeNode curr = queue.poll();
-            int pos = indexList.poll();
+            int i = index.poll();
             
-            if (!map.containsKey(pos)) map.put(pos, new ArrayList<Integer>());
-            map.get(pos).add(curr.val);
+            if (!map.containsKey(i)) map.put(i, new ArrayList<Integer>());
+            map.get(i).add(curr.val);
             
             if (curr.left != null) {
                 queue.add(curr.left);
-                indexList.add(pos-1);
-                if (pos <= left) left = pos - 1;
+                index.add(i - 1);
+                if (left > i - 1) left = i - 1;
             }
             if (curr.right != null) {
                 queue.add(curr.right);
-                indexList.add(pos+1);
-                if (pos >= right) right = pos + 1;
+                index.add(i + 1);
+                if (right < i + 1) right = i + 1;
             }
         }
         for (int i = left; i <= right; i++) {

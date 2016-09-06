@@ -1,11 +1,10 @@
 public class Solution {
     public int countNumbersWithUniqueDigits(int n) {
         if (n == 0) return 1;
-        
-        int uniq = 9, avail = 9, i = 2, res = 10;
-        while (i <= Math.min(10, n) && avail > 0) {
+        int res = 10, uniq = 9, avail = 9, i = 2;
+        while (i <= Math.min(10, n)) {
             res += uniq * avail;
-            uniq *= avail;
+            uniq = uniq * avail;
             avail--;
             i++;
         }

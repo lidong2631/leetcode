@@ -17,8 +17,7 @@
  */
 public class Solution {
     public int depthSum(List<NestedInteger> nestedList) {
-        int[] res = new int[1];
-        int level = 1;
+        int[] res = new int[1]; 
         dfs(nestedList, 1, res);
         return res[0];
     }

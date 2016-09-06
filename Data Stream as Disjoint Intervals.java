@@ -19,8 +19,8 @@ public class SummaryRanges {
     public void addNum(int val) {
         if (tree.containsKey(val)) return;
         
-        Integer left = tree.lowerKey(val);      // least key strictly greater than the given key
-        Integer right = tree.higherKey(val);    // the greatest key strictly less than the given key
+        Integer left = tree.lowerKey(val);      // Returns the greatest key strictly less than the given key, or null if there is no such key.
+        Integer right = tree.higherKey(val);    // Returns the least key strictly greater than the given key, or null if there is no such key.
         
         if (left != null && right != null && tree.get(left).end + 1 == val && right - 1 == val) {
             tree.get(left).end = tree.get(right).end;   // insert 2 into [1,1], [3,3]

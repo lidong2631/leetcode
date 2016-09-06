@@ -23,7 +23,7 @@ public class Solution {
                 sb.append(str.charAt(i++));
             }
             i++;
-            if (sb.length() == 0) return false;     // careful
+            if (sb.length() == 0) return false;     // careful check
             String tmp = sb.toString();
             if (map1.containsKey(c)) {
                 if (!map1.get(c).equals(tmp)) return false;
@@ -31,12 +31,10 @@ public class Solution {
             if (map2.containsKey(tmp)) {
                 if (map2.get(tmp) != c) return false;
             }
-            else {
-                map1.put(c, tmp);
-                map2.put(tmp, c);
-            }
+            map1.put(c, tmp);
+            map2.put(tmp, c);
         }
-        return i == str.length() + 1;   // careful
+        return i == str.length() + 1;   // careful check
     }
 }
 

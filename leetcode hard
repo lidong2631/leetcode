@@ -146,11 +146,8 @@ Paint House II
 Alien Dictionary
 Closest Binary Search Tree Value II
 Expression Add Operators
+Word Pattern II
 
-
-
-Isomorphic Strings
-Word Pattern
 
 
 Kth Largest Element in an Array (not same as k-sliding window !)
@@ -194,7 +191,7 @@ Shortest Word Distance III
 
 
 bottom up
-Count Univalue Subtrees (Binary Tree Max Sum)
+Count Univalue Subtrees (Binary Tree Max Sum )
 
 
 Factor Combination (helper(n/i, i, list, res))
@@ -266,6 +263,15 @@ First Missing Positive (1-100)
 Paint Fence (Count Numbers with Unique Digit)
 
 
+int[] dp = new int[n];
+for (int i = 0; i < n; i++) {
+    dp[i] = 1;
+    for (int j = 0; j < i; j++) {
+        if (nums[j] < nums[i]) dp[i] = Math.max(dp[i], dp[i] + 1);
+    }
+    maxLen = Math.max(maxLen, dp[i]);
+}
+return maxLen;
 Perfect Squares
 Longest Increasing Subsequence
 
@@ -300,23 +306,167 @@ while (root != null) {
 Inorder Successor in BST
 
 
+for (Character c : pattern.toCharArray()) {
+    // get string separated by space
+    if (sb.toString() == 0) return false;
+    if (map1.containsKey(c)) {
+        if (!map1.get(c).equals(tmp)) return false;
+    }
+    if (map2.containsKey(tmp)) {
+        if (map2.get(tmp) != c) return false;
+    }
+    map1.put(c, tmp);
+    map2.put(tmp, c);
+}
+return i == str.length() + 1;
+Word Pattern
+Isomorphic Strings (easier)
+
+
+Binary Tree Longest Consecutive Sequence (Balanced Binary Tree / Binary Tree Max Sum)
+
+
 
 
 301 - 400
-Number of Islands II
 Additive Number
 Range Sum Query - Mutable
 Range Sum Query 2D - Mutable
 Best Time to Buy and Sell Stock with Cooldown
-Sparse Matrix Multiplication
 Burst Balloons
 Shortest Distance from All Buildings
 Create Maximum Number
 Wiggle Sort II
 Verify Preorder Serialization of a Binary Tree
+Largest BST Subtree
 Self Crossing
 Rearrange Strin k Distance Apart
 Max Sum of Rectangle No Larger Than K
+
+
+BFS
+Queue<String>
+Set<String>
+while (!queue.isEmpty()) {
+    // every time remove a parentheses and if it is valid add to queue
+}
+boolean isValid(String s) {
+    int count = 0;
+    for(int i=0; i<s.length(); i++) {
+        if(s.charAt(i)=='(') count++;
+        if(s.charAt(i)==')' && count--==0) return false;
+    }
+    return count==0;
+}
+Remove Invalid Parenthese
+
+
+int maxX = 0, maxY = 0, minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE;
+dfs(image, x, y);
+return (maxX-minX+1) * (maxY-minY+1);
+dfs() {
+    image[x][y] = '0';
+    dfs(image, x+1, y); dfs(image, x-1, y); dfs(image, x, y+1); dfs(image, x, y-1);
+}
+Smallest Rectangle Enclosing Black Pixels
+
+
+Union Find
+for (int[] pos : positions) {
+    arr[index] = index;
+    ...
+    for (int[] move : moves) {
+        // get new pos if it != -1 union and count--
+    }
+}
+int find(int[] parent, int i)
+Number of Islands II
+
+
+create adjList and leaves
+while (n > 2) {
+    List<Integer> newLeaves = new ArrayList<>();
+    n -= leaves.size();
+    move leaves and add new leaves
+    leaves = newLeaves;
+}
+Minimum Height Tree
+
+
+Queue<TreeNode> queue = new LinkedList<>();
+Map<Integer, List<Integer>> map = new HashMap<>();
+Queue<Integer> index = new LinkedList<>();
+queue.add(root); index.add(0);
+int left = 0, right = 0;
+while (!queue.isEmpty()) {
+    if (map)
+    if (curr.left != null)
+    if (curr.right != null)
+}
+Binary Tree Vertical Order Traversal
+
+
+TreeNode (left/right/val/count)
+insertNode(int val, TreeNode root) {
+    while (true) {
+        if (root.val >= val)
+        else
+    }
+}
+Count of Smaller Numbers After Self
+
+
+Stack<Character>
+visited[26]
+count[26]
+for (int i = 0; i < s.length(); i++) {
+    ...
+    while(!stack.isEmpty() && stack.peek() > c && count[c-'a'] > 0) {
+        visited[stack.peek()-'a'] = false;
+        stack.pop();
+    }
+    stack.push(c);
+    visited[c] = true;
+}
+Remove Duplicate Letters
+
+
+int[] arr = new int[words.length];
+for every arr[i] calculate arr[i] |= 1 << (tmp.charAt(j)-'a')
+Maximum Product of Word Lengths
+
+
+helper(word, res, index+1, curr, count+1);
+helper(word, res, index+1, curr + (count == 0 ? "" : count) + word.charAt(index), 0);
+Generalized Abbreviation (helper(word, res, 0, "", 0))
+
+
+Number of Connected Components in an Undirected Graph (Graph Valid Tree)
+
+
+if (sum == k)
+if (map.containKey(sum-k))
+if (!map.containsKey(sum))
+Maximum Size Subarray Sum Equals k
+
+dfs(int i, int j, int[][] matrix, int[][] cache) {
+    if (cache[i][j] > 0) return cache[i][j];
+    int curr = 0;
+    for (k = 0; k < 4...) {
+        if (increase)
+            curr = Math.max(curr, dfs())
+    }
+    cache[i][j] = curr + 1;
+    return cache[i][j];
+}
+Longest Increasing Path in a Matrix
+
+
+dfs("JFK", res, map)
+Reconstruct Itinerary
+
+
+Increasing Triplet Subsequence (Max Diff in Array / Best Time buy stock i)
 
 
 bottom up
@@ -326,13 +476,58 @@ House Robber III (Count Univalue Subtrees, Binary Tree Max Sum, Balanced Tree)
 Counting Bits (Grey Code)
 
 
+Stack<NestedInteger> stack
 Flatten Nested List Iterator (Flat 2D Vector/Zigzag Iterator/Peeking Iterator/Binary Search Tree Iterator)
+
+
+always has a 3
+Integer Break
 
 
 Top K Frequent Elements (Kth Largest Element in Array)
 
 
+
+Data Stream as Disjoint Intervals
+
+
+Count Numbers with Unique Digits (Paint Fence)
+
+
+Logger Rate Limiter (Map<String, Integer>)
+Design Hit Counter (Deque<Integer>))
+
+
+Sorted Transformed Array (a>0 parabola open upward a<0 parabola open downward)
+
+
+int rowCount; int[] colCount;
+for (i) {
+    for (j) {
+        if (j == 0 || grid[i][j-1] == 'W')
+        if (i == 0 || grid[i-1][j] == 'W')
+        if (grid[i][j] == '0') res = Math.max
+    }
+}
+Bomb Enemy
+
+
+currSum += nums[i];
+Integer curr = set.ceiling(currSum - k);
+if (curr != null) res = Math.max(res, currSum - curr);
+set.add(currSum);
+Max Sum of Rectangle No Larger Than k (Maximum Size Subarray Sum Equals k / Minimum Size )
+
+
+if (ni.isInteger()) res[0] += (int)ni.getInteger() * level;
+else dfs(ni.getList(), level+1, res);
 Nested List Weight Sum
+int intSum = prev, listSum = 0;
+for 
+    if (ni.isInteger()) intSum += ni.getInteger();
+    else list.addAll(ni.getList());
+if (list.size() > 0) listSum = helper(list, intSum);
+return intSum + listSum;
 Nested List Weight Sum II
 
 
@@ -340,8 +535,38 @@ bottom up
 Find Leaves of Binary Tree (Binary Tree Level Order Traversal)
 
 
-Combination Sum IV(Longest Increasing Subsequence review I II III)
+if (p == null) return 1;
+int carry = helper(p.next);
+if (carry == 0) return 0;
+int tmp = p.val + carry; p.val = tmp % 10; return tmp/10;
+Plus One Linked List 
 
 
+mark start with val and end + 1 with -val then sum all together
+Range Addition
+
+
+Combination Sum IV(Longest Increasing Subsequence / Coin Changes / Perfect Square review I II III)
+
+
+create PriorityQueue<int[]>
+assign first row to heap
+while (k-- > 0) {
+    res = heap.poll();
+    if (res[2]+1<matrix[0].length) heap.offer
+}
 Kth Smallest Element in a Sorted Matrix
 Find K Pairs with Smallest Sums
+
+
+LinkedList<Integer> list;
+Set<Integer> set;
+Design Phone Directory
+
+
+
+
+
+
+
+

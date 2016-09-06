@@ -40,4 +40,6 @@ AB = | -1 0 3 | x | 0 0 0 | = | -7 0 3 |
                   | 0 0 1 |
           A           B            res
 
+tmp = {{0,1,1,1}, {0,-1,2,3}}
+
 https://leetcode.com/discuss/71912/easiest-java-solution

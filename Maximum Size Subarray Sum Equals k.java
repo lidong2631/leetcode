@@ -6,7 +6,7 @@ public class Solution {
             sum += nums[i];
             if (sum == k) 
                 maxLen = Math.max(maxLen, i+1);
-            else if (map.containsKey(sum-k))
+            if (map.containsKey(sum-k))
                 maxLen = Math.max(maxLen, i-map.get(sum-k));
             if (!map.containsKey(sum))      // careful need to check if map has this sum always reserve the earliest one for maximum size
                 map.put(sum, i);
