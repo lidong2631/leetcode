@@ -66,7 +66,7 @@ public class Solution {
             p.next = curr;
             curr = next;
         }
-        head.next = curr;
+        head.next = end;
         return head;
     }
 }

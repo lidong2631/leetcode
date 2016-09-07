@@ -1,10 +1,8 @@
 1 - 100
-regular expression matching
 4Sum
 divide two integers
 substring with concatenation of all words
 multiply strings
-wildcard matching
 rotate image
 permutation sequence
 text justification
@@ -69,6 +67,47 @@ for c : s.toCharArray()
 Roman to Integer
 
 
+while (i > 0 && nums[i-1] >= nums[i]) i--;
+int j = i - 1;
+while (i < nums.length && nums[i] > nums[j]) i++;
+swap(nums, i-1, j);
+reverse(nums, j+1);
+Next Permutation
+
+
+if stack.isEmpty() && s.charAt(i) == ')' j = i + 1;
+else if s.charAt(i) == '(' stack.push(i);
+else stack.pop();
+    if stack.isEmpty() maxLen = Math.max(maxLen, i-j+1);
+    else maxLen = Math.max(maxLen, i-stack.peek())  
+Longest Valid Parentheses
+
+
+while (left <= right)
+    if (nums[mid] == target)
+    else if (nums[mid] <= nums[right]) checkv right
+    else check left
+Search in Rotated Sorted Array I II
+
+
+for i = 2; i <= n; i++
+    for j = 1; j < str.length(); j++
+        if (str.charAt(j) == str.charAt(j-1)) count++;
+        else
+    res.append(count);
+    res.append();
+    str = res.toString();
+Count and Say
+
+
+if n == 0 return 1.0
+double half = pow(x, n/2);
+if n % 2 == 0 return half * half;
+else if n > 0 return half * half * x;
+else return half * half / x;
+Pow(x, n)
+
+
 LinkedList:
 create dummy node. get prev and next and perform reverse subroutine
 Swap Nodes in Pairs
@@ -116,7 +155,13 @@ Letter Combinations of a Phone Number (helper(digits, map, 0, "", res)  HashMap)
 if Valid go to next row/col
 N-QUeens 			(helper(res, n, 0, colForRow), colForRow, isValid)
 N-Queens II
-Sudoku Solver 		(helper(board, 0, 0))
+
+if (r == 0)
+if (c == 9)
+if (board[r][c] == '.')
+else return helper(board, r, c+1)
+return false;
+Sudoku Solver 		(boolean helper(board, 0, 0))
 
 Subsets 		(List<List<Integer>> helper(S, S.length-1))
 Subsets II 		(List<List<Integer>> helper(S, S.length-1, last))

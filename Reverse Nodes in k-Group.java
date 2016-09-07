@@ -18,7 +18,7 @@ public class Solution {
                 prev = reverse(prev, next); // call reverse linked list ii subroutine
                 i = 0;
             }
-            curr = next;                    // careful here
+            curr = next;                    // careful here cannot write curr = curr.next
             i++;
         }
         return dummy.next;

@@ -44,7 +44,7 @@ class Solution:
 public class Solution {
     public int strStr(String haystack, String needle) {
         if (haystack.length() == needle.length() && haystack.equals(needle)) return 0;
-        for (int i = 0; i <= haystack.length() - needle.length(); i++) {
+        for (int i = 0; i <= haystack.length() - needle.length(); i++) {    // careful i<=haystack.length()-needle.length()
             boolean flag = true;
             for (int j = 0; j < needle.length(); j++) {
                 if (needle.charAt(j) != haystack.charAt(i+j)) {

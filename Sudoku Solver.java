@@ -8,7 +8,7 @@ public class Solution {
         if (c == 9) return helper(board, r+1, 0);
         if (board[r][c] == '.') {
             for (int k = 1; k <= 9; k++) {
-                board[r][c] = (char)(k + '0');      // carefule
+                board[r][c] = (char)(k + '0');      // careful
                 if (isValid(board, r, c)) {
                     if (helper(board, r, c+1))
                         return true;
