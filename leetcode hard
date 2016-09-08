@@ -129,7 +129,7 @@ Rotate List
 
 
 
-Remove Duplicate
+Remove Duplicate (Move Zeroes  i j both start from 0)
 two pointers when (elements not same or find target) set left pointer and move ahead
 Remove Duplicates from Sorted Array
 Remove Duplicates from Sorted List
@@ -285,15 +285,39 @@ high = n / (factor * 10)
 Number of Digit One
 
 
+if (p2 != -1) minLen = Math.min(minLen, i - p2);
+p1 = i;
 Shortest Word Distance
 Shortest Word Distance III
 
 
-bottom up
+helper(n, n)
+Strobogrammatic Number ii
+
+
+int offset = strings[i].charAt(0) - 'a';
+for 
+    char curr = (char)(strings[i].charAt(j) - offset);
+    sb.append(curr);
+Group Shifted Strings (Group Anagram)
+
+
+boolean helper(root, res)
+boolean l = helper(root.left, res); boolean r = helper(root.right, res);
+if (l & r)
 Count Univalue Subtrees (Binary Tree Max Sum )
 
 
-Factor Combination (helper(n/i, i, list, res))
+sort by start time then create a heap that sort by end time. earlier end time is ahead
+Interval curr = heap.poll();
+if (curr.end <= intervals[i].start) curr.end = intervals[i].end;
+else heap.offer(intervals[i]);
+heap.offer(curr);
+Meeting Rooms II
+
+
+helper(n/i, i, list, res)
+Factor Combination (helper(n, 2, new Arraylist<Integer>(), res))
 Combination Sum III (helper(k, n-i, i+1, list, res))
 
 
@@ -359,8 +383,43 @@ Missing Number
 First Missing Positive (1-100)
 
 
+diffColor = (diffColor + sameColor) * (k-1);
+sameColor = tmp;
 Paint Fence (Count Numbers with Unique Digit)
 
+
+if (sb.length() == 0) return false;
+...
+return i == str.length() + 1;
+Word Pattern
+
+
+if (s.startsWith("++", i))
+Flip Game I II
+
+
+if (minHeap.size() == maxHeap.size())
+    maxHeap.offer(num);
+    if (minHeap.size() != 0 && num > minHeap.peek())
+else
+Find Median From DataStream
+
+
+i = -1, j = dis.length, left = 0, right = 0, d = 0;
+while i != j
+    if left < right
+        d += left; left += dis[++i];
+    else
+        d += right; right += dis[--j];
+Best Meeting Point
+
+
+int[] res = new int[n+1];
+for i = 1 i <= n
+    for j = 1 j * j <= i
+        min = Math.min(min, res[i-j*j]+1);
+    res[i] = min;
+Perfect Squares
 
 int[] dp = new int[n];
 for (int i = 0; i < n; i++) {
@@ -370,12 +429,18 @@ for (int i = 0; i < n; i++) {
     }
     maxLen = Math.max(maxLen, dp[i]);
 }
-return maxLen;
-Perfect Squares
 Longest Increasing Subsequence
 
 
-Flat 2D Vector
+TreeNode node = null;   // without right subtree
+while (root != null)
+    if (root.val > p.val) node = root; root = root.left;
+    else root = root.right;
+Inorder Successor in BST
+
+
+List<Iterator<Integer>> list
+Flatten 2D Vector
 
 Deque<Iterator> list
 Iterator i = list.removeFirst();
@@ -383,7 +448,7 @@ int tmp = (int)i.next();
 if (i.hasNext()) list.addLast(i);	// idea like implements Stack using Queue
 Zigzag Iterator
 
-hasPeeked / peekElement
+hasPeeked / peekElement / Iterator<Integer>
 peek() {
 	if (!hasPeeked) set peekElement / hasPeeked
 	return peekElement
