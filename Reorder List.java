@@ -67,13 +67,14 @@ public class Solution {
         }
         ListNode prev = slow.next, curr = slow.next.next;
         prev.next = null;
-        slow.next = null; slow = head;
+        slow.next = null;
         while (curr != null) {          // reverse linked list
             ListNode next = curr.next;
             curr.next = prev;
             prev = curr;
             curr = next;
         }
+        slow = head;
         while (slow != null && prev != null) {
             ListNode next1 = slow.next, next2 = prev.next;
             slow.next = prev; prev.next = next1;
@@ -83,7 +84,13 @@ public class Solution {
 }
 
 
+Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
 
+You must do this in-place without altering the nodes values.
+
+For example,
+Given {1,2,3,4}, reorder it to {1,4,2,3}.
 
 
 

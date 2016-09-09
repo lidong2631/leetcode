@@ -1,25 +1,21 @@
-class Solution:
-    # @param s, a string
-    # @return a string
-    def reverseWords(self, s):
-        return " ".join(s.split()[::-1])
+Given an input string, reverse the string word by word.
 
-Note: join(), split(), slicing operation [::-1]
+For example,
+Given s = "the sky is blue",
+return "blue is sky the".
 
+Update (2015-02-12):
+For C programmers: Try to solve it in-place in O(1) space.
 
+click to show clarification.
 
-1 What constitute a word?
-A sequence of non-space characters
-
-2 Does tab or newline character count as space characters?
-Assume the input does not contain any tabs or newline characters
-
-3 Could the input string contain leading or trailing spaces?
-Yes. However, your reversed string should not contain leading or trailing spaces
-
-4 How about multiple spaces between two words?
-reduce them to a single space in reversed words
-
+Clarification:
+What constitutes a word?
+A sequence of non-space characters constitutes a word.
+Could the input string contain leading or trailing spaces?
+Yes. However, your reversed string should not contain leading or trailing spaces.
+How about multiple spaces between two words?
+Reduce them to a single space in the reversed string.
 
 
 public class Solution {

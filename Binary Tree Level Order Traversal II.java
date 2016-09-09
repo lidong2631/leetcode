@@ -16,13 +16,8 @@ public class Solution {
     }
     
     private void helper(TreeNode root, int level, List<List<Integer>> res) {
-        if(root!=null)
-        {
-            if(res.size()<level+1)
-            {
-                List<Integer> tmpList = new ArrayList<Integer>();
-                res.add(new ArrayList(tmpList));
-            }
+        if (root != null) {
+            if (res.size() < level + 1) res.add(new ArrayList<Integer>());
             res.get(level).add(root.val);
             helper(root.left, level+1, res);
             helper(root.right, level+1, res);
