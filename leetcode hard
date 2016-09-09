@@ -105,7 +105,62 @@ double half = pow(x, n/2);
 if n % 2 == 0 return half * half;
 else if n > 0 return half * half * x;
 else return half * half / x;
-Pow(x, n)
+Pow(x, n) (sqrt(x))
+
+
+while (i < intervals.size() && intervals.get(i).end < newInterval.start) i++;
+if (i == intervals.size())
+newInterval.start = Math.min()
+intervals.add(i, newInterval); i++;
+while (i < intervals.size() && intervals.get(i-1).end >= intervals.get(i).start)
+Insert Interval
+
+
+res[0] = 1;
+for i = 0
+    for j = 1
+Unique Path
+res[0] = obstacleGrid[0][0] == 1 ? 0 : 1;
+if (obstacleGrid[i][j] == 1) res[j] = 0;
+else if (j > 0) res[j] += res[j-1];
+Unique Path II
+res[0] = grid[0][0];
+for i = 1; i < n;
+    res[i] = res[i-1] + grid[0][i];
+for i = 1
+    for j = 0
+        if j == 0 res[j] += grid[i][0];
+        else res[j] = grid[i][j] + Math.min(res[j], res[j-1]);
+Minimum Path Sum
+
+
+while (i < n && Character.isWhitespace(s.charAt(i)))
+if (i < n && (s.charAt(i) == '+' || s.charAt(i) == '-'))
+while (i < n && Character.isDigit(s.charAt(i))) i++; isNumeric = true;
+if (i < n && s.charAt(i) == '.')
+while (i < n && Character.isWhitespace(s.charAt(i)))
+return isNumeric && i == n;
+Valid Number
+
+
+left = 1, right = x / 2 + 1;
+x/mid>=mid && x/(mid+1)<mid+1   x/(mid+1)>=mid+1    else
+Sqrt(x)
+
+
+while (i < path.length())
+    int left = i; StringBuffer sb
+    while (i < path.length() && path.charAt(i) != '/')
+    if (i != left)
+    i++;
+while (!stack.isEmpty()) res = "/" + stack.pop() + res;
+Simplify Path
+
+
+for i
+    for j
+        if (search(board, 0, i, j, word, used))
+Word Search
 
 
 LinkedList:
@@ -130,15 +185,29 @@ Rotate List
 
 
 Remove Duplicate (Move Zeroes  i j both start from 0)
-two pointers when (elements not same or find target) set left pointer and move ahead
+if (nums[i] == nums[i-1])
+else count = 1;
+nums[j++] = nums[i];
 Remove Duplicates from Sorted Array
+while (p2 != null && p1.val == p2.val) p2 = p2.next;
+p1.next = p2; p1 = p1.next;
 Remove Duplicates from Sorted List
+
 Remove Element
 
 Remove Duplicates from Sorted Array II
-
+while (r.next != null && l.next.val == r.next.val) r = r.next;
+if (l.next = r) l = l.next;
+else l.next = r.next;
+r = r.next;
 Remove Duplicates from Sorted List II
 
+
+for i = 1; i <= n
+    int size = res.size();
+    for j = size - 1; j >= 0
+        res.add(res.get(j) + (1<<(i-1)));
+Grey Code
 
 
 NP:
@@ -152,8 +221,10 @@ Letter Combinations of a Phone Number (helper(digits, map, 0, "", res)  HashMap)
 |--Permutations 		(helper(nums, used, new ArrayList<Integer>(), res))
 |--Permutations II 	(i > 0 && nums[i] == nums[i-1] && !used[i-1] continue)
 
-if Valid go to next row/col
-N-QUeens 			(helper(res, n, 0, colForRow), colForRow, isValid)
+colForRow[r] = i;
+if (isValid(i, r, colForRow)) helper(res, n, r+1, colForRow)
+isValid: if (col == colForRow[i] || row - i == Math.abs(col - colForRow[i]))
+N-QUeens 			(helper(res, n, 0, colForRow))
 N-Queens II
 
 if (r == 0)
