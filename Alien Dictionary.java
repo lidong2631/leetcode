@@ -4,49 +4,44 @@ public class Solution {
     public String alienOrder(String[] words) {
         boolean[][] adj = new boolean[N][N];
         int[] visited = new int[N];
-        BuildGraph(words, adj, visited);
+        BuildAdj(words, adj, visited);
         
-        StringBuilder res = new StringBuilder();
-        
-        for(int i=0; i<N; i++) {                                            // topological sort
-            if(visited[i]==0) {
-                if(!dfs(adj, visited, res, i))
+        StringBuffer res = new StringBuffer();
+        for (int i = 0; i < N; i++) {       // careful
+            if (visited[i] == 0) {          // careful
+                if (!tps(res, i, adj, visited))
                     return "";
             }
         }
         return res.reverse().toString();
     }
     
-    private boolean dfs(boolean[][] adj, int[] visited, StringBuilder res, int i) {
+    private boolean tps(StringBuffer res, int i, boolean[][] adj, int[] visited) {
         visited[i] = 1;
-        
-        for(int j=0; j<N; j++) {
-            if(adj[i][j]) {
-                if(visited[j]==1)                                           // has cycle
-                    return false;
-                if(visited[j]==0) {                                         // if not visited, dfs
-                    if(!dfs(adj, visited, res, j))
-                        return false;
-                }
+        for (int j = 0; j < N; j++) {
+            if (adj[i][j]) {
+                if (visited[j] == 1) return false;      // check cycle
+                if (visited[j] == 0) {
+                    if (!tps(res, j, adj, visited)) return false;
+                } 
             }
         }
-        visited[i] = 2;                                                     // done visiting
-        res.append((char)('a'+i));                                          // be careful need to change into char format
+        visited[i] = 2;
+        res.append((char)('a' + i));
         return true;
     }
     
-    private void BuildGraph(String[] words, boolean[][] adj, int[] visited) {
-        Arrays.fill(visited, -1);                                       // initially set visited to -1
-        
-        for(int i=0; i<words.length; i++) {
-            for(char c : words[i].toCharArray())
-                visited[c-'a'] = 0;                                     // for every character in words mark visited to 0
-            if(i>0) {
-                String s1 = words[i-1], s2 = words[i];
+    private void BuildAdj(String[] words, boolean[][] adj, int[] visited) {
+        Arrays.fill(visited, -1);
+        for (int i = 0; i < words.length; i++) {
+            for (char c : words[i].toCharArray())
+                visited[c-'a'] = 0;
+            if (i > 0) {
+                String s1 = words[i-1], s2 = words[i];      //careful
                 int len = Math.min(s1.length(), s2.length());
-                for(int j=0; j<len; j++) {                              // build up adjacency matrix
+                for (int j = 0; j < len; j++) {
                     char c1 = s1.charAt(j), c2 = s2.charAt(j);
-                    if(c1!=c2) {
+                    if (c1 != c2) {
                         adj[c1-'a'][c2-'a'] = true;
                         break;
                     }
@@ -109,3 +104,29 @@ https://leetcode.com/discuss/78602/3ms-clean-java-solution-dfs
 
 Another good solution using BFS
 https://leetcode.com/discuss/77078/easiest-java-bfs-solution
+
+
+
+There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you. 
+
+You receive a list of words from the dictionary, wherewords are sorted lexicographically by the rules of this 
+
+new language. Derive the order of letters in this language.
+
+For example,
+Given the following words in dictionary,
+
+[
+  "wrt",
+  "wrf",
+  "er",
+  "ett",
+  "rftt"
+]
+The correct order is: "wertf".
+
+Note:
+
+You may assume all letters are in lowercase.
+If the order is invalid, return an empty string.
+There may be multiple valid order of letters, return any one of them is fine.

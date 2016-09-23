@@ -51,27 +51,30 @@ class Solution:
 
 
 public class Solution {
-    public int threeSumClosest(int[] num, int target) {
-        if (num == null || num.length < 3) return Integer.MAX_VALUE;
-        int minDiff = num[0] + num[1] + num[2] - target;
-        Arrays.sort(num);
-        for (int i = num.length - 1; i >=2; i--) {
-            if (i < num.length - 1 && num[i] == num[i+1]) continue;
-            int diff = twoSumClosest(num, i-1, target-num[i]);
-            if (Math.abs(diff) < Math.abs(minDiff)) minDiff = diff; // careful
+    public int threeSumClosest(int[] nums, int target) {
+        if (nums == null || nums.length < 3) return -1;
+        int minDiff = nums[0] + nums[1] + nums[2] - target;
+        Arrays.sort(nums);
+        for (int i = nums.length - 1; i >= 2; i--) {
+            if (i < nums.length - 1 && nums[i] == nums[i+1]) continue;
+            int currDiff = twoSumDiff(nums, i-1, target-nums[i]);
+            if (currDiff == 0) return target;       // careful if 0 then we are done
+            if (Math.abs(currDiff) < Math.abs(minDiff)) minDiff = currDiff;
         }
-        return minDiff + target;
+        return target + minDiff;
     }
     
-    private int twoSumClosest(int[] num, int index, int target) {
-        int minDiff = num[index] + num[index-1] - target;
+    private int twoSumDiff(int[] nums, int index, int target) {
+        int minDiff = nums[index] + nums[index-1] - target;
         int left = 0, right = index;
         while (left < right) {
-            if (num[left] + num[right] == target) return 0;
-            int diff = num[left] + num[right] - target;
-            if (Math.abs(diff) < Math.abs(minDiff)) minDiff = diff; // careful
-            if (diff < 0) left++;
-            else right--;
+            if (nums[left] + nums[right] == target) {
+                return 0;
+            }
+            int diff = nums[left] + nums[right] - target;
+            if (Math.abs(diff) < Math.abs(minDiff)) minDiff = diff;
+            if (diff > 0) right--;
+            else left++;
         }
         return minDiff;
     }
