@@ -17,6 +17,11 @@ public class Solution {
 
 O(nlogk) O(k)
 
+Given an array of integers, find out whether there are two distinct indices i and j in the array such that the 
+difference between nums[i] and nums[j] is at most t and the difference between i and j is at most k.
+
+
+
 This problem requires to maintain a window of size k of the previous values that can be queried for value ranges. 
 
 The best data structure to do that is Binary Search Tree. As a result maintaining the tree of size k will result in 

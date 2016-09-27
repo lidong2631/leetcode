@@ -28,12 +28,12 @@ public class Solution {
             if (curr.left != null) {
                 queue.add(curr.left);
                 index.add(i - 1);
-                if (left > i - 1) left = i - 1;
+                left = Math.min(left, i - 1);
             }
             if (curr.right != null) {
                 queue.add(curr.right);
                 index.add(i + 1);
-                if (right < i + 1) right = i + 1;
+                right = Math.max(right, i + 1);
             }
         }
         for (int i = left; i <= right; i++) {

@@ -17,7 +17,7 @@ public class Solution {
     
     private int helper(TreeNode root) {
         if (root == null) return 0;
-        int curr = 1;
+        int curr = 1;               // careful
         int left = helper(root.left);
         int right = helper(root.right);
         if (root.left != null && root.left.val == root.val + 1)

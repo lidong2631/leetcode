@@ -8,22 +8,25 @@
  * }
  */
 public class Solution {
+    
+    int res = 0;
+    
     public int countUnivalSubtrees(TreeNode root) {
         if (root == null) return 0;
-        List<Integer> res = new ArrayList<>();
-        res.add(0);
-        helper(root, res);
-        return res.get(0);
+        helper(root);
+        return res;
     }
     
-    private boolean helper(TreeNode root, List<Integer> res) {
+    private boolean helper(TreeNode root) {
         if (root == null) return true;
-        boolean l = helper(root.left, res);
-        boolean r = helper(root.right, res);
+        boolean l = helper(root.left);
+        boolean r = helper(root.right);
         if (l & r) {
-            if (root.left != null && root.left.val != root.val) return false;
-            if (root.right != null && root.right.val != root.val) return false;
-            res.set(0, res.get(0)+1);
+            if (root.left != null && root.left.val != root.val)
+                return false;
+            if (root.right != null && root.right.val != root.val)
+                return false;
+            res += 1;
             return true;
         }
         return false;

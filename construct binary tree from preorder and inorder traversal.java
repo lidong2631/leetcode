@@ -19,7 +19,7 @@ public class Solution {
     
     private TreeNode helper(int[] preorder, int preL, int preR, int[] inorder, int inL, int inR, HashMap<Integer, Integer> map) {
         if (preL > preR || inL > inR) return null;
-        TreeNode root = new TreeNode(preorder[preL]);
+        TreeNode root = new TreeNode(preorder[preL]);   // careful
         int index = map.get(preorder[preL]);
         root.left = helper(preorder, preL+1, preL+index-inL, inorder, inL, index-1, map);
         root.right = helper(preorder, preL+index-inL+1, preR, inorder, index+1, inR, map);

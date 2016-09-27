@@ -89,23 +89,23 @@ class Solution:
  * }
  */
 public class Solution {
+    
+    int max;
+    
     public int maxPathSum(TreeNode root) {
-        List<Integer> res = new ArrayList<>();
-        res.add(null);
-        helper(root, res);
-        return res.get(0);
+        max = root.val;
+        helper(root);
+        return max;
     }
     
-    private int helper(TreeNode root, List<Integer> res) {
+    private int helper(TreeNode root) {
         if (root == null) return 0;
-        int left = Math.max(helper(root.left, res), 0);         // careful need to compare with 0
-        int right = Math.max(helper(root.right, res), 0);
-        int currPath = root.val + left + right;
-        if (res.get(0) == null || res.get(0) < currPath) res.set(0, currPath);
-        return Math.max(left, right) + root.val;
+        int left = Math.max(helper(root.left), 0);
+        int right = Math.max(helper(root.right), 0);
+        max = Math.max(max, left + right + root.val);
+        return Math.max(left + root.val, right + root.val);
     }
 }
-
 
 
 
