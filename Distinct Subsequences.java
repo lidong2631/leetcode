@@ -47,20 +47,22 @@ class Solution:
 
 public class Solution {
     public int numDistinct(String s, String t) {
-        
-        int[][] res = new int[s.length()+1][t.length()+1];
-        for (int i = 0; i <= s.length(); i++)
-            res[i][0] = 1;
+        int[][] dp = new int[s.length()+1][t.length()+1];
+        for (int i = 0; i <= s.length(); i++) {
+            dp[i][0] = 1;
+        }
         for (int i = 1; i <= s.length(); i++) {
-            for (int j = 1; j <= Math.min(t.length(), i); j++) {
-                res[i][j] = res[i-1][j] + (s.charAt(i-1) == t.charAt(j-1) ? res[i-1][j-1] : 0);
+            for (int j = 1; j <= Math.min(t.length(), i); j++) {    // careful
+                dp[i][j] = dp[i-1][j] + ((s.charAt(i-1) == t.charAt(j-1)) ? dp[i-1][j-1] : 0);
             }
         }
-        return res[s.length()][t.length()];
+        return dp[s.length()][t.length()];
     }
 }
 
+S = "rabbbit", T = "rabbit"
 
+Return 3.
 
 
 from code ganker:

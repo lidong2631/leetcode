@@ -17,38 +17,42 @@ s = "2[abc]3[cd]ef", return "abcabccdcdcdef".
 public class Solution {
     public String decodeString(String s) {
         String res = "";
-        Stack<Integer> countStack = new Stack<>();
         Stack<String> resStack = new Stack<>();
-        int idx = 0;
-        while (idx < s.length()) {
-            if (Character.isDigit(s.charAt(idx))) {
-                int count = 0;
-                while (Character.isDigit(s.charAt(idx))) {
-                    count = 10 * count + (s.charAt(idx) - '0');
-                    idx++;
+        Stack<Integer> numStack = new Stack<>();
+        int i = 0;
+        while (i < s.length()) {
+            if (Character.isDigit(s.charAt(i))) {   // accumulate number and push to numStack
+                int tmp = 0;
+                while (i < s.length() && Character.isDigit(s.charAt(i))) {
+                    tmp = 10*tmp + s.charAt(i) - '0';
+                    i++;
                 }
-                countStack.push(count);
+                numStack.push(tmp);
             }
-            else if (s.charAt(idx) == '[') {
+            else if (s.charAt(i) == '[') {  // left bracket
                 resStack.push(res);
                 res = "";
-                idx++;
+                i++;
             }
-            else if (s.charAt(idx) == ']') {
-                StringBuilder temp = new StringBuilder (resStack.pop());
-                int repeatTimes = countStack.pop();
-                for (int i = 0; i < repeatTimes; i++) {
-                    temp.append(res);
+            else if (s.charAt(i) == ']') {  // right bracket
+                StringBuffer sb = new StringBuffer(resStack.pop());     // careful
+                int n = numStack.pop();
+                for (int j = 0; j < n; j++) {
+                    sb.append(res);
                 }
-                res = temp.toString();
-                idx++;
+                res = sb.toString();
+                i++;
             }
-            else {
-                res += s.charAt(idx++);
+            else {          // String accumulate each character
+                res += s.charAt(i++);
             }
         }
         return res;
     }
 }
 
+
 https://discuss.leetcode.com/topic/57159/simple-java-solution-using-stack
+
+using regex cool!
+https://discuss.leetcode.com/topic/57145/3-lines-python-2-lines-ruby-regular-expression

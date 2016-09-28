@@ -47,9 +47,9 @@ class Solution:
 
 public class Solution {
     public int numDecodings(String s) {
-        if(s==null || s.length()==0 || s.charAt(0)=='0')
+        if(s==null || s.length()==0 || s.charAt(0)=='0')    // careful
             return 0;
-        int curr = 0, prev1 = 1, prev2 = 1;
+        int curr = 0, prev1 = 1, prev2 = 1;     // carefult
         for (int i = 1; i < s.length(); i++) {
             if (s.charAt(i) == '0') {
                 if (s.charAt(i-1) == '1' || s.charAt(i-1) == '2')

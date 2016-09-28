@@ -1,23 +1,3 @@
-class Solution:
-    # @return an integer
-    def minDistance(self, word1, word2):
-        dp = [[0 for j in range(len(word2)+1)] for i in range(len(word1)+1)]
-        for i in range(len(word1)+1):
-            dp[i][0] = i
-        for j in range(len(word2)+1):
-            dp[0][j] = j
-        for i in range(1, len(word1)+1):
-            for j in range(1, len(word2)+1):
-                dp[i][j] = min(dp[i-1][j]+1, dp[i][j-1]+1, dp[i-1][j-1]+(0 if word1[i-1] == word2[j-1] else 1))
-        return dp[len(word1)][len(word2)]
-
-Note: 这题比较难以理解 结合照片理解会比较容易 二维动态规划
-
-
-
-
-
-
 题意：
 
 Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)
@@ -62,43 +42,6 @@ class Solution:
 
 public class Solution {
     public int minDistance(String word1, String word2) {
-        if(word1.length()==0)
-            return word2.length();
-        if(word2.length()==0)
-            return word1.length();
-        String minWord = word1.length()>word2.length()?word2:word1;
-        String maxWord = word1.length()>word2.length()?word1:word2;
-        int[] res = new int[minWord.length()+1];
-        for(int i=0; i<minWord.length(); i++) { //跟空字符串比较
-            res[i] = i;
-        }
-        for(int i=0; i<maxWord.length(); i++) {
-            int[] tmp = new int[minWord.length()+1];
-            tmp[0] = i+1;       //初始化tmp 意思为空字符串跟有i＋1个字符的序列需要i＋1次编辑
-            for(int j=0; j<minWord.length(); j++) {
-                if(minWord.charAt(j)==maxWord.charAt(i))
-                    tmp[j+1] = res[j];
-                else {
-                    tmp[j+1] = Math.min(res[j], Math.min(tmp[j], res[j+1]))+1;  //三种情况 res[j]->res[i-1][j-1] tmp[j]->res[i][j-1]
-                }
-            }
-            res = tmp;
-        }
-        return res[minWord.length()];
-    }
-}
-
-res[i][j] = min(res[i-1][j], res[i][j-1], res[i-1][j-1])+1
-
-code ganker版 二维降一维 看评论 O(m*n) O(min(m, n))
-
-
-
-
-
-
-public class Solution {
-    public int minDistance(String word1, String word2) {
         int[][] dp = new int[word1.length()+1][word2.length()+2];
         for(int i=0; i<word1.length()+1; i++)
             dp[i][0] = i;
@@ -118,10 +61,7 @@ public class Solution {
     }
 }
 
-Note: 根据python版改编 二维dp问题 code ganker思路跟python版一样 只是空间上优化了下
-
-
-
+similar to distinct subsequence
 
 
 

@@ -12,3 +12,16 @@ public class Solution {
 In java the caret "^" does not represent exponential operater it is XOR. Use Math.pow to calculate power
 
 时间O(n) 空间O(1)
+
+
+Given a column title as appear in an Excel sheet, return its corresponding column number.
+
+For example:
+
+    A -> 1
+    B -> 2
+    C -> 3
+    ...
+    Z -> 26
+    AA -> 27
+    AB -> 28 
