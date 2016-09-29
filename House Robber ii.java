@@ -23,5 +23,5 @@ public class Solution {
 O(2n) O(1)
 
         4
-    5       9
+    5       2
       2   8

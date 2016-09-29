@@ -7,7 +7,7 @@ public class Solution {
             StringBuffer sb = new StringBuffer();
             for (int j = 0; j < strings[i].length(); j++) {
                 char curr = (char)(strings[i].charAt(j) - offset);
-                if (curr < 'a') curr += 26;
+                if (curr < 'a') curr += 26;     // careful
                 sb.append(curr);
             }
             String str = sb.toString();

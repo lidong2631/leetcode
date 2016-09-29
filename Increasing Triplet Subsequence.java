@@ -2,9 +2,9 @@ public class Solution {
     public boolean increasingTriplet(int[] nums) {
         int first = Integer.MAX_VALUE, second = Integer.MAX_VALUE;
         for (int n : nums) {
-            if (n <= first)
+            if (n <= first)     // careful <= [1,1,1,1,1,1,1,] is true
                 first = n;
-            else if (n <= second)
+            else if (n <= second)   // careful <=
                 second = n;
             else return true;
         }

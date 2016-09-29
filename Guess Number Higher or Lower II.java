@@ -8,7 +8,7 @@ public class Solution {
                     int localMax = k + Math.max(dp[i][k-1], dp[k+1][j]);
                     globalMin = Math.min(globalMin, localMax);
                 }
-                dp[i][j] = i+1==j ? i : globalMin;
+                dp[i][j] = i+1==j ? i : globalMin;  // careful if i+1==j globalMin is Integer.MAX_VALUE so dp[i][j] = i
             }
         }
         return dp[1][n];
