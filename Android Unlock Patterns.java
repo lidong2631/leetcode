@@ -17,14 +17,14 @@ public class Solution {
     }
     
     private int dfs(int[][] jump, boolean[] visited, int start, int len, int count, int m, int n) {
-        if (len >= m) count++;
+        if (len >= m) count++;  // careful this goes first
         len++;
-        if (len > n) return count;
+        if (len > n) return count;  // careful 
         visited[start] = true;
         for (int i = 1; i <= 9; i++) {
             int tmp = jump[start][i];
             if (!visited[i] && (tmp == 0 || visited[tmp]))          // if not visited and no middle num or the middle num has been visited
-                count = dfs(jump, visited, i, len, count, m, n);    // dfs
+                count = dfs(jump, visited, i, len, count, m, n);    // careful not "count +=" because line 13 14 we multiply 4
         }
         visited[start] = false;
         return count;
