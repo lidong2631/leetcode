@@ -23,6 +23,19 @@ public class Solution {
 System.out.println("\tabc".length()); // 4
 System.out.println("abc".length());   // 3
 
+The string "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext" represents:
+
+["dir", "\tsubdir1", "\t\tfile1.ext", "\t\tsubsubdir1", "\tsubdir2", "\t\tsubsubdir2", "\t\t\tfile2.ext"]
+
+dir
+    subdir1
+        file1.ext
+        subsubdir1
+    subdir2
+        subsubdir2
+            file2.ext
+
+
 O(n) O(n)
 
 https://discuss.leetcode.com/topic/55088/java-o-n-solution-using-stack
@@ -49,11 +62,19 @@ dir
     subdir2
         subsubdir2
             file2.ext
-The directory dir contains two sub-directories subdir1 and subdir2. subdir1 contains a file file1.ext and an empty second-level sub-directory subsubdir1. subdir2 contains a second-level sub-directory subsubdir2 containing a file file2.ext.
+The directory dir contains two sub-directories subdir1 and subdir2. subdir1 contains a file file1.ext and an empty second-level 
 
-We are interested in finding the longest (number of characters) absolute path to a file within our file system. For example, in the second example above, the longest absolute path is "dir/subdir2/subsubdir2/file2.ext", and its length is 32 (not including the double quotes).
+sub-directory subsubdir1. subdir2 contains a second-level sub-directory subsubdir2 containing a file file2.ext.
 
-Given a string representing the file system in the above format, return the length of the longest absolute path to file in the abstracted file system. If there is no file in the system, return 0.
+We are interested in finding the longest (number of characters) absolute path to a file within our file system. 
+
+For example, in the second example above, the longest absolute path is "dir/subdir2/subsubdir2/file2.ext", and its length 
+
+is 32 (not including the double quotes).
+
+Given a string representing the file system in the above format, return the length of the longest absolute path to file in the 
+
+abstracted file system. If there is no file in the system, return 0.
 
 Note:
 The name of a file contains at least a . and an extension.

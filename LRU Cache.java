@@ -44,7 +44,7 @@ public class LRUCache {
                 first = first.next;
                 if(first!=null)
                     first.pre = null;
-                else
+                else                // when capacity is 1
                     last = null;
                 num--;
             }

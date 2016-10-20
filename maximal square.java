@@ -28,6 +28,24 @@ dp
 res[i][j]表示以i,j为右下角点的全1子正方形矩阵的边长
 可以参考http://www.geeksforgeeks.org/maximum-size-sub-matrix-with-all-1s-in-a-binary-matrix/
 
+0 0 0 0
+1 0 0 0
+0 0 0 0
+0 0 0 0
+
+
+Given a 2D binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
+
+For example, given the following matrix:
+
+1 0 1 0 0
+1 0 1 1 1
+1 1 1 1 1
+1 0 0 1 0
+Return 4.
+Credits:
+
+
 
 滚动数组省掉空间一维
 public class Solution {

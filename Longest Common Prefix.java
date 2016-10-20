@@ -24,7 +24,7 @@ public class Solution {
         for (int i = 0; i < strs[0].length(); i++) {        // set strs[0] as standard outer loop traverse each char in strs[0]
             boolean flag = true;
             char tmp = strs[0].charAt(i);
-            for (int j = 0; j < strs.length; j++) {         // inner loop go through each string
+            for (int j = 1; j < strs.length; j++) {         // inner loop go through each string
                 if (i >= strs[j].length() || strs[j].charAt(i) != tmp) {
                     flag = false;
                     break;

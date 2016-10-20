@@ -62,7 +62,7 @@ https://www.quora.com/Given-an-array-of-integers-A-and-an-integer-k-find-a-subar
 public int maxSumLessEqualK(int[] nums, int k) {
     int res = 0;
     TreeSet<Integer> set = new TreeSet<>();
-    set.add(0);
+    set.add(0);         // careful [2] k = 4 set need to have a initial value
     int currSum = 0;
     for (int i = 0; i < nums.length; i++) {
         currSum += nums[i];
