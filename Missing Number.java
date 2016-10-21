@@ -15,9 +15,22 @@ public class Solution {
     }
 }
 
+[0, 2, 3]
+
 O(n) O(1)
 
 同 first missing positive integer 只是这里是找不符合nums[i]=nums[nums[i]]的元素
+
+
+
+Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
+
+For example,
+Given nums = [0, 1, 3] return 2.
+
+Note:
+Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
+
 
 
 
@@ -31,8 +44,6 @@ public class Solution {
         return (1+n)*n/2-sum;
     }
 }
-
-
 
 
 public class Solution {
@@ -51,4 +62,6 @@ public class Solution {
     }
 }
 
-更简单的解法 只适用于只miss一个num的情况 将所有数加和同时找出最大值 如果最大值等于nums.length-1 则miss nums.length 否则将0到最大值求和减去之前的所有数之和即是miss的num
+更简单的解法 只适用于只miss一个num的情况 将所有数加和同时找出最大值 如果最大值等于nums.length-1 则miss nums.length 
+
+否则将0到最大值求和减去之前的所有数之和即是miss的num

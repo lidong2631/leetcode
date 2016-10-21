@@ -1,37 +1,3 @@
-class Solution:
-    # @param num, a list of integer
-    # @return a list of integer
-    def nextPermutation(self, num):
-        if len(num) <= 1:       #如果长度小于等于1 返回num
-            return num
-        partition = -1
-        for i in range(len(num)-2, -1, -1):     #从后往前遍历数组 如果找到第一对升序对 将partition标记为第一个违反升序的值的索引
-            if num[i] < num[i+1]:
-                partition = i
-                break;
-        if partition == -1:     #如果partition等于－1 说明全部降序排列 将num反转为最小排列
-            num.reverse()
-            return num
-        for i in range(len(num)-1, partition, -1):      #否则从后往前遍历 找到第一个比partition标记的值大的值 交换它和partition的值
-            if num[partition] < num[i]:
-                num[partition], num[i] = num[i], num[partition]
-                break
-        num[partition+1:len(num)] = num[partition+1:len(num)][::-1]     #将partition后面的序列逆序即可
-        return num
-
-Note: python reverse()没有返回值 不可以用这种形式 return num.reverse() 只可以先num.reverse() 之后直接返回num
-
-因为降序序列是没法变的更大的，所以从后往前找到第一个升序对的位置。
-
-然后就存在调整大小排列顺序的可能，从后往前找到比第一个当前位置大的元素，交换之。
-
-当前位置后面的元素还是降序排列，将他们反转得到最小顺序排列。其实就是原来当前位置元素后面是最大的排列，而交换后的新元素之后是最小的排列，他们就是相邻的顺序。
-
-当不存在升序，则当前排列是最大排列，只要旋转整个序列变成最小排列。
-
-
-
-
 public class Solution {
     public void nextPermutation(int[] nums) {
         int i = nums.length - 1;
@@ -63,6 +29,22 @@ public class Solution {
     }
 }
 
+6 8 7 4 3 2
+7 8 6 4 3 2
+7 2 3 4 6 8
+
+
+
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+
+If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
+
+The replacement must be in-place, do not allocate extra memory.
+
+Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
 
 
 

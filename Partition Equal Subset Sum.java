@@ -21,7 +21,9 @@ public class Solution {
     }
 }
 
-The problem can be solved using dynamic programming when the sum of the elements is not too big. We can create a 2D array part[][] of size (sum/2)*(n+1). 
+The problem can be solved using dynamic programming when the sum of the elements is not too big. We can create a 
+
+2D array part[][] of size (sum/2)*(n+1). 
 
 And we can construct the solution in bottom up manner such that every filled entry has following property
 
@@ -34,7 +36,9 @@ O(sum*n) O(sum*n)
 http://www.geeksforgeeks.org/dynamic-programming-set-18-partition-problem/
 
 
-Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets 
+
+such that the sum of elements in both subsets is equal.
 
 Note:
 Each of the array element will not exceed 100.
