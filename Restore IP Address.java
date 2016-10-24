@@ -1,26 +1,9 @@
-class Solution:
-    def dfs(self, currIP, restStr, currIndex):
-        if currIndex == 3:      #如果当前数字已经有3位
-            if len(restStr) > 0:        #就要看下是否还有剩下字符串
-                if str(int(restStr)) == restStr and int(restStr) <= 255:    #如果有且数字小于255 就可以将结果(currIP + restStr)append进结果集
-                    Solution.res.append(currIP + restStr)
-            return
-        length = len(restStr)   #计算长度
-        for i in range(1, 4):       #循环3次 每次多加1位 递归调用dfs遍历所有情况
-            if length >= i and str(int(restStr[0:i])) == restStr[0:i] and int(restStr[0:i]) <= 255:
-                self.dfs(currIP + restStr[0:i] + '.', restStr[i:], currIndex + 1)
-        return
-    
-    # @param s, a string
-    # @return a list of strings
-    def restoreIpAddresses(self, s):
-        Solution.res = []
-        self.dfs('', s, 0)
-        return Solution.res
+Given a string containing only digits, restore it by returning all possible valid IP address combinations.
 
-递归方法，str(int(s)) == s是为了去掉前导0，即Input＝"010010"时, Output不能是"0.1.0.010"之类的。
+For example:
+Given "25525511135",
 
-这段代码from kitt
+return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)
 
 
 

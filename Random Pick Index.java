@@ -37,7 +37,9 @@ https://discuss.leetcode.com/topic/58301/simple-reservoir-sampling-solution
 
 
 
-Given an array of integers with possible duplicates, randomly output the index of a given target number. You can assume that the given target number must exist in the array.
+Given an array of integers with possible duplicates, randomly output the index of a given target number. You can assume that the given 
+
+target number must exist in the array.
 
 Note:
 The array size can be very large. Solution that uses too much extra space will not pass the judge.
@@ -52,6 +54,4 @@ solution.pick(3);
 
 // pick(1) should return 0. Since in the array only nums[0] is equal to 1.
 solution.pick(1);
-Show Company Tags
-Show Tags
-Show Similar Problems
+

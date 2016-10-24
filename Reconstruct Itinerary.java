@@ -14,7 +14,7 @@ public class Solution {
     
     private void dfs(String depart, LinkedList<String> res, Map<String, PriorityQueue<String>> map) {
         PriorityQueue<String> arrivals = map.get(depart);
-        while (arrivals != null && !arrivals.isEmpty()) {
+        while (arrivals != null && !arrivals.isEmpty()) {   // careful arrivals != null
             dfs(arrivals.poll(), res, map);
         }
         res.addFirst(depart);

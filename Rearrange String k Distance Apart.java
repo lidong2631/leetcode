@@ -27,7 +27,7 @@ public class Solution {
             Map<Character, Integer> cache = new HashMap<>();
             
             for (int i = 0; i < count; i++) {
-                if (heap.isEmpty()) return "";
+                if (heap.isEmpty()) return "";      // careful
                 Map.Entry<Character, Integer> entry = heap.poll();
                 sb.append(entry.getKey());
                 int val = entry.getValue();
@@ -40,6 +40,22 @@ public class Solution {
         return sb.substring(str.length()).toString();
     }
 }
+
+aaadbbcc k = 2
+
+Map:
+a: 3 b: 2 c: 2 d: 1
+
+first for
+abc
+a: 2 d: 1 b: 1 c: 1
+
+second for
+abcadb
+a: 1 c: 1
+
+third for
+abcadbac
 
 
 Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.

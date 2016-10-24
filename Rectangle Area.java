@@ -14,3 +14,12 @@ Following is a simpler approach. Two rectangles do not overlap if one of the fol
 
 http://articles.leetcode.com/2011/05/determine-if-two-rectangles-overlap.html
 http://www.geeksforgeeks.org/find-two-rectangles-overlap/
+
+
+
+Find the total area covered by two rectilinear rectangles in a 2D plane.
+
+Each rectangle is defined by its bottom left corner and top right corner as shown in the figure.
+
+Rectangle Area
+Assume that the total area is never beyond the maximum possible value of int.
