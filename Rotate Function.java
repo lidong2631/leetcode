@@ -6,7 +6,7 @@ public class Solution {
             sum += A[i];
             iter += i * A[i];
         }
-        int max = iter;
+        int max = iter;     // careful cannot write int max = 0 that will miss first iter
         for (int i = 1; i < n; i++) {
             iter = iter - sum + n*A[i-1];
             max = Math.max(max, iter);

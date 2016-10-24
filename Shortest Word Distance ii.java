@@ -19,8 +19,8 @@ public class WordDistance {
         List<Integer> l1 = map.get(word1);
         List<Integer> l2 = map.get(word2);
         int shortest = Integer.MAX_VALUE;
-        for(int i=0, j=0; i<l1.size() && j<l2.size(); ) {   // find minimum distance between two sorted array. related topic: closest value in sorted array (binary search)
-            int index1 = l1.get(i);
+        for(int i=0, j=0; i<l1.size() && j<l2.size(); ) {   // find minimum distance between two sorted array.
+            int index1 = l1.get(i);                         // related topic: closest value in sorted array (binary search)
             int index2 = l2.get(j);
             if(index1<index2) {
                 shortest = Math.min(shortest, index2-index1);
@@ -44,9 +44,13 @@ public class WordDistance {
 https://leetcode.com/discuss/50190/java-solution-using-hashmap
 
 
-This is a follow up of Shortest Word Distance. The only difference is now you are given the list of words and your method will be called repeatedly many times with different parameters. How would you optimize it?
+This is a follow up of Shortest Word Distance. The only difference is now you are given the list of words 
 
-Design a class which receives a list of words in the constructor, and implements a method that takes two words word1 and word2 and return the shortest distance between these two words in the list.
+and your method will be called repeatedly many times with different parameters. How would you optimize it?
+
+Design a class which receives a list of words in the constructor, and implements a method that takes 
+
+two words word1 and word2 and return the shortest distance between these two words in the list.
 
 For example,
 Assume that words = ["practice", "makes", "perfect", "coding", "makes"].

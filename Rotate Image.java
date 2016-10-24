@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-class Solution:
-    # @param matrix, a list of lists of integers
-    # @return a list of lists of integers
-    def rotate(self, matrix):
-        for i in range(len(matrix)):
-            for j in range(i+1, len(matrix)):		#求转置矩阵 很简单 要记住做法 将对应位置交换值即可
-                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
-        for i in range(len(matrix)):	#
-            matrix[i].reverse()
-        return matrix
-
-Note: 两种解法： 1 先求转置矩阵 然后reverse 2 直接求翻转矩阵 我用的方法1 比较易懂
-
-
-
-
-
 题意：
 
 You are given an n x n 2D matrix representing an image.
@@ -118,26 +100,35 @@ Note: 根据python版改编 code ganker是直接转的 那个也不难 主要搞
 
 
 
+ 1  2  3  4
+ 5  6  7  8
+ 9 10 11 12
+13 14 15 16
+
+
+13  9  5  1
+14 10  6  2
+15 11  7  3
+16 12  8  4
+
 
 public class Solution {
     public void rotate(int[][] matrix) {
-        if(matrix==null || matrix.length==0 || matrix[0].length==0)
-            return;
-        for(int layer=0; layer<matrix.length/2; layer++) {
-            for(int i=layer; i<matrix.length-1-layer; i++) {
-                int tmp = matrix[layer][i];
-                matrix[layer][i] = matrix[matrix.length-1-i][layer];
-                matrix[matrix.length-1-i][layer] = matrix[matrix.length-1-layer][matrix.length-1-i];
-                matrix[matrix.length-1-layer][matrix.length-1-i] = matrix[i][matrix.length-1-layer];
-                matrix[i][matrix.length-1-layer] = tmp;
+        for (int layer = 0; layer < matrix.length / 2; layer++) {
+            for (int i = layer; i < matrix.length - 1 - layer; i++) {   // careful i = layer
+                int tmp = matrix[layer][i];         // save left top
+                
+                matrix[layer][i] = matrix[matrix.length-1-i][layer];    // left bottom -> left top
+                
+                matrix[matrix.length-1-i][layer] = matrix[matrix.length-1-layer][matrix.length-1-i];    // right bottom -> left bottom
+                
+                matrix[matrix.length-1-layer][matrix.length-1-i] = matrix[i][matrix.length-1-layer];    // right top -> right bottom
+                
+                matrix[i][matrix.length-1-layer] = tmp;         // left top -> right top
             }
         }
     }
 }
-
-这种矩阵操作题要小心谨慎 另外想想如果counter clockwise怎么变换以及如果旋转180度 270度怎么做 还有矩阵的置换操作 总结下矩阵相关操作的代码实现
-
-
 
 
 

@@ -43,51 +43,8 @@ public class Solution {
 }
 
 
-
-
-
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
-public class Solution {
-    public ListNode rotateRight(ListNode head, int n) {
-        if(head==null)
-            return head;
-        ListNode dummy = new ListNode(0);
-        ListNode p = dummy;
-        p.next = head;
-        int length = 0;
-        while(p.next!=null) {   //扫一遍
-            p = p.next;
-            length++;
-        }
-        n = n%length;   //如果n大于length
-        p.next = head;  //将尾指针指向head
-        for(int i=0; i<length-n; i++) { //移动length－n个位置
-            dummy = dummy.next;
-        }
-        ListNode newHead = dummy.next; //得到新的头指针 并将尾部断开
-        dummy.next = null;
-        return newHead;
-    }
-}
-
 connect list cycle first then go to cut off point set new head and cut off
 
-
-Given a list, rotate the list to the right by k places, where k is non-negative.
-
-For example:
-Given 1->2->3->4->5->NULL and k = 2,
-return 4->5->1->2->3->NULL.
 
 
 
