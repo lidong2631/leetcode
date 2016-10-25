@@ -4,7 +4,7 @@ public class Solution {
         int diff = 0;
         for (int n : nums)
             diff ^= n;
-        diff &= ~(diff - 1);
+        diff &= ~(diff - 1);    // careful get rightmost 1 bit
         for (int n : nums) {
             if ((n & diff) == 0) res[0] ^= n;   // careful when deal with & need to add () (n & diff)
             else res[1] ^= n;
@@ -34,3 +34,17 @@ O(n) O(1)
 
 https://leetcode.com/discuss/52351/accepted-java-space-easy-solution-with-detail-explanations
 https://leetcode.com/discuss/52913/my-java-solution-adapted-from-the-commonest-solution-here
+
+
+
+Given an array of numbers nums, in which exactly two elements appear only once and all the other elements appear exactly twice. 
+
+Find the two elements that appear only once.
+
+For example:
+
+Given nums = [1, 2, 1, 3, 2, 5], return [3, 5].
+
+Note:
+The order of the result is not important. So in the above example, [5, 3] is also correct.
+Your algorithm should run in linear runtime complexity. Could you implement it using only constant space complexity?

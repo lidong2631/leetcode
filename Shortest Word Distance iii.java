@@ -5,7 +5,7 @@ public class Solution {
             if (words[i].equals(word1)) {
                 if (word1.equals(word2)) {
                     if (p1 != -1) res = Math.min(res, i - p1);
-                    p1 = i;
+                    p1 = i;         // careful
                 }
                 else {
                     if (p2 != -1) res = Math.min(res, i - p2);

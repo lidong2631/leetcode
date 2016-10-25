@@ -42,14 +42,14 @@ Here, we will use the integers 0, 1, and 2 to represent the color red, white, an
 public class Solution {
     public void sortColors(int[] nums) {
         int[] colors = new int[3];
-        int[] res = new int[nums.length + 1];   // new int[nums.length] is fine
+        int[] res = new int[nums.length];   // new int[nums.length+1] is fine
         for (int i = 0; i < nums.length; i++)
             colors[nums[i]]++;
         for (int i = 1; i < colors.length; i++)
             colors[i] += colors[i-1];
         for (int i = nums.length - 1; i >= 0; i--) {
             res[colors[nums[i]]-1] = nums[i];
-            colors[nums[i]]--;
+            colors[nums[i]]--;      // careful
         }
         for (int i = 0; i < nums.length; i++)
             nums[i] = res[i];

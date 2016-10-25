@@ -2,31 +2,31 @@ import java.util.*;
 
 public class Solution {
 
-    private int[] n;
-    private Random rand;
+    int[] arr;
+    Random rand;
 
     public Solution(int[] nums) {
-        this.n = nums;
+        this.arr = nums;
         rand = new Random();
     }
     
     /** Resets the array to its original configuration and return it. */
     public int[] reset() {
-        return n;    
+        return arr;
     }
     
     /** Returns a random shuffling of the array. */
     public int[] shuffle() {
-        if (n == null) return null;
-        int[] arr = n.clone();
-        for (int i = 1; i < arr.length; i++) {
-            int index = rand.nextInt(i+1);
-            
-            int tmp = arr[index];
-            arr[index] = arr[i];
-            arr[i] = tmp;
+        if (arr == null) return null;
+        int[] a = arr.clone();
+        int m = a.length;
+        while (m > 0) {
+            int i = rand.nextInt(m--);
+            int tmp = a[m];
+            a[m] = a[i];
+            a[i] = tmp;
         }
-        return arr;
+        return a;
     }
 }
 
@@ -37,12 +37,25 @@ public class Solution {
  * int[] param_2 = obj.shuffle();
  */
 
-
-https://discuss.leetcode.com/topic/53978/first-accepted-solution-java
-
 Fisher-Yates-shuffle
 https://bost.ocks.org/mike/shuffle/
 http://www.programming-algorithms.net/article/43676/Fisher-Yates-shuffle
+
+
+int[] shuffle(int[] array) {
+    int m = array.length;
+    Random rand = new Random();
+
+    while (m > 0) {
+        int random = rand.nextInt(m--);
+        int tmp = array[m];
+        array[m] = array[random];
+        array[random] = tmp;
+    }
+    return array;
+}
+
+
 
 
 

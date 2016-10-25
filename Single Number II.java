@@ -1,17 +1,3 @@
-class Solution:
-    # @param A, a list of integer
-    # @return an integer
-    def singleNumber(self, A):
-        one = two = three = 0
-        for i in range(len(A)):
-            two |= A[i] & one
-            one = A[i] ^ one
-            three = ~(one & two)
-            one &= three
-            two &= three
-        return one
-
-
 题意：Given an array of integers, every element appears three times except for one. Find that single one.
 
 要求：和single number一样，线性时间复杂度，不能使用额外空间。
