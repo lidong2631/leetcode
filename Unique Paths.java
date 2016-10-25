@@ -47,8 +47,9 @@ public class Solution {
         return res[n-1];
     }
 }
-
-
+0 0 0
+0 0 0
+0 0 0
 
 from code ganker:
 

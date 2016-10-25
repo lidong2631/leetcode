@@ -129,7 +129,7 @@ public class Solution {
                 queue.add(r * len + c - 1);
                 board[r][c-1] = 'O';
             }
-            if (r < board.length - 1 && board[r+1][c] == '-') {
+            if (r < board.length - 1 && board[r+1][c] == '-') {     // careful
                 queue.add((r+1) * len + c);
                 board[r+1][c] = 'O';
             }

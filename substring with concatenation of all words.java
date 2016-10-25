@@ -76,66 +76,6 @@ if(currMap.containsKey(removeStr)) {
 
 
 
-public class Solution {
-    public List<Integer> findSubstring(String S, String[] L) {
-        List<Integer> res = new ArrayList<Integer>();
-        if(S==null || S.length()==0 || L==null || L.length==0)
-            return res;
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
-        for(int i=0; i<L.length; i++) {
-            if(map.containsKey(L[i]))
-                map.put(L[i], map.get(L[i])+1);
-            else
-                map.put(L[i], 1);
-        }
-        
-        for(int i=0; i<L[0].length(); i++) {
-            int count = 0, left = i;
-            HashMap<String, Integer> currMap = new HashMap<String, Integer>();
-            for(int j=i; j<=S.length()-L[0].length(); j+=L[0].length()) {
-                String currStr = S.substring(j, j+L[0].length());
-                if(map.containsKey(currStr)) {
-                    if(currMap.containsKey(currStr))
-                        currMap.put(currStr, currMap.get(currStr)+1);
-                    else
-                        currMap.put(currStr, 1);
-                    if(currMap.get(currStr)<=map.get(currStr)) {
-                        count++;
-                    }
-                    else {
-                        while(currMap.get(currStr)>map.get(currStr)) {
-                            String tmpStr = S.substring(left, left+L[0].length());
-                            currMap.put(tmpStr, currMap.get(tmpStr)-1);
-                            left+=L[0].length();
-                            if(currMap.get(tmpStr)<map.get(tmpStr))
-                                count--;
-                        }
-                    }
-                    if(count==L.length) {
-                        res.add(left);
-                        String tmpStr = S.substring(left, left+L[0].length());
-                        currMap.put(tmpStr, currMap.get(tmpStr)-1);
-                        count--;
-                        left+=L[0].length();
-                    }
-                }
-                else {
-                    currMap.clear();
-                    count = 0;
-                    left = j+L[0].length();
-                }
-            }
-        }
-        return res;
-    }
-}
-
-
-
-
-
-
-
 
 from code ganker:
 

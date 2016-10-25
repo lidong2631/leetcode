@@ -28,3 +28,17 @@ for left subtree check if we can add its value to res for right subtree just rec
 O(n)
 
 https://discuss.leetcode.com/topic/60403/java-iterative-and-recursive-solutions
+
+
+
+Find the sum of all left leaves in a given binary tree.
+
+Example:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+There are two left leaves in the binary tree, with values 9 and 15 respectively. Return 24.

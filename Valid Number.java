@@ -25,6 +25,17 @@ public class Solution {
     }
 }
 
+Validate if a given string is numeric.
+
+Some examples:
+"0" => true
+" 0.1 " => true
+"abc" => false
+"1 a" => false
+"2e10" => true
+Note: It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one.
+
+
 这题题目比较模糊 要注意先提问澄清一些情况再着手解题
 
 官方解法思路很清晰 先是简化版的题目不考虑e的情况 判断4个地方 1 开始的whitespace 2 正负号 3 数字 4 末尾的whitespace

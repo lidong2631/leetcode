@@ -42,7 +42,7 @@ class Solution:
 
 
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -54,11 +54,12 @@ public class Solution {
     public boolean isValidBST(TreeNode root) {
         return helper(root, null, null);
     }
-
-    private boolean helper(TreeNode root, Integer left, Integer right) {
-        if (root == null) return true;
-        if ((left == null || root.val > left) && (right == null || root.val < right))
-            return helper(root.left, left, root.val) && helper(root.right, root.val, right);
+    
+    private boolean helper(TreeNode root, TreeNode left, TreeNode right) {
+        if (root == null)
+            return true;
+        if ((left == null || root.val > left.val) && (right == null || root.val < right.val))
+            return helper(root.left, left, root) && helper(root.right, root, right);
         return false;
     }
 }

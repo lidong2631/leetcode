@@ -1,17 +1,18 @@
 public class Solution {
     public boolean isValidSerialization(String preorder) {
-        if(preorder==null || preorder.length()==0)
-            return true;
         String[] str = preorder.split(",");
         int i = 0, level = 0;
-        while(i<str.length-1) {
-            if(str[i++].equals("#")) {
-                if(level==0) return false;
-                else level--;
+        while (i < str.length - 1) {
+            if (str[i].equals("#")) {
+                if (level == 0)
+                    return false;
+                level--;
             }
             else level++;
+            i++;
         }
-        if(level!=0) return false;
+        if (level != 0)
+            return false;
         return str[str.length-1].equals("#");
     }
 }
@@ -27,7 +28,9 @@ One way to serialize a binary tree is to use pre-order traversal. When we encoun
 # # # #   # #
 For example, the above binary tree can be serialized to the string "9,3,4,#,#,1,#,#,2,#,6,#,#", where # represents a null node.
 
-Given a string of comma separated values, verify whether it is a correct preorder traversal serialization of a binary tree. Find an algorithm without reconstructing the tree.
+Given a string of comma separated values, verify whether it is a correct preorder traversal serialization of a binary tree. 
+
+Find an algorithm without reconstructing the tree.
 
 Each comma separated value in the string must be either an integer or a character '#' representing null pointer.
 
