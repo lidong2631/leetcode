@@ -32,8 +32,26 @@ O（m^2*n^2) O(m*n*4^(len(word))) 空间O(1)
 
 每个方向最多可能递归len(word)次 看code ganker评论
 
-
 https://leetcode.com/discuss/23165/accepted-very-short-java-solution-no-additional-space
+
+
+Given a 2D board and a word, find if the word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. 
+
+The same letter cell may not be used more than once.
+
+For example,
+Given board =
+
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+word = "ABCCED", -> returns true,
+word = "SEE", -> returns true,
+word = "ABCB", -> returns false.
 
 
 
