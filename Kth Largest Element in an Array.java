@@ -2,29 +2,28 @@ public class Solution {
     public int findKthLargest(int[] nums, int k) {
         return helper(nums, 0, nums.length-1, k);
     }
-
+    
     private int helper(int[] nums, int left, int right, int k) {
         if (left == right) return nums[left];
         
         while (true) {
             int n = partition(nums, left, right);
-            int rank = right - n + 1;                               // notice here !
-            if (rank == k)
+            int rank = right - n + 1;
+            if (k == rank)
                 return nums[n];
-            else if (rank < k)
-                return helper(nums, left, n-1, k-rank);
-            else
+            else if (k < rank)
                 return helper(nums, n+1, right, k);
+            else
+                return helper(nums, left, n-1, k-rank);
         }
     }
     
-    private int partition(int[] nums, int left, int right) {        // quick sort partition
-        int pivot = nums[right];
-        int l = left - 1, r = right;
+    private int partition(int[] nums, int left, int right) {
+        int pivot = nums[right], l = left - 1, r = right;
         while (true) {
             while (nums[++l] < pivot)
                 ;
-            while (r > 0 && nums[--r] > pivot)                      //
+            while (r > 0 && nums[--r] > pivot)
                 ;
             if (l >= r)
                 break;
@@ -34,16 +33,28 @@ public class Solution {
         return l;
     }
     
-    private void swap(int[] nums, int left, int right) {
-        int tmp = nums[left];
-        nums[left] = nums[right];
-        nums[right] = tmp;
+    private void swap(int[] nums, int l, int r) {
+        int tmp = nums[l];
+        nums[l] = nums[r];
+        nums[r] = tmp;
     }
 }
 
 quick select. Order Statistics 利用quicksort中的selection algorithm 其实就是partition那步
 
 O(n) worst case complexity is O(n^2)
+n + n/2 + n/4 + n/8 + ... = n (1 + 1/2 + 1/4 + 1/8 + ...) = n * 1 * (1 - (1/2)^n) / (1 - 1/2) = 2n
+
+explanation on the time complexity
+http://stackoverflow.com/questions/8783408/why-is-the-runtime-of-the-selection-algorithm-on
+
+
+Geometric Progression
+sum = a1 * (1 - q^n) / (1 - q)
+Arithmetic Sequence
+sum = (a1 + an) * n / 2  or  n * a1 + n * (n - 1) * d / 2
+
+
 
 这种做法的进一步优化就是median of medians 有空可以看下 worst performance仍是O(n)
 

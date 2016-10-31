@@ -2,7 +2,7 @@ public class Solution {
     public boolean isAdditiveNumber(String num) {
         int len = num.length();
         for (int i = 1; i <= len / 2; i++) {
-            for (int j = 1; Math.max(i, j) <= len - i - j; j++) {
+            for (int j = 1; Math.max(i, j) <= len - i - j; j++) {   // careful
                 if (isValid(i, j, num))
                     return true;
             }
@@ -11,10 +11,10 @@ public class Solution {
     }
     
     private boolean isValid(int i, int j, String num) {
-        if (i > 1 && num.charAt(0) == '0') return false;
+        if (i > 1 && num.charAt(0) == '0') return false;    // both the two numbers cannot start with '0'
         if (j > 1 && num.charAt(i) == '0') return false;
         String sum;
-        Long x1 = Long.parseLong(num.substring(0, i));
+        Long x1 = Long.parseLong(num.substring(0, i));      // get two numbers
         Long x2 = Long.parseLong(num.substring(i, i+j));
         for (int start = i + j; start != num.length(); start += sum.length()) {
             x2 = x1 + x2;

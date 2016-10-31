@@ -1,0 +1,1164 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"RAT",
+				"RESERVE_RATIO"
+			],
+			[
+				"CUR",
+				"CURRENT_RESERVE"
+			],
+			[
+				"Dn",
+				"DynamicProxy"
+			],
+			[
+				"Dyna",
+				"DynamicProxy"
+			],
+			[
+				"UserSer",
+				"UserServiceImpl"
+			],
+			[
+				"user",
+				"UserService"
+			],
+			[
+				"Prev",
+				"PREVIOUS_MONTH_RESERVE"
+			],
+			[
+				"CURRENT",
+				"CURRENT_MONTH_RESERVE"
+			],
+			[
+				"Pre",
+				"PREVIOUS_MONTH_RESERVE"
+			],
+			[
+				"PRE",
+				"PREVIOUS_MONTH_BALANCE"
+			],
+			[
+				"CURRENT_",
+				"CURRENT_MONTH_RESERVE"
+			],
+			[
+				"RESERVE",
+				"RESERVE_CATEGORY"
+			],
+			[
+				"listn",
+				"listener"
+			],
+			[
+				"listner",
+				"listener-container"
+			],
+			[
+				"message",
+				"messageConverter"
+			],
+			[
+				"defaul",
+				"defaultDestinationName"
+			],
+			[
+				"conn",
+				"connectionFactory"
+			],
+			[
+				"AlertServi",
+				"AlertServiceImpe"
+			],
+			[
+				"Multi",
+				"MultipartFile"
+			],
+			[
+				"proce",
+				"processRegistration"
+			],
+			[
+				"spitterr",
+				"spittleRepository"
+			],
+			[
+				"spitterR",
+				"spittleRepository"
+			],
+			[
+				"Spitter",
+				"SpitterController"
+			],
+			[
+				"dis",
+				"DispatcherServlet"
+			],
+			[
+				"getServ",
+				"getServletConfigClasses"
+			],
+			[
+				"perf",
+				"perform"
+			],
+			[
+				"shopp",
+				"shoppingCart"
+			],
+			[
+				"Conditi",
+				"ConditionContext"
+			],
+			[
+				"Con",
+				"ConditionContext"
+			],
+			[
+				"sprin",
+				"springframework"
+			],
+			[
+				"Magic",
+				"MagicExistsCondition"
+			],
+			[
+				"Embe",
+				"embeddedDatabaseType"
+			],
+			[
+				"CURREN",
+				"CURRENT_RESERVE"
+			],
+			[
+				"PREV",
+				"PREVIOUS_MONTH_RESERVE"
+			],
+			[
+				"CURR",
+				"CURRENT_MONTH_RESERVE"
+			],
+			[
+				"ORDER",
+				"ORDER_NO"
+			],
+			[
+				"RESER",
+				"RESERVE_RATIO"
+			],
+			[
+				"to",
+				"toString"
+			],
+			[
+				"proper",
+				"propertyIsEnumerable"
+			],
+			[
+				"peek",
+				"peekElement"
+			],
+			[
+				"curr",
+				"currNode"
+			],
+			[
+				"remove",
+				"removeNode"
+			],
+			[
+				"data",
+				"dataStore"
+			],
+			[
+				"CURRE",
+				"CURRENT_MONTH_BALANCE"
+			],
+			[
+				"D",
+				"DEAL_LOCAL_BAL"
+			],
+			[
+				"reverse",
+				"reverseWords"
+			],
+			[
+				"re",
+				"rearrangeString"
+			],
+			[
+				"foll",
+				"followeeId"
+			],
+			[
+				"follower",
+				"followerId"
+			],
+			[
+				"self",
+				"selfTweets"
+			],
+			[
+				"get",
+				"getNewsFeed"
+			],
+			[
+				"post",
+				"postTweet"
+			],
+			[
+				"Sql",
+				"SqlServerFactory"
+			],
+			[
+				"Oracle",
+				"OracleFactory"
+			],
+			[
+				"fac",
+				"Factory"
+			],
+			[
+				"S",
+				"SqlServerFactory"
+			],
+			[
+				"Ora",
+				"OracleDepartment"
+			],
+			[
+				"Or",
+				"OracleUser"
+			],
+			[
+				"create",
+				"createDepartment"
+			],
+			[
+				"sta",
+				"stateB"
+			],
+			[
+				"conc",
+				"ConcreteStateB"
+			],
+			[
+				"state",
+				"stateA"
+			],
+			[
+				"Concre",
+				"ConcreteStateA"
+			],
+			[
+				"COncr",
+				"ConcreteStateB"
+			],
+			[
+				"tvs",
+				"tvStopState"
+			],
+			[
+				"TVS",
+				"TVStopState"
+			],
+			[
+				"socke",
+				"socketAdapter"
+			],
+			[
+				"get12",
+				"get12Volt"
+			],
+			[
+				"get1",
+				"get110Volt"
+			],
+			[
+				"Socke",
+				"SocketAdapter"
+			],
+			[
+				"s",
+				"SpecificRequest"
+			],
+			[
+				"Bra",
+				"BrandB"
+			],
+			[
+				"r",
+				"Run"
+			],
+			[
+				"op",
+				"Operation"
+			],
+			[
+				"COnc",
+				"ConcreteImplementorB"
+			],
+			[
+				"abst",
+				"Abstraction"
+			],
+			[
+				"no",
+				"Notify"
+			],
+			[
+				"Cook",
+				"CookBeefCommand"
+			],
+			[
+				"cook",
+				"CookChickenCommand"
+			],
+			[
+				"Exe",
+				"ExecuteCommand"
+			],
+			[
+				"exe",
+				"ExecuteCommand"
+			],
+			[
+				"set",
+				"SetCommand"
+			],
+			[
+				"ex",
+				"Execute"
+			],
+			[
+				"Dol",
+				"Dollar10Dispenser"
+			],
+			[
+				"DO",
+				"Dollar20Dispenser"
+			],
+			[
+				"Doll",
+				"Dollar50Dispenser"
+			],
+			[
+				"Disp",
+				"DispenseChain"
+			],
+			[
+				"Concrete",
+				"ConcreteHandler2"
+			],
+			[
+				"handl",
+				"HandleRequest"
+			],
+			[
+				"add",
+				"addUser"
+			],
+			[
+				"ChatMedia",
+				"ChatMediatorImpl"
+			],
+			[
+				"send",
+				"sendMessage"
+			],
+			[
+				"Chat",
+				"ChatMediator"
+			],
+			[
+				"setColl",
+				"setColleague1"
+			],
+			[
+				"colle",
+				"colleague1"
+			],
+			[
+				"Concret",
+				"ConcreteMediator"
+			],
+			[
+				"Web",
+				"WebsiteFactory"
+			],
+			[
+				"fly",
+				"flyweights"
+			],
+			[
+				"un",
+				"UnsharedConcreteFlyweight"
+			],
+			[
+				"o",
+				"Operation"
+			],
+			[
+				"Fly",
+				"Flyweight"
+			],
+			[
+				"Flywei",
+				"FlyweightFactory"
+			],
+			[
+				"Conc",
+				"ConcreteVisitor2"
+			],
+			[
+				"Concr",
+				"ConcreteVisitor1"
+			],
+			[
+				"visi",
+				"VisitConcreteElementB"
+			],
+			[
+				"VisitConcre",
+				"VisitConcreteElementA"
+			],
+			[
+				"con",
+				"concreteElementA"
+			],
+			[
+				"Visi",
+				"VisitConcreteElementA"
+			],
+			[
+				"elemen",
+				"elements"
+			],
+			[
+				"write",
+				"writePos"
+			],
+			[
+				"right",
+				"right_LCA"
+			],
+			[
+				"left",
+				"left_LCA"
+			],
+			[
+				"find",
+				"findDisUtil"
+			],
+			[
+				"heap",
+				"heapifyDown"
+			],
+			[
+				"new",
+				"newValue"
+			],
+			[
+				"HeA",
+				"HEAP_SIZE"
+			],
+			[
+				"cur",
+				"curLevel"
+			],
+			[
+				"ne",
+				"nextKey"
+			],
+			[
+				"vo",
+				"vowelCount"
+			],
+			[
+				"n",
+				"nElems"
+			],
+			[
+				"My",
+				"MyHttpController"
+			],
+			[
+				"picture",
+				"picture_uploader"
+			],
+			[
+				"feed",
+				"feed_items"
+			],
+			[
+				"log",
+				"logged_in"
+			],
+			[
+				"update",
+				"update_attribute"
+			],
+			[
+				"constr",
+				"constructFunction"
+			],
+			[
+				"bt",
+				"btnHide"
+			],
+			[
+				"Object",
+				"ObjectOutputSteam"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/D/java/SDLC.java",
+			"settings":
+			{
+				"buffer_size": 30252,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "INSERT INTO BOOK_TEMPLATE_PREV ( BR, CCY, DR, CR, AMOUNT, VALUE_DAY, REF, INPUT_DATE )\nSELECT \n	Switch(RMD.COMPANY In ('BNK'),'NYB',RMD.COMPANY In ('NIB'),'IBF',RMD.COMPANY In ('CTB'),'CTB',RMD.COMPANY In ('CHI'),'CHI',RMD.COMPANY In ('LAB'),'LAB',RMD.COMPANY In ('CIB'),'CIB',RMD.COMPANY In ('LIB'),'LIB') AS Expr1, 'USD' AS Expr2, RMD.RESERVE_CATEGORY, Switch(RMD.COMPANY = 'CTB' AND RMD.RESERVE_CATEGORY = '17004', 'PL52855',\n			RMD.RESERVE_CATEGORY In ('17004','17005','17019','17006','17007','17008','17009','17010','17011','17012','17013','17014','17015','17016','17017','17018','17020','17021','17022'),'PL52851',\n			RMD.RESERVE_CATEGORY In ('17105','17110','17111','17107','17116','17123','17115'),'PL52852',\n			RMD.RESERVE_CATEGORY In ('18201','18203','18204','18205','18206','18207','18208','18210'),'PL68010',\n			RMD.RESERVE_CATEGORY In ('18202'),'PL68016') AS Expr3, Sum(RMD.RESERVE) AS RESERVEOfSum, '' AS Expr4, '' AS Expr5, '' AS Expr6\nFROM RMD\nGROUP BY RMD.RESERVE_CATEGORY, RMD.COMPANY\nORDER BY RMD.COMPANY;\n",
+			"settings":
+			{
+				"buffer_size": 1025,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Whether you are an individual contributor or a manager of a large team, you are an Amazon leader. These are our leadership principles, unless you know better ones.  Please be a leader.\n\n\nCustomer Obsession \n\nLeaders start with the customer and work backwards. They work vigorously to earn and keep customer trust.  Although leaders pay attention to competitors, they obsess over customers.\n\n\nOwnership\n\nLeaders are owners.  They think long term and don’t sacrifice long-term value for short-term results. They act on behalf of the entire company, beyond just their own team.  They never say “that’s not my job”.  \n\n\nInvent and Simplify\n\nLeaders expect and require innovation and invention from their teams and always find ways to simplify. They are externally aware, look for new ideas from everywhere, and are not limited by “not invented here”. As we do new things, we accept that we may be misunderstood for long periods of time. \n\n\nAre Right, A Lot\n\nLeaders are right a lot. They have strong business judgment and good instincts.\n\n\nHire and Develop The Best\n\nLeaders raise the performance bar with every hire and promotion. They recognize exceptional talent, and willingly move them throughout the organization. Leaders develop leaders and take seriously their role in coaching others. \n\n\nInsist on the Highest Standards\n\nLeaders have relentlessly high standards - many people may think these standards are unreasonably high. Leaders are continually raising the bar and drive their teams to deliver high quality products, services and processes. Leaders ensure that defects do not get sent down the line and that problems are fixed so they stay fixed.    \n\n\nThink Big\n\nThinking small is a self-fulfilling prophecy. Leaders create and communicate a bold direction that inspires results. They think differently and look around corners for ways to serve customers.  \n\n\nBias for Action\n\nSpeed matters in business. Many decisions and actions are reversible and do not need extensive study. We value calculated risk taking.\n\n\nFrugality\n\nWe try not to spend money on things that don’t matter to customers. Frugality breeds resourcefulness, self-sufficiency and invention. There are no extra points for headcount, budget size or fixed expense.\n\n\nVocally Self Critical\n\nLeaders do not believe their or their team’s body odor smells of perfume. Leaders come forward with problems or information, even when doing so is awkward or embarrassing. Leaders benchmark themselves and their teams against the best.\n\n\nEarn Trust of Others\n\nLeaders are sincerely open-minded, genuinely listen, and are willing to examine their strongest convictions with humility. \n\n\nDive Deep\n\nLeaders operate at all levels, stay connected to the details and audit frequently. No task is beneath them.  \n\n\nHave Backbone; Disagree and Commit\n\nLeaders are obligated to respectfully challenge decisions when they disagree, even when doing so is uncomfortable or exhausting. Leaders have conviction and are tenacious. They do not compromise for the sake of social cohesion. Once a decision is determined, they commit wholly.\n\n\nDeliver Results\n\nLeaders focus on the key inputs for their business and deliver them with the right quality and in a timely fashion. Despite setbacks, they rise to the occasion and never settle. \n\n <https://mailfoogae.appspot.com/t?sender=abGlkb25nMjYzMUBnbWFpbC5jb20%3D&type=zerocontent&guid=2727836d-30cd-464d-8129-d796e241de18> ᐧ\n",
+			"settings":
+			{
+				"buffer_size": 3423,
+				"line_ending": "Windows",
+				"name": "Whether you are an individual contributor or a man"
+			}
+		},
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 81.0,
+		"selected_items":
+		[
+			[
+				"SQL",
+				"Set Syntax: SQL"
+			],
+			[
+				"sql",
+				"Set Syntax: SQL"
+			],
+			[
+				"java",
+				"Set Syntax: Java"
+			],
+			[
+				"py",
+				"Set Syntax: Python"
+			],
+			[
+				"j",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"ja",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"javasc",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"pyt",
+				"Set Syntax: Python"
+			],
+			[
+				"python",
+				"Set Syntax: Python"
+			],
+			[
+				"jav",
+				"Set Syntax: Java"
+			],
+			[
+				"xml",
+				"Set Syntax: XML"
+			],
+			[
+				"ruby",
+				"Set Syntax: Ruby on Rails"
+			],
+			[
+				"javascript",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"javascr",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"javas",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"shell",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"json",
+				"Set Syntax: JSON"
+			],
+			[
+				"rails",
+				"Set Syntax: SQL (Rails)"
+			],
+			[
+				"ru",
+				"Set Syntax: Ruby on Rails"
+			],
+			[
+				"rail",
+				"Set Syntax: HTML (Rails)"
+			],
+			[
+				"JAVA",
+				"Set Syntax: Java"
+			],
+			[
+				"Java",
+				"Set Syntax: Java"
+			],
+			[
+				"Package",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 392.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/D/leetcode/Walls and Gates.java",
+		"/D/leetcode/Verify Preorder Sequence in BST.java",
+		"/D/leetcode/Verify Preorder Serialization of a Binary Tree.java",
+		"/D/leetcode/Validate Binary Search Tree.java",
+		"/D/leetcode/Valid Word Square.java",
+		"/D/leetcode/Valid Word Abbreviation.java",
+		"/D/leetcode/Valid Sudoku.java",
+		"/D/leetcode/Valid Perfect Square.java",
+		"/D/leetcode/Valid Parentheses.java",
+		"/D/leetcode/Valid Palindrome.java",
+		"/D/leetcode/Valid Number.java",
+		"/D/leetcode/Valid Anagram.java",
+		"/D/leetcode/Unique Word Abbreviation.java",
+		"/D/leetcode/Unique Paths II.java",
+		"/D/leetcode/Unique Binary Search Tree II.java",
+		"/D/leetcode/Unique Paths.java",
+		"/D/leetcode/Unique Binary Search Tree.java",
+		"/C/Users/dli/Desktop/Case/R10678/STMT_ENTRY.sql",
+		"/D/leetcode/Two Sum III - Data Structure design.java",
+		"/D/leetcode/Triangle.java",
+		"/D/leetcode/Two Sum II - Input array is sorted.java",
+		"/D/leetcode/Two Sum.java",
+		"/D/leetcode/Trapping Rain Water.java",
+		"/D/leetcode/Top K Frequent Elements.java",
+		"/D/leetcode/Third Maximum Number.java",
+		"/D/leetcode/The Skyline Problem.java",
+		"/D/leetcode/Super Ugly Number.java",
+		"/D/leetcode/Ugly Number II.java",
+		"/D/leetcode/Surrounded Regions.java",
+		"/D/leetcode/Ugly Number.java",
+		"/D/leetcode/Swap Nodes in Pairs.java",
+		"/D/leetcode/Symmetric Tree.java",
+		"/D/leetcode/Missing Range.java",
+		"/D/leetcode/Summary Ranges.java",
+		"/D/leetcode/Sum Root to Leaf Numbers.java",
+		"/D/leetcode/Sum of Left Leaves.java",
+		"/D/leetcode/Sum of Two Integers.java",
+		"/D/leetcode/Sudoku Solver.java",
+		"/D/leetcode/substring with concatenation of all words.java",
+		"/D/leetcode/Subsets II.java",
+		"/D/leetcode/Sparse Matrix Multiplication.java",
+		"/D/leetcode/Shortest Word Distance ii.java",
+		"/D/leetcode/Shortest Word Distance.java",
+		"/D/leetcode/Shortest Distance from All Buildings.java",
+		"/D/leetcode/Shortest Palindrome.java",
+		"/D/leetcode/Set Matrix Zeroes.java",
+		"/D/leetcode/Serialize and Deserialize Binary Tree.java",
+		"/D/leetcode/Search Insert Position.java",
+		"/D/leetcode/Search in Rotated Sorted Array II.java",
+		"/D/leetcode/Search in Rotated Sorted Array.java",
+		"/C/Users/dli/Desktop/Case/R10678/CATEG_ENTRY.sql",
+		"/D/leetcode/Search for a Range.java",
+		"/D/leetcode/Search a 2D matrix II.java",
+		"/D/leetcode/Search a 2D Matrix.java",
+		"/D/leetcode/Scramble Strings.java",
+		"/D/leetcode/Same Tree.java",
+		"/D/leetcode/Russian Doll Envelopes.java",
+		"/D/leetcode/Rotate Image.java",
+		"/D/leetcode/Rotate List.java",
+		"/D/leetcode/Reverse Nodes in k-Group.java",
+		"/D/leetcode/Rotate Function.java",
+		"/D/leetcode/Rotate Array.java",
+		"/D/leetcode/Reverse Words in a String II.java",
+		"/D/leetcode/Roman to Integer.java",
+		"/D/leetcode/Reverse Words in a String.java",
+		"/D/leetcode/Reverse Vowels of a String.java",
+		"/D/leetcode/Reverse String.java",
+		"/D/leetcode/Reverse Linked List II.java",
+		"/D/leetcode/Reverse Linked List.java",
+		"/D/leetcode/Reverse Integer.java",
+		"/D/leetcode/Reverse Bits.java",
+		"/D/leetcode/Restore IP Address.java",
+		"/C/Users/dli/Desktop/Case/R10085/book_template_FINAL(DESCRIPTION).xlsx",
+		"/C/Users/dli/Desktop/Case/R10085/INSERT INTO BOOK_TEMPLATE",
+		"/D/leetcode/Partition Equal Subset Sum.java",
+		"/D/leetcode/Palindrome Permutaton II.java",
+		"/D/leetcode/Palindrome Partitioning II.java",
+		"/D/leetcode/Palindrome Permutation.java",
+		"/D/leetcode/Palindrome Partitioning.java",
+		"/D/leetcode/Palindrome Number.java",
+		"/D/leetcode/Palindrome List.java",
+		"/D/leetcode/Paint House.java",
+		"/D/leetcode/Paint House ii.java",
+		"/D/leetcode/Paint Fence.java",
+		"/D/leetcode/One Edit Distance.java",
+		"/D/leetcode/Odd Even Linked List.java",
+		"/D/leetcode/Number of Islands II.java",
+		"/D/leetcode/Number of Islands.java",
+		"/D/leetcode/Number of Digit One.java",
+		"/D/leetcode/Number of Connected Components in an Undirected Graph.java",
+		"/D/leetcode/Number of 1 Bits.java",
+		"/D/leetcode/Nth Digit.java",
+		"/D/leetcode/N-Queens II.java",
+		"/D/leetcode/N-Queens.java",
+		"/D/leetcode/nqueenii.py",
+		"/D/leetcode/Nim Game.java",
+		"/D/leetcode/Next Permutation.java",
+		"/D/leetcode/Nested List Weight Sum ii.java",
+		"/D/leetcode/multiply strings.py",
+		"/D/leetcode/Nested List Weight Sum.java",
+		"/D/leetcode/Moving Average from Data Stream.java",
+		"/D/leetcode/Move Zeroes.java",
+		"/D/leetcode/Missing Number.java",
+		"/D/leetcode/minimum window substring(java).py",
+		"/D/leetcode/Minimum Size Subarray Sum.java",
+		"/D/leetcode/Minimum Path Sum.java",
+		"/D/leetcode/Minimum Height Trees.java",
+		"/D/leetcode/Mini Parser.java",
+		"/D/leetcode/Minimum Depth of Binary Tree.java",
+		"/D/leetcode/Min Stack.java",
+		"/D/leetcode/Merge K Sorted List.java",
+		"/D/leetcode/Merge Two Sorted List.java",
+		"/D/leetcode/Merge Sorted Array.java",
+		"/D/leetcode/Merge Intervals.java",
+		"/D/leetcode/Meeting Rooms ii.java",
+		"/D/leetcode/Meeting Rooms.java",
+		"/D/leetcode/Median of Two Sorted Array.java",
+		"/D/leetcode/Maximum Size Subarray Sum Equals k.java",
+		"/D/leetcode/Maximum Subarray.java",
+		"/D/leetcode/Maximum Product Subarray.java",
+		"/D/leetcode/Maximum Product of Word Lengths.java",
+		"/D/leetcode/Maximum Gap.java",
+		"/D/leetcode/Maximum Depth of Binary Tree.java",
+		"/D/leetcode/Maximal Square.java",
+		"/D/leetcode/Maximal Rectangle.java",
+		"/D/leetcode/Max Sum of Rectangle No Larger Than K.java",
+		"/D/leetcode/Max Points on a Line.java",
+		"/D/leetcode/Majority Element II.java"
+	],
+	"find":
+	{
+		"height": 37.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"geomap",
+			"input",
+			"curl_exec",
+			"postXmlCurl",
+			"通知",
+			"code_url",
+			"cdplayerc",
+			"/ib",
+			"WHOLE",
+			"CURRENT",
+			"Stripe",
+			"NO",
+			"script",
+			"garbage",
+			"static",
+			"polymor",
+			"event loo",
+			"index",
+			"1022251",
+			"statepara",
+			"<tfsa_ctrct_nbr>",
+			"<tfsa_pln_id>",
+			"tfsa_ctrct_nbr",
+			"interface User {\n	public void insert(User user);\n	public User getUser(int id);\n}\n\nclass SqlServerUser implements User {\n\n	public void insert(User user) {\n		System.out.println(\"insert into user in SQL server\");\n	}\n\n	public User getUser(int id) {\n		System.out.println(\"get id's record from user in SQL server\");\n	}\n}\n\nclass OracleUser implements User {\n	\n	public void insert(User user) {\n		System.out.println(\"insert into user in Oracle\");\n	}\n\n	public User getUser(int id) {\n		System.out.println(\"get id's record from user in Oracle\");\n	}	\n}\n\ninterface Department {\n	public void insert(Department department);\n	public Department getDepartment(int id);\n}\n\nclass SqlServerDepartment implements Department {\n\n	public void insert(Department department) {\n		System.out.println(\"insert into department in SQL server\");\n	}\n\n	public Department getDepartment(int id) {\n		System.out.println(\"get id's record from department in SQL server\");\n	}\n}\n\nclass OracleDepartment implements Department {\n\n	public void insert(Department department) {\n		System.out.println(\"insert into department in Oracle\");\n	}\n\n	public Department getDepartment(int id) {\n		System.out.println(\"get id's record from department in Oracle\");\n	}\n}\n\n\ninterface Factory {\n	public User createUser();\n	public Department createDepartment();	\n}\n\nclass SqlServerFactory implements Factory {\n\n	public User createUser() {\n		return new SqlServerUser();\n	}\n\n	public Department createDepartment() {\n		return new SqlServerDepartment();\n	}\n}\n\nclass OracleFactory implements Factory {\n\n	public User createUser() {\n		return new OracleUser();\n	}\n\n	public Department createDepartment() {\n		return new OracleDepartment();\n	}\n}\n\n\nclient:\nUser user = new User();\nDepartment dept = new Department();\n\n// Factory factory = new SqlServerFactory();\nFactory factory = new OracleFactory();\n\nUser u = factory.cr\n",
+			"interface User {\n	public void insert(User user);\n	public User getUser(int id);\n}\n\nclass SqlServerUser implements User {\n\n	public void insert(User user) {\n		System.out.println(\"insert into user in SQL server\");\n	}\n\n	public User getUser(int id) {\n		System.out.println(\"get id's record from user in SQL server\");\n	}\n}\n\nclass OracleUser implements User {\n	\n	public void insert(User user) {\n		System.out.println(\"insert into user in Oracle\");\n	}\n\n	public User getUser(int id) {\n		System.out.println(\"get id's record from user in Oracle\");\n	}	\n}\n\ninterface Department {\n	public void insert(Department department);\n	public Department getDepartment(int id);\n}\n\nclass SqlServerDepartment implements Department {\n\n	public void insert(Department department) {\n		System.out.println(\"insert into department in SQL server\");\n	}\n\n	public Department getDepartment(int id) {\n		System.out.println(\"get id's record from department in SQL server\");\n	}\n}\n\nclass OracleDepartment implements Department {\n\n	public void insert(Department department) {\n		System.out.println(\"insert into department in Oracle\");\n	}\n\n	public Department getDepartment(int id) {\n		System.out.println(\"get id's record from department in Oracle\");\n	}\n}\n\n\ninterface Factory {\n	public User createUser();\n	public Department createDepartment();	\n}\n\nclass SqlServerFactory implements Factory {\n\n	public User createUser() {\n		return new SqlServerUser();\n	}\n\n	public Department createDepartment() {\n		return new SqlServerDepartment();\n	}\n}\n\nclass OracleFactory implements Factory {\n\n	public User createUser() {\n		return new OracleUser();\n	}\n\n	public Department cr\n}",
+			"interse",
+			"diff",
+			"minimum",
+			"visit",
+			"fog",
+			"update_at",
+			"digest",
+			"param",
+			"minimu",
+			"heap",
+			";\n",
+			"<tfsa_hldr_brth_dt_yr>1",
+			"<tfsa_hldr_brth_dt_yr>",
+			"<trans_dt_yr>",
+			"<trans_dt_yr>2015</trans_dt_yr>",
+			"correct_user",
+			"shared/",
+			"flag",
+			"password_reset_expired",
+			"params",
+			"params[:id]",
+			"query",
+			"edit_account",
+			"remember_digest",
+			"authenticated?",
+			"cookie",
+			"18009204",
+			"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Not duplicate, add to hashtable",
+			"password_dig",
+			"res",
+			"line",
+			"air",
+			"str",
+			"generics",
+			"synchroni",
+			"\\$user",
+			"$user",
+			"ag",
+			"stack",
+			"generics",
+			"User.findOne",
+			"req.params",
+			"<cye_fmv_amt>",
+			"cye_fmv_amt",
+			"alt",
+			"inapp",
+			"g",
+			"rout",
+			"g",
+			"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Not duplicate, add to hashtable:",
+			"rtot_cye_fmv_amt:",
+			"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Not duplicate, add to hashtable:",
+			"D",
+			"d",
+			"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Not duplicate, add to hashtable:",
+			"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",
+			"This account has MM:",
+			"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Not duplicate, add to hashtable:",
+			"routePar",
+			"angular ui",
+			"cat",
+			"CREATE TABLE",
+			"length=\"96\"",
+			"length=\"86\"",
+			"length=\"19\"",
+			"precision=\"-1\" talendType=\"NUMBER\"",
+			"\\)",
+			"\\(",
+			"varchar2",
+			",",
+			"length=\\(19,2\\)",
+			"length=(19,2)",
+			"asd",
+			"length",
+			"length=\"192\"",
+			"precision=\"-1\" talendType=\"NUMBER\"",
+			"varchar2",
+			",",
+			"\\)",
+			"\\(",
+			"asd",
+			"number",
+			"\\)",
+			"length(",
+			"varchar2",
+			"asd",
+			"type/>",
+			"\"NUMBER\"",
+			"\"number\"",
+			"number",
+			"NUMBER",
+			",",
+			"varchar2",
+			"\\)",
+			"\\(",
+			"(",
+			"number",
+			"length",
+			"asd",
+			"d",
+			"asd",
+			"varchar2",
+			"asd"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"PREV",
+			"ITEM_NO",
+			"precision=\"2\" talendType=\"id_Double\"",
+			"\"",
+			"id_String",
+			"",
+			"length=\"19\"",
+			"precision=\"2\" talendType=\"id_Double\"",
+			"id_String",
+			"",
+			"\"",
+			"id_String",
+			"\"id_Double\"",
+			"",
+			"id_String",
+			"\"",
+			"id_String",
+			"id_Double",
+			"id_String",
+			"",
+			"id_String",
+			"\\n",
+			",",
+			"Point",
+			"double",
+			"HtWt",
+			"BBS_FOLDER"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/D/java/SDLC.java",
+					"settings":
+					{
+						"buffer_size": 30252,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								16525,
+								16525
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 17290.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"settings":
+					{
+						"buffer_size": 1025,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								102,
+								102
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQL/SQL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"settings":
+					{
+						"buffer_size": 3423,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3423,
+								3423
+							]
+						],
+						"settings":
+						{
+							"auto_name": "Whether you are an individual contributor or a man",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 513.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 33.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 50.0,
+	"status_bar_visible": true
+}
