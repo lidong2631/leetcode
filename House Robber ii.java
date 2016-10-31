@@ -1,5 +1,29 @@
 public class Solution {
     public int rob(int[] nums) {
+        if (nums == null || nums.length == 0)
+            return 0;
+        if (nums.length == 1)
+            return nums[0];
+        int maxRob = Math.max(rob(1, nums.length-1, nums), rob(2, nums.length, nums));
+        return maxRob;
+    }
+    
+    private int rob(int start, int end, int[] nums) {
+        int prev = 0, curr = nums[start-1];
+        for (int i = start; i < end; i++) {
+            int tmp = curr;
+            curr = Math.max(prev + nums[i], curr);
+            prev = tmp;
+        }
+        return curr;
+    }
+}
+
+
+
+
+public class Solution {
+    public int rob(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
         if (nums.length == 1) return nums[0];
         int prev = 0, curr = nums[0];

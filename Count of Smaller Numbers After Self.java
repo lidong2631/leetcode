@@ -26,12 +26,12 @@ public class Solution {
     
     private int insertNode(int val, TreeNode root) {
         int count = 0;
-        while (true) {
+        while (true) {          // careful
             if (val <= root.val) {
                 root.count++;
                 if (root.left == null) {
                     root.left = new TreeNode(val);
-                    break;
+                    break;      // careful
                 }
                 else root = root.left;
             }

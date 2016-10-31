@@ -17,7 +17,7 @@ public class SummaryRanges {
     }
     
     public void addNum(int val) {
-        if (tree.containsKey(val)) return;
+        if (tree.containsKey(val)) return;      // careful
         
         Integer left = tree.lowerKey(val);      // Returns the greatest key strictly less than the given key, or null if there is no such key.
         Integer right = tree.higherKey(val);    // Returns the least key strictly greater than the given key, or null if there is no such key.
@@ -37,7 +37,7 @@ public class SummaryRanges {
     }
     
     public List<Interval> getIntervals() {
-        return new ArrayList<>(tree.values());
+        return new ArrayList<>(tree.values());  // careful
     }
 }
 
