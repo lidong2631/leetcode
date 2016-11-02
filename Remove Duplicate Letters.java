@@ -27,6 +27,17 @@ public class Solution {
     }
 }
 
+bcacb
+a : 1
+b : 2
+c : 2
+
+stack: b
+stack: bc
+stack: a
+stack: ac
+stack: acb
+
 O(n) O(n)
 
 https://discuss.leetcode.com/topic/43469/java-o-n-solution-using-stack-with-detail-explanation/2

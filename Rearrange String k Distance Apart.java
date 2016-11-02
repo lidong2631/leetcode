@@ -41,17 +41,19 @@ public class Solution {
     }
 }
 
-aaadbbcc k = 2
+aaadbbcc k = 3
 
-Map:
+8
 a: 3 b: 2 c: 2 d: 1
 
 first for
 abc
+8 - 3 = 5
 a: 2 d: 1 b: 1 c: 1
 
 second for
 abcadb
+5 - 3 = 2
 a: 1 c: 1
 
 third for

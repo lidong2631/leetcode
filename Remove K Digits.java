@@ -12,7 +12,7 @@ public class Solution {
             stack.push(num.charAt(i++));
         }
         
-        while (k > 0) {        // corner case "1111"
+        while (k > 0) {        // corner case "1111" for characters all equal
             stack.pop();
             k--;
         }
@@ -27,6 +27,17 @@ public class Solution {
         return sb.toString();
     }
 }
+
+1432219     k = 3
+
+stack: 1
+stack: 14
+stack: 13   k = 2
+stack: 12   k = 1
+stack: 122
+stack: 121  k = 0
+stack: 1219
+
 
 O(n) O(n)
 
