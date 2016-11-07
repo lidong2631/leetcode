@@ -1,39 +1,29 @@
-题意：
+/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+public class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        
+        // Java 8 lambda expression
+        // Collections.sort(intervals, (Interval i1, Interval i2) -> (i1.start==i2.start)?i1.end-i2.end:i1.start-i2.start);
+        intervals.sort((Interval i1, Interval i2) -> (i1.start==i2.start)?i1.end-i2.end:i1.start-i2.start);     // in Java 8 no need to use Collections.sort
+        for(int i=1; i<intervals.size(); i++) {
+            if(intervals.get(i).start<=intervals.get(i-1).end) {
+                intervals.get(i-1).end = Math.max(intervals.get(i-1).end, intervals.get(i).end);
+                intervals.remove(i);
+                i--;
+            }
+        }
+        return intervals;
+    }
+}
 
-Given a collection of intervals, merge all overlapping intervals.
-
-For example,
-Given [1,3],[2,6],[8,10],[15,18],
-return [1,6],[8,10],[15,18].
-
-解题思路：先将区间按照每个start的值来排序，排好序以后判断一个区间的start值是否处在前一个区间中，如果在前一个区间中，那么合并；如果不在，就将新区间添加。
-
-代码：
-
-
-# Definition for an interval.
-# class Interval:
-#     def __init__(self, s=0, e=0):
-#         self.start = s
-#         self.end = e
-
-class Solution:
-    # @param intervals, a list of Interval
-    # @return a list of Interval
-    def merge(self, intervals):
-        intervals.sort(key = lambda x:x.start)
-        length=len(intervals)
-        res=[]
-        for i in range(length):
-            if res==[]:
-                res.append(intervals[i])
-            else:
-                size=len(res)
-                if res[size-1].start<=intervals[i].start<=res[size-1].end:
-                    res[size-1].end=max(intervals[i].end, res[size-1].end)
-                else:
-                    res.append(intervals[i])
-        return res
 
 
 
