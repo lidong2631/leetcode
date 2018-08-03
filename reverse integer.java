@@ -2,12 +2,12 @@ from cleanCode
 
 public class Solution {
     public int reverse(int x) {
-        int ret=0;
-        while(x!=0) {
-            if(Math.abs(ret)>Integer.MAX_VALUE/10)
+        int ret = 0;
+        while (x != 0) {
+            if (Math.abs(ret) > Integer.MAX_VALUE/10)
                 return 0;
-            ret = ret*10+x%10;
-            x/=10;
+            ret = ret * 10 + x % 10;
+            x /= 10;
         }
         return ret;
     }
@@ -19,6 +19,55 @@ Reverse digits of an integer.
 
 Example1: x = 123, return 321
 Example2: x = -123, return -321
+
+
+Python:
+class Solution:
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        s = str(x)
+        res = int('-' + s[1:][::-1]) if s[0] == '-' else int(s[::-1])
+        return res if -2147483648 <= res <= 2147483647 else 0
+
+class Solution:
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        result = 0
+
+        if x < 0:
+            symbol = -1
+            x = -x
+        else:
+            symbol = 1
+
+        while x:
+            result = result * 10 + x % 10
+            x = math.floor(x / 10)
+        
+        return 0 if result > pow(2, 31) else result * symbol
+
+In Python, integer has no true fixed maximum, only limited by available memory.
+math.floor() math.ceiling()
+
+
+
+Golang:
+func reverse(x int) int {
+    res := 0
+    for ; x != 0; x /= 10 {
+        res = res * 10 + x % 10
+        if res > math.MaxInt32 || res < -math.MaxInt32 - 1 {
+            return 0
+        }
+    }
+    return res
+}
 
 
 

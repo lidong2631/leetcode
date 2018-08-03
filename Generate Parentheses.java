@@ -11,10 +11,19 @@ For example, given n = 3, a solution set is:
 代码：
 
 
+Python:
 class Solution:
-    # @param an integer
-    # @return a list of string
-    # @draw a decision tree when n == 2, and you can understand it!
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        if n == 0:
+            return []
+        res = []
+        self.helpler(n, n, '', res)
+        return res
+    
     def helpler(self, l, r, item, res):
         if r < l:
             return
@@ -24,13 +33,6 @@ class Solution:
             self.helpler(l - 1, r, item + '(', res)
         if r > 0:
             self.helpler(l, r - 1, item + ')', res)
-    
-    def generateParenthesis(self, n):
-        if n == 0:
-            return []
-        res = []
-        self.helpler(n, n, '', res)
-        return res
 
 
 

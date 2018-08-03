@@ -1,19 +1,47 @@
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+Example 1:
+
+Input: ["flower","flow","flight"]
+Output: "fl"
+Example 2:
+
+Input: ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+Note:
+
+All given inputs are in lowercase letters a-z.
+
+
+
+Python:
 class Solution:
-    # @return a string
     def longestCommonPrefix(self, strs):
-        if len(strs) == 0:      #如果长度为0 return 空字符串‘’
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if len(strs) == 0:
             return ''
-        if len(strs) == 1:      #如果只有一个元素字符串 返回这个字符串
+        if len(strs) == 1:
             return strs[0]
-        len_list = [len(i) for i in strs]   #非上述情况 建立一个新的list 每个元素为原strs中各个字符串的长度值
-        common_prefix = ''
-        for i in range(min(len_list)):      #循环最小长度字符串次数 因为最大也只可能是这个字符串
-            tmp = strs[0][i]                
-            for j in range(1, len(strs)):       #循环 比较每一个字符 如果不相等则返回当前 common_prefix 否则一直加下去
-                if strs[j][i]!=tmp:
-                    return common_prefix
-            common_prefix += tmp
-        return common_prefix
+        res = ''
+        for i in range(len(strs[0])):
+            flag = True
+            tmp = strs[0][i]
+            for j in range(1, len(strs)):
+                if i >= len(strs[j]) or strs[j][i] != tmp:
+                    flag = False
+                    break
+            if not flag:
+                return res
+            res += tmp
+        return res
+
+
 
 
 
@@ -21,10 +49,10 @@ public class Solution {
     public String longestCommonPrefix(String[] strs) {
         if (strs == null || strs.length == 0) return "";
         StringBuffer res = new StringBuffer();
-        for (int i = 0; i < strs[0].length(); i++) {        // set strs[0] as standard outer loop traverse each char in strs[0]
+        for (int i = 0; i < strs[0].length(); i++) {        
             boolean flag = true;
             char tmp = strs[0].charAt(i);
-            for (int j = 1; j < strs.length; j++) {         // inner loop go through each string
+            for (int j = 1; j < strs.length; j++) {         
                 if (i >= strs[j].length() || strs[j].charAt(i) != tmp) {
                     flag = false;
                     break;
@@ -36,6 +64,37 @@ public class Solution {
         return res.toString();
     }
 }
+
+
+
+
+Golang:
+func longestCommonPrefix(strs []string) string {
+    if len(strs) == 0 {
+        return ""
+    }
+    var res bytes.Buffer
+    for i := 0; i < len(strs[0]); i++ {
+        flag, tmp := true, strs[0][i]
+        for j := 1; j < len(strs); j++ {
+            if i >= len(strs[j]) || strs[j][i] != tmp {
+                flag = false
+                break
+            }
+        }
+        if !flag {
+            return res.String()
+        }
+        res.WriteString(string(tmp))
+    }
+    return res.String()
+}
+
+in Go you can compare string with their byte value
+
+O(n^2)
+
+
 
 
 

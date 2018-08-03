@@ -2,25 +2,26 @@
     
 and there exists one unique longest palindromic substring.
 
-解题思路：最长回文子串求解。
-
-代码：
-
-复制代码
+Python:
 class Solution:
-    # @return a string
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        palindrome = ''
+        for i in range(len(s)):
+            len1 = len(self.getlongestpalindrome(s, i, i))
+            if len1 > len(palindrome): 
+                palindrome = self.getlongestpalindrome(s, i, i)
+            len2 = len(self.getlongestpalindrome(s, i, i + 1))
+            if len2 > len(palindrome): 
+                palindrome = self.getlongestpalindrome(s, i, i + 1)
+        return palindrome
     def getlongestpalindrome(self, s, l, r):
         while l >= 0 and r < len(s) and s[l] == s[r]:
             l -= 1; r += 1
         return s[l+1 : r]
-    def longestPalindrome(self, s):
-        palindrome = ''
-        for i in range(len(s)):
-            len1 = len(self.getlongestpalindrome(s, i, i))
-            if len1 > len(palindrome): palindrome = self.getlongestpalindrome(s, i, i)
-            len2 = len(self.getlongestpalindrome(s, i, i + 1))
-            if len2 > len(palindrome): palindrome = self.getlongestpalindrome(s, i, i + 1)
-        return palindrome
 
 
 
@@ -55,6 +56,33 @@ O(n^2) O(1)
 扩展 如果要返回所有最长回文串，只需要稍做变化就可以，维护一个集合，如果等于当前最大的，
 
 即加入集合，否则，如果更长，则清空集合，加入当前这个
+
+
+
+Golang:
+func longestPalindrome(s string) string {
+    res := ""
+    for i, _ := range s {
+        s1 := getPalindromeLength(s, i, i)
+        s2 := getPalindromeLength(s, i, i+1)
+        if len(s1) > len(res) {
+            res = s1
+        }
+        if len(s2) > len(res) {
+            res = s2
+        }
+    }
+    return res
+}
+
+func getPalindromeLength(s string, l, r int) string {
+    for l >=0 && r < len(s) && s[l] == s[r] {
+        l--
+        r++
+    }
+    return s[l+1:r]
+}
+
 
 
 

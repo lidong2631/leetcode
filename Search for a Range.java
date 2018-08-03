@@ -1,3 +1,61 @@
+Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
+
+Your algorithm's runtime complexity must be in the order of O(log n).
+
+If the target is not found in the array, return [-1, -1].
+
+Example 1:
+
+Input: nums = [5,7,7,8,8,10], target = 8
+Output: [3,4]
+Example 2:
+
+Input: nums = [5,7,7,8,8,10], target = 6
+Output: [-1,-1]
+
+
+Python:
+class Solution:
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        l, r, m, found = 0, len(nums)-1, 0, False
+        res = [-1, -1]
+        while l <= r:
+            m = (l + r) // 2
+            if nums[m] == target:
+                found = True
+                break
+            elif nums[m] < target:
+                l = m + 1
+            else:
+                r = m -1
+        if not found:
+            return res
+        l, r = 0, m
+        while l <= r:
+            m = (l + r) // 2
+            if nums[m] == target:
+                r = m - 1
+            else:
+                l = m + 1
+        res[0] = l
+        l, r = m, len(nums)-1
+        while l <= r:
+            m = (l + r) // 2
+            if nums[m] == target:
+                l = m + 1
+            else:
+                r = m - 1
+        res[1] = r
+        return res
+
+
+
+Java:
 public class Solution {
     public int[] searchRange(int[] nums, int target) {
         int left = 0, right = nums.length - 1, mid = 0;
@@ -36,15 +94,53 @@ public class Solution {
         return res;
     }
 }
-Given a sorted array of integers, find the starting and ending position of a given target value.
 
-Your algorithm runtime complexity must be in the order of O(log n).
 
-If the target is not found in the array, return [-1, -1].
 
-For example,
-Given [5, 7, 7, 8, 8, 10] and target value 8,
-return [3, 4].
+Golang:
+func searchRange(nums []int, target int) []int {
+    l, r, m := 0, len(nums)-1, 0
+    found := false
+    res := []int{-1, -1}
+    for l <= r {
+        m = (l + r) / 2
+        if nums[m] == target {
+            found = true
+            break
+        } else if nums[m] < target {
+            l = m + 1
+        } else {
+            r = m - 1
+        }
+    }
+    if !found {
+        return res
+    }
+    l, r = 0, m
+    for l <= r {
+        m = (l + r) / 2
+        if nums[m] == target {
+            r = m - 1
+        } else {
+            l = m + 1
+        }
+    }
+    res[0] = l
+    l, r = m, len(nums) - 1
+    for l <= r {
+        m = (l + r) / 2
+        if nums[m] == target {
+            l = m + 1
+        } else {
+            r = m - 1
+        }
+    }
+    res[1] = r
+    return res
+}
+
+
+
 
 
 from code ganker:

@@ -52,33 +52,27 @@ class Solution:
  */
 public class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        if(l1 == null) return l2;
-        if(l2 == null) return l1;
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
         ListNode newHead = new ListNode(0);
         ListNode tmp = newHead;
-        while(l1!=null && l2!=null)
-        {
-            if(l1.val<l2.val)
-            {
+        while(l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
                 tmp.next = l1;
                 l1 = l1.next;
                 tmp = tmp.next;
-            }
-            else
-            {
+            } else {
                 tmp.next = l2;
                 l2 = l2.next;
                 tmp = tmp.next;
             }
         }
-        while(l1!=null)
-        {
+        while (l1 != null) {
             tmp.next = l1;
             l1 = l1.next;
             tmp = tmp.next;
         }
-        while(l2!=null)
-        {
+        while (l2 != null) {
             tmp.next = l2;
             l2 = l2.next;
             tmp = tmp.next;
@@ -90,6 +84,50 @@ public class Solution {
 Note: 没什么好说的 简单一定要数量
 
 T:O(m+n) S:O(1)
+
+
+
+
+Golang:
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
+    if (l1 == nil) { return l2 }
+    if (l2 == nil) { return l1 }
+    dummy := &ListNode{0, l1}
+    l := dummy
+    for l1 != nil && l2 != nil {
+        if l1.Val < l2.Val { 
+            l.Next = l1
+            l1 = l1.Next
+            l = l.Next
+        } else {
+            l.Next = l2
+            l2 = l2.Next
+            l = l.Next
+        }
+    }
+    for l1 != nil {
+        l.Next = l1
+        l1 = l1.Next
+        l = l.Next
+    }
+    for l2 != nil {
+        l.Next = l2
+        l2 = l2.Next
+        l = l.Next
+    }
+    return dummy.Next
+}
+
+
+
+
 
 
 

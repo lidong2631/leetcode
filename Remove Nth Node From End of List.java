@@ -10,13 +10,10 @@ Note:
 Given n will always be valid.
 Try to do this in one pass.
 
-这道题的含义是删除链表的倒数第n个节点。
-
-解题思路：加一个头结点dummy，并使用双指针p1和p2。p1先向前移动n个节点，然后p1和p2同时移动，当p1.next==None时，此时p2.next指的就是需要删除的节点。
-
-代码：
 
 
+
+Python:
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -24,15 +21,21 @@ Try to do this in one pass.
 #         self.next = None
 
 class Solution:
-    # @return a ListNode
     def removeNthFromEnd(self, head, n):
-        dummy=ListNode(0); dummy.next=head
-        p1=p2=dummy
-        for i in range(n): p1=p1.next
-        while p1.next:
-            p1=p1.next; p2=p2.next
-        p2.next=p2.next.next
-        return dummy.next
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        l, r = head, head
+        for i in range(n):
+            r = r.next
+        if r is None:
+            return head.next
+        while r.next is not None:
+            l = l.next; r = r.next
+        l.next = l.next.next
+        return head
 
 
 /**
@@ -57,6 +60,32 @@ public class Solution {
         return head;
     }
 }
+
+
+
+Golang:
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
+    l, r := head, head
+    for i := 0; i < n; i++ {
+        r = r.Next
+    }
+    if r == nil {
+        return head.Next
+    }
+    for r.Next != nil {
+        l, r = l.Next, r.Next
+    }
+    l.Next = l.Next.Next
+    return head
+}
+
 
 
 

@@ -1,3 +1,57 @@
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+
+If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
+
+The replacement must be in-place and use only constant extra memory.
+
+Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+
+1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+
+
+
+
+6 8 7 4 3 2
+7 8 6 4 3 2
+7 2 3 4 6 8
+
+
+
+
+
+Python:
+class Solution:
+    def nextPermutation(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        i = len(nums) - 1
+        while i > 0 and nums[i-1] >= nums[i]:
+            i -= 1
+        if i == 0:
+            self.reverse(nums, 0, len(nums)-1)
+            return
+        j = i - 1
+        while i < len(nums) and nums[i] > nums[j]:
+            i += 1
+        self.swap(nums, i-1, j)
+        self.reverse(nums, j+1, len(nums)-1)
+        
+    def swap(self, nums, i, j):
+        nums[i], nums[j] = nums[j], nums[i]
+        
+    def reverse(self, nums, i, j):
+        while i < j:
+            self.swap(nums, i, j)
+            i += 1; j -= 1
+
+
+
+
+Java:
 public class Solution {
     public void nextPermutation(int[] nums) {
         int i = nums.length - 1;
@@ -29,22 +83,11 @@ public class Solution {
     }
 }
 
-6 8 7 4 3 2
-7 8 6 4 3 2
-7 2 3 4 6 8
 
 
+Golang:
 
-Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
 
-If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
-
-The replacement must be in-place, do not allocate extra memory.
-
-Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
-1,2,3 → 1,3,2
-3,2,1 → 1,2,3
-1,1,5 → 1,5,1
 
 
 

@@ -11,26 +11,64 @@ return [0, 1].
 
 public int[] twoSum(int[] numbers, int target) {
     int[] res = new int[2];
-    if(numbers==null || numbers.length<2)
+    if (numbers == null || numbers.length < 2)
         return null;
-    HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
-    for(int i=0;i<numbers.length;i++)
-    {
-        if(map.containsKey(target-numbers[i]))
-        {
-            res[0]=map.get(target-numbers[i])+1;
-            res[1]=i+1;
+    HashMap<Integer, Integer> map = new HashMap<Integer,Integer>();
+    for (int i = 0; i < numbers.length; i++) {
+        if (map.containsKey(target - numbers[i])) {
+            res[0] = map.get(target-numbers[i]) + 1;
+            res[1] = i + 1;
             return res;
         }
-        map.put(numbers[i],i);
+        map.put(numbers[i], i);
     }
     return null;
 }
 
 
-follow up: what if we can have duplicate results?
-1 use below two pointers method
-2 use method 1 but hashmap value should be a list instead of a single value
+Golang:
+func twoSum(nums []int, target int) []int {
+    var res []int
+    if len(nums) < 2 {
+        return res
+    }
+    m := make(map[int]int)
+    for i, v := range nums {
+        val, ok := m[target-v]
+        if ok {
+            res = append(res, i)
+            res = append(res, val)
+            return res
+        }
+        m[v] = i
+    }
+    return res
+}
+
+
+
+Python:
+class Solution:
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        d = {}
+        res = []
+        for i in range(len(nums)):
+            if target - nums[i] in d:
+                res.append(d[target-nums[i]])
+                res.append(i)
+                return res
+            d[nums[i]] = i
+        return res
+
+
+
+follow up: what if we can have duplicate results? (2, 3, 3, 7, 7, 9) target = 10
+use method 1 but hashmap value should be a list of all index for the specific number instead of a single value
 
 
 第二种解法是先对数组进行排序，然后使用夹逼的方法找出满足条件的pair，原理是因为数组是有序的，那么假设当前结果比target大，
@@ -41,30 +79,26 @@ follow up: what if we can have duplicate results?
 
 public int[] twoSum(int[] numbers, int target) {
     int[] res = new int[2];
-    if(numbers==null || numbers.length<2)
+    if (numbers == null || numbers.length < 2)
         return null;
     Arrays.sort(numbers);
     int l = 0;
-    int r = numbers.length-1;
-    while(l<r)
-    {
-        if(numbers[l]+numbers[r]==target)
-        {
+    int r = numbers.length - 1;
+    while (l < r) {
+        if (numbers[l] + numbers[r] == target) {
             res[0] = number[l];
             res[1] = number[r];
             return res;
         }
-        else if(numbers[l]+numbers[r]>target)
-        {
+        else if (numbers[l] + numbers[r] > target) {
             r--;
-        }
-        else
-        {
+        } else
             l++;
-        }
     }
     return null;
 }
+
+
 
 注意，在这里，输出结果改成了满足相加等于target的两个数，而不是他们的index。因为要排序，如果要输出index，需要对原来的数的index进行记录，
 

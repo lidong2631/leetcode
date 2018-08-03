@@ -22,6 +22,74 @@ public class Solution {
     }
 }
 
+O(n) O(1)
+
+
+
+Python:
+class Solution:
+    def myAtoi(self, str):
+        """
+        :type str: str
+        :rtype: int
+        """
+        ls = list(str.strip())
+        if len(ls) == 0:
+            return 0
+        sign = -1 if ls[0] == '-' else 1
+        if ls[0] in ['-','+']: 
+            del ls[0]
+        ret, i = 0, 0
+        while i < len(ls) and ls[i].isdigit():
+            ret = ret*10 + ord(ls[i]) - ord('0')
+            i += 1
+        return max(-2**31, min(sign * ret,2**31-1))
+
+O(n) O(1)
+
+strip() in-built function of Python is used to remove all the leading and trailing spaces from a string.
+string.strip([remove])
+https://www.geeksforgeeks.org/python-string-strip-2/
+
+ord() chr()
+https://docs.python.org/3/library/functions.html#ord
+https://docs.python.org/3/library/functions.html#chr
+
+
+
+Golang:
+func myAtoi(str string) int {
+    sign, idx, res := 1, 0, 0
+
+    // Skip leading spaces
+    s := strings.TrimSpace(str)
+    if len(s) == 0 {
+        return 0
+    }
+
+    // +/- Sign
+    if s[idx] == '+' {
+        sign = 1
+        idx++
+    } else if s[idx] == '-' {
+        sign = -1
+        idx++
+    }
+
+    // Numbers
+    for idx < len(s) && s[idx] >= '0' && s[idx] <= '9'{
+        res = res * 10 + int(s[idx]) - '0'
+        if sign * res > math.MaxInt32 {
+            return math.MaxInt32
+        } else if sign * res < math.MinInt32 {
+            return math.MinInt32
+        }
+        idx++
+    }
+    return res * sign
+}
+
+
 
 
 from code ganker:

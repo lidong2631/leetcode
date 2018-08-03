@@ -1,38 +1,48 @@
-题意：
-
 Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
 
 You may assume no duplicates in the array.
 
-Here are few examples.
-[1,3,5,6], 5 → 2
-[1,3,5,6], 2 → 1
-[1,3,5,6], 7 → 4
-[1,3,5,6], 0 → 0
+Example 1:
 
-解题思路：二分查找的变种。注意最后一句是return left。
+Input: [1,3,5,6], 5
+Output: 2
+Example 2:
 
-代码：
+Input: [1,3,5,6], 2
+Output: 1
+Example 3:
+
+Input: [1,3,5,6], 7
+Output: 4
+Example 4:
+
+Input: [1,3,5,6], 0
+Output: 0
 
 
+
+Python:
 class Solution:
-    # @param A, a list of integers
-    # @param target, an integer to be inserted
-    # @return integer
-    def searchInsert(self, A, target):
-        left = 0; right = len(A) - 1
-        while left <= right:
-            mid = ( left + right ) / 2
-            if A[mid] < target:
-                left = mid + 1
-            elif A[mid] > target:
-                right = mid - 1
+    def searchInsert(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        l = 0; r = len(nums) - 1
+        while l <= r:
+            m = (l + r ) // 2
+            if nums[m] < target:
+                l = m + 1
+            elif nums[m] > target:
+                r = m - 1
             else:
-                return mid
-        return left
+                return m
+        return l
 
 
 
+Java:
 public class Solution {
     public int searchInsert(int[] nums, int target) {
         int left = 0, right = nums.length - 1;
@@ -48,6 +58,14 @@ public class Solution {
         return left;
     }
 }
+
+
+
+
+Golang:
+
+
+
 
 
 from code ganker:

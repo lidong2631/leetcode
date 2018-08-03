@@ -1,14 +1,13 @@
+Python:
 class Solution:
-    # @return a list of strings, [s1, s2]
     def letterCombinations(self, digits):
-        def dfs(num, tmpString, res):
-            if num == length:           #如果num等于length 则表示递归到底 得到一个解 将它append到res
-                res.append(tmpString)
-                return
-            for letter in dict[digits[num]]:        #每一次递归循环将当前数字对应的字符遍历 然后继续递归下一个数字
-                dfs(num+1, tmpString + letter, res)
-        
-        dict = {
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        if len(digits) == 0:
+            return []
+        map = {
                 '2':['a','b','c'],
                 '3':['d','e','f'],
                 '4':['g','h','i'],
@@ -17,25 +16,19 @@ class Solution:
                 '7':['p','q','r','s'],
                 '8':['t','u','v'],
                 '9':['w','x','y','z']
-            }
-        
+              }
         length = len(digits)
         res = []
-        dfs(0, '', res)
+        self.dfs(digits, map, 0, '', res)
         return res
+    
+    def dfs(self, digits, map, index, tmpString, res):
+        if index == len(digits):           
+            res.append(tmpString)
+            return
+        for letter in map[digits[index]]:        
+            self.dfs(digits, map, index+1, tmpString + letter, res)
 
-Note: 这题思路跟combination一样 只是多一个dict映射数字和字母的关系 dfs()函数在类似的几题中均有出现 如subset, combination等 要熟记其套路
-
-另扩展可以考虑不用递归如何做 看code ganker
-
-
-这道题目和求组合的思路差不多，比较简单。依次读取数字，然后把数字可以代表的字符依次加到当前的所有结果中，然后进入下一次迭代。假设总共有n个digit，
-
-每个digit可以代表k个字符，那么时间复杂度是O(n^k)，就是结果的数量，空间复杂度也是一样。
-
-这道题个人觉得没有太多算法和数据结构的思想，但是自己在facebook的面试中遇到了，所以还是要重视一下，就是一些数组操作的小细节。相关的扩展是这道题如何用递归来解，
-
-思路其实类似，就是对于当前字符，递归剩下的数字串，然后得到结果后加上自己返回回去，大家可以试试
 
 
 
@@ -70,6 +63,45 @@ public class Solution {
         }
     }
 }
+
+
+
+
+Golang: Not working ! do not know how golang recursion pass by value
+func letterCombinations(digits string) []string {
+    var res []string
+    if len(digits) == 0 {
+        return res
+    }
+    m := make(map[string]string)
+    m["2"] = "abc"
+    m["3"] = "def"
+    m["4"] = "ghi"
+    m["5"] = "jkl"
+    m["6"] = "mno"
+    m["7"] = "pqrs"
+    m["8"] = "tuv"
+    m["9"] = "wxyz"
+    m["0"] = " "
+    
+    helper(m, 0, "", digits, res)
+    return res
+}
+
+func helper(m map[string]string, index int, tmp, digits string, res []string) {
+    if index == len(digits) {
+        res = append(res, tmp)
+        return
+    }
+    strs := m[string(digits[index])]
+    for j := 0; j < len(strs); j++ {
+        s := strings.Join([]string{tmp, string(strs[j])}, "")
+        fmt.Println(res)
+        helper(m, index+1, s, digits, res)
+    }
+}
+
+
 
 
 

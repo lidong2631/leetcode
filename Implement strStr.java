@@ -1,50 +1,51 @@
-题意：实现字符串匹配函数，并返回一个指针，这个指针指向原字符串中第一次出现待匹配字符串的位置。如：haystack='aabbaa'; needle='bb'。如果使用python实现，则最后返回的应该是一个字符串，即：'bbaa'。
+mplement strStr().
 
-解题思路：这道题我是使用KMP算法写的，到现在KMP算法都不是很懂，只是按照《算法导论》上的伪代码机械的实现了一遍。
+Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
 
-代码：
+Example 1:
+
+Input: haystack = "hello", needle = "ll"
+Output: 2
+Example 2:
+
+Input: haystack = "aaaaa", needle = "bba"
+Output: -1
+Clarification:
+
+What should we return when needle is an empty string? This is a great question to ask during an interview.
+
+For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C's strstr() and Java's indexOf().
 
 
+
+Python:
 class Solution:
-    # @param haystack, a string
-    # @param needle, a string
-    # @return a string or None
-    # @KMP algorithms
-    def ComputePrefixFunction(self, needle):
-        Pi = [0 for i in range(len(needle))]
-        m = len(needle)
-        Pi[0] = 0
-        k = 0
-        for q in range(1, m):
-            while k > 0 and needle[k] != needle[q]:
-                k = Pi[k - 1]
-            if needle[k] == needle[q]:
-                k = k + 1
-            Pi[q] = k
-        return Pi
-    
     def strStr(self, haystack, needle):
-        n = len(haystack)
-        m = len(needle)
-        if m == 0:
-            return haystack
-        Pi = self.ComputePrefixFunction(needle)
-        q = 0
-        for i in range(0, n):
-            while q > 0 and needle[q] != haystack[i]:
-                q = Pi[q - 1]
-            if needle[q] == haystack[i]:
-                q = q + 1
-            if q == m:
-                return haystack[i - m + 1:]
-        return None
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        if len(haystack) == len(needle) and haystack == needle:
+            return 0
+        for i in range(len(haystack)-len(needle)+1):
+            flag = True
+            for j in range(len(needle)):
+                if needle[j] != haystack[i+j]:
+                    flag = False
+                    break
+            if flag:
+                return i
+        return -1
+            
 
 
 
+Java:
 public class Solution {
     public int strStr(String haystack, String needle) {
         if (haystack.length() == needle.length() && haystack.equals(needle)) return 0;
-        for (int i = 0; i <= haystack.length() - needle.length(); i++) {    // careful i<=haystack.length()-needle.length()
+        for (int i = 0; i <= haystack.length() - needle.length(); i++) {
             boolean flag = true;
             for (int j = 0; j < needle.length(); j++) {
                 if (needle.charAt(j) != haystack.charAt(i+j)) {
@@ -59,6 +60,35 @@ public class Solution {
 }
 
 O(mn) O(1)
+
+
+
+
+
+Golang:
+func strStr(haystack string, needle string) int {
+    if len(haystack) == len(needle) && haystack == needle {
+        return 0
+    }
+    for i := 0; i <= len(haystack) - len(needle); i++ {
+        flag := true
+        for j := 0; j < len(needle); j++ {
+            if needle[j] != haystack[i+j] {
+                flag = false
+                break
+            }
+        }
+        if flag {
+            return i
+        }
+    }
+    return -1
+}
+
+
+
+
+
 
 
 

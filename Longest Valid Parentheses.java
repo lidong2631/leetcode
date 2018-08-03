@@ -1,39 +1,44 @@
-题意：
-
 Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed) parentheses substring.
 
-For "(()", the longest valid parentheses substring is "()", which has length = 2.
+Example 1:
 
-Another example is ")()())", where the longest valid parentheses substring is "()()", which has length = 4.
+Input: "(()"
+Output: 2
+Explanation: The longest valid parentheses substring is "()"
+Example 2:
 
-解题思路：返回括号串中合法括号串的长度。使用栈。这个解法比较巧妙，开辟一个栈，压栈的不是括号，而是未匹配左括号的索引！
+Input: ")()())"
+Output: 4
+Explanation: The longest valid parentheses substring is "()()"
 
-代码：
 
 
+Python:
 class Solution:
-    # @param s, a string
-    # @return an integer
     def longestValidParentheses(self, s):
-        maxlen = 0
+        """
+        :type s: str
+        :rtype: int
+        """
+        maxLen, i, j = 0, 0, 0
         stack = []
-        last = -1
-        for i in range(len(s)):
-            if s[i]=='(':
-                stack.append(i)     # push the INDEX into the stack!!!!
+        while (i < len(s)):
+            if stack == [] and s[i] == ')':
+                j = i + 1
+            elif s[i] == '(':
+                stack.append(i)
             else:
+                stack.pop()
                 if stack == []:
-                    last = i
+                    maxLen = max(maxLen, i-j+1)
                 else:
-                    stack.pop()
-                    if stack == []:
-                        maxlen = max(maxlen, i-last)
-                    else:
-                        maxlen = max(maxlen, i-stack[len(stack)-1])
-        return maxlen
+                    maxLen = max(maxLen, i-stack[len(stack)-1])
+            i += 1
+        return maxLen
 
 
 
+Java:
 public class Solution {
     public int longestValidParentheses(String s) {
         Stack<Integer> stack = new Stack<>();
@@ -55,6 +60,42 @@ public class Solution {
 }
 
 O(n) O(n)
+
+
+
+Golang:
+func longestValidParentheses(s string) int {
+    var stack []int
+    maxLen, i, j := 0, 0, 0
+    for i < len(s) {
+        if string(s[i]) == ")" && len(stack) == 0 {
+            j = i + 1
+        } else if string(s[i]) == "(" {
+            stack = append(stack, i)
+        } else {
+            stack = stack[:len(stack)-1]
+            if len(stack) == 0 {
+                maxLen = max(maxLen, i-j+1)
+            } else {
+                maxLen = max(maxLen, i-stack[len(stack)-1])
+            }
+        }
+        i++
+    }
+    return maxLen
+}
+
+func max(x, y int) int {
+    if (x > y) {
+        return x
+    } else {
+        return y
+    }
+}
+
+
+
+
 
 
 

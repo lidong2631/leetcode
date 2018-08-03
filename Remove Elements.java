@@ -1,31 +1,61 @@
-题意：
+Given an array nums and a value val, remove all instances of that value in-place and return the new length.
 
-Given an array and a value, remove all instances of that value in place and return the new length.
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
 
 The order of elements can be changed. It doesn't matter what you leave beyond the new length.
 
-解题思路：去掉数组中等于elem的元素，返回新的数组长度，数组中的元素不必保持原来的顺序。使用头尾指针，头指针碰到elem时，
+Example 1:
 
-与尾指针指向的元素交换，将elem都换到数组的末尾去。
+Given nums = [3,2,2,3], val = 3,
 
-代码：
+Your function should return length = 2, with the first two elements of nums being 2.
+
+It doesn't matter what you leave beyond the returned length.
+Example 2:
+
+Given nums = [0,1,2,2,3,0,4,2], val = 2,
+
+Your function should return length = 5, with the first five elements of nums containing 0, 1, 3, 0, and 4.
+
+Note that the order of those five elements can be arbitrary.
+
+It doesn't matter what values are set beyond the returned length.
+Clarification:
+
+Confused why the returned value is an integer but your answer is an array?
+
+Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.
+
+Internally you can think of this:
+
+// nums is passed in by reference. (i.e., without making a copy)
+int len = removeElement(nums, val);
+
+// any modification to nums in your function would be known by the caller.
+// using the length returned by your function, it prints the first len elements.
+for (int i = 0; i < len; i++) {
+    print(nums[i]);
+}
 
 
+
+Python:
 class Solution:
-    # @param    A       a list of integers
-    # @param    elem    an integer, value need to be removed
-    # @return an integer
-    # clrs qsort
-    def removeElement(self, A, elem):
-        j = len(A)-1
-        for i in range(len(A) - 1, -1, -1):
-            if A[i] == elem:
-                A[i], A[j] = A[j], A[i]
-                j -= 1
-        return j+1
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        j = 0
+        for i in range(len(nums)):
+            if nums[i] != val:
+                nums[j] = nums[i]
+                j += 1
+        return j
 
 
-
+Java:
 public class Solution {
     public int removeElement(int[] nums, int val) {
         int j = 0;
@@ -36,6 +66,24 @@ public class Solution {
         return j;
     }
 }
+
+O(n)
+
+
+
+Golang:
+func removeElement(nums []int, val int) int {
+    j := 0
+    for _, v := range(nums) {
+        if v != val {
+            nums[j] = v
+            j++
+        }
+    }
+    return j
+}
+
+
 
 
 

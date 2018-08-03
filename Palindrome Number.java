@@ -18,6 +18,7 @@ There is a more generic way of solving this problem.
 代码：
 
 
+Python:
 class Solution:
     # @return a boolean
     def isPalindrome(self, x):
@@ -55,6 +56,28 @@ public class Solution {
         }
         return true;
     }
+}
+
+
+
+
+Golang:
+func isPalindrome(x int) bool {
+    if x < 0 {
+        return false
+    }
+    radix := 1
+    for x / 10 >= radix {
+        radix *= 10
+    }
+    for x != 0 {
+        if x / radix != x % 10 {
+            return false
+        }
+        x = (x % radix) / 10
+        radix /= 100
+    }
+    return true
 }
 
 

@@ -4,30 +4,23 @@ For example, the longest substring without repeating letters for "abcabcbb" is "
 
 For "bbbbb" the longest substring is "b", with the length of 1.
 
-解题思路：使用一个哈希表，记录字符的索引。例如对于字符串'zwxyabcabczbb'，当检测到第二个'a'时，由于之前已经有一个'a'了，
 
-所以应该从第一个a的下一个字符重新开始测算长度，但是要把第一个a之前的字符在哈希表中对应的值清掉，如果不清掉的话，就会误以为还存在重复的。
-
-比如检测到第二个'z'时，如果第一个'z'对应的哈希值还在，那就出错了，所以要把第一个'a'之前的字符的哈希值都重置才行。
-
-代码：
-
-复制代码
+Python:
 class Solution:
-    # @return an integer
     def lengthOfLongestSubstring(self, s):
-        start = 0
-        maxlen = 0
-        hashtable = [-1 for i in range(256)]
+        """
+        :type s: str
+        :rtype: int
+        """
+        j, maxLen = 0, 0
+        dict = {}
         for i in range(len(s)):
-            if hashtable[ord(s[i])] != -1:
-                while start <= hashtable[ord(s[i])]:
-                    hashtable[ord(s[start])] = -1
-                    start += 1
-            if i - start + 1 > maxlen: maxlen = i - start + 1
-            hashtable[ord(s[i])] = i
-        return maxlen
-复制代码
+            while s[i] in dict:
+                del dict[s[j]]
+                j = j + 1
+            dict[s[i]] = True
+            maxLen = max(maxLen, i-j+1)
+        return maxLen
 
 
 
@@ -43,7 +36,7 @@ Does it contain ASCII characters only? Or even unicode character sets?)
 public int lengthOfLongestSubstring(String s) {
     boolean[] exist = new boolean[256];
     int i = 0, maxLen = 0;      //i相当于左窗口
-    for(int j=0; j<s.length(); j++) {   //j相当于右窗口
+    for(int j = 0; j < s.length(); j++) {   //j相当于右窗口
         while(exist[s.charAt(j)]) {        //这里while不可以改成if 错误answer "abba"
             exist[s.charAt(i)] = false;
             i++;
@@ -59,6 +52,32 @@ public int lengthOfLongestSubstring(String s) {
 如果不是ASCII字符 就要用set 下面第二种解法
 
 
+
+
+Golang:
+func maxInt(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
+
+
+func lengthOfLongestSubstring(s string) int {
+    maxLen, start := 0, 0
+    table := [128]int{}
+    for i, _ := range table {
+        table[i] = -1
+    }
+    for i, c := range s {
+        if table[c] >= start {
+            start = table[c] + 1
+        }
+        table[c] = i
+        maxLen = maxInt(maxLen, i - start + 1)
+    }
+    return maxLen
+}
 
 
 
@@ -85,12 +104,12 @@ public int lengthOfLongestSubstring(String s) {
 
 public class Solution {
     public int lengthOfLongestSubstring(String s) {
-        if(s==null || s.length()==0)
+        if (s == null || s.length() == 0)
             return 0;
         HashSet<Character> set = new HashSet<Character>();
         int i = 0, maxLen = 0;
-        for(int j=0; j<s.length(); j++) {
-            while(set.contains(s.charAt(j))) {
+        for (int j = 0; j < s.length(); j++) {
+            while (set.contains(s.charAt(j))) {
                 set.remove(s.charAt(i));
                 i++;
             }

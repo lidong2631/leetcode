@@ -1,3 +1,16 @@
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+
+Example:
+
+Input:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+Output: 1->1->2->3->4->4->5->6
+
+
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -91,88 +104,29 @@ public class Solution {
  */
 public class Solution {
     public ListNode mergeKLists(List<ListNode> lists) {
-        if(lists==null || lists.size()==0)      //注意 要写上
-            return null;
-        PriorityQueue<ListNode> heap = new PriorityQueue(10, new Comparator<ListNode>(){
-            public int compare(ListNode l1, ListNode l2) {
-                return l1.val-l2.val;
-            }
-        });
-        for(int i=0; i<lists.size(); i++) {
-            if(lists.get(i)!=null)          //这里要注意判断下元素是不是空
-                heap.offer(lists.get(i));
-        }
-        ListNode curr = heap.poll();
-        ListNode pre = curr;
-        ListNode head = curr;
-        while(heap.size()>0) {
-            if(curr.next!=null)
-                heap.offer(curr.next);
-            curr = heap.poll();
-            pre.next = curr;
-            pre = curr;
-        }
-        return head;
-    }
-}
-
-我的写法 这种解法有个地方要注意 就是127 - 132 不能写成如下
- while(heap.size()>0) {
-    curr = heap.poll();
-    pre.next = curr;
-    pre = curr;
-    if(curr.next!=null)
-        heap.offer(curr.next);
-}
-假设碰到这个case {1,2,2}, {1,1,2}会出错{1,1,1,2} 因为while前已经poll了一次 进入while后首先poll一次 这样此时heap就空了 之后每次循环如果
-
-都是对同一个list一弹出一进入 当这个list为空时if(curr.next!=null)这一步就不会再加元素了 这样就会跳出while循环而其他list的元素还没有加上
-
-所以这里要特别注意不可以这样让heap始终维持在空的状态 至少要有一个元素在里面 这样新进来的元素才可以与之比较
-
-
-
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
-public class Solution {
-    public ListNode mergeKLists(List<ListNode> lists) {
         PriorityQueue<ListNode> heap = new PriorityQueue<ListNode>(10, new Comparator<ListNode>(){
         
-        public int compare(ListNode n1, ListNode n2)
-        {
-            return n1.val - n2.val;
-        }});
-        for(int i=0; i<lists.size(); i++)   //将每个list头节点入堆
-        {
+            public int compare(ListNode n1, ListNode n2) {
+                return n1.val - n2.val;
+            }});
+        for (int i = 0; i < lists.size(); i++) {
             ListNode first = lists.get(i);
-            if(first!=null)
+            if (first != null)
                 heap.offer(first);
         }
         ListNode head = null;
         ListNode prev = head;
-        while(heap.size()>0)        //循环 每次poll出堆顶点加到结果list中 将该顶点对应的下一个节点加到堆中
-        {
+        while (heap.size() > 0) {
             ListNode curr = heap.poll();
-            if(head==null)
-            {
+            if (head == null) {
                 head = curr;
                 prev = head;
             }
-            else
-            {
+            else {
                 prev.next = curr;
             }
             prev = curr;
-            if(curr.next!=null)
+            if (curr.next != null)
                 heap.offer(curr.next);
         }
         return head;
