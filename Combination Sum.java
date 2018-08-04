@@ -1,3 +1,63 @@
+Given a set of candidate numbers (candidates) (without duplicates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+
+The same repeated number may be chosen from candidates unlimited number of times.
+
+Note:
+
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+
+Input: candidates = [2,3,6,7], target = 7,
+A solution set is:
+[
+  [7],
+  [2,2,3]
+]
+Example 2:
+
+Input: candidates = [2,3,5], target = 8,
+A solution set is:
+[
+  [2,2,2,2],
+  [2,3,3],
+  [3,5]
+]
+
+
+
+
+Python:
+class Solution:
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        candidates.sort()
+        self.helper(candidates, target, 0, [], res)
+        return res
+    
+    def helper(self, candidates, target, index, l, res):
+        if target == 0:
+            res.append(l)
+            return
+        elif target < 0:
+            return
+        else:
+            for i in range(index, len(candidates)):
+                self.helper(candidates, target - candidates[i], i, l+[candidates[i]], res)
+
+https://leetcode.com/problems/combination-sum/discuss/16510/Python-dfs-solution.
+
+O(2^n)
+
+
+
+
+Java:
 public class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
@@ -21,19 +81,33 @@ public class Solution {
 }
 
 
-Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
 
-The same repeated number may be chosen from C unlimited number of times.
 
-Note:
-All numbers (including target) will be positive integers.
-The solution set must not contain duplicate combinations.
-For example, given candidate set [2, 3, 6, 7] and target 7, 
-A solution set is: 
-[
-  [7],
-  [2, 2, 3]
-]
+Golang:
+func combinationSum(candidates []int, target int) [][]int {
+    var res [][]int
+    sort.Ints(candidates)
+    helper(candidates, target, 0, &[]int{}, &res)
+    return res
+}
+
+func helper(candidates []int, target, index int, l *[]int, res *[][]int) {
+    if target == 0 {
+        tmp := make([]int, len(*l))
+        copy(tmp, *l)
+        *res = append(*res, tmp)
+        return
+    } else if target < 0 {
+        return
+    }
+    for i := index; i < len(candidates); i++ {
+        *l = append(*l, candidates[i])
+        helper(candidates, target-candidates[i], i, l, res)
+        *l = (*l)[:len(*l)-1]
+    }
+}
+
+
 
 
 

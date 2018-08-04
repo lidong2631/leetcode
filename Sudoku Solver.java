@@ -1,3 +1,63 @@
+Write a program to solve a Sudoku puzzle by filling the empty cells.
+
+A sudoku solution must satisfy all of the following rules:
+
+Each of the digits 1-9 must occur exactly once in each row.
+Each of the digits 1-9 must occur exactly once in each column.
+Each of the the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.
+Empty cells are indicated by the character '.'.
+
+
+Note:
+
+The given board contain only digits 1-9 and the character '.'.
+You may assume that the given Sudoku puzzle will have a single unique solution.
+The given board size is always 9x9.
+
+
+
+Python: (have problem)
+class Solution:
+    def solveSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: void Do not return anything, modify board in-place instead.
+        """
+        self.helper(board, 0, 0)
+        
+    def helper(self, board, r, c):
+        if r == 9:
+            return True
+        if c == 9:
+            return self.helper(board, r+1, 0)
+        if board[r][c] == ".":
+            for i in range(1, 10):
+                board[r][c] = str(i)
+                if self.valid(board, r, c):
+                    if self.helper(board, r, c+1):
+                        return True
+                board[r][c] = "."
+        else:
+            return self.helper(board, r, c+1)
+        return False
+    
+    def valid(self, board, r, c):
+        for i in range(9):
+            if i != r and board[i][c] == board[r][c]:
+                return False
+        for i in range(9):
+            if i != c and board[r][i] == board[r][c]:
+                return False
+        for i in range(r//3*3, r//3*3+3):
+            for j in range(c%3*3, c%3*3+3):
+                if i != r and j != c and board[i][j] == board[r][c]:
+                    return False             
+        return True
+
+
+
+
+Java:
 public class Solution {
     public void solveSudoku(char[][] board) {
         helper(board, 0, 0);

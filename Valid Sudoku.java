@@ -121,7 +121,44 @@ public class Solution {
 
 
 Golang:
-
+func isValidSudoku(board [][]byte) bool {
+    for i := 0; i < 9; i++ {
+        m := make(map[string]bool)
+        for j := 0; j < 9; j++ {
+            if string(board[i][j]) != "." {
+                if m[string(board[i][j])] {
+                    return false
+                }
+                m[string(board[i][j])] = true
+            }
+        }
+    }
+    for i := 0; i < 9; i++ {
+        m := make(map[string]bool)
+        for j := 0; j < 9; j++ {
+            if string(board[j][i]) != "." {
+                if m[string(board[j][i])] {
+                    return false
+                }
+                m[string(board[j][i])] = true
+            }
+        }
+    }
+    for k := 0; k < 9; k++ {
+        m := make(map[string]bool)
+        for i := k / 3 * 3; i < k / 3 * 3 + 3; i++ {
+            for j := k % 3 * 3; j < k % 3 * 3 + 3; j++ {
+                if string(board[i][j]) != "." {
+                    if m[string(board[i][j])] {
+                        return false
+                    }
+                    m[string(board[i][j])] = true
+                }
+            }
+        }
+    }
+    return true
+}
 
 
 
