@@ -12,6 +12,37 @@ For example,
 ]
 
 
+
+Python:
+class Solution:
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        used = set()
+        res = []
+        self.helper(nums, used, [], res)
+        return res
+    
+    def helper(self, nums, used, l, res):
+        if len(l) == len(nums):
+            res.append(l)
+            return
+        for i in range(len(nums)):
+            if i not in used:
+                used.add(i)
+                self.helper(nums, used, l+[nums[i]], res)
+                used.remove(i)
+
+
+Python set
+https://docs.python.org/3/library/stdtypes.html#set
+
+
+
+
+Java:
 public class Solution {
     public List<List<Integer>> permute(int[] nums) {
         boolean[] used = new boolean[nums.length];
@@ -36,6 +67,38 @@ public class Solution {
         }
     }
 }
+
+
+
+
+Golang:
+func permute(nums []int) [][]int {
+    m := make(map[int]bool)
+    var res [][]int
+    helper(nums, m, &[]int{}, &res)
+    return res
+}
+
+func helper(nums []int, m map[int]bool, l *[]int, res *[][]int) {
+    if len(*l) == len(nums) {
+        tmp := make([]int, len(*l))
+        copy(tmp, *l)
+        *res = append(*res, tmp)
+        return
+    }
+    for i := 0; i < len(nums); i++ {
+        if _, ok := m[i]; !ok {
+            m[i] = true
+            *l = append(*l, nums[i])
+            helper(nums, m, l, res)
+            *l = (*l)[:len(*l)-1]
+            delete(m, i)
+        }
+    }
+}
+
+
+
 
 
 

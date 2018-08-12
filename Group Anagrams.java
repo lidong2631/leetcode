@@ -1,3 +1,41 @@
+Given an array of strings, group anagrams together.
+
+Example:
+
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+Note:
+
+All inputs will be in lowercase.
+The order of your output does not matter.
+
+
+
+Python:
+class Solution:
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        dic = {}
+        for s in strs:
+            tmp = ''.join(sorted(s))
+            if tmp in dic:
+                dic[tmp].append(s)
+            else:
+                dic[tmp] = [s]
+        return [dic[x] for x in dic]
+
+
+
+
+Java:
 public class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
@@ -16,6 +54,49 @@ public class Solution {
         return res;
     }
 }
+
+
+
+
+
+Golang:
+func groupAnagrams(strs []string) [][]string {
+    m := make(map[string][]string)
+    for _, v := range strs {
+        s := SortStringByCharacter(v)
+        if _, ok := m[s]; ok {
+            m[s] = append(m[s], v)
+        } else {
+            m[s] = []string{v}
+        }
+    }
+    var res [][]string
+    for _, v := range m {
+        res = append(res, v)
+    }
+    return res
+}
+
+func StringToRuneSlice(s string) []rune {
+      var r []rune
+      for _, runeValue := range s {
+              r = append(r, runeValue)
+      }
+      return r
+}
+
+func SortStringByCharacter(s string) string {
+      r := StringToRuneSlice(s)
+      sort.Slice(r, func(i, j int) bool {
+              return r[i] < r[j]
+      })
+      return string(r)
+}
+
+
+Go sort string
+https://siongui.github.io/2017/05/07/go-sort-string-slice-of-rune/
+
 
 
 

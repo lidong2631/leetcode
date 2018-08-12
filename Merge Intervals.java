@@ -1,3 +1,47 @@
+Given a collection of intervals, merge all overlapping intervals.
+
+Example 1:
+
+Input: [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+Example 2:
+
+Input: [[1,4],[4,5]]
+Output: [[1,5]]
+Explanation: Intervals [1,4] and [4,5] are considerred overlapping.
+
+
+
+
+Python:
+# Definition for an interval.
+# class Interval:
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+class Solution:
+    def merge(self, intervals):
+        """
+        :type intervals: List[Interval]
+        :rtype: List[Interval]
+        """
+        if len(intervals) == 0:
+            return []
+        intervals = sorted(intervals, key = lambda x: x.start)
+        res = [intervals[0]]
+        for n in intervals[1:]:
+            if n.start <= res[-1].end:
+                res[-1].end = max(res[-1].end, n.end)
+            else:
+                res.append(n)
+        return res
+
+
+
+
+Java:
 /**
  * Definition for an interval.
  * public class Interval {
@@ -13,8 +57,8 @@ public class Solution {
         // Java 8 lambda expression
         // Collections.sort(intervals, (Interval i1, Interval i2) -> (i1.start==i2.start)?i1.end-i2.end:i1.start-i2.start);
         intervals.sort((Interval i1, Interval i2) -> (i1.start==i2.start)?i1.end-i2.end:i1.start-i2.start);     // in Java 8 no need to use Collections.sort
-        for(int i=1; i<intervals.size(); i++) {
-            if(intervals.get(i).start<=intervals.get(i-1).end) {
+        for (int i = 1; i < intervals.size(); i++) {
+            if (intervals.get(i).start <= intervals.get(i-1).end) {
                 intervals.get(i-1).end = Math.max(intervals.get(i-1).end, intervals.get(i).end);
                 intervals.remove(i);
                 i--;
@@ -23,9 +67,6 @@ public class Solution {
         return intervals;
     }
 }
-
-
-
 
 /**
  * Definition for an interval.
@@ -56,6 +97,49 @@ public class Solution {
         return intervals;
     }
 }
+
+
+
+
+Golang:
+/**
+ * Definition for an interval.
+ * type Interval struct {
+ *     Start int
+ *     End   int
+ * }
+ */
+func merge(intervals []Interval) []Interval {
+    if len(intervals) == 0 {
+        return []Interval{}
+    }
+    
+    sort.Slice(intervals, func(i, j int) bool{
+        return intervals[i].Start < intervals[j].Start
+    }) 
+    
+    res := []Interval{intervals[0]}
+    for _, v := range intervals[1:] {
+        if v.Start <= res[len(res)-1].End {
+            res[len(res)-1].End = max(res[len(res)-1].End, v.End)
+        } else {
+            res = append(res, v)
+        }
+    }
+    return res
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    } else {
+        return b
+    }
+}
+
+https://gobyexample.com/sorting-by-functions
+
+
 
 
 

@@ -1,36 +1,46 @@
-题意：
-
 Given a collection of numbers that might contain duplicates, return all possible unique permutations.
 
-For example,
-[1,1,2] have the following unique permutations:
-[1,1,2], [1,2,1], and [2,1,1].
+Example:
 
-解题思路：这道题也是穷举全排列，只是集合中可能有重复的元素。分两步：1，对集合进行排序。2，进行剪枝，如果元素重复，直接跳过这一元素，决策树的这一枝被剪掉。
+Input: [1,1,2]
+Output:
+[
+  [1,1,2],
+  [1,2,1],
+  [2,1,1]
+]
 
-代码：
 
 
+Python:
 class Solution:
-    # @param num, a list of integer
-    # @return a list of lists of integers
-    def permuteUnique(self, num):
-        length = len(num)
-        if length == 0: return []
-        if length == 1: return [num]
-        num.sort()
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        used = set()
         res = []
-        previousNum = None
-        for i in range(length):
-            if num[i] == previousNum: continue
-            previousNum = num[i]
-            for j in self.permuteUnique(num[:i] + num[i+1:]):
-                res.append([num[i]] + j)
+        nums.sort()
+        self.helper(nums, used, [], res)
         return res
+    
+    def helper(self, nums, used, l, res):
+        if len(l) == len(nums):
+            res.append(l)
+            return
+        for i in range(len(nums)):
+            if i > 0 and nums[i] == nums[i-1] and (i-1 not in used):
+                continue
+            if i not in used:
+                used.add(i)
+                self.helper(nums, used, l+[nums[i]], res)
+                used.remove(i)
 
 
 
 
+Java:
 public class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();

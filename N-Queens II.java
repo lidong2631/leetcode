@@ -1,9 +1,34 @@
+The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
+Given an integer n, return the number of distinct solutions to the n-queens puzzle.
+
+Example:
+
+Input: 4
+Output: 2
+Explanation: There are two distinct solutions to the 4-queens puzzle as shown below.
+[
+ [".Q..",  // Solution 1
+  "...Q",
+  "Q...",
+  "..Q."],
+
+ ["..Q.",  // Solution 2
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
+
+
+Python:
 class Solution:
-    # @return an integer
     def totalNQueens(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
         self.total = 0      
         self.board = [-1 for i in range(n)]
-        self.dfs(0,n)
+        self.dfs(0, n)
         return self.total
 
     def check(self, k, j):
@@ -11,25 +36,21 @@ class Solution:
             if self.board[i] == j or abs(k-i) == abs(self.board[i] - j):
                 return False
         return True
-    
         
     def dfs(self, depth, n):
         if depth == n:
             self.total += 1
             return
         for i in range(n):
-            if self.check(depth,i):
+            if self.check(depth, i):
                 self.board[depth] = i
-                self.dfs(depth+1,n)
+                self.dfs(depth+1, n)
 
 Note: 此解法跟上一题几乎一样 只是换用total来记录解法数目 另本解法开始total总是报 local variable 'total' referenced before assignment
 
 
 
-此题还有另一种解法用非递归的方式 如下：
-
-
-
+Java:
 public class Solution {
     public int totalNQueens(int n) {
         int[] res = new int[1];

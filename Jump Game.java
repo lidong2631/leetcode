@@ -1,19 +1,42 @@
+Given an array of non-negative integers, you are initially positioned at the first index of the array.
+
+Each element in the array represents your maximum jump length at that position.
+
+Determine if you are able to reach the last index.
+
+Example 1:
+
+Input: [2,3,1,1,4]
+Output: true
+Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+Example 2:
+
+Input: [3,2,1,0,4]
+Output: false
+Explanation: You will always arrive at index 3 no matter what. Its maximum
+             jump length is 0, which makes it impossible to reach the last index.
+
+
+
+Python:
 class Solution:
-    # @param A, a list of integers
-    # @return a boolean
-    def canJump(self, A):
-        step = A[0]
-        for i in range(1, len(A)):  #循环 每次step取上一次step-1及当前A[i]的最大值 如果step<0 返回false 否则如果都遍历完就返回true
-            if step > 0:                #如果step>0 则表示至少可以到达下一个点 将step设为step-1
-                step-=1
-                step = max(step, A[i])  #更新step取这个step和下一个点A[i]的最大值
-            else:                   #如果step<0 则代表有点无法跨越 返回false
-                return False
-        return True         #如果都遍历完则可以走完
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        reach, i = 0, 0
+        while i < len(nums) and i <= reach:
+            reach = max(reach, i + nums[i])
+            i += 1
+        if reach < len(nums) - 1:
+            return False
+        return True
 
 
 
 
+Java:
 public class Solution {
     public boolean canJump(int[] nums) {
         int reach = 0;
@@ -24,6 +47,9 @@ public class Solution {
         return true;
     }
 }
+
+
+
 
 
 

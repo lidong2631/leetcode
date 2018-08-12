@@ -1,13 +1,38 @@
-题意：经典的N皇后问题。
+The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
 
-解题思路：这类型问题统称为递归回溯问题，也可以叫做对决策树的深度优先搜索（dfs）。N皇后问题有个技巧的关键在于棋盘的表示方法，
+Given an integer n, return all distinct solutions to the n-queens puzzle.
 
-这里使用一个数组就可以表达了。比如board=[1, 3, 0, 2]，这是4皇后问题的一个解，意思是：在第0行，皇后放在第1列；在第1行，皇后放在第3列；在第2行，
+Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space respectively.
 
-皇后放在第0列；在第3行，皇后放在第2列。这道题提供一个递归解法，下道题使用非递归。check函数用来检查在第k行，皇后是否可以放置在第j列。
 
-代码：
 
+Python:
+class Solution:
+    def solveNQueens(self, n):
+        """
+        :type n: int
+        :rtype: List[List[str]]
+        """        
+        board = [-1 for i in range(n)]
+        res = []
+        self.dfs(0, [], n, res, board)
+        return res
+    
+    def check(self, k, j, board):  # check if the kth queen can be put in column j!
+        for i in range(k):
+            if board[i]==j or abs(k-i)==abs(board[i]-j):
+                return False
+        return True
+    
+    def dfs(self, depth, valuelist, n, res, board):
+        if depth == n: 
+            res.append(valuelist)
+            return
+        for i in range(n):
+            if self.check(depth, i, board): 
+                board[depth]=i
+                s ='.' * n
+                self.dfs(depth+1, valuelist+[s[:i]+'Q'+s[i+1:]], n, res, board)
 
 class Solution:
     # @return a list of lists of string
@@ -27,10 +52,10 @@ class Solution:
         board=[-1 for i in range(n)]
         res=[]
         dfs(0,[])
-        return res
+        return res                
 
 
-
+Java:
 public class Solution {
     public List<List<String>> solveNQueens(int n) {
         int[] colForRow = new int[n];
@@ -69,6 +94,14 @@ public class Solution {
         return true;
     }
 }
+
+O(n!)
+
+
+
+
+
+
 
 
 

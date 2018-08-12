@@ -1,38 +1,43 @@
-题意：
-
 Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
 
 Note: You can only move either down or right at any point in time.
 
-解题思路：这道题也是比较简单的动态规划，注意矩阵下标问题就行了。
+Example:
 
-代码：
+Input:
+[
+  [1,3,1],
+  [1,5,1],
+  [4,2,1]
+]
+Output: 7
+Explanation: Because the path 1→3→1→1→1 minimizes the sum.
 
-复制代码
+
+
+Python:
 class Solution:
-    # @param grid, a list of lists of integers
-    # @return an integer
     def minPathSum(self, grid):
-        m = len(grid); n = len(grid[0])
-        dp = [[0 for i in range(n)] for j in range(m)]
-        dp[0][0] = grid[0][0]
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        m, n = len(grid), len(grid[0])
+        res = [0 for x in range(n)]
+        res[0] = grid[0][0]
         for i in range(1, n):
-            dp[0][i] = dp[0][i-1] + grid[0][i]
+            res[i] = res[i-1] + grid[0][i]
         for i in range(1, m):
-            dp[i][0] = dp[i-1][0] + grid[i][0]
-        for i in range(1, m):
-            for j in range(1, n):
-                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]
-        return dp[m-1][n-1]
+            for j in range(n):
+                if j == 0:
+                    res[j] += grid[i][0]
+                else:
+                    res[j] = min(res[j], res[j-1]) + grid[i][j]
+        return res[n-1]
+        
 
 
-
-Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
-
-Note: You can only move either down or right at any point in time.
-
-
-
+Java:
 public class Solution {
     public int minPathSum(int[][] grid) {
         int m = grid.length, n = grid[0].length;

@@ -11,21 +11,26 @@ Your algorithm should run in O(n) time and uses constant space.
 解题思路：要求时间复杂度为O(n)和常数空间。又是一个tricky的解法。
 
 
+
+Python:
 class Solution:
-    # @param A, a list of integers
-    # @return an integer
-    # @a very subtle solution
-    def firstMissingPositive(self, A):
-        n=len(A)
-        for i in range(n):
-            if A[i]<=0: A[i]=n+2
-        for i in range(n):
-            if abs(A[i])<=n:
-                curr=abs(A[i])-1
-                A[curr]=-abs(A[curr])
-        for i in range(n):
-            if A[i]>0: return i+1
-        return n+1
+    def firstMissingPositive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        i = 0
+        while i < len(nums):
+            if nums[i] > 0 and nums[i] <= len(nums) and nums[i] != nums[nums[i]-1]:
+                nums[nums[i]-1], nums[i] = nums[i], nums[nums[i]-1]
+                i -= 1
+            i += 1
+        for i in range(len(nums)):
+            if nums[i] != i + 1:
+                return i + 1
+        return len(nums) + 1
+
+In Python if you use for i in range(len(nums)) you cannot control i in each iteration
 
 
 

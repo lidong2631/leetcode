@@ -1,3 +1,28 @@
+Python:
+class Solution:
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        l, r, maxArea = 0, len(height) - 1, 0
+        while l < r:
+            minHeight = min(height[l], height[r])
+            if height[l] == minHeight:
+                l += 1
+                while l < r and height[l] <= minHeight:
+                    maxArea += minHeight - height[l]
+                    l += 1
+            else:
+                r -= 1
+                while l < r and height[r] <= minHeight:
+                    maxArea += minHeight - height[r]
+                    r -= 1
+        return maxArea
+
+
+
+Java:
 public class Solution {
     public int trap(int[] height) {
         int left = 0, right = height.length - 1, max = 0;
@@ -22,6 +47,7 @@ public class Solution {
     }
 }
 
+O(n)
 
 
 from code ganker:

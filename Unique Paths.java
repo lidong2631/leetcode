@@ -1,40 +1,46 @@
-题意：
-
 A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 
 The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
 
 How many possible unique paths are there?
 
+
 Note: m and n will be at most 100.
 
-解题思路：这道题和climbing stairs很像，可以用动态规划解决。状态转移方程为dp[i][j]=dp[i-1][j]+dp[i][j-1]。
+Example 1:
 
-代码：
+Input: m = 3, n = 2
+Output: 3
+Explanation:
+From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:
+1. Right -> Right -> Down
+2. Right -> Down -> Right
+3. Down -> Right -> Right
+Example 2:
 
-复制代码
+Input: m = 7, n = 3
+Output: 28
+
+
+
+Python:
 class Solution:
-    # @return an integer
     def uniquePaths(self, m, n):
-        if m == 1 and n == 1:
-            list = [[1]]
-        elif m == 1 and n > 1:
-            list = [[1 for i in range(n)]]
-        elif m > 1 and n == 1:
-            list = [[1] for i in range(m)]
-        else:
-            list = [[0 for i in range(n)] for i in range(m)]
-            for i in range(0, n):
-                list[0][i] = 1
-            for i in range(0, m):
-                list[i][0] = 1
-            for i in range(1, m):
-                for j in range(1, n):
-                    list[i][j] = list[i-1][j] + list[i][j-1]
-        return list[m-1][n-1]
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        res = [0 for x in range(n)]
+        res[0] = 1
+        for i in range(m):
+            for j in range(1, n):
+                res[j] += res[j-1]
+        return res[n-1]
 
 
 
+Java:
 public class Solution {
     public int uniquePaths(int m, int n) {
         int[] res = new int[n];
@@ -50,6 +56,25 @@ public class Solution {
 0 0 0
 0 0 0
 0 0 0
+
+
+
+Golang:
+func uniquePaths(m int, n int) int {
+    res := make([]int, n)
+    res[0] = 1
+    for i := 0; i < m; i++ {
+        for j := 1; j < n; j++ {
+            res[j] += res[j-1]
+        }
+    }
+    return res[n-1]
+}
+
+create n elems array: make([]int, n)
+
+
+
 
 from code ganker:
 

@@ -3,15 +3,54 @@ Given a set of non-overlapping intervals, insert a new interval into the interva
 You may assume that the intervals were initially sorted according to their start times.
 
 Example 1:
-Given intervals [1,3],[6,9], insert and merge [2,5] in as [1,5],[6,9].
 
+Input: intervals = [[1,3],[6,9]], newInterval = [2,5]
+Output: [[1,5],[6,9]]
 Example 2:
-Given [1,2],[3,5],[6,7],[8,10],[12,16], insert and merge [4,9] in as [1,2],[3,10],[12,16].
 
-This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
+Input: intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]
+Output: [[1,2],[3,10],[12,16]]
+Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 
 
 
+Python:
+# Definition for an interval.
+# class Interval:
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+class Solution:
+    def insert(self, intervals, newInterval):
+        """
+        :type intervals: List[Interval]
+        :type newInterval: Interval
+        :rtype: List[Interval]
+        """
+        if len(intervals) == 0:
+            return [newInterval]
+        i = 0
+        while i < len(intervals) and intervals[i].end < newInterval.start:
+            i += 1
+        if i == len(intervals):
+            intervals.append(newInterval)
+            return intervals
+        newInterval.start = min(newInterval.start, intervals[i].start)
+        intervals.insert(i, newInterval)
+        i += 1
+        while i < len(intervals) and intervals[i-1].end >= intervals[i].start:
+            intervals[i-1].end = max(intervals[i-1].end, intervals[i].end)
+            del intervals[i]
+        return intervals
+
+how to remove list item by index in Python
+use del a[-1]
+https://stackoverflow.com/questions/627435/how-do-i-remove-an-element-from-a-list-by-index-in-python
+
+
+
+Java:
 /**
  * Definition for an interval.
  * public class Interval {
@@ -23,10 +62,13 @@ This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
  */
 public class Solution {
     public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
-        if (intervals == null || intervals.size() == 0) intervals.add(newInterval);
+        if (intervals == null || intervals.size() == 0) 
+            intervals.add(newInterval);
         int i = 0;
-        while (i < intervals.size() && intervals.get(i).end < newInterval.start) i++;
-        if (i == intervals.size()) intervals.add(newInterval);
+        while (i < intervals.size() && intervals.get(i).end < newInterval.start) 
+            i++;
+        if (i == intervals.size()) 
+            intervals.add(newInterval);
         newInterval.start = Math.min(newInterval.start, intervals.get(i).start);
         intervals.add(i, newInterval);
         i++;
@@ -37,6 +79,13 @@ public class Solution {
         return intervals;
     }
 }
+
+
+
+
+
+
+
 
 
 
