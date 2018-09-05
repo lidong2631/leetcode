@@ -1,12 +1,21 @@
-题意：将一个排序好的数组转换为一颗二叉查找树，这颗二叉查找树要求是平衡的。
+Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
 
-解题思路：由于要求二叉查找树是平衡的。所以我们可以选在数组的中间那个数当树根root，然后这个数左边的数组为左子树，右边的数组为右子树，
+For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
 
-分别递归产生左右子树就可以了。
+Example:
 
-代码：
+Given the sorted array: [-10,-3,0,5,9],
 
-复制代码
+One possible answer is: [0,-3,9,-10,null,5], which represents the following height balanced BST:
+
+      0
+     / \
+   -3   9
+   /   /
+ -10  5
+
+
+
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -30,7 +39,7 @@ class Solution:
 
 
 
-
+Java:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {

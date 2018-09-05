@@ -1,5 +1,3 @@
-题意：
-
 Given an absolute path for a file (Unix-style), simplify it.
 
 For example,
@@ -7,11 +5,51 @@ path = "/home/", => "/home"
 path = "/a/./b/../../c/", => "/c"
 
 Corner Cases:
- 
+
 Did you consider the case where path = "/../"?
 In this case, you should return "/".
 Another corner case is the path might contain multiple slashes '/' together, such as "/home//foo/".
 In this case, you should ignore redundant slashes and return "/home/foo".
+
+
+
+Python:
+class Solution(object):
+    def simplifyPath(self, path):
+        places = [p for p in path.split("/") if p != "." and p != ""]
+        stack = []
+        for p in places:
+            if p == "..":
+                if len(stack) > 0:
+                    stack.pop()
+            else:
+                stack.append(p)
+        return "/" + "/".join(stack)
+
+
+
+Java:
+class Solution {
+    public String simplifyPath(String path) {
+        String[] p = path.split("/");
+        Stack<String> stack = new Stack<>();
+        for (String s : p) {
+            if (s.equals("..")) {
+                if (!stack.isEmpty())
+                    stack.pop();
+            } else if (!s.equals(".") && !s.equals("")) {
+                stack.push(s);
+            }
+        }
+        if (stack.isEmpty())
+            return "/";
+        String res = "";
+        while (!stack.isEmpty()) {
+            res = "/" + stack.pop() + res;
+        }
+        return res;
+    }
+}
 
 
 

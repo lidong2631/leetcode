@@ -1,52 +1,40 @@
 Given a string containing only digits, restore it by returning all possible valid IP address combinations.
 
-For example:
-Given "25525511135",
+Example:
 
-return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)
+Input: "25525511135"
+Output: ["255.255.11.135", "255.255.111.35"]
 
 
 
-public class Solution {
+Java:
+class Solution {
     public List<String> restoreIpAddresses(String s) {
-        List<String> res = new ArrayList<String>();
-        if(s==null || s.length()>12)
-            return res;
-        helper(s, 0, 1, "", res);
+        List<String> res = new ArrayList<>();
+        int len = s.length();
+        for (int i = 1; i < 4 && i < len - 2; i++) {
+            for (int j = i + 1; j < i + 4 && j < len - 1; j++) {
+                for (int k = j + 1; k < j + 4 && k < len; k++) {
+                    String s1 = s.substring(0, i), s2 = s.substring(i, j), s3 = s.substring(j, k), s4 = s.substring(k, len);
+                    if (isValid(s1) && isValid(s2) && isValid(s3) && isValid(s4)) {
+                        res.add(s1 + "." + s2 + "." + s3 + "." + s4);
+                    }
+                }
+            }
+        }
         return res;
     }
     
-    private void helper(String s, int index, int segment, String item, List<String> res) {
-        if(segment==4) {
-            String sub = s.substring(index);
-            if(isValid(sub)) {
-                res.add(item+"."+sub);
-            }
-            return;
-        }
-        for(int i=1; i<4&&(index+i<=s.length()); i++) {
-            String str = s.substring(index, index+i);
-            if(isValid(str)) {
-                if(segment==1)
-                    helper(s, index+i, segment+1, str, res);
-                else
-                    helper(s, index+i, segment+1, item+"."+str, res);
-            }
-        }
-    }
-    
-    private boolean isValid(String s) {
-        if(s.charAt(0)=='0' && s.length()>1)
+    public boolean isValid(String s) {
+        if (s.length() > 3 || s.length() == 0 || (s.charAt(0) == '0' && s.length() > 1) || Integer.parseInt(s) > 255)
             return false;
-        else if(Integer.parseInt(s)>=0 && Integer.parseInt(s)<=255)
-            return true;
-        return false;
+        return true;
     }
 }
 
-NP问题套路 但因为ip地址的限制实际不是NP问题
 
-看code ganker评论 复杂度类似于O(2^k)
+O(n^3)
+https://leetcode.com/problems/restore-ip-addresses/discuss/30949/My-code-in-Java
 
 
 

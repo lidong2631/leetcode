@@ -1,24 +1,6 @@
-public class Solution {
-    public int minimumTotal(List<List<Integer>> triangle) {
-        if (triangle == null || triangle.size() == 0) return 0;
-        int[] sums = new int[triangle.size()];
-        sums[0] = triangle.get(0).get(0);
-        for (int i = 1; i < triangle.size(); i++) {
-            sums[i] = sums[i-1] + triangle.get(i).get(i);               // careful
-            for (int j = triangle.get(i).size() - 2; j >= 1; j--) {
-                sums[j] = Math.min(sums[j], sums[j-1]) + triangle.get(i).get(j);
-            }
-            sums[0] += triangle.get(i).get(0);
-        }
-        int res = sums[0];
-        for (int i = 1; i < sums.length; i++)
-            res = Math.min(res, sums[i]);
-        return res;
-    }
-}
+Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
 
-O(n^2) O(n)
-
+For example, given the following triangle
 
 [
      [2],
@@ -26,13 +8,32 @@ O(n^2) O(n)
    [6,5,7],
   [4,1,8,3]
 ]
+The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
 
-2 + 3 + 5 + 1 = 11
+Note:
 
-[2]
-[5, 6]
-[11, 10, 13]
-[15, 11, 18, 16]
+Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
+
+
+
+
+Java:
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int[] res = new int[triangle.size() + 1];
+        for (int i = triangle.size() - 1; i >= 0; i--) {
+            for (int j = 0; j < triangle.get(i).size(); j++) {
+                res[j] = Math.min(res[j], res[j+1]) + triangle.get(i).get(j);
+            }
+        }
+        return res[0];
+    }
+}
+
+O(n^2) O(n)
+
+https://leetcode.com/problems/triangle/discuss/38724/7-lines-neat-Java-Solution
+
 
 
 public class Solution {

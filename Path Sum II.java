@@ -1,27 +1,28 @@
-题意：
+Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
 
-Given a binary tree and a sum, find all root-to-leaf paths where each path sum equals the given sum.
+Note: A leaf is a node with no children.
 
-For example:
+Example:
+
 Given the below binary tree and sum = 22,
-              5
-             / \
-            4   8
-           /   / \
-          11  13  4
-         /  \    / \
-        7    2  5   1
-return
+
+      5
+     / \
+    4   8
+   /   / \
+  11  13  4
+ /  \    / \
+7    2  5   1
+Return:
 
 [
    [5,4,11,2],
    [5,8,4,5]
 ]
-解题思路：这题需要将根到叶子的路径和为sum的路径都枚举出来。一样是使用递归。
 
-代码：
 
-复制代码
+
+
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -49,6 +50,8 @@ class Solution:
 
 
 
+
+Java:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -61,14 +64,17 @@ class Solution:
 public class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if (root == null) return res;
-        List<Integer> list = new ArrayList<>(); list.add(root.val);
+        if (root == null) 
+            return res;
+        List<Integer> list = new ArrayList<>();
+        list.add(root.val);
         helper(root, sum-root.val, list, res);
         return res;
     }
     
     private void helper(TreeNode root, int sum, List<Integer> list, List<List<Integer>> res) {
-        if (root == null) return;
+        if (root == null) 
+            return;
         if (root.left == null && root.right == null && sum == 0) {
             res.add(new ArrayList<Integer>(list));
             return;

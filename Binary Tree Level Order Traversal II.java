@@ -1,3 +1,22 @@
+Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).
+
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its bottom-up level order traversal as:
+[
+  [15,7],
+  [9,20],
+  [3]
+]
+
+
+
+Java:
 /**
  * Definition for binary tree
  * public class TreeNode {
@@ -42,30 +61,25 @@ public class Solution {
 public class Solution {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if(root==null)
+        if (root == null)
             return res;
         LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
         queue.offer(root);
-        int currLevel = 1;
-        int nextLevel = 0;
+        int currLevel = 1, nextLevel = 0;
         List<Integer> tmpList = new ArrayList<Integer>();
-        while(!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             currLevel--;
             TreeNode node = queue.poll();
             tmpList.add(node.val);
-            if(node.left!=null)
-            {
+            if (node.left != null) {
                 nextLevel++;
                 queue.offer(node.left);
-            }
-            if(node.right!=null)
-            {
+            } 
+            if (node.right != null) {
                 nextLevel++;
                 queue.offer(node.right);
             }
-            if(currLevel==0)
-            {
+            if (currLevel == 0) {
                 currLevel = nextLevel;
                 nextLevel = 0;
                 res.add(tmpList);

@@ -1,13 +1,18 @@
 Given an input string, reverse the string word by word.
 
-For example,
-Given s = "the sky is blue",
-return "blue is sky the".
+Example:  
 
-Update (2015-02-12):
-For C programmers: Try to solve it in-place in O(1) space.
+Input: "the sky is blue",
+Output: "blue is sky the".
+Note:
 
-click to show clarification.
+A word is defined as a sequence of non-space characters.
+Input string may contain leading or trailing spaces. However, your reversed string should not contain leading or trailing spaces.
+You need to reduce multiple spaces between two words to a single space in the reversed string.
+Follow up: For C programmers, try to solve it in-place in O(1) space.
+
+
+
 
 Clarification:
 What constitutes a word?
@@ -16,6 +21,21 @@ Could the input string contain leading or trailing spaces?
 Yes. However, your reversed string should not contain leading or trailing spaces.
 How about multiple spaces between two words?
 Reduce them to a single space in the reversed string.
+
+
+
+
+Java:
+public class Solution {
+    public String reverseWords(String s) {
+        String[] parts = s.trim().split("\\s+");
+        StringBuffer res = new StringBuffer();
+        for (int i = parts.length - 1; i > 0; i--) {
+            res.append(parts[i] + " ");
+        }
+        return res.append(parts[0]).toString();
+    }
+}
 
 
 public class Solution {
@@ -33,11 +53,6 @@ public class Solution {
     }
 }
 
-Given an input string, reverse the string word by word.
-
-For example,
-Given s = "the sky is blue",
-return "blue is sky the".
 
 
 

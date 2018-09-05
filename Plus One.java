@@ -1,33 +1,42 @@
-题意：
+Given a non-empty array of digits representing a non-negative integer, plus one to the integer.
 
-Given a non-negative number represented as an array of digits, plus one to the number.
+The digits are stored such that the most significant digit is at the head of the list, and each element in the array contain a single digit.
 
-The digits are stored such that the most significant digit is at the head of the list.
+You may assume the integer does not contain any leading zero, except the number 0 itself.
 
-解题思路：这只一个flag标志位就可以了。
+Example 1:
 
-代码：
+Input: [1,2,3]
+Output: [1,2,4]
+Explanation: The array represents the integer 123.
+Example 2:
 
-复制代码
+Input: [4,3,2,1]
+Output: [4,3,2,2]
+Explanation: The array represents the integer 4321.
+
+
+
+Python:
 class Solution:
-    # @param digits, a list of integer digits
-    # @return a list of integer digits
     def plusOne(self, digits):
-        flag = 1
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
         for i in range(len(digits)-1, -1, -1):
-            if digits[i] + flag == 10:
-                digits[i] = 0
-                flag = 1
+            if digits[i] < 9:
+                digits[i] += 1
+                return digits
             else:
-                digits[i] = digits[i] + flag
-                flag = 0
+                digits[i] = 0
+        res = [1 if i == 0 else 0 for i in range(len(digits)+1)]
+        return res
         
-        if flag == 1:
-            digits.insert(0, 1)
-        return digits
 
 
 
+Java:
 public class Solution {
     public int[] plusOne(int[] digits) {
         for (int i = digits.length - 1; i >= 0; i--) {
@@ -41,6 +50,24 @@ public class Solution {
         res[0] = 1;
         return res;
     }
+}
+
+
+
+Golang:
+func plusOne(digits []int) []int {
+    n := len(digits)
+    for i := n - 1; i >= 0; i-- {
+        if digits[i] < 9 {
+            digits[i] += 1
+            return digits
+        } else {
+            digits[i] = 0
+        }
+    }
+    res := make([]int, n+1)
+    res[0] = 1
+    return res
 }
 
 

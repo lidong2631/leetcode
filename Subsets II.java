@@ -1,16 +1,11 @@
-题意：
+Given a collection of integers that might contain duplicates, nums, return all possible subsets (the power set).
 
-Given a collection of integers that might contain duplicates, S, return all possible subsets.
+Note: The solution set must not contain duplicate subsets.
 
-Note:
+Example:
 
-•Elements in a subset must be in non-descending order.
-•The solution set must not contain duplicate subsets.
- 
-
-For example,
-If S = [1,2,2], a solution is:
-
+Input: [1,2,2]
+Output:
 [
   [2],
   [1],
@@ -18,9 +13,7 @@ If S = [1,2,2], a solution is:
   [2,2],
   [1,2],
   []
-]解题思路：和上一道题一样，求一个集合的所有子集。和上一道题不一样的一点是集合可能有重复元素。这道题同样使用dfs来解题，只是需要在dfs函数里加一个剪枝的条件，排除掉同样的子集。
-
-代码：
+]
 
 
 class Solution:
@@ -39,34 +32,28 @@ class Solution:
 
 
 
-
-public class Solution {
+Java:
+class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
-        List<Integer> last = new ArrayList<>();
-        last.add(0);
         Arrays.sort(nums);
-        return helper(nums, nums.length - 1, last);
-    }
-    
-    private List<List<Integer>> helper(int[] nums, int index, List<Integer> last) {
-        if (index == -1) {
-            List<List<Integer>> res = new ArrayList<List<Integer>>();
-            res.add(new ArrayList<Integer>());
-            return res;
-        }
-        List<List<Integer>> res = helper(nums, index-1, last);
-        int start = 0;
-        if (index > 0 && nums[index] == nums[index-1]) start = last.get(0);
-        int size = res.size();
-        for (int i = start; i < size; i++) {
-            List<Integer> list = new ArrayList<>(res.get(i));
-            list.add(nums[index]);
-            res.add(list);
-        }
-        last.set(0, size);
+        List<List<Integer>> res= new ArrayList<>();
+        helper(nums, 0, new ArrayList<Integer>(), res);
         return res;
     }
+    
+    public void helper(int[] nums, int index, List<Integer> l, List<List<Integer>> res){
+        res.add(l);
+        for (int i = index; i < nums.length; i++) {
+            if (i > index && nums[i] == nums[i-1]) 
+                continue;
+            List<Integer> tmp = new ArrayList<>(l);
+            tmp.add(nums[i]);
+            helper(nums, i+1, tmp, res);
+        }
+    }
 }
+
+https://leetcode.com/problems/subsets-ii/discuss/30158/Standard-DFS-Java-Solution
 
 
 

@@ -1,3 +1,23 @@
+Given inorder and postorder traversal of a tree, construct the binary tree.
+
+Note:
+You may assume that duplicates do not exist in the tree.
+
+For example, given
+
+inorder = [9,3,15,20,7]
+postorder = [9,15,7,20,3]
+Return the following binary tree:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+
+
+Java:
 /**
  * Definition for binary tree
  * public class TreeNode {
@@ -9,14 +29,14 @@
  */
 public class Solution {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-        for(int i=0; i<inorder.length; i++)
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int i = 0; i < inorder.length; i++)
             map.put(inorder[i], i);
         return helper(postorder, 0, postorder.length-1, inorder, 0, inorder.length-1, map);
     }
     
-    private TreeNode helper(int[] postorder, int postL, int postR, int[] inorder, int inL, int inR, HashMap<Integer, Integer> map) {
-        if(inL>inR || postL>postR)
+    private TreeNode helper(int[] postorder, int postL, int postR, int[] inorder, int inL, int inR, Map<Integer, Integer> map) {
+        if (inL > inR || postL > postR)
             return null;
         TreeNode root = new TreeNode(postorder[postR]);
         int index = map.get(postorder[postR]);

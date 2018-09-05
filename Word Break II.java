@@ -1,26 +1,43 @@
-原题地址：https://oj.leetcode.com/problems/word-break-ii/
+Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, add spaces in s to construct a sentence where each word is a valid dictionary word. Return all such possible sentences.
 
-题意：
+Note:
 
-Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.
+The same word in the dictionary may be reused multiple times in the segmentation.
+You may assume the dictionary does not contain duplicate words.
+Example 1:
 
-Return all such possible sentences.
+Input:
+s = "catsanddog"
+wordDict = ["cat", "cats", "and", "sand", "dog"]
+Output:
+[
+  "cats and dog",
+  "cat sand dog"
+]
+Example 2:
 
-For example, given
-s = "catsanddog",
-dict = ["cat", "cats", "and", "sand", "dog"].
+Input:
+s = "pineapplepenapple"
+wordDict = ["apple", "pen", "applepen", "pine", "pineapple"]
+Output:
+[
+  "pine apple pen apple",
+  "pineapple pen apple",
+  "pine applepen apple"
+]
+Explanation: Note that you are allowed to reuse a dictionary word.
+Example 3:
 
-A solution is ["cats and dog", "cat sand dog"].
+Input:
+s = "catsandog"
+wordDict = ["cats", "dog", "sand", "and", "cat"]
+Output:
+[]
 
-解题思路：这道题不只像word break那样判断是否可以分割，而且要找到所有的分割方式，那么我们就要考虑dfs了。不过直接用dfs解题是不行的，为什么？
 
-因为决策树太大，如果全部遍历一遍，时间复杂度太高，无法通过oj。那么我们需要剪枝，如何来剪枝呢？使用word break题中的动态规划的结果，
 
-在dfs之前，先判定字符串是否可以被分割，如果不能被分割，直接跳过这一枝。实际上这道题是dp+dfs。
 
-代码：
 
-复制代码
 class Solution:
     # @param s, a string
     # @param dict, a set of string
@@ -48,6 +65,8 @@ class Solution:
 
 
 
+
+Java:
 public class Solution {
     public List<String> wordBreak(String s, Set<String> wordDict) {
         List<String> res = new ArrayList<>();
@@ -63,8 +82,10 @@ public class Solution {
         for (int i = index; i < s.length(); i++) {
             String tmp = s.substring(index, i+1);
             if (wordDict.contains(tmp)) {
-                if (str.length() == 0) helper(s, wordDict, i+1, tmp, res);
-                else helper(s, wordDict, i+1, str + " " + tmp, res);
+                if (str.length() == 0) 
+                    helper(s, wordDict, i+1, tmp, res);
+                else 
+                    helper(s, wordDict, i+1, str + " " + tmp, res);
             }
         }
     }

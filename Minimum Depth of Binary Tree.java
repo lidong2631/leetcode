@@ -1,16 +1,24 @@
-题意：
-
 Given a binary tree, find its minimum depth.
 
 The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
 
-解题思路：分几种情况考虑：1，树为空，则为0。 2，根节点如果只存在左子树或者只存在右子树，则返回值应为左子树或者右子树的（最小深度+1）。 
+Note: A leaf is a node with no children.
 
-3，如果根节点的左子树和右子树都存在，则返回值为（左右子树的最小深度的较小值+1）。
+Example:
 
-代码：
+Given binary tree [3,9,20,null,null,15,7],
 
-复制代码
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its minimum depth = 2.
+
+
+
+
+
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -32,7 +40,7 @@ class Solution:
 
 
 
-
+Java:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -44,9 +52,12 @@ class Solution:
  */
 public class Solution {
     public int minDepth(TreeNode root) {
-        if (root == null) return 0;
-        if (root.left == null) return minDepth(root.right) + 1;
-        if (root.right == null) return minDepth(root.left) + 1;
+        if (root == null) 
+            return 0;
+        if (root.left == null)
+            return minDepth(root.right) + 1;
+        if (root.right == null) 
+            return minDepth(root.left) + 1;
         return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
     }
 }
@@ -64,33 +75,28 @@ public class Solution {
  */
 public class Solution {
     public int minDepth(TreeNode root) {
-        if(root==null)
+        if (root == null)
             return 0;
         LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
         int currNum = 1;
         int nextNum = 0;
-        int level = 1;              //这里level初始值要是1 因为111行如果判断成立 会立刻返回level 没有机会再让它加一次1
+        int level = 1;
         queue.offer(root);
-        while(!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             TreeNode curr = queue.poll();
             currNum--;
-            if(curr.left==null && curr.right==null)     //这里是终止条件 只要遍历到一个叶子节点 立刻返回 因为是找最小二叉树深度
-            {
+            if (curr.left == null && curr.right == null) {
                 return level;
             }
-            if(curr.left!=null)
-            {
+            if (curr.left != null) {
                 queue.offer(curr.left);
                 nextNum++;
             }
-            if(curr.right!=null)
-            {
+            if (curr.right != null) {
                 queue.offer(curr.right);
                 nextNum++;
             }
-            if(currNum==0)
-            {
+            if (currNum == 0) {
                 currNum = nextNum;
                 nextNum = 0;
                 level++;

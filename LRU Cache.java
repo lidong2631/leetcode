@@ -1,78 +1,137 @@
+Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
+
+get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+
+Follow up:
+Could you do both operations in O(1) time complexity?
+
+Example:
+
+LRUCache cache = new LRUCache( 2 /* capacity */ );
+
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);       // returns 1
+cache.put(3, 3);    // evicts key 2
+cache.get(2);       // returns -1 (not found)
+cache.put(4, 4);    // evicts key 1
+cache.get(1);       // returns -1 (not found)
+cache.get(3);       // returns 3
+cache.get(4);       // returns 4
+
+
+This is the laziest implementation using Java's LinkedHashMap. In the real interview, however, it is definitely not what interviewer expected.
+
+import java.util.LinkedHashMap;
+
 public class LRUCache {
-    class Node {
-        int key;
-        int val;
-        Node pre;
-        Node next;
-        
-        public Node(int key, int val) {
-            this.key = key;
-            this.val = val;
+    private LinkedHashMap<Integer, Integer> map;
+    private final int CAPACITY;
+    public LRUCache(int capacity) {
+        CAPACITY = capacity;
+        map = new LinkedHashMap<Integer, Integer>(capacity, 0.75f, true) {
+            protected boolean removeEldestEntry(Map.Entry eldest) {
+                return size() > CAPACITY;
+            }
+        };
+    }
+    public int get(int key) {
+        return map.getOrDefault(key, -1);
+    }
+    public void set(int key, int value) {
+        map.put(key, value);
+    }
+}
+
+In the constructor, the third boolean parameter specifies the ordering mode. If we set it to true, it will be in access order. 
+(https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html#LinkedHashMap-int-float-boolean-)
+By overriding removeEldestEntry in this way, we do not need to take care of it ourselves. 
+It will automatically remove the least recent one when the size of map exceeds the specified capacity.
+(https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html#removeEldestEntry-java.util.Map.Entry-)
+
+
+
+Below is a "normal" HashMap + doubly-linked list implementation:
+
+public class LRUCache {
+    
+    private class Node {
+        int key, val;
+        Node prev, next;
+
+        Node(int k, int v) {
+            this.key = k;
+            this.val = v;
+        }
+        Node() {
+            this(0, 0);
         }
     }
-    
+
+    private int capacity, count;
     private Map<Integer, Node> map;
-    private int num;
-    private int capacity;
-    Node first, last;
+    private Node head, tail;
     
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        this.num = 0;
-        map = new HashMap<Integer, Node>();
-        first = null;
-        last = null;
+        this.count = 0;
+        map = new HashMap<>();
+        head = new Node();
+        tail = new Node();
+        head.next = tail;
+        tail.prev = head;
     }
     
     public int get(int key) {
-        Node curr = map.get(key);
-        if(curr==null) return -1;
-        updatePos(curr);
-        return curr.val;
+        Node n = map.get(key);
+        if (n == null) {
+            return -1;
+        }
+        update(n);
+        return n.val;
     }
     
-    public void set(int key, int value) {
-        Node curr = map.get(key);
-        if(curr!=null) {
-            curr.val = value;
-            updatePos(curr);
+    public void set(int key, int val) {
+        Node n = map.get(key);
+        if (n == null) {
+            n = new Node(key, val);
+            map.put(key, n);
+            add(n);
+            count++;
+        } else {
+            n.val = val;
+            update(n);
         }
-        else {
-            Node newNode = new Node(key, value);
-            if(num>=capacity) {
-                map.remove(first.key);
-                first = first.next;
-                if(first!=null)
-                    first.pre = null;
-                else                // when capacity is 1
-                    last = null;
-                num--;
-            }
-            if(first==null)
-                first = newNode;
-            else
-                last.next = newNode;
-            newNode.pre = last;
-            last = newNode;
-            num++;
-            map.put(key, newNode);
+        if (count > capacity) {
+            Node toDel = tail.prev;
+            remove(toDel);
+            map.remove(toDel.key);
+            count--;
         }
     }
     
-    private void updatePos(Node curr) {
-        if(curr!=last) {
-            if(curr==first)
-                first = first.next;
-            else
-                curr.pre.next = curr.next; // use doubly linkedlist because we can access to previous node in O(1)
-            curr.next.pre = curr.pre;
-            last.next = curr;
-            curr.pre = last;
-            curr.next = null;
-            last = curr;
-        }
+    private void update(Node node){
+        remove(node);
+        add(node);
+    }
+
+    private void add(Node node) {
+        Node after = head.next;
+        head.next = node;
+        node.prev = head;
+        node.next = after;
+        after.prev = node;
+    }
+    
+    private void remove(Node node) {
+        Node before = node.prev, after = node.next;
+        before.next = after;
+        after.prev = before;
     }
 }
+
+https://leetcode.com/problems/lru-cache/discuss/45939/Laziest-implementation:-Java's-LinkedHashMap-takes-care-of-everything
 
 
 see also LFU cache http://stackoverflow.com/questions/21117636/how-to-implement-a-least-frequently-used-lfu-cache

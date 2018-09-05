@@ -1,30 +1,3 @@
-from cleanCode
-
-public class Solution {
-    public boolean isNumber(String s) {
-        int i=0, n = s.length();
-        while(i<n && Character.isWhitespace(s.charAt(i)))	//判断起始位置的whitespace
-            i++;
-        if(i<n && (s.charAt(i)=='+' || s.charAt(i)=='-'))	//接着判断是否有正负号
-            i++;
-        boolean isNumeric = false;						//判断字符串中是否有数字
-        while(i<n && Character.isDigit(s.charAt(i))) {	//然后判断整数位 如果有将isNumeric设为true
-            i++;
-            isNumeric = true;
-        }
-        if(i<n && s.charAt(i)=='.') {	//判断小数点
-            i++;
-            while(i<n && Character.isDigit(s.charAt(i))) {	//判断紧接小数点后的小数位
-                i++;
-                isNumeric = true;
-            }
-        }
-        while(i<n && Character.isWhitespace(s.charAt(i)))	//最后判断余下的whitespace
-            i++;
-        return isNumeric && i==n;
-    }
-}
-
 Validate if a given string is numeric.
 
 Some examples:
@@ -33,7 +6,93 @@ Some examples:
 "abc" => false
 "1 a" => false
 "2e10" => true
+
 Note: It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one.
+
+Update (2015-02-10):
+The signature of the C++ function had been updated. If you still see your function signature accepts a const char * argument, please click the reload button to reset your code definition.
+
+
+
+Python:
+class Solution:
+    def isNumber(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        try:
+            float(s)
+            return True
+        except :
+            return False
+
+
+class Solution:
+    def isNumber(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        i, n = 0, len(s)
+        while i < n and s[i].isspace():
+            i += 1
+        if i < n and (s[i] == '+' or s[i] == '-'):
+            i += 1
+        isNumeric = False
+        while i < n and s[i].isdigit():
+            i += 1
+            isNumeric = True
+        if i < n and s[i] == '.':
+            i += 1
+            while i < n and s[i].isdigit():
+                i += 1
+                isNumeric = True
+        if i < n and isNumeric and s[i] == 'e':
+            i += 1
+            if i < n and (s[i] == '+' or s[i] == '-'):
+                i += 1
+            isNumeric = False
+            while i < n and s[i].isdigit():
+                i += 1
+                isNumeric = True
+        while i < n and s[i].isspace():
+            i += 1
+        return isNumeric and i == n
+
+isspace()
+https://stackoverflow.com/questions/2405292/how-to-check-if-text-is-empty-spaces-tabs-newlines-in-python
+isdigit()
+https://stackoverflow.com/questions/40097590/detect-whether-a-python-string-is-a-number-or-a-letter
+
+
+
+Java:
+public class Solution {
+    public boolean isNumber(String s) {
+        int i = 0, n = s.length();
+        while (i < n && Character.isWhitespace(s.charAt(i)))
+            i++;
+        if (i < n && (s.charAt(i) == '+' || s.charAt(i) == '-'))
+            i++;
+        boolean isNumeric = false;
+        while (i < n && Character.isDigit(s.charAt(i))) {
+            i++;
+            isNumeric = true;
+        }
+        if (i < n && s.charAt(i) == '.') {
+            i++;
+            while (i < n && Character.isDigit(s.charAt(i))) {
+                i++;
+                isNumeric = true;
+            }
+        }
+        while (i < n && Character.isWhitespace(s.charAt(i)))
+            i++;
+        return isNumeric && i == n;
+    }
+}
+
 
 
 这题题目比较模糊 要注意先提问澄清一些情况再着手解题
@@ -53,36 +112,36 @@ Note: It is intended for the problem statement to be ambiguous. You should gathe
 
 public class Solution {
     public boolean isNumber(String s) {
-        int i=0, n = s.length();
-        while(i<n && Character.isWhitespace(s.charAt(i)))
+        int i = 0, n = s.length();
+        while (i < n && Character.isWhitespace(s.charAt(i)))
             i++;
-        if(i<n && (s.charAt(i)=='+' || s.charAt(i)=='-'))
+        if (i < n && (s.charAt(i) == '+' || s.charAt(i) == '-'))
             i++;
         boolean isNumeric = false;
-        while(i<n && Character.isDigit(s.charAt(i))) {
+        while (i < n && Character.isDigit(s.charAt(i))) {
             i++;
             isNumeric = true;
         }
-        if(i<n && s.charAt(i)=='.') {
+        if (i < n && s.charAt(i) == '.') {
             i++;
-            while(i<n && Character.isDigit(s.charAt(i))) {  //这个while写if外面也可以
+            while (i < n && Character.isDigit(s.charAt(i))) {
                 i++;
                 isNumeric = true;
             }
         }
-        if(i<n && isNumeric && s.charAt(i)=='e') {	//60-69处理e的情况
-            i++;									//跳过e
-            if(i<n && (s.charAt(i)=='+' || s.charAt(i)=='-'))	//判断正负号
+        if (i < n && isNumeric && s.charAt(i) == 'e') {
+            i++;
+            if (i < n && (s.charAt(i) == '+' || s.charAt(i) == '-'))
                 i++;
-            isNumeric = false;								//将isNumeric设为false
-            while(i<n && Character.isDigit(s.charAt(i))) {	//判断后面的是否是合法数字
+            isNumeric = false;								
+            while (i < n && Character.isDigit(s.charAt(i))) {
                 i++;
                 isNumeric = true;
             }
         }
-        while(i<n && Character.isWhitespace(s.charAt(i)))
+        while (i < n && Character.isWhitespace(s.charAt(i)))
             i++;
-        return isNumeric && i==n;
+        return isNumeric && i == n;
     }
 }
 

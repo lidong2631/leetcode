@@ -2,7 +2,8 @@ Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surr
 
 A region is captured by flipping all 'O's into 'X's in that surrounded region.
 
-For example,
+Example:
+
 X X X X
 X O O X
 X X O X
@@ -13,48 +14,55 @@ X X X X
 X X X X
 X X X X
 X O X X
+Explanation:
+
+Surrounded regions shouldn’t be on the border, which means that any 'O' on the border of the board are not flipped to 'X'. 
+Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'. 
+Two cells are connected if they are adjacent cells connected horizontally or vertically.
 
 
 
+
+
+Java:
 public class Solution {
     public void solve(char[][] board) {
-        if(board==null || board.length==0 || board[0].length==0)
+        if (board == null || board.length == 0 || board[0].length == 0)
             return;
-        for(int i=0; i<board.length; i++) { //第一步
-            for(int j=0; j<board[0].length; j++) {
-                if(board[i][j]=='O')
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 'O')
                     board[i][j] = '-';
             }
         }
-        for(int i=0; i<board.length; i++) { //第二步
-            if(board[i][0]=='-')
+        for (int i = 0; i < board.length; i++) {
+            if (board[i][0] == '-')
                 floodFill(board, i, 0, '-', 'O');
         }
-        for(int i=0; i<board.length; i++) {
-            if(board[i][board[0].length-1]=='-')
+        for (int i = 0; i < board.length; i++) {
+            if (board[i][board[0].length-1] == '-')
                 floodFill(board, i, board[0].length-1, '-', 'O');
         }
-        for(int i=0; i<board[0].length; i++) {
-            if(board[0][i]=='-')
+        for (int i = 0; i < board[0].length; i++) {
+            if (board[0][i] == '-')
                 floodFill(board, 0, i, '-', 'O');
         }
-        for(int i=0; i<board[0].length; i++) {
-            if(board[board.length-1][i]=='-')
+        for (int i = 0; i < board[0].length; i++) {
+            if (board[board.length-1][i]=='-')
                 floodFill(board, board.length-1, i, '-', 'O');
         }
-        
-        for(int i=0; i<board.length; i++) { //第三步
-            for(int j=0; j<board[0].length; j++) {
-                if(board[i][j]=='-')
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == '-')
                     board[i][j] = 'X';
             }
         }
     }
     
     private void floodFill(char[][] board, int i, int j, char oldC, char newC) {
-        if(i<0 || i>=board.length || j<0 || j>=board[0].length)
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length)
             return;
-        if(board[i][j]!=oldC)
+        if (board[i][j] != oldC)
             return;
         board[i][j] = newC;
         
@@ -88,26 +96,32 @@ public class Solution {
         int m = board.length, n = board[0].length;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (board[i][j] == 'O') board[i][j] = '-';
+                if (board[i][j] == 'O') 
+                    board[i][j] = '-';
             }
         }
         
         for (int i = 0; i < n; i++) {
-            if (board[0][i] == '-') floodFill(board, 0, i);
+            if (board[0][i] == '-') 
+                floodFill(board, 0, i);
         }
         for (int i = 0; i < n; i++) {
-            if (board[m-1][i] == '-') floodFill(board, m-1, i);
+            if (board[m-1][i] == '-') 
+                floodFill(board, m-1, i);
         }
         for (int i = 0; i < m; i++) {
-            if (board[i][0] == '-') floodFill(board, i, 0);
+            if (board[i][0] == '-') 
+                floodFill(board, i, 0);
         }
         for (int i = 0; i < m; i++) {
-            if (board[i][n-1] == '-') floodFill(board, i, n-1);
+            if (board[i][n-1] == '-') 
+                floodFill(board, i, n-1);
         }
         
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
-                if (board[i][j] == '-') board[i][j] = 'X';
+                if (board[i][j] == '-') 
+                    board[i][j] = 'X';
             }
         }
     }

@@ -1,3 +1,23 @@
+Given a binary tree, find its maximum depth.
+
+The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+Note: A leaf is a node with no children.
+
+Example:
+
+Given binary tree [3,9,20,null,null,15,7],
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its depth = 3.
+
+
+
+
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -18,7 +38,7 @@ Note: too easy to explain. could think other solutions
 
 
 
-
+Java:
 /**
  * Definition for binary tree
  * public class TreeNode {
@@ -30,7 +50,7 @@ Note: too easy to explain. could think other solutions
  */
 public class Solution {
     public int maxDepth(TreeNode root) {
-        if(root==null)
+        if (root == null)
             return 0;
         return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
     }
@@ -53,25 +73,25 @@ Note: 上面是递归解法 下面是非递归解法 非递归解法用的层序
  */
 public class Solution {
     public int maxDepth(TreeNode root) {
-        if(root==null)
+        if (root == null)
             return 0;
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.offer(root);
         int currNum = 1, nextNum = 0, level = 1;
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             TreeNode curr = queue.poll();
             currNum--;
-            if(curr.left==null && curr.right==null &&queue.isEmpty())
+            if (curr.left == null && curr.right == null && queue.isEmpty())
                 return level;
-            if(curr.left!=null) {
+            if (curr.left != null) {
                 queue.offer(curr.left);
                 nextNum++;
             }
-            if(curr.right!=null) {
+            if (curr.right != null) {
                 queue.offer(curr.right);
                 nextNum++;
             }
-            if(currNum==0) {
+            if (currNum == 0) {
                 currNum = nextNum;
                 nextNum = 0;
                 level++;

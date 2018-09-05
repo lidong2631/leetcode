@@ -1,3 +1,24 @@
+Given preorder and inorder traversal of a tree, construct the binary tree.
+
+Note:
+You may assume that duplicates do not exist in the tree.
+
+For example, given
+
+preorder = [3,9,20,15,7]
+inorder = [9,3,15,20,7]
+Return the following binary tree:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+
+
+
+Java:
 /**
  * Definition for binary tree
  * public class TreeNode {
@@ -9,16 +30,16 @@
  */
 public class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        if (preorder == null || inorder == null) return null;
-        HashMap<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
         return helper(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1, map);
     }
     
-    private TreeNode helper(int[] preorder, int preL, int preR, int[] inorder, int inL, int inR, HashMap<Integer, Integer> map) {
-        if (preL > preR || inL > inR) return null;
+    private TreeNode helper(int[] preorder, int preL, int preR, int[] inorder, int inL, int inR, Map<Integer, Integer> map) {
+        if (preL > preR || inL > inR) 
+            return null;
         TreeNode root = new TreeNode(preorder[preL]);   // careful
         int index = map.get(preorder[preL]);
         root.left = helper(preorder, preL+1, preL+index-inL, inorder, inL, index-1, map);

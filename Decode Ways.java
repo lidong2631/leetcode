@@ -1,31 +1,25 @@
-题意：
-
 A message containing letters from A-Z is being encoded to numbers using the following mapping:
 
 'A' -> 1
 'B' -> 2
 ...
 'Z' -> 26
-Given an encoded message containing digits, determine the total number of ways to decode it.
+Given a non-empty string containing only digits, determine the total number of ways to decode it.
 
-For example,
-Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+Example 1:
 
-The number of ways decoding "12" is 2.
+Input: "12"
+Output: 2
+Explanation: It could be decoded as "AB" (1 2) or "L" (12).
+Example 2:
 
-解题思路：解码有多少种方法。一般求“多少”我们考虑使用dp。状态方程如下：
-
-　　　　　当s[i-2:i]这两个字符是10~26但不包括10和20这两个数时，比如21，那么可以有两种编码方式（BA，U），所以dp[i]=dp[i-1]+dp[i-2]
-
-　　　　　当s[i-2:i]等于10或者20时，由于10和20只有一种编码方式，所以dp[i]=dp[i-2]
-
-　　　　   当s[i-2:i]不在以上两个范围时，如09这种，编码方式为0，而31这种，dp[i]=dp[i-1]。
-
-　　　　   注意初始化时：dp[0]=1,dp[1]=1
-
-代码：
+Input: "226"
+Output: 3
+Explanation: It could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
 
 
+
+Python:
 class Solution:
     # @param s, a string
     # @return an integer
@@ -44,10 +38,10 @@ class Solution:
 
 
 
-
+Java:
 public class Solution {
     public int numDecodings(String s) {
-        if(s==null || s.length()==0 || s.charAt(0)=='0')    // careful
+        if (s == null || s.length() == 0 || s.charAt(0) == '0')    // careful
             return 0;
         int curr = 0, prev1 = 1, prev2 = 1;     // carefult
         for (int i = 1; i < s.length(); i++) {
@@ -59,10 +53,8 @@ public class Solution {
             }
             else if (s.charAt(i-1) == '0' || s.charAt(i-1) >= '3') 
                 curr = prev1;
-
             else if (s.charAt(i-1) == '2' && s.charAt(i) >= '7')
                 curr = prev1;
-                
             else
                 curr = prev1 + prev2;
                 

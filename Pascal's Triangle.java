@@ -1,10 +1,12 @@
-题意：
+Given a non-negative integer numRows, generate the first numRows of Pascal's triangle.
 
-Given numRows, generate the first numRows of Pascal triangle.
 
-For example, given numRows = 5,
-Return
+In Pascal's triangle, each number is the sum of the two numbers directly above it.
 
+Example:
+
+Input: 5
+Output:
 [
      [1],
     [1,1],
@@ -12,11 +14,11 @@ Return
   [1,3,3,1],
  [1,4,6,4,1]
 ]
-解题思路：杨辉三角的求解。
 
-代码：
 
-复制代码
+
+
+
 class Solution:
     # @return a list of lists of integers
     def generate(self, numRows):
@@ -38,21 +40,16 @@ class Solution:
 
 
 
-public class Solution {
+Java:
+class Solution {
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if (numRows == 0) return res;
-        List<Integer> firstRow = new ArrayList<>();
-        firstRow.add(1);
-        res.add(firstRow);                                  // save first row
-        for (int i = 2; i <= numRows; i++) {
-            List<Integer> row = new ArrayList<>();
-            row.add(1);
-            for (int j = 1; j < res.get(i-2).size(); j++) {
-                row.add(res.get(i-2).get(j-1) + res.get(i-2).get(j));
-            }
-            row.add(1);
-            res.add(row);
+        List<Integer> row = new ArrayList<>();
+        for (int i = 0; i < numRows; i++) {
+            row.add(0, 1);
+            for (int j = 1; j < row.size() - 1; j++)
+                row.set(j, row.get(j) + row.get(j+1));
+            res.add(new ArrayList<>(row));
         }
         return res;
     }

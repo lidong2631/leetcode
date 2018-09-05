@@ -1,16 +1,17 @@
-题意：
-
 Given a sorted linked list, delete all duplicates such that each element appear only once.
 
-For example,
-Given 1->1->2, return 1->2.
-Given 1->1->2->3->3, return 1->2->3.
+Example 1:
 
-解题思路：链表节点的去重。比较简单。
+Input: 1->1->2
+Output: 1->2
+Example 2:
 
-代码：
+Input: 1->1->2->3->3
+Output: 1->2->3
 
 
+
+Python:
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -18,21 +19,22 @@ Given 1->1->2->3->3, return 1->2->3.
 #         self.next = None
 
 class Solution:
-    # @param head, a ListNode
-    # @return a ListNode
     def deleteDuplicates(self, head):
-        if head == None or head.next == None:
-            return head
-        p = head
-        while p.next:
-            if p.val == p.next.val:
-                p.next = p.next.next
-            else:
-                p = p.next
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        p1, p2 = head, head
+        while p2:
+            while p2 and p1.val == p2.val:
+                p2 = p2.next
+            p1.next = p2
+            p1 = p1.next
         return head
 
 
 
+Java:
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -52,6 +54,30 @@ public class Solution {
         return head;
     }
 }
+
+
+
+Go:
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func deleteDuplicates(head *ListNode) *ListNode {
+    p1, p2 := head, head
+    for p2 != nil {
+        for p2 != nil && p1.Val == p2.Val {
+            p2 = p2.Next
+        }
+        p1.Next = p2
+        p1 = p1.Next
+    }
+    return head
+}
+
+https://stackoverflow.com/questions/28447297/how-to-check-for-an-empty-struct
 
 
 

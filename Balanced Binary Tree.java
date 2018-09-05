@@ -1,14 +1,36 @@
-题意：Given a binary tree, determine if it is height-balanced.
+Given a binary tree, determine if it is height-balanced.
 
-For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+For this problem, a height-balanced binary tree is defined as:
 
-判断一颗二叉树是否是平衡二叉树。
+a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
 
-解题思路：在这道题里，平衡二叉树的定义是二叉树的任意节点的两颗子树之间的高度差小于等于1。这实际上是AVL树的定义。首先要写一个计算二叉树高度的函数，二叉树的高度定义为：树为空时，高度为0。然后递归求解：树的高度 = max(左子树高度，右子树高度)+1(根节点要算上)。高度计算函数实现后，递归求解每个节点的左右子树的高度差，如果有大于1的，则return False。如果高度差小于等于1，则继续递归求解。
+Example 1:
 
-代码：
+Given the following tree [3,9,20,null,null,15,7]:
 
-复制代码
+    3
+   / \
+  9  20
+    /  \
+   15   7
+Return true.
+
+Example 2:
+
+Given the following tree [1,2,2,3,3,null,null,4,4]:
+
+       1
+      / \
+     2   2
+    / \
+   3   3
+  / \
+ 4   4
+
+
+
+
+
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -37,37 +59,7 @@ class Solution:
 
 
 
-
-/**
- * Definition for binary tree
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-public class Solution {
-    public boolean isBalanced(TreeNode root) {
-        if(root==null)
-            return true;
-        if(Math.abs(height(root.left) - height(root.right)) <= 1)
-            return isBalanced(root.left) && isBalanced(root.right);
-        else
-            return false;
-    }
-    
-    private int height(TreeNode root) {
-        if(root==null)
-            return 0;
-        return Math.max(height(root.left), height(root.right)) + 1;
-    }
-}
-
-Note: 这个解法根据python版改的 下面的是code ganker的版本 python版自己写了个height函数计算高度 code ganker调用递归函数helper
-
-
-
+Java:
 /**
  * Definition for binary tree
  * public class TreeNode {
@@ -83,11 +75,14 @@ public class Solution {
     }
     
     private int helper(TreeNode root) {
-        if (root == null) return 0;
+        if (root == null) 
+            return 0;
         int left = helper(root.left);
         int right = helper(root.right);
-        if (left < 0 || right < 0) return -1;
-        if (Math.abs(left - right) >= 2) return -1;
+        if (left < 0 || right < 0) 
+            return -1;
+        if (Math.abs(left - right) >= 2) 
+            return -1;
         return Math.max(left, right) + 1;
     }
 }

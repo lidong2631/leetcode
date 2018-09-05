@@ -1,18 +1,16 @@
-题意：
-
 Given a string s, partition s such that every substring of the partition is a palindrome.
 
 Return all possible palindrome partitioning of s.
 
-For example, given s = "aab",
-Return
+Example:
 
-  [
-    ["aa","b"],
-    ["a","a","b"]
-  ]解题思路：回文的分割问题。同样是需要穷举出所有符合条件的集合，那么我们还是使用dfs。
+Input: "aab"
+Output:
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
 
-代码：
 
 
 class Solution:
@@ -37,39 +35,40 @@ class Solution:
 
 
 
-public class Solution {
+Java:
+class Solution {
     public List<List<String>> partition(String s) {
         List<List<String>> res = new ArrayList<List<String>>();
-        helper(s, getDict(s), 0, new ArrayList<String>(), res);
+        helper(s, res, 0, new ArrayList<String>());
         return res;
     }
     
-    private void helper(String s, boolean[][] dict, int index, List<String> list, List<List<String>> res) {
-        if (index == s.length()) {
-            res.add(new ArrayList<String>(list));
+    private void helper(String s, List<List<String>> res, int idx, List<String> l) {
+        if (idx == s.length()) {
+            res.add(new ArrayList<String>(l));
             return;
         }
-        for (int i = index; i < s.length(); i++) {
-            if (dict[index][i]) {
-                list.add(s.substring(index, i + 1));        // careful
-                helper(s, dict, i + 1, list, res);
-                list.remove(list.size() - 1);
+        for (int i = idx; i < s.length(); i++) {
+            if (isPalindrome(s, idx, i)) {
+                l.add(s.substring(idx, i+1));
+                helper(s, res, i+1, l);
+                l.remove(l.size()-1);
             }
         }
     }
     
-    private boolean[][] getDict(String s) {
-        boolean[][] dict = new boolean[s.length()][s.length()];
-        for (int i = s.length() - 1; i >= 0; i--) {
-            for (int j = i; j < s.length(); j++) {
-                if (s.charAt(j) == s.charAt(i) && (j - i < 2 || dict[i+1][j-1])) dict[i][j] = true;     // careful put j-i>2 first
-            }
+    private boolean isPalindrome(String s, int l, int r) {
+        while (l < r) {
+            if (s.charAt(l) != s.charAt(r))
+                return false;
+            l++; r--;
         }
-        return dict;
+        return true;
     }
 }
 
-Word Break II + Longest Palindromic Substring
+
+
 
 
 

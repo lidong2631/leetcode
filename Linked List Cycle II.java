@@ -1,18 +1,12 @@
-原理说明：图中，head到环路起点的距离为K，起点到fast和slow的相遇点的距离为M，环路周长为L。假设，在fast和slow相遇时，fast走过了Lfast，slow走过了Lslow。根据题意：
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
 
-　　　　　Lslow=K+M；Lfast=K+M+n*L（n为正整数）；Lfast=2*Lslow
+Note: Do not modify the linked list.
 
-　　　　   可以推出：Lslow=n*L；K=n*L-M
+Follow up:
+Can you solve it without using extra space?
 
-　　　　　则当slow重新回到head，而fast还在相遇点，slow和fast都向前走，且每次走一个节点。
 
-　　　　   则slow从head走到起点走了K，而fast从相遇点出发也走了K，而fast向前走了距离K后到了哪里呢？由于K=（n-1）*L+（L-M），所以fast转了n-1圈，再走L-M，也到了起点。这样起点就找到了。
 
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
 
 class Solution:
     # @param head, a ListNode
@@ -36,9 +30,7 @@ class Solution:
 
 
 
-
-
-
+Java:
 /**
  * Definition for singly-linked list.
  * class ListNode {
@@ -54,7 +46,7 @@ public class Solution {
     public ListNode detectCycle(ListNode head) {
         if (head == null || head.next == null) return null;
         ListNode slow = head, fast = head;
-        while (fast != null && fast.next != null) {         // careful cannot write fast.next != null && fast.next.next != null
+        while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
             if (slow == fast) break;

@@ -1,51 +1,44 @@
-题意：
-
 Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
 
-For example,
-"A man, a plan, a canal: Panama" is a palindrome.
-"race a car" is not a palindrome.
+Note: For the purpose of this problem, we define empty string as valid palindrome.
 
-Note:
-Have you consider that the string might be empty? This is a good question to ask during an interview.
+Example 1:
 
-For the purpose of this problem, we define empty string as valid palindrome.
+Input: "A man, a plan, a canal: Panama"
+Output: true
+Example 2:
 
-解题思路：将不是字母的字符去掉，然后转换成小写，然后简单的回文判断。
-
-代码：
+Input: "race a car"
+Output: false
 
 
-class Solution:
-    # @param s, a string
-    # @return a boolean
-    def isPalindrome(self, s):
-        if s == '':
-            return True
-        else:
-            sTmp = ''
-            for i in range(0, len(s)):
-                if s[i] >= 'a' and s[i] <= 'z' or s[i] >= '0' and s[i] <= '9' or s[i] >= 'A' and s[i] <= 'Z':
-                    sTmp += s[i]
-            sTmp = sTmp.lower()
-            for i in range(0, len(sTmp)/2):
-                if sTmp[i] != sTmp[len(sTmp)-1-i]:
-                    return False
-            return True
+
+Python:
+def isPalindrome(self, s):
+    l, r = 0, len(s)-1
+    while l < r:
+        while l < r and not s[l].isalnum():
+            l += 1
+        while l <r and not s[r].isalnum():
+            r -= 1
+        if s[l].lower() != s[r].lower():
+            return False
+        l +=1; r -= 1
+    return True
 
 
 
 
-From cleanCode
+Java:
 public class Solution {
     public boolean isPalindrome(String s) {
         int left = 0, right = s.length()-1;
-        while(left<right) {
-            while(left<right && !Character.isLetterOrDigit(s.charAt(left)))
+        while (left < right) {
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left)))
                 left++;
-            while(left<right && !Character.isLetterOrDigit(s.charAt(right)))
+            while (left < right && !Character.isLetterOrDigit(s.charAt(right)))
                 right--;
-            if(Character.toLowerCase(s.charAt(left))!=Character.toLowerCase(s.charAt(right)))
+            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right)))
                 return false;
             left++;
             right--;

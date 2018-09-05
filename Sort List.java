@@ -1,8 +1,15 @@
-解题思路：由于题目对时间复杂度和空间复杂度要求比较高，所以查看了各种解法，最好的解法就是归并排序，由于链表在归并操作时并不需要像数组的归并操作那样分配一个临时数组空间，所以这样就是常数空间复杂度了，当然这里不考虑递归所产生的系统调用的栈。
+Sort a linked list in O(n log n) time using constant space complexity.
 
-　　　　   这里涉及到一个链表常用的操作，即快慢指针的技巧。设置slow和fast指针，开始它们都指向表头，fast每次走两步，slow每次走一步，fast到链表尾部时，slow正好到中间，这样就将链表截为两段。
+Example 1:
 
-　　　　   运行时需要将中文注释删掉，leetcode oj平台里面不支持中文字符。
+Input: 4->2->1->3
+Output: 1->2->3->4
+Example 2:
+
+Input: -1->5->3->4->0
+Output: -1->0->3->4->5
+
+
 
 
 # Definition for singly-linked list.
@@ -55,6 +62,8 @@ Note: mergesort(linklist/array), ;, self
 
 
 
+
+Java:
 /**
  * Definition for singly-linked list.
  * public class ListNode {

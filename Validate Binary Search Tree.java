@@ -1,22 +1,30 @@
-题意：检测一颗二叉树是否是二叉查找树。
+Given a binary tree, determine if it is a valid binary search tree (BST).
 
-解题思路：看到二叉树我们首先想到需要进行递归来解决问题。这道题递归的比较巧妙。让我们来看下面一棵树：
+Assume a BST is defined as follows:
 
-　　　　　　　　　　　　　　　　　　4
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+Example 1:
 
-　　　　　　　　　　　　　　　　　/    \
+Input:
+    2
+   / \
+  1   3
+Output: true
+Example 2:
 
-　　　　　　　　　　　　　　　　 2　　 6
+    5
+   / \
+  1   4
+     / \
+    3   6
+Output: false
+Explanation: The input is: [5,1,4,null,null,3,6]. The root node's value
+             is 5 but its right child's value is 4.
 
-　　　　　　　　　　　　　　　 /    \   /   \
 
-　　　　　　　　　　　　　　  1      3 5    7
 
-　　　　　对于这棵树而言，怎样进行递归呢？root.left这棵树的所有节点值都小于root，root.right这棵树的所有节点值都大于root。然后依次递归下去就可以了。
-
-例如：如果这棵树是二叉查找树，那么左子树的节点值一定处于（负无穷，4）这个范围内，右子树的节点值一定处于（4，正无穷）这个范围内。思路到这一步，程序就不难写了。
-
-代码：
 
 
 # Definition for a  binary tree node
@@ -41,6 +49,7 @@ class Solution:
 
 
 
+Java:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {

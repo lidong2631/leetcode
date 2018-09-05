@@ -1,63 +1,11 @@
-题意：枚举所有子集。
-
-解题思路：碰到这种问题，一律dfs。
-
-代码：
-
-复制代码
-class Solution:
-    # @param S, a list of integer
-    # @return a list of lists of integer
-    
-    def subsets(self, S):
-        def dfs(depth, start, valuelist):
-            res.append(valuelist)
-            if depth == len(S): return
-            for i in range(start, len(S)):
-                dfs(depth+1, i+1, valuelist+[S[i]])
-        S.sort()
-        res = []
-        dfs(0, 0, [])
-        return res
-
-
-
-
-
-
-public class Solution {
-    public List<List<Integer>> subsets(int[] S) {
-        if(S==null)
-            return null;
-        return helper(S, S.length-1);           // this one we do need to sort the array because all elements are distinct
-    }
-    
-    private List<List<Integer>> helper(int[] S, int index) {
-        if(index==-1) {
-            List<List<Integer>> res = new ArrayList<List<Integer>>();
-            List<Integer> item = new ArrayList<Integer>();
-            res.add(item);
-            return res;
-        }
-        List<List<Integer>> res = helper(S, index-1);
-        int size = res.size();                          // careful
-        for(int i=0; i<size; i++) {
-            List<Integer> newItem = new ArrayList<Integer>(res.get(i));
-            newItem.add(S[index]);
-            res.add(newItem);
-        }
-        return res;
-    }
-}
-
-
-Given a set of distinct integers, nums, return all possible subsets.
+Given a set of distinct integers, nums, return all possible subsets (the power set).
 
 Note: The solution set must not contain duplicate subsets.
 
-For example,
-If nums = [1,2,3], a solution is:
+Example:
 
+Input: nums = [1,2,3]
+Output:
 [
   [3],
   [1],
@@ -68,6 +16,73 @@ If nums = [1,2,3], a solution is:
   [1,2],
   []
 ]
+
+
+
+Python:
+class Solution:
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        nums.sort()
+        self.backtrack(res, [], nums, 0)
+        return res
+    
+    def backtrack(self, res, tmp, nums, start):
+        res.append(tmp[:])
+        for i in range(start, len(nums)):
+            tmp.append(nums[i])
+            self.backtrack(res, tmp, nums, i+1)
+            tmp.pop()
+            
+
+
+Java:
+public List<List<Integer>> subsets(int[] nums) {
+    List<List<Integer>> res = new ArrayList<>();
+    Arrays.sort(nums);
+    backtrack(res, new ArrayList<>(), nums, 0);
+    return res;
+}
+
+private void backtrack(List<List<Integer>> res, List<Integer> tmp, int [] nums, int start){
+    res.add(new ArrayList<>(tmp));
+    for (int i = start; i < nums.length; i++){
+        tmp.add(nums[i]);
+        backtrack(res, tmp, nums, i + 1);
+        tmp.remove(tmp.size() - 1);
+    }
+}
+
+
+general approach to backtracking (Subsets, Permutations, Combination Sum, Palindrome Partitionin)
+https://leetcode.com/problems/subsets/discuss/27281/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partitioning)
+
+
+
+
+
+Golang:
+func subsets(nums []int) [][]int {
+    var res [][]int
+    sort.Ints(nums)
+    backtrack(&res, &[]int{}, nums, 0)
+    return res
+}
+
+func backtrack(res *[][]int, tmp *[]int, nums []int, start int) {
+    l := make([]int, len(*tmp))
+    copy(l, *tmp)
+    *res = append(*res, l)
+    for i := start; i < len(nums); i++ {
+        *tmp = append(*tmp, nums[i])
+        backtrack(res, tmp, nums, i+1)
+        *tmp = (*tmp)[:len(*tmp)-1]
+    }
+}
 
 
 

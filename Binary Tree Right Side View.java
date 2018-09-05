@@ -1,3 +1,21 @@
+Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+Example:
+
+Input: [1,2,3,null,5,null,4]
+Output: [1, 3, 4]
+Explanation:
+
+   1            <---
+ /   \
+2     3         <---
+ \     \
+  5     4       <---
+
+
+
+
+Java:
 /**
  * Definition for binary tree
  * public class TreeNode {
@@ -15,7 +33,7 @@ public class Solution {
         queue.add(root);
         int last = 1, next = 0;
         while (!queue.isEmpty()) {
-            TreeNode curr= queue.poll();
+            TreeNode curr = queue.poll();
             last--;
             if (curr.left != null) {
                 queue.add(curr.left);

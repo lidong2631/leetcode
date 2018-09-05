@@ -1,8 +1,16 @@
-题意：Given two sorted integer arrays A and B, merge B into A as one sorted array.
+Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
 
-解题思路：归并排序的归并这一步的实现，原理很多地方都有。使用一个tmp临时数组进行归并。
+Note:
 
-代码：
+The number of elements initialized in nums1 and nums2 are m and n respectively.
+You may assume that nums1 has enough space (size that is greater or equal to m + n) to hold additional elements from nums2.
+Example:
+
+Input:
+nums1 = [1,2,3,0,0,0], m = 3
+nums2 = [2,5,6],       n = 3
+
+Output: [1,2,2,3,5,6]
 
 
 class Solution:
@@ -33,20 +41,19 @@ class Solution:
 
 
 
-
+Java:
 public class Solution {
     public void merge(int A[], int m, int B[], int n) {
-        int indexA = m-1;   //这里不能用A.length-1 因为A的长度超过m+n 要用m-1
-        int indexB = n-1;
-        int len = m+n-1;
-        while(indexA>=0 && indexB>=0)
-        {
+        int indexA = m - 1;   //这里不能用A.length-1 因为A的长度超过m+n 要用m-1
+        int indexB = n - 1;
+        int len = m + n - 1;
+        while (indexA >= 0 && indexB >= 0) {
             if(A[indexA] > B[indexB])
                 A[len--] = A[indexA--];
             else
                 A[len--] = B[indexB--];
         }
-        while(indexB>=0)
+        while(indexB >= 0)
             A[len--] = B[indexB--];
     }
 }

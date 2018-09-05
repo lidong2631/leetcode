@@ -1,14 +1,22 @@
-题意：将一条排序好的链表转换为二叉查找树，二叉查找树需要平衡。
+Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
 
-解题思路：两个思路：一，可以使用快慢指针来找到中间的那个节点，然后将这个节点作为树根，并分别递归这个节点左右两边的链表产生左右子树，
+For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
 
-这样的好处是不需要使用额外的空间，坏处是代码不够整洁。二，将排序好的链表的每个节点的值存入一个数组中，
+Example:
 
-这样就和http://www.cnblogs.com/zuoyuan/p/3722103.html这道题一样了，代码也比较整洁。
+Given the sorted linked list: [-10,-3,0,5,9],
 
-代码：
+One possible answer is: [0,-3,9,-10,null,5], which represents the following height balanced BST:
 
-复制代码
+      0
+     / \
+   -3   9
+   /   /
+ -10  5
+
+
+
+
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -44,6 +52,8 @@ class Solution:
 
 
 
+
+Java:
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -63,8 +73,10 @@ class Solution:
  */
 public class Solution {
     public TreeNode sortedListToBST(ListNode head) {
-        if (head == null) return null;
-        List<ListNode> l = new LinkedList<ListNode>(); l.add(head);
+        if (head == null) 
+            return null;
+        List<ListNode> l = new LinkedList<ListNode>()
+        l.add(head);
         int len = 1;
         ListNode p = head;
         while (p.next != null) {
@@ -81,7 +93,8 @@ public class Solution {
         TreeNode leftChild = helper(l, left, mid - 1);
         TreeNode root = new TreeNode(l.get(0).val);
         l.set(0, l.get(0).next);
-        root.left = leftChild; root.right = helper(l, mid + 1, right);
+        root.left = leftChild; 
+        root.right = helper(l, mid + 1, right);
         return root;
     }
 }

@@ -1,35 +1,42 @@
-题意：
-
 Implement int sqrt(int x).
 
-Compute and return the square root of x.
+Compute and return the square root of x, where x is guaranteed to be a non-negative integer.
 
-解题思路：实现开平方函数。这里要注意的一点是返回的时一个整数。通过这一点我们可以看出，很有可能是使用二分查找来解决问题的。这里要注意折半查找起点和终点的设置。
+Since the return type is an integer, the decimal digits are truncated and only the integer part of the result is returned.
 
-起点i=1；终点j=x/2+1；因为在(x/2+1)^2 > x，所以我们将折半查找的终点设为x/2+1。
+Example 1:
 
-代码：
+Input: 4
+Output: 2
+Example 2:
+
+Input: 8
+Output: 2
+Explanation: The square root of 8 is 2.82842..., and since 
+             the decimal part is truncated, 2 is returned.
 
 
+
+Python:
 class Solution:
-    # @param x, an integer
-    # @return an integer
-    def sqrt(self, x):
-        if x == 0:
-            return 0
-        i = 1; j = x / 2 + 1
-        while( i <= j ):
-            center = ( i + j ) / 2
-            if center ** 2 == x:
-                return center
-            elif center ** 2 > x:
-                j = center - 1
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        l, r = 0, x
+        while l <= r:
+            mid = l + (r - l) // 2
+            if mid * mid <= x < (mid+1)*(mid+1):
+                return mid
+            elif x < mid * mid:
+                r = mid
             else:
-                i = center + 1
-        return j
+                l = mid + 1
 
 
 
+Java:
 public class Solution {
     public int mySqrt(int x) {
         int left  = 1, right = x / 2 + 1;       // careful

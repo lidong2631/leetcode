@@ -1,3 +1,21 @@
+Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its level order traversal as:
+[
+  [3],
+  [9,20],
+  [15,7]
+]
+
+
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -28,7 +46,7 @@ like Binary Search Tree Preorder Traversal
 
 
 
-
+Java:
 /**
  * Definition for binary tree
  * public class TreeNode {
@@ -41,25 +59,25 @@ like Binary Search Tree Preorder Traversal
 public class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if(root==null)
+        if (root == null)
             return res;
-        Queue<TreeNode> queue = new LinkedList<TreeNode>(); //java中实现Queue接口的类很多 用LinkedList就可以了
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
         List<Integer> item = new ArrayList<Integer>();
         queue.offer(root);
         int currLevel = 1, nextLevel = 0;
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             TreeNode curr = queue.poll();
             currLevel--;
             item.add(curr.val);
-            if(curr.left!=null) {
+            if (curr.left != null) {
                 queue.offer(curr.left);
                 nextLevel++;
             }
-            if(curr.right!=null) {
+            if (curr.right != null) {
                 queue.offer(curr.right);
                 nextLevel++;
             }
-            if(currLevel==0) {
+            if (currLevel == 0) {
                 currLevel = nextLevel;
                 nextLevel = 0;
                 res.add(item);

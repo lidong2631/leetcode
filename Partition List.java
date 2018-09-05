@@ -1,18 +1,12 @@
-题意：
-
 Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
 
 You should preserve the original relative order of the nodes in each of the two partitions.
 
-For example,
-Given 1->4->3->2->5->2 and x = 3,
-return 1->2->2->4->3->5.
+Example:
 
-解题思路：解决链表问题时，最好加一个头结点，问题会比较好解决。对这道题来说，创建两个头结点head1和head2，head1这条链表是小于x值的节点的链表，
+Input: head = 1->4->3->2->5->2, x = 3
+Output: 1->2->2->4->3->5
 
-head2链表是大于等于x值的节点的链表，然后将head2链表链接到head链表的尾部即可。
-
-代码：
 
 
 # Definition for singly-linked list.
@@ -50,7 +44,7 @@ class Solution:
 
 
 
-
+Java:
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -77,8 +71,7 @@ public class Solution {
                 p1 = p1.next;
                 p = p.next;
                 p1.next = null;         // careful here
-            }
-            else {
+            } else {
                 p2.next = p;
                 p2 = p2.next;
                 p = p.next;

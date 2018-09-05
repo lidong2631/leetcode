@@ -1,14 +1,30 @@
-题意：实现对一个图的深拷贝。
+Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.
 
-解题思路：由于遍历一个图有两种方式：bfs和dfs。所以深拷贝一个图也可以采用这两种方法。
 
-不管使用dfs还是bfs都需要一个哈希表map来存储原图中的节点和新图中的节点的一一映射。
+OJ's undirected graph serialization:
+Nodes are labeled uniquely.
 
-map的作用在于替代bfs和dfs中的visit数组，一旦map中出现了映射关系，就说明已经复制完成，也就是已经访问过了。
+We use # as a separator for each node, and , as a separator for node label and each neighbor of the node.
+As an example, consider the serialized graph {0,1,2#1,2#2,2}.
 
-dfs代码：
+The graph has a total of three nodes, and therefore contains three parts as separated by #.
 
-复制代码
+First node is labeled as 0. Connect node 0 to both nodes 1 and 2.
+Second node is labeled as 1. Connect node 1 to node 2.
+Third node is labeled as 2. Connect node 2 to node 2 (itself), thus forming a self-cycle.
+Visually, the graph looks like the following:
+
+       1
+      / \
+     /   \
+    0 --- 2
+         / \
+         \_/
+
+
+
+
+
 # Definition for a undirected graph node
 # class UndirectedGraphNode:
 #     def __init__(self, x):
@@ -68,6 +84,8 @@ class Solution:
 
 
 
+
+Java:
 /**
  * Definition for undirected graph.
  * class UndirectedGraphNode {
@@ -101,6 +119,9 @@ public class Solution {
   // \\
  o ===o
 
+
+
+Java:
 /**
  * Definition for undirected graph.
  * class UndirectedGraphNode {

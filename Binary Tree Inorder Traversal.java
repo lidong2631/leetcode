@@ -1,30 +1,18 @@
-题意：二叉树的中序遍历。这道题用递归比较简单，考察的是非递归实现二叉树中序遍历。中序遍历顺序为：左子树，根，右子树。如此递归下去。
+Given a binary tree, return the inorder traversal of its nodes' values.
 
-解题思路：假设树为：
+Example:
 
-　　　　　　　　　　　　　　　　1
+Input: [1,null,2,3]
+   1
+    \
+     2
+    /
+   3
 
-　　　　　　　　　　　　　　　/　  \
+Output: [1,3,2]
+Follow up: Recursive solution is trivial, could you do it iteratively?
 
-　　　　　　　　　　　　　　 2　　  3
 
-　　　　　　　　　　　　　  /   \　 /   \
-
-   　　　　　　　　　　　　4     5  6    7
-
-我们使用一个栈来解决问题。步骤如下：
-
-　　　　一，我们将根节点1入栈，如果有左孩子，依次入栈，那么入栈顺序为：1，2，4。由于4的左子树为空，停止入栈，此时栈为{1，2，4}。
-
-　　　　二，此时将4出栈，并遍历4，由于4也没有右孩子，那么根据中序遍历的规则，我们显然应该继续遍历4的父亲2，情况是这样。所以我们继续将2出栈并遍历2，2存在右孩子，将5入栈，此时栈为{1，5}。
-
-　　　　三，5没有孩子，则将5出栈并遍历5，这也符合中序遍历的规则。此时栈为{1}。
-
-　　　　四，1有右孩子，则将1出栈并遍历1，然后将右孩子3入栈，并继续以上三个步骤即可。
-
-　　　　栈的变化过程：{1}->{1,2}->{1,2,4}->{1,2}->{1}->{1,5}->{1}->{}->{3}->{3,6}->{3}->{}->{7}->{}。
-
-代码：
 
 
 # Definition for a  binary tree node
@@ -59,6 +47,57 @@ class Solution:
         list = []
         self.iterative_inorder(root, list)
         return list
+
+
+
+
+Java:
+public ArrayList<Integer> inorderTraversal(TreeNode root) {
+    ArrayList<Integer> res = new ArrayList<Integer>();
+    helper(root, res);
+    return res;
+}
+
+private void helper(TreeNode root, ArrayList<Integer> res) {
+    if (root == null)
+        return;
+    helper(root.left, res);
+    res.add(root.val);
+    helper(root.right, res);
+}
+
+Recursion: 时间O(n) 空间O(logn) 递归栈大小
+
+
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        if (root == null) return res;
+        while (!stack.isEmpty() || root != null) {
+            if (root != null) {
+                stack.push(root);
+                root = root.left;
+            } else {
+                root = stack.pop();
+                res.add(root.val);
+                root = root.right;
+            }
+        }
+        return res;
+    }
+}
+
+Iteration: 时间空间跟递归一样    Morris遍历有时间看
 
 
 
@@ -124,54 +163,3 @@ http://www.cnblogs.com/AnnieKim/archive/2013/06/15/MorrisTraversal.html
 
 
 
-
-Recursion: 时间O(n) 空间O(logn) 递归栈大小
-
-public ArrayList<Integer> inorderTraversal(TreeNode root) {
-    ArrayList<Integer> res = new ArrayList<Integer>();
-    helper(root, res);
-    return res;
-}
-
-private void helper(TreeNode root, ArrayList<Integer> res) {
-    if(root==null)
-        return;
-    helper(root.left, res);
-    res.add(root.val);
-    helper(root.right, res);
-}
-
-
-Iteration: 时间空间跟递归一样    Morris遍历有时间看
-
-/**
- * Definition for binary tree
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-public class Solution {
-    public List<Integer> inorderTraversal(TreeNode root) {
-        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
-        ArrayList<Integer> res = new ArrayList<Integer>();
-        if(root==null) return res;
-        while(!stack.isEmpty() || root!=null)
-        {
-            if(root!=null)
-            {
-                stack.push(root);
-                root = root.left;
-            }
-            else
-            {
-                root = stack.pop();
-                res.add(root.val);
-                root = root.right;
-            }
-        }
-        return res;
-    }
-}

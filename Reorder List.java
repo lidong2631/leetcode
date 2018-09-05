@@ -1,12 +1,16 @@
-解题思路：
+Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
 
-1，先将链表截断为两个相等长度的链表，如果链表长度为奇数，则第一条链表长度多1。如原链表为L={1,2,3,4,5}，那么拆分结果为L1={1,2,3}；L2={4,5}。
+You may not modify the values in the list's nodes, only nodes itself may be changed.
 
-    拆分的技巧还是快慢指针的技巧。
+Example 1:
 
-2，将第二条链表L2翻转，如将L2={4,5}翻转为L2={5,4}。
+Given 1->2->3->4, reorder it to 1->4->2->3.
+Example 2:
 
-3，按照题意归并链表。
+Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
+
+
 
 
 # Definition for singly-linked list.
@@ -49,6 +53,7 @@ class Solution:
 
 
 
+Java:
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -84,13 +89,7 @@ public class Solution {
 }
 
 
-Given a singly linked list L: L0→L1→…→Ln-1→Ln,
-reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
 
-You must do this in-place without altering the nodes values.
-
-For example,
-Given {1,2,3,4}, reorder it to {1,4,2,3}.
 
 
 

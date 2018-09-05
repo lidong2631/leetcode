@@ -1,76 +1,44 @@
-题意：
+Given a binary tree
 
-Follow up for problem "Populating Next Right Pointers in Each Node".
+struct TreeLinkNode {
+  TreeLinkNode *left;
+  TreeLinkNode *right;
+  TreeLinkNode *next;
+}
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
 
-What if the given tree could be any binary tree? Would your previous solution still work?
+Initially, all next pointers are set to NULL.
 
 Note:
 
 You may only use constant extra space.
- 
+Recursive approach is fine, implicit stack space does not count as extra space for this problem.
+Example:
 
-For example,
 Given the following binary tree,
 
-         1
-       /  \
-      2    3
-     / \    \
-    4   5    7
- 
-
+     1
+   /  \
+  2    3
+ / \    \
+4   5    7
 After calling your function, the tree should look like:
 
-         1 -> NULL
-       /  \
-      2 -> 3 -> NULL
-     / \    \
-    4-> 5 -> 7 -> NULL
-解题思路：和"Populating Next Right Pointers in Each Node"这道题不同的一点是，这道题的二叉树不是满的二叉树，有些节点是没有的。
-
-但是也可以按照递归的思路来完成。在编写递归的基准情况时需要将细节都考虑清楚：
-
-代码一：
-
-复制代码
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-#         self.next = None
-
-class Solution:
-    # @param root, a tree node
-    # @return nothing
-    def connect(self, root):
-        if root:
-            if root.left and root.right:
-                root.left.next = root.right
-                tmp = root.next
-                while tmp:
-                    if tmp.left: root.right.next = tmp.left; break
-                    if tmp.right: root.right.next = tmp.right; break
-                    tmp = tmp.next
-            elif root.left:
-                tmp = root.next
-                while tmp:
-                    if tmp.left: root.left.next = tmp.left; break
-                    if tmp.right: root.left.next = tmp.right; break
-                    tmp = tmp.next
-            elif root.right:
-                tmp = root.next
-                while tmp:
-                    if tmp.left: root.right.next = tmp.left; break
-                    if tmp.right: root.right.next = tmp.right; break
-                    tmp = tmp.next
-            self.connect(root.right)
-            self.connect(root.left)
-            # @connect(root.right)should be the first!!!
-            
+     1 -> NULL
+   /  \
+  2 -> 3 -> NULL
+ / \    \
+4-> 5 -> 7 -> NULL
 
 
+
+
+Python:
+         
+
+
+
+Java:
 /**
  * Definition for binary tree with next pointer.
  * public class TreeLinkNode {
@@ -81,38 +49,26 @@ class Solution:
  */
 public class Solution {
     public void connect(TreeLinkNode root) {
-        TreeLinkNode curr = null, currL = null, prevHead = root;
-        while (prevHead != null) {
-            TreeLinkNode prev = prevHead;
-            while (prev != null) {
-                if (prev.left != null) {
-                    if (currL == null) {
-                        currL = prev.left; 
-                        curr = prev.left;
-                    }
-                    else {
-                        curr.next = prev.left;
-                        curr = curr.next;
-                    }
+        while (root != null) {
+            TreeLinkNode tmp = new TreeLinkNode(0);
+            TreeLinkNode curr = tmp;
+            while (root != null) {
+                if (root.left != null) { 
+                    curr.next = root.left; 
+                    curr = curr.next;
                 }
-                if (prev.right != null) {
-                    if (currL == null) {
-                        currL = prev.right;
-                        curr = prev.right;
-                    }
-                    else {
-                        curr.next = prev.right;
-                        curr = curr.next;
-                    }
+                if (root.right != null) { 
+                    curr.next = root.right; 
+                    curr = curr.next;
                 }
-                prev = prev.next;
+                root = root.next;
             }
-            prevHead = currL;
-            currL = null;
+            root = tmp.next;
         }
     }
 }
 
+https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/discuss/37811/Simple-solution-using-constant-space
 
 
 

@@ -1,16 +1,47 @@
-public ArrayList<Integer> postorderTraversal(TreeNode root, ArrayList<Integer> res) {
-    ArrayList<Integer> res = new ArrayList<Integer>();
-    helper(root, res);
-    return res;
+Given a binary tree, return the postorder traversal of its nodes' values.
+
+Example:
+
+Input: [1,null,2,3]
+   1
+    \
+     2
+    /
+   3
+
+Output: [3,2,1]
+Follow up: Recursive solution is trivial, could you do it iteratively?
+
+
+
+
+
+Java:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ArrayList<Integer> postorderTraversal(TreeNode root, ArrayList<Integer> res) {
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        helper(root, res);
+        return res;
+    }
+
+    private void helper(TreeNode root, ArrayList<Integer> res) {
+        if(root==null)
+            return;
+        helper(root.left, res);
+        helper(root.right, res);
+        res.add(root.val);
+    }    
 }
 
-private void helper(TreeNode root, ArrayList<Integer> res) {
-    if(root==null)
-        return;
-    helper(root.left, res);
-    helper(root.right, res);
-    res.add(root.val);
-}
 
 
 /**

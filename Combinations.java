@@ -1,30 +1,9 @@
-题意：组合求解问题。
-
-解题思路：这种求组合的问题，需要使用dfs来解决。
-
-代码：
-
-
-class Solution:
-    # @return a list of lists of integers
-    def combine(self, n, k):
-        def dfs(start, valuelist):
-            if self.count == k: ret.append(valuelist); return
-            for i in range(start, n + 1):
-                self.count += 1
-                dfs(i + 1, valuelist + [i])
-                self.count -= 1
-        ret = []; self.count = 0
-        dfs(1, [])
-        return ret
-
-
-
 Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
 
-For example,
-If n = 4 and k = 2, a solution is:
+Example:
 
+Input: n = 4, k = 2
+Output:
 [
   [2,4],
   [3,4],
@@ -35,6 +14,33 @@ If n = 4 and k = 2, a solution is:
 ]
 
 
+
+Python:
+class Solution:
+    def combine(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        self.helper(res, n, k, 1, [])
+        return res
+    
+    def helper(self, res, n, k, i, tmp):
+        if len(tmp) == k:
+            res.append(tmp[:])
+            return
+
+        for j in range(i, n+1):
+            tmp.append(j)
+            self.helper(res, n, k, j+1, tmp)
+            tmp.pop()
+
+
+
+
+Java:
 public class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();

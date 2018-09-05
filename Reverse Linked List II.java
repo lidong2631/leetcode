@@ -1,21 +1,16 @@
-题意：
+Reverse a linked list from position m to n. Do it in one-pass.
 
-Reverse a linked list from position m to n. Do it in-place and in one-pass.
+Note: 1 ≤ m ≤ n ≤ length of list.
 
-For example:
-Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+Example:
 
-return 1->4->3->2->5->NULL.
-
-Note:
-Given m, n satisfy the following condition:
-1 ≤ m ≤ n ≤ length of list.
-
-解题思路：翻转链表的题目。
-
-代码：
+Input: 1->2->3->4->5->NULL, m = 2, n = 4
+Output: 1->4->3->2->5->NULL
 
 
+
+
+Python:
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -44,7 +39,7 @@ class Solution:
 
 
 
-
+Java:
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -55,7 +50,7 @@ class Solution:
  */
 public class Solution {
     public ListNode reverseBetween(ListNode head, int m, int n) {
-        if(head==null || head.next==null)
+        if (head == null || head.next == null)
             return head;
         ListNode dummy = new ListNode(0);
         dummy.next = head;
@@ -81,37 +76,7 @@ return 1->4->3->2->5->NULL.
 
 
 
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
-public class Solution {
-    public ListNode reverseBetween(ListNode head, int m, int n) {
-        if(head==null || head.next==null)
-            return head;
-        ListNode newNode = new ListNode(0);
-        newNode.next = head;
-        ListNode prev = newNode;
-        for(int i=0; i<m-1; i++)    //走到m节点前一个位置
-            prev = prev.next;
-        ListNode curr = prev.next;
-        for(int i=0; i<n-m; i++)    //循环n-m次 两两reverse节点
-        {
-            ListNode tmp = prev.next;
-            prev.next = curr.next;      //这里注意要写curr.next 不可写tmp.next因为tmp。next已经被reverse指向它前一个点了
-            curr.next = curr.next.next;
-            prev.next.next = tmp;
-        }
-        return newNode.next;
-    }
-}
+
 
 
 

@@ -1,42 +1,42 @@
-题意：
-
 Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.
 
 An example is the root-to-leaf path 1->2->3 which represents the number 123.
 
 Find the total sum of all root-to-leaf numbers.
 
-For example,
+Note: A leaf is a node with no children.
 
+Example:
+
+Input: [1,2,3]
     1
    / \
   2   3
- 
-
+Output: 25
+Explanation:
 The root-to-leaf path 1->2 represents the number 12.
 The root-to-leaf path 1->3 represents the number 13.
+Therefore, sum = 12 + 13 = 25.
+Example 2:
 
-Return the sum = 12 + 13 = 25.
+Input: [4,9,0,5,1]
+    4
+   / \
+  9   0
+ / \
+5   1
+Output: 1026
+Explanation:
+The root-to-leaf path 4->9->5 represents the number 495.
+The root-to-leaf path 4->9->1 represents the number 491.
+The root-to-leaf path 4->0 represents the number 40.
+Therefore, sum = 495 + 491 + 40 = 1026.
 
-解题思路：看到二叉树，我们首先想到递归。比如一棵树如下：
 
-　　　　　　　　　　　　　　　　　　　　　　1
 
-　　　　　　　　　　　　　　　　　　　　　/  \
 
-　　　　　　　　　　　　　　　　　　　　2　　  3
 
-　　　　　　　　　　　　　　　　　　　/ \   /  \
 
-　　　　　　　　　　　　　　　　　　4   5 6     7
-
-此题求和为sum=124+125+136+137，我们可以使用一个preSum变量来记录从根节点到节点父亲的路径，比如当我们递归的4时，
-
-preSum=12，递归到6时，preSum=13，这样就可以了。具体看代码。
-
-代码：
-
-复制代码
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -59,6 +59,7 @@ class Solution:
 
 
 
+Java:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
