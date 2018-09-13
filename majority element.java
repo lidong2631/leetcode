@@ -1,3 +1,20 @@
+Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
+
+You may assume that the array is non-empty and the majority element always exist in the array.
+
+Example 1:
+
+Input: [3,2,3]
+Output: 3
+Example 2:
+
+Input: [2,2,1,1,1,2,2]
+Output: 2
+
+
+
+
+Java:
 public class Solution {
     public int majorityElement(int[] num) {
         int candidate = 0, count = 0;
@@ -19,23 +36,23 @@ public class Solution {
 public class Solution {
     public int majorityElement(int[] num) {
         int counter = 0, curr = 0;
-        for(int i=0; i<num.length; i++) {
-            if(counter==0) {
+        for (int i = 0; i < num.length; i++) {
+            if (counter == 0) {
                 curr = num[i];
                 counter++;
             }
-            else if(curr==num[i]) {
+            else if (curr == num[i]) {
                 counter++;
             }
             else
                 counter--;
         }
         counter = 0;        //后面只是判断curr是不是majority leetcode假设一定有解 实际应该有这步
-        for(int i=0; i<num.length; i++) {
-            if(num[i]==curr)
+        for (int i = 0; i < num.length; i++) {
+            if (num[i] == curr)
                 counter++;
         }
-        if(counter<=num.length/2)
+        if (counter <= num.length / 2)
             return -1;
         return curr;
     }

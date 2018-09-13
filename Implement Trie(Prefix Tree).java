@@ -1,5 +1,24 @@
-http://www.geeksforgeeks.org/trie-insert-and-search/
+Implement a trie with insert, search, and startsWith methods.
 
+Example:
+
+Trie trie = new Trie();
+
+trie.insert("apple");
+trie.search("apple");   // returns true
+trie.search("app");     // returns false
+trie.startsWith("app"); // returns true
+trie.insert("app");   
+trie.search("app");     // returns true
+Note:
+
+You may assume that all inputs are consist of lowercase letters a-z.
+All inputs are guaranteed to be non-empty strings.
+
+
+
+
+Java:
 class TrieNode {
     TrieNode[] children;
     boolean isLeaf;
@@ -35,7 +54,8 @@ public class Trie {
         TrieNode p = root;
         for (int i = 0; i < word.length(); i++) {
             int index = word.charAt(i) - 'a';
-            if (p.children[index] == null) return false;
+            if (p.children[index] == null) 
+                return false;
             p = p.children[index];
         }
         return p.isLeaf;
@@ -47,7 +67,8 @@ public class Trie {
         TrieNode p = root;
         for (int i = 0; i < prefix.length(); i++) {
             int index = prefix.charAt(i) - 'a';
-            if (p.children[index] == null) return false;
+            if (p.children[index] == null) 
+                return false;
             p = p.children[index];
         }
         return true;
@@ -61,6 +82,10 @@ public class Trie {
 
 
 O(key_length) O(Alphabet_size * key_length *N)
+
+
+
+http://www.geeksforgeeks.org/trie-insert-and-search/
 
 
 

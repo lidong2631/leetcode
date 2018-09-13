@@ -1,15 +1,37 @@
+Given an array of integers, find out whether there are two distinct indices i and j in the array such that the absolute difference between nums[i] and nums[j] is at most t 
+and the absolute difference between i and j is at most k.
+
+Example 1:
+
+Input: nums = [1,2,3,1], k = 3, t = 0
+Output: true
+Example 2:
+
+Input: nums = [1,0,1,1], k = 1, t = 2
+Output: true
+Example 3:
+
+Input: nums = [1,5,9,1,5,9], k = 2, t = 3
+Output: false
+
+
+
+
+Java:
 public class Solution {
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
-        if(nums==null || nums.length==0 || k<=0)
+        if (nums == null || nums.length == 0 || k <= 0)
             return false;
         TreeSet<Integer> tree = new TreeSet<>();
         int i = 0, j = 0;
         while (i < nums.length) {
             Integer left = tree.ceiling(nums[i] - t);
             Integer right = tree.floor(nums[i] + t);
-            if ((left != null && left <= nums[i]) || (right != null && right >= nums[i])) return true;
+            if ((left != null && left <= nums[i]) || (right != null && right >= nums[i])) 
+                return true;
             tree.add(nums[i++]);
-            if (i - j > k) tree.remove(nums[j++]);
+            if (i - j > k) 
+                tree.remove(nums[j++]);
         }
         return false;
     }

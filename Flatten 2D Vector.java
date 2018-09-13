@@ -1,5 +1,26 @@
+Implement an iterator to flatten a 2d vector.
+
+Example:
+
+Input: 2d vector =
+[
+  [1,2],
+  [3],
+  [4,5,6]
+]
+Output: [1,2,3,4,5,6]
+Explanation: By calling next repeatedly until hasNext returns false, 
+             the order of elements returned by next should be: [1,2,3,4,5,6].
+Follow up:
+As an added challenge, try to code it using only iterators in C++ or iterators in Java.
+
+
+
+
+
+
 http://segmentfault.com/a/1190000003791233
- 
+Java: 
 public class Vector2D {
 
     private List<Iterator<Integer>> list;
@@ -8,21 +29,21 @@ public class Vector2D {
     public Vector2D(List<List<Integer>> vec2d) {
         list = new ArrayList<Iterator<Integer>>();
         curr = 0;
-        for(List<Integer> l : vec2d) {
-            if(l.size()>0)
+        for (List<Integer> l : vec2d) {
+            if (l.size() > 0)
                 list.add(l.iterator());
         }
     }
 
     public int next() {
         Integer i = list.get(curr).next();
-        if(!list.get(curr).hasNext())
+        if (!list.get(curr).hasNext())
             curr++;
         return i;
     }
 
     public boolean hasNext() {
-        return curr<list.size();
+        return curr < list.size();
     }
 }
 

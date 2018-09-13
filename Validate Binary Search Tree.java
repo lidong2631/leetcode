@@ -73,6 +73,19 @@ public class Solution {
     }
 }
 
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return valid(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    private boolean valid(TreeNode p, int low, int high) {
+        if (p == null)
+            return true;
+        return p.val > low && p.val < high && valid(p.left, low, p.val) && valid(p.right, p.val, high);
+    }    
+}
+
+
 
 
 

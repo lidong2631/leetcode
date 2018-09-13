@@ -1,16 +1,41 @@
+Given two strings s and t, determine if they are isomorphic.
+
+Two strings are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.
+
+Example 1:
+
+Input: s = "egg", t = "add"
+Output: true
+Example 2:
+
+Input: s = "foo", t = "bar"
+Output: false
+Example 3:
+
+Input: s = "paper", t = "title"
+Output: true
+Note:
+You may assume both s and t have the same length.
+
+
+
+
+Java:
 public class Solution {
     public boolean isIsomorphic(String s, String t) {
         Map<Character, Character> mapS = new HashMap<Character, Character>();
         Map<Character, Character> mapT = new HashMap<Character, Character>();
-        for(int i=0; i<s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             char c1 = s.charAt(i);
             char c2 = t.charAt(i);
-            if(mapS.containsKey(c1)) {
-                if(mapS.get(c1)!=c2)
+            if (mapS.containsKey(c1)) {
+                if (mapS.get(c1) != c2)
                     return false;
             }
-            if(mapT.containsKey(c2)) {
-                if(mapT.get(c2)!=c1)
+            if (mapT.containsKey(c2)) {
+                if (mapT.get(c2) != c1)
                     return false;
             }
             mapS.put(c1, c2);
