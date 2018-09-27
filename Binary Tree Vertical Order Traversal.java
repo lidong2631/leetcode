@@ -1,3 +1,23 @@
+Given binary tree [3,9,8,4,0,1,7],
+     3
+    /\
+   /  \
+   9   8
+  /\  /\
+ /  \/  \
+ 4  01   7
+return its vertical order traversal as:
+[
+  [4],
+  [9],
+  [3,0,1],
+  [8],
+  [7]
+]
+
+
+
+Java:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -10,14 +30,15 @@
 public class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if (root == null) return res;
+        if (root == null) 
+            return res;
         Queue<TreeNode> queue = new LinkedList<>();
         Map<Integer, List<Integer>> map = new HashMap<>();
         Queue<Integer> index = new LinkedList<>();
         queue.add(root);
         index.add(0);
-        
         int left = 0, right = 0;
+
         while (!queue.isEmpty()) {
             TreeNode curr = queue.poll();
             int i = index.poll();
@@ -42,23 +63,6 @@ public class Solution {
         return res;
     }
 }
-
-Given binary tree [3,9,8,4,0,1,7],
-     3
-    /\
-   /  \
-   9   8
-  /\  /\
- /  \/  \
- 4  01   7
-return its vertical order traversal as:
-[
-  [4],
-  [9],
-  [3,0,1],
-  [8],
-  [7]
-]
 
 level order套路
 

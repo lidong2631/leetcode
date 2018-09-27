@@ -1,11 +1,3 @@
-public class Solution {
-    public boolean isPowerOfFour(int num) {
-        int mask = 0x55555554;                  // 0101...01010100
-        return (num == 1) || ((num & (num-1)) == 0) && ((mask & num) != 0);
-    }
-}
-
-
 Given an integer (signed 32 bits), write a function to check whether it is a power of 4.
 
 Example:
@@ -16,6 +8,15 @@ Follow up: Could you solve it without loops/recursion?
 
 same as Power of Two but also use mask to eliminate those power of two but not four
 
+
+
+Java:
+public class Solution {
+    public boolean isPowerOfFour(int num) {
+        int mask = 0x55555554;                  // 0101...01010100
+        return (num == 1) || ((num & (num-1)) == 0) && ((mask & num) != 0);
+    }
+}
 
 Another workaround:
 

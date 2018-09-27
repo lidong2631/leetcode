@@ -1,3 +1,15 @@
+Given a stream of integers and a window size, calculate the moving average of all integers in the sliding window.
+
+For example,
+MovingAverage m = new MovingAverage(3);
+m.next(1) = 1
+m.next(10) = (1 + 10) / 2
+m.next(3) = (1 + 10 + 3) / 3
+m.next(5) = (10 + 3 + 5) / 3
+
+
+
+Java:
 public class MovingAverage {
 
     private double sum;                     // careful need to be double
@@ -31,16 +43,6 @@ public class MovingAverage {
  * MovingAverage obj = new MovingAverage(size);
  * double param_1 = obj.next(val);
  */
-
-
-Given a stream of integers and a window size, calculate the moving average of all integers in the sliding window.
-
-For example,
-MovingAverage m = new MovingAverage(3);
-m.next(1) = 1
-m.next(10) = (1 + 10) / 2
-m.next(3) = (1 + 10 + 3) / 3
-m.next(5) = (10 + 3 + 5) / 3
 
 
 O(1) O(n)

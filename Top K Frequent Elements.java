@@ -1,19 +1,43 @@
+Given a non-empty array of integers, return the k most frequent elements.
+
+Example 1:
+
+Input: nums = [1,1,1,2,2,3], k = 2
+Output: [1,2]
+Example 2:
+
+Input: nums = [1], k = 1
+Output: [1]
+Note:
+
+You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
+Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
+
+
+
+Java:
 public class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
-        Queue<Map.Entry<Integer, Integer>> heap = new PriorityQueue<>(k, new Comparator<Map.Entry<Integer, Integer>>() {
-            public int compare(Map.Entry<Integer, Integer> m1, Map.Entry<Integer, Integer> m2) {
-                return m1.getValue() - m2.getValue();
-            }
-        });
+        Comparator<Map.Entry<Integer, Integer>> cmp = (Map.Entry<Integer, Integer> m1, Map.Entry<Integer, Integer> m2) -> m1.getValue() - m2.getValue();
+        Queue<Map.Entry<Integer, Integer>> heap = new PriorityQueue<>(k, cmp);
+        // Queue<Map.Entry<Integer, Integer>> heap = new PriorityQueue<>(k, new Comparator<Map.Entry<Integer, Integer>>() {
+        //     public int compare(Map.Entry<Integer, Integer> m1, Map.Entry<Integer, Integer> m2) {
+        //         return m1.getValue() - m2.getValue();
+        //     }
+        // });
         for (int n : nums) {
             int count = map.getOrDefault(n, 0);     // getOrDefault
             map.put(n, count+1);
         }
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+        map.entrySet().forEach(entry -> {
             heap.offer(entry);
             if (heap.size() > k) heap.poll();
-        }
+        });
+        // for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+        //     heap.offer(entry);
+        //     if (heap.size() > k) heap.poll();
+        // }
         List<Integer> res = new LinkedList<>();
         while (!heap.isEmpty()) {
             res.add(0, heap.poll().getKey());
@@ -21,16 +45,6 @@ public class Solution {
         return res;
     }
 }
-
-Given a non-empty array of integers, return the k most frequent elements.
-
-For example,
-Given [1,1,1,2,2,3] and k = 2, return [1,2].
-
-Note: 
-You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
-Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
-
 
 use a minheap to save top k frequent elements
 

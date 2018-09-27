@@ -1,27 +1,3 @@
-public class Solution {
-    public int countComponents(int n, int[][] edges) {
-        int[] parent = new int[n];
-        Arrays.fill(parent, -1);
-        
-        for(int i=0; i<edges.length; i++) {
-            int x = find(parent, edges[i][0]);
-            int y = find(parent, edges[i][1]);
-            
-            if(x!=y) {
-                parent[x] = y;
-                n--;
-            }
-        }
-        return n;
-    }
-    
-    private int find(int[] parent, int i) {
-        if(parent[i]==-1)
-            return i;
-        return find(parent, parent[i]);
-    }
-}
-
 Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), write a function to 
 find the number of connected components in an undirected graph.
 
@@ -36,6 +12,33 @@ Example 2:
      |           |
      1 --- 2 --- 3
 Given n = 5 and edges = [[0, 1], [1, 2], [2, 3], [3, 4]], return 1.
+
+
+
+Java:
+public class Solution {
+    public int countComponents(int n, int[][] edges) {
+        int[] parent = new int[n];
+        Arrays.fill(parent, -1);
+        
+        for (int i = 0; i < edges.length; i++) {
+            int x = find(parent, edges[i][0]);
+            int y = find(parent, edges[i][1]);
+            
+            if (x != y) {
+                parent[x] = y;
+                n--;
+            }
+        }
+        return n;
+    }
+    
+    private int find(int[] parent, int i) {
+        if (parent[i] == -1)
+            return i;
+        return find(parent, parent[i]);
+    }
+}
 
 O(n)
 

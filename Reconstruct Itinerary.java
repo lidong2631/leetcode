@@ -1,26 +1,3 @@
-public class Solution {
-    public List<String> findItinerary(String[][] tickets) {
-        LinkedList<String> res = new LinkedList<>();
-        Map<String, PriorityQueue<String>> map = new HashMap<>();
-        
-        for (String[] ticket : tickets) {
-            if (!map.containsKey(ticket[0])) map.put(ticket[0], new PriorityQueue<String>());
-            map.get(ticket[0]).add(ticket[1]);
-        }
-        
-        dfs("JFK", res, map);
-        return res;
-    }
-    
-    private void dfs(String depart, LinkedList<String> res, Map<String, PriorityQueue<String>> map) {
-        PriorityQueue<String> arrivals = map.get(depart);
-        while (arrivals != null && !arrivals.isEmpty()) {   // careful arrivals != null
-            dfs(arrivals.poll(), res, map);
-        }
-        res.addFirst(depart);
-    }
-}
-
 Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order. 
 
 All of the tickets belong to a man who departs from JFK. Thus, the itinerary must begin with JFK
@@ -36,6 +13,32 @@ ATL: JFK, SFO
       4
 SFO: ATL
 
+
+
+Java:
+public class Solution {
+    public List<String> findItinerary(String[][] tickets) {
+        LinkedList<String> res = new LinkedList<>();
+        Map<String, PriorityQueue<String>> map = new HashMap<>();   // use Heap as val to sort the string
+        
+        for (String[] ticket : tickets) {
+            if (!map.containsKey(ticket[0])) 
+                map.put(ticket[0], new PriorityQueue<String>());
+            map.get(ticket[0]).add(ticket[1]);
+        }
+        
+        dfs("JFK", res, map);
+        return res;
+    }
+    
+    private void dfs(String depart, LinkedList<String> res, Map<String, PriorityQueue<String>> map) {
+        PriorityQueue<String> arrivals = map.get(depart);
+        while (arrivals != null && !arrivals.isEmpty()) {   // careful arrivals != null
+            dfs(arrivals.poll(), res, map);
+        }
+        res.addFirst(depart);
+    }
+}
 
 https://leetcode.com/discuss/84702/share-my-solution
 

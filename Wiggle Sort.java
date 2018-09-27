@@ -1,3 +1,14 @@
+Given an unsorted array nums, reorder it in-place such that nums[0] <= nums[1] >= nums[2] <= nums[3]....
+
+Example:
+
+Input: nums = [3,5,2,1,6,4]
+Output: One possible answer is [3,5,1,6,2,4]
+
+
+
+
+Java:
 public class Solution {
     public void wiggleSort(int[] nums) {
         for (int i = 1; i < nums.length; i++) {
@@ -22,9 +33,3 @@ O(n) O(1)
 
 https://leetcode.com/discuss/57113/java-o-n-solution
 https://leetcode.com/discuss/57120/4-lines-o-n-c
-
-
-
-Given an unsorted array nums, reorder it in-place such that nums[0] <= nums[1] >= nums[2] <= nums[3]....
-
-For example, given nums = [3, 5, 2, 1, 6, 4], one possible answer is [1, 6, 2, 5, 3, 4].

@@ -1,20 +1,3 @@
-public class Solution {
-    public int maxSubArrayLen(int[] nums, int k) {
-        int maxLen = 0, sum = 0;
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];
-            if (sum == k) 
-                maxLen = Math.max(maxLen, i+1);
-            if (map.containsKey(sum-k))
-                maxLen = Math.max(maxLen, i-map.get(sum-k));
-            if (!map.containsKey(sum))      // careful need to check if map has this sum always reserve the earliest one for maximum size
-                map.put(sum, i);
-        }
-        return maxLen;
-    }
-}
-
 Given an array nums and a target value k, find the maximum length of a subarray that sums to k. If there isnt one, return 0 instead.
 
 Example 1:
@@ -31,6 +14,26 @@ Can you do it in O(n) time?
 O(n) O(n)
 
 nums = [-2, -1, 2, 1], k = 1
+
+
+
+Java:
+public class Solution {
+    public int maxSubArrayLen(int[] nums, int k) {
+        int maxLen = 0, sum = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (sum == k) 
+                maxLen = Math.max(maxLen, i+1);
+            if (map.containsKey(sum - k))
+                maxLen = Math.max(maxLen, i - map.get(sum - k));
+            if (!map.containsKey(sum))      // careful need to check if map has this sum always reserve the earliest one for maximum size
+                map.put(sum, i);
+        }
+        return maxLen;
+    }
+}
 
 对比这题和Minimum Size Subarray Sum的差别 一个用two pointer 一个用hashtable
 
