@@ -34,7 +34,7 @@ for (int i = 0; i < len; i++) {
 }
 
 
-
+Java:
 public class Solution {
     public int removeDuplicates(int[] nums) {
         int j = 1, count = 1;

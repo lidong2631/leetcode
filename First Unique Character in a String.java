@@ -1,3 +1,17 @@
+Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
+
+Examples:
+
+s = "leetcode"
+return 0.
+
+s = "loveleetcode",
+return 2.
+Note: You may assume the string contain only lowercase letters.
+
+
+
+Java:
 public class Solution {
     public int firstUniqChar(String s) {
         int[][] index = new int[26][2];
@@ -12,7 +26,7 @@ public class Solution {
         for (int[] arr : index) {
             if (arr[0] == 1) minIndex = Math.min(minIndex, arr[1]);
         }
-        return (minIndex == s.length()) ? -1 : minIndex;
+        return (minIndex == s.length()) ? -1 : minIndex;        // careful
     }
 }
 
@@ -21,15 +35,3 @@ create a table key is character value is an array contains count of characters a
 O(n) O(1)
 
 http://www.geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character/
-
-
-
-Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
-
-Examples:
-
-s = "leetcode"
-return 0.
-
-s = "loveleetcode",
-return 2.

@@ -53,36 +53,6 @@ class Solution {
 
 
 
-public class Solution {
-    public String simplifyPath(String path) {
-        Stack<String> stack = new Stack<>();
-        int i = 0;
-        while (i < path.length()) {
-            StringBuffer sb = new StringBuffer();
-            int left = i;
-            while (i < path.length() && path.charAt(i) != '/') {
-                sb.append(path.charAt(i));
-                i++;
-            }
-            if (i != left) {                                // careful need to check if there is something
-                String tmp = sb.toString();
-                if (tmp.equals("..")) {                     // careful cannot write if (!stack.isEmpty() && tmp.equals(".."))
-                    if (!stack.isEmpty()) stack.pop();
-                }
-                else if (!tmp.equals(".")) stack.push(tmp);    
-            }
-            i++;
-        }
-        if (stack.isEmpty()) return "/";
-        String res = "";
-        while (!stack.isEmpty())
-            res = "/" + stack.pop() + res;
-        return res;
-    }
-}
-
-
-
 
 from code ganker:
 

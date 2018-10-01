@@ -41,8 +41,7 @@ class Solution:
 
 
 
-from cleanCode
-
+Java:
 public class Solution {
     public boolean isPalindrome(int x) {
         if (x < 0) return false;
@@ -50,8 +49,8 @@ public class Solution {
         while (x / 10 >= radix)
             radix *= 10;
         while (x != 0) {                            // careful cannot write x >= 10  1000021
-            if (x / radix != x % 10) return false;
-            x = (x % radix) / 10;
+            if (x / radix != x % 10) return false;  // check
+            x = (x % radix) / 10;                   // cut last digit
             radix /= 100;
         }
         return true;

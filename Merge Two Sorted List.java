@@ -38,7 +38,7 @@ class Solution:
 
 
 
-
+Java:
 /**
  * Definition for singly-linked list.
  * public class ListNode {

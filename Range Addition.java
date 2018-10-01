@@ -1,22 +1,3 @@
-public class Solution {
-    public int[] getModifiedArray(int length, int[][] updates) {
-        int[] res = new int[length];
-        for (int[] update : updates) {
-            int val = update[2], start = update[0], end = update[1];
-            res[start] += val;
-            if (end < length - 1)
-                res[end + 1] -= val;
-        }
-        
-        int sum = 0;
-        for (int i = 0; i < length; i++) {
-            sum += res[i];
-            res[i] = sum;
-        }
-        return res;
-    }
-}
-
 Assume you have an array of length n initialized with all 0 and are given k update operations.
 
 Each operation is represented as a triplet: [startIndex, endIndex, inc] which increments each element of subarray A[startIndex ... endIndex] (startIndex and endIndex inclusive) with inc.
@@ -52,6 +33,26 @@ After applying operation [0, 2, -2]:
 [-2, 0, 3, 5, 3 ]
 
 
+
+Java:
+public class Solution {
+    public int[] getModifiedArray(int length, int[][] updates) {
+        int[] res = new int[length];
+        for (int[] update : updates) {
+            int val = update[2], start = update[0], end = update[1];
+            res[start] += val;
+            if (end < length - 1)
+                res[end + 1] -= val;
+        }
+        
+        int sum = 0;
+        for (int i = 0; i < length; i++) {
+            sum += res[i];
+            res[i] = sum;
+        }
+        return res;
+    }
+}
 
 Just store every start index for each value and at end index plus minus value
 

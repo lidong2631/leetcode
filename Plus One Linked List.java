@@ -1,3 +1,17 @@
+Given a non-negative number represented as a singly linked list of digits, plus one to the number.
+
+The digits are stored such that the most significant digit is at the head of the list.
+
+Example:
+Input:
+1->2->3
+
+Output:
+1->2->4
+
+
+
+Java:
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -14,7 +28,7 @@ public class Solution {
         return dummy;
     }
     
-    private int helper(ListNode p) {
+    private int helper(ListNode p) {    // helper returns carry
         if (p == null) return 1;
         
         int carry = helper(p.next);
@@ -26,18 +40,6 @@ public class Solution {
         return tmp / 10;
     }
 }
-
-Given a non-negative number represented as a singly linked list of digits, plus one to the number.
-
-The digits are stored such that the most significant digit is at the head of the list.
-
-Example:
-Input:
-1->2->3
-
-Output:
-1->2->4
-
 
 recursion
 

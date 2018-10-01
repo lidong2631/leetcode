@@ -56,7 +56,7 @@ public class Solution {
         
         // Java 8 lambda expression
         // Collections.sort(intervals, (Interval i1, Interval i2) -> (i1.start==i2.start)?i1.end-i2.end:i1.start-i2.start);
-        intervals.sort((Interval i1, Interval i2) -> (i1.start==i2.start)?i1.end-i2.end:i1.start-i2.start);     // in Java 8 no need to use Collections.sort
+        intervals.sort((Interval i1, Interval i2) -> (i1.start == i2.start) ? i1.end - i2.end : i1.start - i2.start);     // in Java 8 no need to use Collections.sort
         for (int i = 1; i < intervals.size(); i++) {
             if (intervals.get(i).start <= intervals.get(i-1).end) {
                 intervals.get(i-1).end = Math.max(intervals.get(i-1).end, intervals.get(i).end);

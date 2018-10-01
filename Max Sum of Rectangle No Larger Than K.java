@@ -66,7 +66,7 @@ public int maxSumLessEqualK(int[] nums, int k) {
     int currSum = 0;
     for (int i = 0; i < nums.length; i++) {
         currSum += nums[i];
-        Integer curr = set.ceiling(currSum - k);
+        Integer curr = set.ceiling(currSum - k);    // Returns the least element in this set greater than or equal to the given element,
         if (curr != null) res = Math.max(res, currSum - curr);
         set.add(currSum);
     }

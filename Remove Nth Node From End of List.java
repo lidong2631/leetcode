@@ -38,6 +38,7 @@ class Solution:
         return head
 
 
+Java:
 /**
  * Definition for singly-linked list.
  * public class ListNode {

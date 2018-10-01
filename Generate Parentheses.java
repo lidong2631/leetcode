@@ -36,6 +36,7 @@ class Solution:
 
 
 
+Java;
 public class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> res = new ArrayList<>();

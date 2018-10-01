@@ -54,6 +54,7 @@ class Solution:
 
 
 
+Java:
 public class Solution {
     public int removeDuplicates(int[] nums) {
         if (nums.length < 2) return 1;

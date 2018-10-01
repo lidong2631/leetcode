@@ -35,6 +35,7 @@ In Python if you use for i in range(len(nums)) you cannot control i in each iter
 
 
 
+Java:
 public class Solution {
     public int firstMissingPositive(int[] nums) {
         for (int i = 0; i < nums.length; i++) {

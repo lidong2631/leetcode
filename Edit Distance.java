@@ -50,7 +50,7 @@ class Solution:
 Java:
 public class Solution {
     public int minDistance(String word1, String word2) {
-        int[][] dp = new int[word1.length()+1][word2.length()+2];
+        int[][] dp = new int[word1.length()+1][word2.length()+1];
         for (int i = 0; i < word1.length() + 1; i++)
             dp[i][0] = i;
         for (int i = 0; i < word2.length() + 1; i++)

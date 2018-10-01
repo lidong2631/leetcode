@@ -101,6 +101,7 @@ public class Logger {
 }
 
 https://leetcode.com/problems/logger-rate-limiter/discuss/83254/Java-with-a-LinkedHashMap-and-using-removeEldestEntry
+https://www.geeksforgeeks.org/linkedhashmap-removeeldestentry-method-in-java/
 
 
 

@@ -45,8 +45,13 @@ public class Solution {
     }
 }
 
+Worse case O(N^2 * 4^k)
+First we have to find the first letter to start, which gives time O(N^2), then for each search step it has 2~4 neighbours to go, and it has k steps, where k is the length of the word to be searched.
 
 O（m^2*n^2) O(m*n*4^(len(word))) 空间O(1)
+
+
+
 
 递归题 类似于dfs 但复杂度比dfs高 因为访问过的节点还会再被访问 最坏复杂度为O(m*n*4^(len(word))) 意思是一共m*n个点 每个点要走4个方向
 
